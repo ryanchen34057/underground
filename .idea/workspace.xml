@@ -32,37 +32,46 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/graphics/MoveFrameManager.java">
+        <entry file="file://$PROJECT_DIR$/src/character/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="52" column="72" selection-start-line="52" selection-start-column="72" selection-end-line="52" selection-end-column="72" />
+            <state relative-caret-position="190">
+              <caret line="36" column="67" lean-forward="true" selection-start-line="36" selection-start-column="67" selection-end-line="36" selection-end-column="67" />
+              <folding>
+                <element signature="e#7231#7232#0" expanded="true" />
+                <element signature="e#7292#7293#0" expanded="true" />
+                <element signature="e#7361#7362#0" expanded="true" />
+                <element signature="e#7458#7459#0" expanded="true" />
+                <element signature="e#9643#10294#0" />
+                <element signature="e#10299#10905#0" />
+                <element signature="e#10910#11521#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/character/Player.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/character/Entity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="34" column="55" selection-start-line="34" selection-start-column="55" selection-end-line="34" selection-end-column="55" />
-              <folding>
-                <element signature="e#7190#7191#0" expanded="true" />
-                <element signature="e#7220#7221#0" expanded="true" />
-                <element signature="e#7251#7252#0" expanded="true" />
-                <element signature="e#7281#7282#0" expanded="true" />
-                <element signature="e#7320#7321#0" expanded="true" />
-                <element signature="e#7350#7351#0" expanded="true" />
-                <element signature="e#7386#7387#0" expanded="true" />
-                <element signature="e#7447#7448#0" expanded="true" />
-                <element signature="e#7829#8011#0" />
-                <element signature="e#8016#8200#0" />
-                <element signature="e#8205#8389#0" />
-                <element signature="e#8394#8584#0" />
-                <element signature="e#8589#8775#0" />
-                <element signature="e#8780#8968#0" />
-                <element signature="e#8973#9624#0" />
-                <element signature="e#9629#10235#0" />
-              </folding>
+            <state relative-caret-position="950">
+              <caret line="84" column="5" selection-start-line="84" selection-start-column="5" selection-end-line="84" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/states/Dashing.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="8" column="4" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/util/Handler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="28" column="55" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -70,17 +79,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/states/RunningJumping.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
+            <state relative-caret-position="156">
               <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/states/Falling.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
+            <state relative-caret-position="569">
+              <caret line="67" column="32" selection-start-line="67" selection-start-column="32" selection-end-line="67" selection-end-column="32" />
+              <folding>
+                <element signature="e#2943#2944#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -88,12 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/states/StandingJumping.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="987">
-              <caret line="46" column="9" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="46" selection-end-column="9" />
-              <folding>
-                <element signature="e#2160#2161#0" expanded="true" />
-                <element signature="e#2200#2201#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-237">
+              <caret line="35" column="49" selection-start-line="35" selection-start-column="49" selection-end-line="35" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -101,8 +109,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/states/DashJumping.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="16" column="73" lean-forward="true" selection-start-line="16" selection-start-column="73" selection-end-line="16" selection-end-column="73" />
+            <state relative-caret-position="247">
+              <caret line="16" column="73" selection-start-line="16" selection-start-column="73" selection-end-line="16" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -110,8 +118,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/states/VerticalDashing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-13">
-              <caret line="15" column="52" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
+            <state relative-caret-position="390">
+              <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -120,27 +128,9 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/UI/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="89" column="51" selection-start-line="89" selection-start-column="51" selection-end-line="89" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/graphics/Sprite.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="8" column="51" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/graphics/SpriteSheet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
+            <state relative-caret-position="209">
               <caret line="14" column="78" selection-start-line="14" selection-start-column="78" selection-end-line="14" selection-end-column="78" />
             </state>
           </provider>
@@ -199,9 +189,7 @@
         <option value="$PROJECT_DIR$/src/states/Running.java" />
         <option value="$PROJECT_DIR$/src/states/Bouncing.java" />
         <option value="$PROJECT_DIR$/src/states/PlayerState.java" />
-        <option value="$PROJECT_DIR$/src/states/VerticalDashing.java" />
         <option value="$PROJECT_DIR$/src/util/Camera.java" />
-        <option value="$PROJECT_DIR$/src/util/Handler.java" />
         <option value="$PROJECT_DIR$/src/enums/Direction.java" />
         <option value="$PROJECT_DIR$/src/graphics/SpriteSheet.java" />
         <option value="$PROJECT_DIR$/src/graphics/Sprite.java" />
@@ -210,17 +198,19 @@
         <option value="$PROJECT_DIR$/src/graphics/MoveFrameManager.java" />
         <option value="$PROJECT_DIR$/src/states/StandingJumping.java" />
         <option value="$PROJECT_DIR$/src/states/RunningJumping.java" />
+        <option value="$PROJECT_DIR$/src/util/Handler.java" />
+        <option value="$PROJECT_DIR$/src/states/VerticalDashing.java" />
+        <option value="$PROJECT_DIR$/src/character/Player.java" />
+        <option value="$PROJECT_DIR$/src/character/Player.java" />
         <option value="$PROJECT_DIR$/src/states/Falling.java" />
-        <option value="$PROJECT_DIR$/src/character/Player.java" />
-        <option value="$PROJECT_DIR$/src/character/Player.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="3" />
-    <option name="y" value="-9" />
-    <option name="width" value="1750" />
-    <option name="height" value="980" />
+    <option name="x" value="2040" />
+    <option name="y" value="63" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -228,77 +218,41 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
+              <item name="platformer_game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="platformer_game" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
+              <item name="platformer_game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="platformer_game" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
+              <item name="platformer_game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="platformer_game" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="character" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="enums" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="graphics" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="input" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="level" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="prize" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
+              <item name="platformer_game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="platformer_game" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
+              <item name="platformer_game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="platformer_game" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="states" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="UI" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gameprototype" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gameprototype" type="462c0819:PsiDirectoryNode" />
+              <item name="platformer_game" type="b2602c69:ProjectViewProjectNode" />
+              <item name="platformer_game" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -310,6 +264,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -351,25 +306,24 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
+    <frame x="2040" y="63" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19500674" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2081138" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32794118" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.13235295" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.30147058" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31744313" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.20043337" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32647058" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3261105" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -454,21 +408,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/character/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1064">
-          <caret line="84" column="5" selection-start-line="84" selection-start-column="5" selection-end-line="84" selection-end-column="5" />
-          <folding>
-            <element signature="e#1286#1287#0" expanded="true" />
-            <element signature="e#1318#1319#0" expanded="true" />
-            <element signature="e#1474#1475#0" expanded="true" />
-            <element signature="e#1504#1505#0" expanded="true" />
-            <element signature="e#1549#1550#0" expanded="true" />
-            <element signature="e#1587#1588#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/states/EmptyState.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
@@ -494,13 +433,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="26" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/states/Dashing.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-550">
-          <caret line="8" column="4" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="48" />
         </state>
       </provider>
     </entry>
@@ -560,13 +492,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/Handler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
-          <caret line="26" column="36" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/util/Camera.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -581,97 +506,108 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/graphics/SpriteSheet.java">
+    <entry file="file://$PROJECT_DIR$/src/graphics/MoveFrameManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="14" column="78" selection-start-line="14" selection-start-column="78" selection-end-line="14" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/graphics/Sprite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="51" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
+        <state relative-caret-position="969">
+          <caret line="52" column="72" selection-start-line="52" selection-start-column="72" selection-end-line="52" selection-end-column="72" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/UI/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
+        <state relative-caret-position="1482">
           <caret line="89" column="51" selection-start-line="89" selection-start-column="51" selection-end-line="89" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/graphics/MoveFrameManager.java">
+    <entry file="file://$PROJECT_DIR$/src/graphics/Sprite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="52" column="72" selection-start-line="52" selection-start-column="72" selection-end-line="52" selection-end-column="72" />
+        <state relative-caret-position="152">
+          <caret line="8" column="51" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/states/DashJumping.java">
+    <entry file="file://$PROJECT_DIR$/src/graphics/SpriteSheet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="16" column="73" lean-forward="true" selection-start-line="16" selection-start-column="73" selection-end-line="16" selection-end-column="73" />
+        <state relative-caret-position="209">
+          <caret line="14" column="78" selection-start-line="14" selection-start-column="78" selection-end-line="14" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/Handler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="28" column="55" selection-start-line="28" selection-start-column="55" selection-end-line="28" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/states/StandingJumping.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-237">
+          <caret line="35" column="49" selection-start-line="35" selection-start-column="49" selection-end-line="35" selection-end-column="49" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/states/VerticalDashing.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-13">
-          <caret line="15" column="52" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
+        <state relative-caret-position="390">
+          <caret line="28" column="37" lean-forward="true" selection-start-line="28" selection-start-column="37" selection-end-line="28" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/states/StandingJumping.java">
+    <entry file="file://$PROJECT_DIR$/src/states/DashJumping.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="987">
-          <caret line="46" column="9" lean-forward="true" selection-start-line="19" selection-start-column="8" selection-end-line="46" selection-end-column="9" />
-          <folding>
-            <element signature="e#2160#2161#0" expanded="true" />
-            <element signature="e#2200#2201#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="247">
+          <caret line="16" column="73" selection-start-line="16" selection-start-column="73" selection-end-line="16" selection-end-column="73" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/states/RunningJumping.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
+        <state relative-caret-position="156">
           <caret line="48" column="9" selection-start-line="48" selection-start-column="9" selection-end-line="48" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/states/Falling.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="20" column="9" selection-start-line="20" selection-start-column="9" selection-end-line="20" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/character/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="34" column="55" selection-start-line="34" selection-start-column="55" selection-end-line="34" selection-end-column="55" />
+        <state relative-caret-position="190">
+          <caret line="36" column="67" lean-forward="true" selection-start-line="36" selection-start-column="67" selection-end-line="36" selection-end-column="67" />
           <folding>
-            <element signature="e#7190#7191#0" expanded="true" />
-            <element signature="e#7220#7221#0" expanded="true" />
-            <element signature="e#7251#7252#0" expanded="true" />
-            <element signature="e#7281#7282#0" expanded="true" />
-            <element signature="e#7320#7321#0" expanded="true" />
-            <element signature="e#7350#7351#0" expanded="true" />
-            <element signature="e#7386#7387#0" expanded="true" />
-            <element signature="e#7447#7448#0" expanded="true" />
-            <element signature="e#7829#8011#0" />
-            <element signature="e#8016#8200#0" />
-            <element signature="e#8205#8389#0" />
-            <element signature="e#8394#8584#0" />
-            <element signature="e#8589#8775#0" />
-            <element signature="e#8780#8968#0" />
-            <element signature="e#8973#9624#0" />
-            <element signature="e#9629#10235#0" />
+            <element signature="e#7231#7232#0" expanded="true" />
+            <element signature="e#7292#7293#0" expanded="true" />
+            <element signature="e#7361#7362#0" expanded="true" />
+            <element signature="e#7458#7459#0" expanded="true" />
+            <element signature="e#9643#10294#0" />
+            <element signature="e#10299#10905#0" />
+            <element signature="e#10910#11521#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/character/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="950">
+          <caret line="84" column="5" selection-start-line="84" selection-start-column="5" selection-end-line="84" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/states/Dashing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="8" column="4" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/states/Falling.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="569">
+          <caret line="67" column="32" selection-start-line="67" selection-start-column="32" selection-end-line="67" selection-end-column="32" />
+          <folding>
+            <element signature="e#2943#2944#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -20,11 +20,13 @@ public class Handler {
     private static LinkedList<Entity> entities;
     private static LinkedList<Tile> tiles;
     private static LinkedList<Prize> prizes;
+    public static boolean[][] map;
 
     public Handler() {
         entities = new LinkedList<>();
         tiles = new LinkedList<>();
         prizes = new LinkedList<>();
+        map = new boolean[Game.HEIGHT*64][Game.WIDTH*64];
     }
 
     //getters
@@ -84,6 +86,7 @@ public class Handler {
 
                 if(red == 0 && green == 0 && blue == 0) {
                     addObject(new Wall(x*64, y*64, Game.TILE_SIZE, Game.TILE_SIZE, false, Id.wall));
+                    map[y*64][x*64] = true;
                 }
                 if(red == 255 && green == 0 && blue == 255) {
                     addObject(new Player(x*64, y*64, Game.playerWidth, Game.playerHeight,Id.player));
