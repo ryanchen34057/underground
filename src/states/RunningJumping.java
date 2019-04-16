@@ -14,10 +14,44 @@ public class RunningJumping implements StateMachine{
         else if(keys.get(3).down) {
             player.setFacing(1);
         }
-        if(keys.get(4).down && !Player.isTired) {
+        if(keys.get(4).down && !Player.isTired && (!keys.get(0).down && !keys.get(1).down)) {
             player.setVelY(0);
             player.currentState = PlayerState.dashingInTheAir;
             Player.isTired = true;
+        }
+        //Vertical Dashing - UP_LEFT
+        if(keys.get(4).down && keys.get(0).down && keys.get(2).down && !Player.isTired) {
+            player.setVelX(Player.VERTICAL_DASHING_VELX * player.getFacing());
+            player.currentState = PlayerState.verticalDashing;
+            Player.isTired = true;
+            player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
+        }
+        //Vertical Dashing - UP_RIGHT
+        else if(keys.get(4).down && keys.get(0).down && keys.get(3).down && !Player.isTired) {
+            player.setVelX(Player.VERTICAL_DASHING_VELX * player.getFacing());
+            player.currentState = PlayerState.verticalDashing;
+            Player.isTired = true;
+            player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
+        }
+        //Vertical Dashing - DOWN_LEFT
+        else if(keys.get(4).down && keys.get(1).down && keys.get(2).down && !Player.isTired) {
+            player.setVelX(Player.VERTICAL_DASHING_VELX * player.getFacing());
+            player.currentState = PlayerState.verticalDashing;
+            Player.isTired = true;
+            player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
+        }
+        //Vertical Dashing - DOWN_RIGHT
+        else if(keys.get(4).down && keys.get(1).down && keys.get(3).down && !Player.isTired) {
+            player.setVelX(Player.VERTICAL_DASHING_VELX * player.getFacing());
+            player.currentState = PlayerState.verticalDashing;
+            Player.isTired = true;
+            player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
+        }
+        //Vertical Dashing
+        else if(keys.get(4).down && (keys.get(0).down || keys.get(1).down) && !Player.isTired) {
+            player.currentState = PlayerState.verticalDashing;
+            Player.isTired = true;
+            player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
         }
     }
 

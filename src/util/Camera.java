@@ -4,8 +4,8 @@ import UI.Game;
 import character.Entity;
 
 public class Camera {
-    private int x;
-    private int y;
+    public static int x;
+    public static int y;
 
     public void update(Entity player) {
         setX(-player.getX() + Game.WIDTH);

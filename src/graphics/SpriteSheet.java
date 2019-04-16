@@ -11,7 +11,7 @@ public class SpriteSheet {
         sheet = ResourceManager.getInstance().getImage(path);
     }
 
-    public BufferedImage getSprite(int x, int y) {
-        return sheet.getSubimage(x*32-32, y*32-32, 32, 32);
+    public BufferedImage getSprite(int x, int y, int width, int height) {
+        return sheet.getSubimage(x*width-width, y*height-height, width, height);
     }
 }

@@ -39,15 +39,18 @@ public class MoveFrameManager {
         if(currentState instanceof DashingInTheAir) {
             y = 10;
         }
+        if(currentState instanceof VerticalDashing) {
+            y = 10;
+        }
         for(int i=0;i<playerMoveFrame.length;i++) {
-            playerMoveFrame[i] = new Sprite(Game.spriteSheet,i + 1, y);
+            playerMoveFrame[i] = new Sprite(Game.spriteSheet,i + 1, y, 32, 32);
         }
         return playerMoveFrame;
     }
 
     public static Sprite[] getPrizeFrame() {
         for(int i=0;i<prizeFrame.length;i++) {
-            prizeFrame[i] = new Sprite(Game.spriteSheet,i + 1, 9);
+            prizeFrame[i] = new Sprite(Game.spriteSheet,i + 1, 9, 32, 32);
         }
         return prizeFrame;
     }

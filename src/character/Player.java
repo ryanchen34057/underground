@@ -1,12 +1,15 @@
 package character;
 
 import UI.Game;
+import enums.Direction;
 import graphics.MoveFrameManager;
 import input.Input;
 import level.Tile;
 import prize.Prize;
 import states.PlayerState;
 import states.StateMachine;
+import util.Camera;
+import util.Handler;
 import util.PrizeCollisionCondition;
 import util.TileCollisionCondition;
 
@@ -20,6 +23,7 @@ public class Player extends Entity {
     public static final int STEP = 5;
     private final int STAMINA = 150;
     public static final int DASH_SPEED = 12;
+    public static final float VERTICAL_DASH_SPEED = 12;
     public static final float DASH_TIMER = 1f;
     public float CURRENT_DASH_SPEED = 12;
     public static final float DASH_SPEED_BUMP = 0.1f;
@@ -28,12 +32,13 @@ public class Player extends Entity {
     public static final float STANDINGJUMPING_VELX_OFFSET = 1.5f;
     public static final float GRAVITY_OFFSET = 0.35f;
     public static final float SLIDING_GRAVITY = 10;
-    public static final float FALLING_GRAVITY_VEL = 0.8f;
+    public static final float FALLING_GRAVITY_VEL = 0.7f;
     public static final float RUNNINGJUMPING_GRAVITY = 8;
     public static final float RUNNINGJUMPING_GRAVITY_OFFSET = 0.2f;
     public static final int FALLING_VELX = 3;
     public static final float DASHJUMPING_GRAVITY_OFFSET = 0.3f;
     public static final float DASHJUMPING_GRAVITY = 8;
+    public static final float VERTICAL_DASHING_VELX = 10;
 
 
     // State
@@ -84,8 +89,11 @@ public class Player extends Entity {
             prevState = currentState;
             System.out.println(prevState);
         }
+
+        // Predict collision
         setX(getX() + (int)getVelX());
         setY(getY() + (int)getVelY());
+
         handleKeyInput();
         currentState.update(this);
         isOnTheGround = false;
@@ -96,14 +104,14 @@ public class Player extends Entity {
             if (t.getId() == Id.wall || t.getId() == Id.spike) {
                 if (checkCollisionTop(t, Tile::getBounds)) {
 //                    System.out.println("TOP");
-                    setGravity(0.8);
+                    setGravity(FALLING_GRAVITY_VEL);
                     setVelY(0);
                     setY(t.getY() + t.getHeight());
                     currentState = PlayerState.falling;
 
                 }
                 if (checkCollisionBottom(t, Tile::getBounds)) {
-//                    System.out.println("BOTTOM");
+                    //System.out.println("BOTTOM");
                     if(currentState == PlayerState.falling || currentState == PlayerState.sliding) {
                         setVelY(0);
                         setY(t.getY() - getHeight());
@@ -113,7 +121,7 @@ public class Player extends Entity {
                     fatigue = 0;
                 }
                 if (checkCollisionLeft(t, Tile::getBounds)) {
-//                    System.out.println("LEFT");
+                    //System.out.println("LEFT");
                     setVelX(0);
                     setX(t.getX() + t.getWidth() - 25);
                     if(currentState == PlayerState.falling &&
@@ -122,7 +130,7 @@ public class Player extends Entity {
                     }
                 }
                 if (checkCollisionRight(t, Tile::getBounds)) {
-//                    System.out.println("RIGHT");
+                    //System.out.println("RIGHT");
                     setVelX(0);
                     setX(t.getX() - getWidth() + 28);
                     if(currentState == PlayerState.falling&& Input.keys.get(3).down && fatigue < STAMINA) {
@@ -209,7 +217,6 @@ public class Player extends Entity {
     public void handleKeyInput() {
         currentState.handleKeyInput(this, Input.keys);
     }
-
     private boolean checkCollisionTop(Tile t, TileCollisionCondition tileCollisionCondition) {
         return getBoundsTop().intersects(tileCollisionCondition.checkCollision(t));
     }
@@ -234,7 +241,6 @@ public class Player extends Entity {
     private boolean checkCollisionRight(Prize p, PrizeCollisionCondition prizeCollisionCondition) {
         return getBoundsRight().intersects(prizeCollisionCondition.checkCollision(p));
     }
-
     private void checkHitSpike(Tile t) {
         // Spike collision test
         if(t.getId() == Id.spike) {
@@ -253,7 +259,6 @@ public class Player extends Entity {
             }
         }
     }
-
     private void checkGetPrize(Prize p) {
         //Prize
         if(p.getId() == Id.coin) {
@@ -272,14 +277,17 @@ public class Player extends Entity {
             }
         }
     }
-
-
-
     private boolean isOnTheGroundCondition() {
-        return !isOnTheGround && currentState != PlayerState.standingJumping && currentState != PlayerState.runningJumping
-                && currentState != PlayerState.dashJumping && currentState != PlayerState.falling
-                && currentState != PlayerState.standing && currentState != PlayerState.sliding && currentState != PlayerState.bouncing
-                && currentState != PlayerState.dashingInTheAir;
+        return !isOnTheGround &&
+                currentState != PlayerState.standingJumping &&
+                currentState != PlayerState.runningJumping &&
+                currentState != PlayerState.dashJumping &&
+                currentState != PlayerState.falling &&
+                currentState != PlayerState.standing &&
+                currentState != PlayerState.sliding &&
+                currentState != PlayerState.bouncing &&
+                currentState != PlayerState.dashingInTheAir &&
+                currentState != PlayerState.verticalDashing;
     }
 
 }

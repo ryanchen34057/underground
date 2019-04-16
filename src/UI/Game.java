@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable {
 
     //Sprite sheet
     public static SpriteSheet spriteSheet;
+    public static SpriteSheet deathSpriteSheet;
 
     //UI.Game object
     public static  Sprite wall;
@@ -83,9 +84,10 @@ public class Game extends Canvas implements Runnable {
     public void init() {
         //Sprite object
         spriteSheet = new SpriteSheet("/res/spriteSheet.png");
-        wall = new Sprite(spriteSheet, 1, 1);
-        spike = new Sprite(spriteSheet, 1, 2);
-        coin = new Sprite(spriteSheet, 1, 9);
+        deathSpriteSheet = new SpriteSheet("/res/death.png");
+        wall = new Sprite(spriteSheet, 1, 1, 32, 32);
+        spike = new Sprite(spriteSheet, 1, 2, 32, 32);
+        coin = new Sprite(spriteSheet, 1, 9, 32, 32);
 
         //BufferedImage object
         currentLevel = ResourceManager.getInstance().getImage("/res/movementTest.png");

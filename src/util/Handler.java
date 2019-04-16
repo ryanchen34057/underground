@@ -12,7 +12,9 @@ import level.Wall;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Handler {
     private static LinkedList<Entity> entities;
@@ -44,6 +46,7 @@ public class Handler {
         prizes.add(p);
     }
 
+
     public void paint(Graphics g) {
         for(int i=0;i<entities.size();i++) {
             entities.get(i).paint(g);
@@ -71,6 +74,7 @@ public class Handler {
         int width = level.getWidth();
         int height = level.getHeight();
 
+        Wall wall;
         for(int y=0;y<height;y++) {
             for(int x=0;x<width;x++) {
                 int pixel = level.getRGB(x, y);
