@@ -6,7 +6,7 @@ import input.Input;
 import java.util.List;
 
 public class VerticalDashing implements StateMachine {
-    private float dashTimer = Player.DASH_TIMER;
+    private float dashTimer = Player.VERTICAL_DASH_TIMER;
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(0).down) {
@@ -24,7 +24,7 @@ public class VerticalDashing implements StateMachine {
         player.CURRENT_DASH_SPEED -= Player.DASH_SPEED_BUMP;
         if(dashTimer <= 0) {
             //Reset timer
-            dashTimer = Player.DASH_TIMER;
+            dashTimer = Player.VERTICAL_DASH_TIMER;
             player.currentState = PlayerState.falling;
             player.CURRENT_DASH_SPEED = Player.DASH_SPEED;
         }

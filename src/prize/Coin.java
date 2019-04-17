@@ -1,9 +1,7 @@
 package prize;
 
-import UI.Game;
 import character.Id;
-import graphics.MoveFrameManager;
-import util.Handler;
+import graphics.FrameManager;
 
 import java.awt.*;
 
@@ -17,7 +15,7 @@ public class Coin extends Prize {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(MoveFrameManager.getPrizeFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
+        g.drawImage(FrameManager.getPrizeFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
                 super.getWidth(), super.getHeight(), null);
 //        if(Game.debugMode) {
 //            g.setColor(Color.YELLOW);
@@ -30,7 +28,7 @@ public class Coin extends Prize {
         frameDelay++;
         if (frameDelay >= 5) {
             frame++;
-            if (frame >= MoveFrameManager.getPrizeFrame().length / 2) {
+            if (frame >= FrameManager.getPrizeFrame().length / 2) {
                 frame = 0;
             }
             frameDelay = 0;

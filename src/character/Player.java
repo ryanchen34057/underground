@@ -1,14 +1,15 @@
 package character;
 
 import UI.Game;
-import enums.Direction;
-import graphics.MoveFrameManager;
+import effects.DashEffect;
+import effects.DeathEffect;
+import effects.Effect;
+import graphics.FrameManager;
 import input.Input;
 import level.Tile;
 import prize.Prize;
 import states.PlayerState;
 import states.StateMachine;
-import util.Camera;
 import util.Handler;
 import util.PrizeCollisionCondition;
 import util.TileCollisionCondition;
@@ -22,9 +23,10 @@ public class Player extends Entity {
     private int frameDelay;
     public static final int STEP = 5;
     private final int STAMINA = 150;
-    public static final int DASH_SPEED = 12;
+    public static final int DASH_SPEED = 10;
     public static final float VERTICAL_DASH_SPEED = 12;
-    public static final float DASH_TIMER = 1f;
+    public static final float DASH_TIMER = 1.5f;
+    public static final float VERTICAL_DASH_TIMER = 1.0f;
     public float CURRENT_DASH_SPEED = 12;
     public static final float DASH_SPEED_BUMP = 0.1f;
     public static final float BOUNCING_RANGE = 2.0f;
@@ -62,10 +64,10 @@ public class Player extends Entity {
     @Override
     public void paint(Graphics g) {
         if (super.getFacing() == -1) {
-            g.drawImage(MoveFrameManager.getPlayerMoveFrame(currentState)[frame + 4].getBufferedImage(), super.getX(), super.getY(),
+            g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame + 4].getBufferedImage(), super.getX(), super.getY(),
                     super.getWidth(), super.getHeight(), null);
         } else {
-            g.drawImage(MoveFrameManager.getPlayerMoveFrame(currentState)[frame].getBufferedImage(), super.getX(), super.getY(),
+            g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame].getBufferedImage(), super.getX(), super.getY(),
                     super.getWidth(), super.getHeight(), null);
         }
         if(Game.debugMode) {
@@ -112,7 +114,8 @@ public class Player extends Entity {
                 }
                 if (checkCollisionBottom(t, Tile::getBounds)) {
                     //System.out.println("BOTTOM");
-                    if(currentState == PlayerState.falling || currentState == PlayerState.sliding) {
+                    if(currentState == PlayerState.falling || currentState == PlayerState.sliding
+                            || currentState == PlayerState.verticalDashing) {
                         setVelY(0);
                         setY(t.getY() - getHeight());
                         currentState = PlayerState.standing;
@@ -121,7 +124,7 @@ public class Player extends Entity {
                     fatigue = 0;
                 }
                 if (checkCollisionLeft(t, Tile::getBounds)) {
-                    //System.out.println("LEFT");
+                    System.out.println("LEFT");
                     setVelX(0);
                     setX(t.getX() + t.getWidth() - 25);
                     if(currentState == PlayerState.falling &&
@@ -130,7 +133,7 @@ public class Player extends Entity {
                     }
                 }
                 if (checkCollisionRight(t, Tile::getBounds)) {
-                    //System.out.println("RIGHT");
+                    System.out.println("RIGHT");
                     setVelX(0);
                     setX(t.getX() - getWidth() + 28);
                     if(currentState == PlayerState.falling&& Input.keys.get(3).down && fatigue < STAMINA) {
@@ -139,7 +142,7 @@ public class Player extends Entity {
                 }
             }
                 // Spike collision test
-                checkHitSpike(t);
+                checkHitTrap(t);
 
                 //Prize
                 if (t.getId() == Id.coin) {
@@ -168,7 +171,6 @@ public class Player extends Entity {
         if(isOnTheGroundCondition()) {
             currentState = PlayerState.falling;
         }
-
         if(currentState == PlayerState.standing) {
             frameDelay++;
             if (frameDelay >= 30) {
@@ -183,7 +185,7 @@ public class Player extends Entity {
             frameDelay++;
             if (frameDelay >= 10) {
                 frame++;
-                if (frame >= 4) {
+                if (frame >= FrameManager.playerMoveFrame.length / 2) {
                     frame = 0;
                 }
                 frameDelay = 0;
@@ -193,7 +195,7 @@ public class Player extends Entity {
             frameDelay++;
             if (frameDelay >= 5) {
                 frame++;
-                if (frame >= 4) {
+                if (frame >= FrameManager.playerMoveFrame.length / 2) {
                     frame = 0;
                 }
                 frameDelay = 0;
@@ -241,38 +243,32 @@ public class Player extends Entity {
     private boolean checkCollisionRight(Prize p, PrizeCollisionCondition prizeCollisionCondition) {
         return getBoundsRight().intersects(prizeCollisionCondition.checkCollision(p));
     }
-    private void checkHitSpike(Tile t) {
+    private void checkHitTrap(Tile t) {
         // Spike collision test
-        if(t.getId() == Id.spike) {
-            if (checkCollisionTop(t, Tile::getBoundsTop)) {
+        if(t.getId() == Id.upwardSpike) {
+            if((checkCollisionTop(t, Tile::getBoundsTop)
+            || (checkCollisionBottom(t, Tile::getBoundsTop)
+            || (checkCollisionLeft(t, Tile::getBoundsTop)
+            || (checkCollisionRight(t, Tile::getBoundsTop))))))
                 Game.handler.getEntities().remove(this);
-            }
-            if (checkCollisionBottom(t, Tile::getBoundsTop)) {
+        }
+        else if(t.getId() == Id.downwardSpike) {
+            if((checkCollisionTop(t, Tile::getBoundsBottom)
+                    || (checkCollisionBottom(t, Tile::getBoundsBottom)
+                    || (checkCollisionLeft(t, Tile::getBoundsBottom)
+                    || (checkCollisionRight(t, Tile::getBoundsBottom)))))){
                 Game.handler.getEntities().remove(this);
-            }
-
-            if (checkCollisionLeft(t, Tile::getBoundsTop)) {
-                Game.handler.getEntities().remove(this);
-            }
-            if (checkCollisionRight(t, Tile::getBoundsTop)) {
-                Game.handler.getEntities().remove(this);
+                Handler.addObject(new DeathEffect(getX(), getY(), DeathEffect.EFFECT_SIZE,DeathEffect.EFFECT_SIZE, Id.deathEffect));
             }
         }
     }
     private void checkGetPrize(Prize p) {
         //Prize
         if(p.getId() == Id.coin) {
-            if (checkCollisionTop(p, Prize::getBounds)) {
-                Game.handler.getPrizes().remove(p);
-            }
-            if (checkCollisionBottom(p,Prize::getBounds)) {
-                Game.handler.getPrizes().remove(p);
-            }
-
-            if (checkCollisionLeft(p, Prize::getBounds)) {
-                Game.handler.getPrizes().remove(p);
-            }
-            if (checkCollisionRight(p, Prize::getBounds)) {
+            if((checkCollisionTop(p, Prize::getBounds)
+                    || (checkCollisionBottom(p, Prize::getBounds)
+                    || (checkCollisionLeft(p, Prize::getBounds)
+                    || (checkCollisionRight(p, Prize::getBounds)))))) {
                 Game.handler.getPrizes().remove(p);
             }
         }

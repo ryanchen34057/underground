@@ -1,4 +1,4 @@
-package level;
+package trap;
 
 import UI.Game;
 import character.Id;
@@ -6,20 +6,18 @@ import graphics.SpriteManager;
 
 import java.awt.*;
 
-public class Wall extends Tile {
-    public Wall(int x, int y, int width, int height,boolean breakable,  Id id) {
-        super(x, y, width, height,breakable, id);
+public class DownwardSpike extends Spike {
+    public DownwardSpike(int x, int y, int width, int height, boolean breakable, Id id) {
+        super(x, y, width, height, breakable, id);
     }
 
     @Override
     public void paint(Graphics g) {
-            g.drawImage(SpriteManager.wall.getBufferedImage(), super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
-            if(Game.debugMode) {
-                g.setColor(Color.GREEN);
-                g.drawRect(getX(), getY(), super.getWidth(),getHeight() );
-
-            }
+        g.drawImage(SpriteManager.downwardSpike.getBufferedImage(), super.getX(), super.getY(),
+                super.getWidth(), super.getHeight(), null);
+        if(Game.debugMode) {
+            g.drawRect(getX()+20, getY()+40, super.getWidth()-40,1);
+        }
     }
 
     @Override
@@ -33,7 +31,7 @@ public class Wall extends Tile {
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(getX()+10, getY()+height, width-20,1 );
+        return new Rectangle(getX()+10, getY()+40, width-40,1 );
     }
     @Override
     public  Rectangle getBoundsLeft() {

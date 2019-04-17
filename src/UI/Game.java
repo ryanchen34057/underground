@@ -1,17 +1,14 @@
 package UI;
 
 import character.Id;
-import graphics.Sprite;
-import graphics.SpriteSheet;
 import input.Input;
 import util.Camera;
 import util.Handler;
-import util.ResourceManager;
+import graphics.SpriteManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
     private static final String TITLE = "UI.Game Prototype";
@@ -27,23 +24,14 @@ public class Game extends Canvas implements Runnable {
     public static final int playerWidth = 96;
     public static final int playerHeight = 96;
 
-    //Sprite sheet
-    public static SpriteSheet spriteSheet;
-    public static SpriteSheet deathSpriteSheet;
-
-    //UI.Game object
-    public static  Sprite wall;
-    public static Sprite spike;
-    public static Sprite coin;
-
-    //currentLevel
-    private BufferedImage currentLevel;
-
     //Handler
     public static  Handler handler;
 
     // Camera
     private Camera cam;
+
+    //Resource Manager
+    private SpriteManager spriteManager;
 
     // KeyListener
     private Input keyListener;
@@ -82,22 +70,13 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void init() {
-        //Sprite object
-        spriteSheet = new SpriteSheet("/res/spriteSheet.png");
-        deathSpriteSheet = new SpriteSheet("/res/death.png");
-        wall = new Sprite(spriteSheet, 1, 1, 32, 32);
-        spike = new Sprite(spriteSheet, 1, 2, 32, 32);
-        coin = new Sprite(spriteSheet, 1, 9, 32, 32);
-
-        //BufferedImage object
-        currentLevel = ResourceManager.getInstance().getImage("/res/movementTest.png");
-
+        spriteManager = new SpriteManager();
         //Game object
         handler = new Handler();
         cam = new Camera();
 
         //Create currentLevel
-        handler.createLevel(currentLevel);
+        handler.createLevel(SpriteManager.currentLevel);
 
         keyListener = new Input();
 

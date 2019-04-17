@@ -1,7 +1,11 @@
 package states;
 
+import character.Id;
 import character.Player;
+import effects.DashEffect;
+import effects.Effect;
 import input.Input;
+import util.Handler;
 
 import java.util.List;
 
@@ -23,6 +27,8 @@ public class Standing implements StateMachine {
         }
         else if(keys.get(4).down && !Player.isTired) {
             player.currentState = PlayerState.dashing;
+            //Dash Effect
+            Handler.addObject(DashEffect.getInstance(player));
             Player.isTired = true;
         }
         else if(!keys.get(4).down) {

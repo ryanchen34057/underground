@@ -1,7 +1,9 @@
 package states;
 
 import character.Player;
+import effects.DashEffect;
 import input.Input;
+import util.Handler;
 
 import java.util.List;
 
@@ -23,8 +25,10 @@ public class Running implements StateMachine {
             player.currentState = PlayerState.runningJumping;
         }
         if(keys.get(4).down && !Player.isTired) {
+            Handler.addObject(DashEffect.getInstance(player));
             player.currentState = PlayerState.dashing;
             Player.isTired = true;
+
         }
         else if(!keys.get(4).down) {
             Player.isTired = false;

@@ -1,29 +1,33 @@
-package level;
+package effects;
 
 import character.Id;
 
 import java.awt.*;
 
-public abstract class Tile {
-    //Coordinate
-    protected int x;
-    protected int y;
-    protected int width;
-    protected int height;
+public abstract class Effect {
+    public static int EFFECT_SIZE = 32;
 
-    //State
-    private boolean breakable;
+    protected int frame;
+    protected int frameDelay;
+
+
+    //Coordinate
+    private int x;
+    private int y;
+    private int width;
+    private int height;
 
     //info
     private Id id;
 
-    public Tile(int x, int y, int width, int height, boolean breakable, Id id) {
+    public Effect(int x, int y, int width, int height, Id id) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.id = id;
-        this.breakable = breakable;
+        frame = 0;
+        frameDelay = 0;
     }
 
     //getters and setters
@@ -61,12 +65,4 @@ public abstract class Tile {
     // Update method
     public abstract void update();
 
-    // Collision test
-    public Rectangle getBounds() {
-        return new Rectangle(getX(), getY(), width, height);
-    }
-    public abstract Rectangle getBoundsTop();
-    public abstract Rectangle getBoundsBottom();
-    public abstract Rectangle getBoundsLeft();
-    public abstract Rectangle getBoundsRight();
 }

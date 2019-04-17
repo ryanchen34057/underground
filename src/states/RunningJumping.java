@@ -22,6 +22,7 @@ public class RunningJumping implements StateMachine{
         //Vertical Dashing - UP_LEFT
         if(keys.get(4).down && keys.get(0).down && keys.get(2).down && !Player.isTired) {
             player.setVelX(Player.VERTICAL_DASHING_VELX * player.getFacing());
+            player.setVelY(0);
             player.currentState = PlayerState.verticalDashing;
             Player.isTired = true;
             player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
@@ -29,6 +30,7 @@ public class RunningJumping implements StateMachine{
         //Vertical Dashing - UP_RIGHT
         else if(keys.get(4).down && keys.get(0).down && keys.get(3).down && !Player.isTired) {
             player.setVelX(Player.VERTICAL_DASHING_VELX * player.getFacing());
+            player.setVelY(0);
             player.currentState = PlayerState.verticalDashing;
             Player.isTired = true;
             player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;

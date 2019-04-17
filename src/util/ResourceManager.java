@@ -1,5 +1,8 @@
 package util;
 
+import graphics.Sprite;
+import graphics.SpriteSheet;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -9,6 +12,7 @@ public class ResourceManager {
     private ArrayList<BufferedImage> bufferedImages;
     private ArrayList<String> paths;
     private static ResourceManager resourceManager;
+
 
     private ResourceManager() {
         bufferedImages = new ArrayList<>();
