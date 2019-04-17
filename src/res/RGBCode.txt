@@ -1,0 +1,7 @@
+Name		 RGBCode
+Player		255,0,255
+Wall		0,0,0
+Upward Spike	0,255,0
+Downward Spike	0,100,0
+Leftward Spike	0,150,0
+Rightward Spike	0,200,0
