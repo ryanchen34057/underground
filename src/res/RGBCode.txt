@@ -1,0 +1,8 @@
+Player		255,0,255
+Wall		0,0,0
+Breakable Wall	0,0,150
+UpwardSpike	0,255,0
+DownwardSpike	0,100,0
+LeftwardSpike	0,150,0
+RightwardSpike	0,200,0
+Coin		255,0,0
