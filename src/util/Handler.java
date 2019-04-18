@@ -21,13 +21,21 @@ public class Handler {
     private static LinkedList<Entity> entities;
     private static LinkedList<Tile> tiles;
     private static LinkedList<Prize> prizes;
+<<<<<<< HEAD
     private static LinkedList<Effect> effects;
+=======
+    public static boolean[][] map;
+>>>>>>> 803f5b3b8ce473111899e1c67aa7126f57261f68
 
     public Handler() {
         entities = new LinkedList<>();
         tiles = new LinkedList<>();
         prizes = new LinkedList<>();
+<<<<<<< HEAD
         effects = new LinkedList<>();
+=======
+        map = new boolean[Game.HEIGHT*64][Game.WIDTH*64];
+>>>>>>> 803f5b3b8ce473111899e1c67aa7126f57261f68
     }
 
     //getters
@@ -92,8 +100,15 @@ public class Handler {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 
+<<<<<<< HEAD
 
                 //Player
+=======
+                if(red == 0 && green == 0 && blue == 0) {
+                    addObject(new Wall(x*64, y*64, Game.TILE_SIZE, Game.TILE_SIZE, false, Id.wall));
+                    map[y*64][x*64] = true;
+                }
+>>>>>>> 803f5b3b8ce473111899e1c67aa7126f57261f68
                 if(red == 255 && green == 0 && blue == 255) {
                     addObject(new Player(x*64, y*64, Game.playerWidth, Game.playerHeight,Id.player));
                 }

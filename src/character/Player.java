@@ -87,12 +87,12 @@ public class Player extends Entity {
 
     @Override
     public void update() {
+        System.out.println(getVelY());
         if(prevState != currentState) {
             prevState = currentState;
             System.out.println(prevState);
         }
 
-        // Predict collision
         setX(getX() + (int)getVelX());
         setY(getY() + (int)getVelY());
 
@@ -161,7 +161,9 @@ public class Player extends Entity {
                     }
                 }
         }
+
         Prize p;
+
         for (int i = 0; i < Game.handler.getPrizes().size(); i++) {
             p = Game.handler.getPrizes().get(i);
             checkGetPrize(p);

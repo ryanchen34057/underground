@@ -27,6 +27,7 @@ public class VerticalDashing implements StateMachine {
             dashTimer = Player.VERTICAL_DASH_TIMER;
             player.currentState = PlayerState.falling;
             player.CURRENT_DASH_SPEED = Player.DASH_SPEED;
+            player.setVelY(0);
         }
     }
 

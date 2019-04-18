@@ -64,10 +64,17 @@ public class Falling implements StateMachine {
     @Override
     public void update(Player player) {
         player.setGravity(player.getGravity() + Player.GRAVITY_OFFSET);
+<<<<<<< HEAD
         player.setVelY((int) player.getGravity());
         if(player.getGravity() > 10) {
             player.setGravity(10);
         }
+=======
+        if(player.getGravity() > 10) {
+            player.setGravity(10);
+        }
+        player.setVelY(player.getGravity());
+>>>>>>> 803f5b3b8ce473111899e1c67aa7126f57261f68
     }
 
     @Override
