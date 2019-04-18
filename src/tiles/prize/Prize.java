@@ -1,21 +1,23 @@
-package prize;
+package tiles.prize;
 
 import character.Id;
+import tiles.Tile;
 
 import java.awt.*;
 
-public abstract class Prize {
+public abstract class Prize extends Tile {
     //Coordinate
-    private int x;
-    private int y;
-    private int width;
-    private int height;
+    protected int x;
+    protected int y;
+    protected int width;
+    protected int height;
 
     //info
     private Id id;
     private int point;
 
-    public Prize(int x, int y, int width, int height,  int point, Id id) {
+    public Prize(int x, int y, int width, int height,  boolean breakable, int point, Id id) {
+        super(x, y, width, height, breakable, id);
         this.x = x;
         this.y = y;
         this.width = width;
@@ -64,19 +66,4 @@ public abstract class Prize {
 
     // Update method
     public abstract void update();
-
-    // Collision test
-    public Rectangle getBounds() {
-        return new Rectangle(getX(), getY(), width, height);
-    }
-//    public Rectangle getBoundsTop() {
-//        return new Rectangle(getX()+10, getY(), width-20,1 );
-//    }
-//    public Rectangle getBoundsBottom() {
-//        return new Rectangle(getX()+10, getY()+height, width-20,1 );
-//    }
-//    public Rectangle getBoundsLeft() {
-//        return new Rectangle(getX(), getY()+20, 1,height-40 );
-//    }
-//    public Rectangle getBoundsRight() { return new Rectangle(getX()+width, getY()+20, 1,height-40 ); }
 }

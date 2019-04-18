@@ -45,7 +45,7 @@ public class DeathParticle extends ParticleSystem {
             y += yD * distance;
         }
         if(!getDest(xD, x, destX) && !getDest(yD, y, destY)){
-            Handler.getParticleSystems().remove(this);
+            Handler.particles.remove(this);
             frame = 0;
         }
     }

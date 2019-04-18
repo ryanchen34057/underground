@@ -7,6 +7,7 @@ import graphics.SpriteManager;
 import java.awt.*;
 
 public class Wall extends Tile {
+    public static final int TILE_SIZE = 64;
     public Wall(int x, int y, int width, int height,boolean breakable,  Id id) {
         super(x, y, width, height,breakable, id);
     }

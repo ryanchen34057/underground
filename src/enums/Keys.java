@@ -7,4 +7,5 @@ public enum Keys {
     RIGHT,
     X,
     C,
+    R
 }

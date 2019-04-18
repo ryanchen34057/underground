@@ -25,9 +25,6 @@ public class Game extends Canvas implements Runnable {
     public static final int WIDTH = 270;
     public static final int HEIGHT = WIDTH / 14*10;
     public static final int SCALE = 4;
-    public static final int TILE_SIZE = 64;
-    public static final int playerWidth = 96;
-    public static final int playerHeight = 96;
 
     //Handler
     public static  Handler handler;
@@ -43,7 +40,7 @@ public class Game extends Canvas implements Runnable {
 
     public Game() {
         running = false;
-        debugMode = true;
+        debugMode = false;
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
@@ -67,30 +64,11 @@ public class Game extends Canvas implements Runnable {
 
     public void update() {
         handler.update();
-        for(int i=0;i<handler.getEntities().size();i++) {
-            if(handler.getEntities().get(i).getId() == Id.player) {
-                cam.update(handler.getEntities().get(i));
+        for(int i=0;i<Handler.entities.size();i++) {
+            if(Handler.entities.get(i).getId() == Id.player) {
+                cam.update(Handler.entities.get(i));
             }
         }
-//        for(int i = 0; i <= particles.size() - 1;i++){
-//            if(particles.get(i).update())
-//                particles.remove(i);
-//        }
-    }
-
-    public void addParticle(boolean bool){
-        int dx,dy;
-        if(bool){
-            dx = (int) (Math.random()*5);
-            dy = (int) (Math.random()*5);
-        }
-        else{
-            dx = (int) (Math.random()*-5);
-            dy = (int) (Math.random()*-5);
-        }
-        int size = (int) (Math.random()*12);
-        int life = (int) Math.random()*(120)+380;
-//        particles.add(new ParticleSystem(Player.x,Player.y,dx,dy,64,life,Color.red));
     }
 
     public void init() {
@@ -149,7 +127,7 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-//                System.out.println(frames + " Frame Per Second " + ticks + " Updates Per Second");
+                System.out.println(frames + " Frame Per Second " + ticks + " Updates Per Second");
                 frames = 0;
                 ticks = 0;
             }

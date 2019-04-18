@@ -6,12 +6,11 @@ import effects.LandingEffect;
 import graphics.FrameManager;
 import input.Input;
 import tiles.Tile;
-import prize.Prize;
+import tiles.prize.Prize;
 import states.PlayerState;
 import states.StateMachine;
 import tiles.trap.Spike;
 import util.Handler;
-import util.PrizeCollisionCondition;
 import util.TileCollisionCondition;
 
 
@@ -24,6 +23,8 @@ public class Player extends Entity {
     public static final int STEP = 5;
 
     //Stats
+    public static final int width = 96;
+    public static final int height = 96;
     private final int STAMINA = 150;
     public static final int DASH_SPEED = 10;
     public static final float VERTICAL_DASH_SPEED = 12;
@@ -55,11 +56,12 @@ public class Player extends Entity {
 
     public Player(int x, int y, int width, int height, Id id) {
         super(x, y, width, height, id);
+        velX = 5;
         frameDelay = 0;
         frame = 0;
         isOnTheGround = false;
         prevState = null;
-        currentState = PlayerState.standing;
+        currentState = PlayerState.idle;
         fatigue = 0;
         isTired = false;
         isDead = false;
@@ -91,9 +93,11 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        if(prevState != currentState) {
-            prevState = currentState;
-            System.out.println(prevState);
+        if(Game.debugMode) {
+            if (prevState != currentState) {
+                prevState = currentState;
+                System.out.println(prevState);
+            }
         }
 
         // Predict collision
@@ -104,11 +108,17 @@ public class Player extends Entity {
         currentState.update(this);
         isOnTheGround = false;
         Tile t;
-        for (int i = 0; i < Game.handler.getTiles().size(); i++) {
-            t = Game.handler.getTiles().get(i);
+        for (int i = 0; i < Handler.tiles.size(); i++) {
+            t = Handler.tiles.get(i);
             // Spike collision test
             if(t instanceof Spike) {
                 checkHitTrap(t);
+            }
+            //Prize
+            if (t.getId() == Id.coin) {
+                if (checkGetPrize(t)) {
+                    Handler.tiles.remove(t);
+                }
             }
 
             //Wall collision test
@@ -152,27 +162,11 @@ public class Player extends Entity {
                 }
             }
 
-                //Prize
-                if (t.getId() == Id.coin) {
-                    if (checkCollisionTop(t, Tile::getBoundsTop)) {
-                        Game.handler.getPrizes().remove(t);
-                    }
-                    if (checkCollisionBottom(t, Tile::getBoundsTop)) {
-                        Game.handler.getPrizes().remove(t);
-                    }
-
-                    if (checkCollisionLeft(t, Tile::getBoundsTop)) {
-                        Game.handler.getPrizes().remove(t);
-                    }
-                    if (checkCollisionRight(t, Tile::getBoundsTop)) {
-                        Game.handler.getPrizes().remove(t);
-                    }
+            if(t.getId() == Id.bluePortal) {
+                if(checkCollisionBounds(t, Tile::getBounds)) {
+                    velX += 3;
                 }
-        }
-        Prize p;
-        for (int i = 0; i < Game.handler.getPrizes().size(); i++) {
-            p = Game.handler.getPrizes().get(i);
-            checkGetPrize(p);
+            }
         }
 
         //Check if on the ground
@@ -257,18 +251,6 @@ public class Player extends Entity {
     private boolean checkCollisionRight(Tile t, TileCollisionCondition tileCollisionCondition) {
         return getBoundsRight().intersects(tileCollisionCondition.checkCollision(t));
     }
-    private boolean checkCollisionTop(Prize p, PrizeCollisionCondition prizeCollisionCondition) {
-        return getBoundsTop().intersects(prizeCollisionCondition.checkCollision(p));
-    }
-    private boolean checkCollisionBottom(Prize p, PrizeCollisionCondition prizeCollisionCondition) {
-        return getBoundsBottom().intersects(prizeCollisionCondition.checkCollision(p));
-    }
-    private boolean checkCollisionLeft(Prize p, PrizeCollisionCondition prizeCollisionCondition) {
-        return getBoundsLeft().intersects(prizeCollisionCondition.checkCollision(p));
-    }
-    private boolean checkCollisionRight(Prize p, PrizeCollisionCondition prizeCollisionCondition) {
-        return getBoundsRight().intersects(prizeCollisionCondition.checkCollision(p));
-    }
     private void checkHitTrap(Tile t) {
         // Spike collision test
         if(t.getId() == Id.upwardSpike) {
@@ -306,27 +288,17 @@ public class Player extends Entity {
 
         //Check if player died
         if(isDead) {
-            if(Handler.getParticleSystems().size() != 0)
+            if(Handler.particles.size() != 0)
                 return;
             for(int i=0;i<8;i++) {
                 DeathParticle deathParticle = new DeathParticle(x-(int)velX, y-(int)velY, (int)(DeathParticle.RANGE * Math.cos(i * 45 * 2 * Math.PI / 360) + x-(int)velX),
                         (int)(DeathParticle.RANGE * Math.sin(i * 45 * 2 * Math.PI / 360) + y-(int)velY), 64, 5);
                 Handler.addObject(deathParticle);
             }
-            Game.handler.getEntities().remove(this);
+            Handler.entities.remove(this);
         }
     }
-    private void checkGetPrize(Prize p) {
-        //Prize
-        if(p.getId() == Id.coin) {
-            if((checkCollisionTop(p, Prize::getBounds)
-                    || (checkCollisionBottom(p, Prize::getBounds)
-                    || (checkCollisionLeft(p, Prize::getBounds)
-                    || (checkCollisionRight(p, Prize::getBounds)))))) {
-                Game.handler.getPrizes().remove(p);
-            }
-        }
-    }
+
     private boolean isOnTheGroundCondition() {
         return !isOnTheGround &&
                 currentState != PlayerState.standingJumping &&
@@ -344,7 +316,11 @@ public class Player extends Entity {
                 || t.getId() == Id.rightwardSpike
                 || t.getId() == Id.leftwardSpike
                 || t.getId() == Id.upwardSpike
-                || t.getId() == Id.downwardSpike;
+                || t.getId() == Id.downwardSpike
+                || t.getId() == Id.breakableWall;
+    }
+    private boolean checkGetPrize(Tile p) {
+        return checkCollisionBounds(p, Tile::getBounds);
     }
 
 }
