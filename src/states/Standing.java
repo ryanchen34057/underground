@@ -14,7 +14,7 @@ public class Standing implements StateMachine {
         if(keys.get(5).down && keys.get(4).down && !Player.isTired) {
             player.setGravity(Player.DASHJUMPING_GRAVITY);
             player.currentState = PlayerState.dashJumping;
-//            Handler.addObject(DashEffect.getInstance(player));
+            Handler.addObject(DashEffect.getInstance(player));
         }
         else if(keys.get(2).down) {
             player.setFacing(-1);

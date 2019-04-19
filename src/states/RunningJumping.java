@@ -2,6 +2,7 @@ package states;
 
 import character.Player;
 import effects.DashInTheAirEffect;
+import effects.VerticalDashEffect;
 import input.Input;
 import util.Handler;
 
@@ -28,7 +29,7 @@ public class RunningJumping implements StateMachine{
             player.currentState = PlayerState.verticalDashing;
             Player.isTired = true;
             player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
-            Handler.addObject(DashInTheAirEffect.getInstance(player));
+            Handler.addObject(VerticalDashEffect.getInstance(player));
         }
         //Vertical Dashing
         else if(keys.get(4).down && (keys.get(0).down || keys.get(1).down) && !Player.isTired) {
@@ -40,7 +41,7 @@ public class RunningJumping implements StateMachine{
 
     @Override
     public void update(Player player) {
-        player.setVelX(player.getFacing() * (Player.STEP) - player.getFacing() * 2);
+        player.setVelX(player.getFacing() * (Player.RUNNINGJUMPING_STEP));
         player.setGravity(player.getGravity() - Player.RUNNINGJUMPING_GRAVITY_OFFSET);
         player.setVelY((int) -player.getGravity());
         if (player.getGravity() <= 0.0) {

@@ -1,6 +1,6 @@
 package tiles.trap;
 
-import character.Id;
+import enums.Id;
 import tiles.Tile;
 
 

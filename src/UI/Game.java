@@ -1,21 +1,19 @@
 package UI;
 
-import character.Id;
-import character.Player;
-import effects.ParticleSystem;
+import enums.Id;
 import input.Input;
 import util.Camera;
 import util.Handler;
 import graphics.SpriteManager;
+import util.ResourceManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
     //Test particle
-    private ArrayList<ParticleSystem> particles = new ArrayList<>();
     private static final String TITLE = "UI.Game Prototype";
     private Thread thread;
     private boolean running;
@@ -38,6 +36,9 @@ public class Game extends Canvas implements Runnable {
     // KeyListener
     private Input keyListener;
 
+    // Background Image
+    private BufferedImage backgroundImage;
+
     public Game() {
         running = false;
         debugMode = true;
@@ -56,7 +57,8 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0,0, getWidth(), getHeight());
-        g.translate(cam.getX(), cam.getY());
+        g.drawImage(backgroundImage, cam.getX(), Camera.backGroundY, WIDTH * SCALE, HEIGHT * SCALE, null);
+        g.translate(cam.getX(), Camera.backGroundY);
         handler.paint(g);
         g.dispose();
         bs.show();
@@ -73,6 +75,7 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         spriteManager = new SpriteManager();
+        backgroundImage = ResourceManager.getInstance().getImage("/res/back-walls.png");
         //Game object
         handler = new Handler();
         cam = new Camera();
@@ -108,7 +111,7 @@ public class Game extends Canvas implements Runnable {
         init();
         requestFocus();
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 60;
+        final double amountOfTicks = 70;
         long timer = System.currentTimeMillis();
         double delta = 0.0;
         double ns = 1000000000.0 / amountOfTicks;

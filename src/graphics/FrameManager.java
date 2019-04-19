@@ -1,6 +1,6 @@
 package graphics;
 
-import character.Id;
+import enums.Id;
 import effects.Effect;
 import states.*;
 
@@ -78,6 +78,11 @@ public class FrameManager {
         else if(id == Id.dashInTheAirEffect) {
             for(int i=0;i<24;i++) {
                 effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 18,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
+            }
+        }
+        else if(id == Id.verticalDashEffect) {
+            for(int i=0;i<24;i++) {
+                effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 17,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
             }
         }
 

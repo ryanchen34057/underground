@@ -1,5 +1,7 @@
 package character;
 
+import enums.Id;
+
 import java.awt.*;
 
 public abstract class Entity {

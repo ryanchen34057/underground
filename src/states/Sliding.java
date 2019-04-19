@@ -10,7 +10,7 @@ public class Sliding implements StateMachine {
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(5).down) {
-            player.setGravity(Player.SLIDING_GRAVITY);
+            player.setGravity(Player.BOUNCING_GRAVITY);
             player.currentState = PlayerState.bouncing;
         }
         if(player.getFacing() == -1) {

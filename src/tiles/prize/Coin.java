@@ -1,7 +1,7 @@
 package tiles.prize;
 
 import UI.Game;
-import character.Id;
+import enums.Id;
 import graphics.FrameManager;
 
 import java.awt.*;

@@ -9,7 +9,6 @@ public class SpriteManager {
     //Sprite sheet
     public static SpriteSheet spriteSheet;
 
-
     //UI.Game object
     public static Sprite wall1;
     public static Sprite wall2Breakable;

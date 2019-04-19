@@ -1,10 +1,9 @@
 package states;
 
-import character.Id;
 import character.Player;
 import effects.DashInTheAirEffect;
+import effects.VerticalDashEffect;
 import input.Input;
-import javafx.print.PageLayout;
 import util.Handler;
 
 import java.util.List;
@@ -31,6 +30,7 @@ public class StandingJumping implements StateMachine {
             player.currentState = PlayerState.verticalDashing;
             Player.isTired = true;
             player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
+            Handler.addObject(VerticalDashEffect.getInstance(player));
         }
         else if(keys.get(4).down && !Player.isTired) {
             player.setVelY(0);
@@ -43,7 +43,7 @@ public class StandingJumping implements StateMachine {
 
     @Override
     public void update(Player player) {
-        player.setGravity(player.getGravity() - Player.GRAVITY_OFFSET);
+        player.setGravity(player.getGravity() - Player.STANDINGJUMPING_GRAVITY_OFFSET);
         player.setVelY((int) -player.getGravity());
         if (player.getGravity() <= 0.0) {
                player.currentState = PlayerState.falling;

@@ -1,6 +1,6 @@
 package effects;
 
-import character.Id;
+import enums.Id;
 
 import java.awt.*;
 

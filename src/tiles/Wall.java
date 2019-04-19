@@ -1,7 +1,7 @@
 package tiles;
 
 import UI.Game;
-import character.Id;
+import enums.Id;
 import graphics.SpriteManager;
 
 import java.awt.*;

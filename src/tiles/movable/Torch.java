@@ -1,6 +1,6 @@
 package tiles.movable;
 
-import character.Id;
+import enums.Id;
 import graphics.FrameManager;
 import tiles.Tile;
 

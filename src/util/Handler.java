@@ -6,7 +6,7 @@ import input.Input;
 import tiles.*;
 import tiles.movable.Torch;
 import character.Entity;
-import character.Id;
+import enums.Id;
 import character.Player;
 import tiles.prize.Coin;
 import tiles.portal.BluePortal;
@@ -79,7 +79,7 @@ public class Handler {
 
         // Respawn player
         if(Handler.entities.size() == 0 && Input.keys.get(6).down) {
-            Handler.addObject(new Player((int)(bluePortalCor.getWidth()+35), (int)(bluePortalCor.getHeight()+35), Player.width, Player.height, Id.player));
+            Handler.addObject(new Player((int)(bluePortalCor.getWidth()+35), (int)(bluePortalCor.getHeight()+35), Player.WIDTH, Player.HEIGHT, Id.player));
         }
     }
 
@@ -128,7 +128,7 @@ public class Handler {
                 //Blue
                 if(red == 0 && green == 0 && blue == 255) {
                     addObject(new BluePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.bluePortal));
-                    addObject(new Player(x*64+35, y*64+35, Player.width, Player.height, Id.player));
+                    addObject(new Player(x*64+35, y*64+35, Player.WIDTH, Player.HEIGHT, Id.player));
                     bluePortalCor = new Dimension(x*64, y*64);
                 }
                 //Purple

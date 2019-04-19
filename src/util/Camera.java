@@ -6,10 +6,16 @@ import character.Entity;
 public class Camera {
     public static int x;
     public static int y;
+    public static int backGroundY;
+    public int level = 0;
 
     public void update(Entity player) {
-        setX(-player.getX() + Game.WIDTH);
-        setY(-player.getY() + Game.HEIGHT*2);
+        x = -player.getX() + Game.WIDTH/2;
+        if(level == 0) {
+            backGroundY = -player.getY() + Game.HEIGHT*2+150;
+            level++;
+        }
+
     }
 
     public int getX() {

@@ -1,13 +1,12 @@
 package character;
 
 import UI.Game;
-import effects.DashEffect;
 import effects.DeathParticle;
 import effects.LandingEffect;
+import enums.Id;
 import graphics.FrameManager;
 import input.Input;
 import tiles.Tile;
-import tiles.prize.Prize;
 import states.PlayerState;
 import states.StateMachine;
 import tiles.trap.Spike;
@@ -21,30 +20,49 @@ public class Player extends Entity {
 
     private int frame;
     private int frameDelay;
-    public static final int STEP = 5;
 
     //Stats
-    public static final int width = 96;
-    public static final int height = 96;
+    public static final int WIDTH = 96;
+    public static final int HEIGHT = 96;
     private final int STAMINA = 150;
-    public static final int DASH_SPEED = 10;
-    public static final float VERTICAL_DASH_SPEED = 12;
-    public static final float DASH_TIMER = 1.5f;
-    public static final float VERTICAL_DASH_TIMER = 1.0f;
-    public float CURRENT_DASH_SPEED = 12;
-    public static final float DASH_SPEED_BUMP = 0.1f;
-    public static final float BOUNCING_RANGE = 2.0f;
-    public static final float STANDINGJUMPING_GRAVITY = 10.0f;
+
+    // Running
+    public static final int STEP = 5;
+
+    // StandingJump
+    public static final float STANDINGJUMPING_GRAVITY = 18;
     public static final float STANDINGJUMPING_VELX_OFFSET = 1.5f;
-    public static final float GRAVITY_OFFSET = 0.35f;
-    public static final float SLIDING_GRAVITY = 10;
-    public static final float FALLING_GRAVITY_VEL = 0.7f;
-    public static final float RUNNINGJUMPING_GRAVITY = 10;
-    public static final float RUNNINGJUMPING_GRAVITY_OFFSET = 0.35f;
-    public static final int FALLING_VELX = 3;
-    public static final float DASHJUMPING_GRAVITY_OFFSET = 0.25f;
-    public static final float DASHJUMPING_GRAVITY = 8;
-    public static final float VERTICAL_DASHING_VELX = 10;
+    public static final float STANDINGJUMPING_GRAVITY_OFFSET = 1.1f;
+
+    // RunningJump
+    public static final float RUNNINGJUMPING_GRAVITY = 16;
+    public static final float RUNNINGJUMPING_GRAVITY_OFFSET = 1f;
+    public static final int RUNNINGJUMPING_STEP = 5;
+
+
+    // Dash
+    public static final int DASH_SPEED = 10;
+    public static final float DASH_TIMER = 1.5f;
+    public float CURRENT_DASH_SPEED = 10;
+    public static final float DASH_SPEED_BUMP = 0.1f;
+
+    // DashJumping
+    public static final float DASHJUMPING_GRAVITY = 16;
+    public static final float DASHJUMPING_GRAVITY_OFFSET = 0.8f;
+
+    // Sliding and Bouncing
+    public static final float BOUNCING_RANGE = 4.0f;
+    public static final float BOUNCING_GRAVITY_OFFSET = 0.6f;
+    public static final float BOUNCING_GRAVITY = 13;
+
+    // Falling
+    public static final float FALLING_GRAVITY_VEL = 0.5f;
+    public static final int FALLING_VELX = 6;
+
+    // Vertical Dashing
+    public static final float VERTICAL_DASH_SPEED = 8;
+    public static final float VERTICAL_DASH_TIMER = 1.2f;
+    public static final float VERTICAL_DASHING_VELX = 8;
 
 
     // State
@@ -55,8 +73,8 @@ public class Player extends Entity {
     public static boolean isTired;
     private boolean isDead;
 
-    public Player(int x, int y, int width, int height, Id id) {
-        super(x, y, width, height, id);
+    public Player(int x, int y, int WIDTH, int HEIGHT, Id id) {
+        super(x, y, WIDTH, HEIGHT, id);
         velX = 5;
         frameDelay = 0;
         frame = 0;
@@ -72,22 +90,22 @@ public class Player extends Entity {
     public void paint(Graphics g) {
         if (facing == -1) {
             g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame + 4].getBufferedImage(), x, y,
-                    width, height, null);
+                    WIDTH, HEIGHT, null);
         } else {
             g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame].getBufferedImage(), x, y,
-                    width, height, null);
+                    WIDTH, HEIGHT, null);
         }
         if(Game.debugMode) {
             g.setColor(Color.BLUE);
-            g.drawRect(x+width/4, y, width-width/2, height);
+            g.drawRect(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT);
             //TOP
-            g.drawRect(x+40, y, width-80, 1);
+            g.drawRect(x+40, y, WIDTH -80, 1);
             //BOTTOM
-            g.drawRect(x+40, y+height, width-80, 1);
+            g.drawRect(x+40, y+ HEIGHT, WIDTH -80, 1);
             //LEFT
-            g.drawRect(x+25, y+20, 1, width-40);
+            g.drawRect(x+25, y+20, 1, WIDTH -40);
             //RIGHT
-            g.drawRect(x+width-30, y+20,1, width-40);
+            g.drawRect(x+ WIDTH -30, y+20,1, WIDTH -40);
         }
 
     }
@@ -126,7 +144,7 @@ public class Player extends Entity {
             if (ifHitWall(t)) {
                 if (checkCollisionTop(t, Tile::getBounds)) {
 //                    System.out.println("TOP");
-                    gravity += FALLING_GRAVITY_VEL;
+                    gravity = 0;
                     velY = 0;
                     y = t.getY() + t.getHeight();
                     currentState = PlayerState.falling;
@@ -137,6 +155,7 @@ public class Player extends Entity {
                     if(currentState == PlayerState.falling || currentState == PlayerState.sliding
                             || currentState == PlayerState.verticalDashing) {
                         velY = 0;
+                        gravity = 0;
                         y = t.getY() - getHeight();
                         currentState = PlayerState.standing;
                         Handler.addObject(LandingEffect.getInstance(this));
@@ -179,15 +198,15 @@ public class Player extends Entity {
             frameDelay++;
             if (frameDelay >= 30) {
                 frame++;
-                if (frame >= 4) {
+                if (frame >= FrameManager.playerMoveFrame.length / 2) {
                     frame = 0;
                 }
                 frameDelay = 0;
             }
         }
-        else if(currentState == PlayerState.dashing) {
+        else if(currentState == PlayerState.dashing || currentState == PlayerState.dashJumping) {
             frameDelay++;
-            if (frameDelay >= 5) {
+            if (frameDelay >= 4) {
                 frame++;
                 if (frame >= FrameManager.playerMoveFrame.length / 2) {
                     frame = 0;
@@ -224,18 +243,18 @@ public class Player extends Entity {
 
     @Override
     // Collision test
-    public Rectangle getBounds() { return new Rectangle(x+width/4, y, width-width/2, height);}
+    public Rectangle getBounds() { return new Rectangle(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT);}
     public Rectangle getBoundsTop() {
-        return new Rectangle(getX()+40, getY(), width-80,1 );
+        return new Rectangle(getX()+40, getY(), WIDTH -80,1 );
     }
     public Rectangle getBoundsBottom() {
-        return new Rectangle(getX()+40, getY()+height, width-80,1 );
+        return new Rectangle(getX()+40, getY()+ HEIGHT, WIDTH -80,1 );
     }
     public Rectangle getBoundsLeft() {
-        return new Rectangle(getX()+25, getY()+20, 1,height-40 );
+        return new Rectangle(getX()+25, getY()+20, 1, HEIGHT -40 );
     }
     public Rectangle getBoundsRight() {
-        return new Rectangle(getX()+width-30, getY()+20, 1,height-40 );
+        return new Rectangle(getX()+ WIDTH -30, getY()+20, 1, HEIGHT -40 );
     }
 
     private boolean checkCollisionBounds(Tile t, TileCollisionCondition tileCollisionCondition) {

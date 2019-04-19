@@ -1,6 +1,6 @@
 package tiles;
 
-import character.Id;
+import enums.Id;
 
 import java.awt.*;
 
