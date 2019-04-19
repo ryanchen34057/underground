@@ -10,15 +10,11 @@ public class Dashing implements StateMachine {
     private float dashTimer = Player.DASH_TIMER;
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
-        if(keys.get(2).down && keys.get(5).down) {
+        if(keys.get(2).down) {
             player.setFacing(-1);
-            player.setGravity(Player.FALLING_GRAVITY_VEL);
-            player.currentState = PlayerState.dashJumping;
         }
-        if(keys.get(3).down && keys.get(5).down) {
+        else if(keys.get(3).down) {
             player.setFacing(1);
-            player.setGravity(Player.FALLING_GRAVITY_VEL);
-            player.currentState = PlayerState.dashJumping;
         }
         if(keys.get(5).down) {
             player.setGravity(Player.DASHJUMPING_GRAVITY);

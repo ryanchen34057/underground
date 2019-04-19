@@ -8,7 +8,7 @@ import util.Handler;
 import java.awt.*;
 
 public class DashEffect extends Effect{
-    public static int EFFECT_SIZE = 100;
+    public static final int EFFECT_SIZE = 100;
     private int direction;
 
     private DashEffect(int x, int y, int width, int height, int direction, Id id) {
@@ -33,15 +33,14 @@ public class DashEffect extends Effect{
             g.drawImage(FrameManager.getEffectFrame(id)[frame+15].getBufferedImage(), super.getX(), super.getY(),
                         super.getWidth(), super.getHeight(), null);
         }
-
     }
 
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 1) {
+        if (frameDelay >= 2) {
             frame++;
-            if (frame >= FrameManager.effectFrame.length / 2) {
+            if (frame >= 15) {
                 frame = 0;
                 Handler.effectRemove();
             }

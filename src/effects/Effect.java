@@ -64,5 +64,4 @@ public abstract class Effect {
 
     // Update method
     public abstract void update();
-
 }

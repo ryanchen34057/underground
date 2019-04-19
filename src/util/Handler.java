@@ -38,7 +38,11 @@ public class Handler {
     public static void addObject(Tile en) {
         tiles.add(en);
     }
-    public static void addObject(Effect e) { effects.add(e); }
+    public static void addObject(Effect e) {
+        if(!effects.contains(e)) {
+            effects.add(e);
+        }
+    }
     public static void addObject(ParticleSystem p) { particles.add(p); }
 
 

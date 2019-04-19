@@ -75,6 +75,11 @@ public class FrameManager {
                 effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 19,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
             }
         }
+        else if(id == Id.dashInTheAirEffect) {
+            for(int i=0;i<24;i++) {
+                effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 18,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
+            }
+        }
 
         return effectFrame;
     }

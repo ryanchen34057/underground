@@ -1,6 +1,7 @@
 package character;
 
 import UI.Game;
+import effects.DashEffect;
 import effects.DeathParticle;
 import effects.LandingEffect;
 import graphics.FrameManager;
@@ -78,7 +79,7 @@ public class Player extends Entity {
         }
         if(Game.debugMode) {
             g.setColor(Color.BLUE);
-            g.drawRect(x+25, y, width-50, height);
+            g.drawRect(x+width/4, y, width-width/2, height);
             //TOP
             g.drawRect(x+40, y, width-80, 1);
             //BOTTOM
@@ -138,7 +139,7 @@ public class Player extends Entity {
                         velY = 0;
                         y = t.getY() - getHeight();
                         currentState = PlayerState.standing;
-                        Handler.addObject(new LandingEffect(x+15, y+30, 64, 64, Id.landingEffect));
+                        Handler.addObject(LandingEffect.getInstance(this));
                     }
                     isOnTheGround = true;
                     fatigue = 0;
@@ -169,6 +170,7 @@ public class Player extends Entity {
             }
         }
 
+
         //Check if on the ground
         if(isOnTheGroundCondition()) {
             currentState = PlayerState.falling;
@@ -185,7 +187,7 @@ public class Player extends Entity {
         }
         else if(currentState == PlayerState.dashing) {
             frameDelay++;
-            if (frameDelay >= 10) {
+            if (frameDelay >= 5) {
                 frame++;
                 if (frame >= FrameManager.playerMoveFrame.length / 2) {
                     frame = 0;
@@ -222,7 +224,7 @@ public class Player extends Entity {
 
     @Override
     // Collision test
-    public Rectangle getBounds() { return new Rectangle(x+25, y, width-50, height);}
+    public Rectangle getBounds() { return new Rectangle(x+width/4, y, width-width/2, height);}
     public Rectangle getBoundsTop() {
         return new Rectangle(getX()+40, getY(), width-80,1 );
     }

@@ -1,6 +1,7 @@
 package effects;
 
 import character.Id;
+import character.Player;
 import graphics.FrameManager;
 import util.Handler;
 
@@ -8,10 +9,15 @@ import java.awt.*;
 
 public class LandingEffect extends Effect {
     public static int EFFECT_SIZE = 100;
-    public LandingEffect(int x, int y, int width, int height, Id id) {
+    private static LandingEffect landingEffect;
+    private LandingEffect(int x, int y, int width, int height, Id id) {
         super(x, y, width, height, id);
         frame = 0;
         frameDelay = 0;
+    }
+
+    public static LandingEffect getInstance(Player player) {
+        return new LandingEffect(player.getX()+15, player.getY()+30, 64, 64, Id.landingEffect);
     }
 
     @Override
