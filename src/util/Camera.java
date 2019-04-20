@@ -4,16 +4,31 @@ import UI.Game;
 import gameObject.character.Entity;
 
 public class Camera {
-    public static int x;
-    public static int y;
-    public static int backGroundY;
+    private int x;
+    private int y;
+    private int backGroundY;
+    private boolean shaking;
+    private int shakingLength;
+    private char shakingAxis;
+    private int counter;
+    private int intensity;
     public int level = 0;
 
     public void update(Entity player) {
         x = -player.getX() + Game.WIDTH/2;
-        if(level == 0) {
-            backGroundY = -player.getY() + Game.HEIGHT*2+150;
-            level++;
+        y = -player.getY() + Game.HEIGHT*2 + 200;
+        if(shaking) {
+            counter++;
+            if(shakingAxis == 'x') {
+                x += Math.random() * intensity - intensity/ 2;
+            }
+            else if(shakingAxis == 'y') {
+                y += Math.random() * intensity - intensity/ 2;
+            }
+            if(counter == shakingLength) {
+                shaking = false;
+                counter = 0;
+            }
         }
 
     }
@@ -32,6 +47,17 @@ public class Camera {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setShaking(boolean shaking, int intensity, int shakingLength, char axis) {
+        this.shaking = shaking;
+        this.intensity = intensity;
+        this.shakingLength = shakingLength;
+        shakingAxis = axis;
+    }
+
+    public void setBackGroundY(int y) {
+        backGroundY = y;
     }
 
 }

@@ -2,6 +2,7 @@ package states;
 
 import effects.DashInTheAirEffect;
 import effects.VerticalDashEffect;
+import enums.Direction;
 import gameObject.character.Player;
 import input.Input;
 import java.util.List;
@@ -11,10 +12,11 @@ public class Bouncing implements State {
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         keys.get(5).down = false;
         //Vertical Dashing
-        if(verticalDashCondition(keys, player)) {
+        Direction dir = verticalDashCondition(keys, player);
+        if(dir != null) {
             player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
             player.setCurrentState(PlayerState.verticalDashing);
-            player.setCurrentEffect(VerticalDashEffect.getInstance(player));
+            player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
         }
@@ -45,14 +47,21 @@ public class Bouncing implements State {
         return "Bouncing";
     }
 
-    public boolean verticalDashCondition(List<Input.Key> keys, Player player) {
-        return          // UP LEFT
-                keys.get(4).down && keys.get(0).down && keys.get(2).down && !player.isTired()
-                        // UP RIGHT
-                        || keys.get(4).down && keys.get(0).down && keys.get(3).down && !player.isTired()
-                        // DOWN LEFT
-                        || keys.get(4).down && keys.get(1).down && keys.get(2).down && !player.isTired()
-                        // DOWN RIGHT
-                        || keys.get(4).down && keys.get(1).down && keys.get(3).down && !player.isTired();
+    public Direction verticalDashCondition(List<Input.Key> keys, Player player) {
+                  // UP LEFT
+                if(keys.get(4).down && keys.get(0).down && keys.get(2).down && !player.isTired()) return Direction.UP_LEFT;
+                // UP RIGHT
+                if(keys.get(4).down && keys.get(0).down && keys.get(3).down && !player.isTired()) return Direction.UP_RIGHT;
+                // DOWN LEFT
+                if(keys.get(4).down && keys.get(1).down && keys.get(2).down && !player.isTired()) return Direction.DOWN_LEFT;
+                // DOWN RIGHT
+                if(keys.get(4).down && keys.get(1).down && keys.get(3).down && !player.isTired()) return Direction.DOWN_RIGHT;
+                // UP
+                if(keys.get(4).down && keys.get(0).down && !player.isTired()) return Direction.UP;
+                // DOWN
+                if(keys.get(4).down && keys.get(1).down && !player.isTired()) return Direction.DOWN;
+                else {
+                    return null;
+                }
     }
 }

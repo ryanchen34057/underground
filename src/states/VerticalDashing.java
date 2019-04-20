@@ -21,6 +21,7 @@ public class VerticalDashing implements State {
         dashTimer -= (60.0f / 1000.0f);
         player.currentDashSpeed -= Player.DASH_SPEED_BUMP;
         if(dashTimer <= 0) {
+            player.setGravity(0);
             //Reset timer
             dashTimer = Player.VERTICALDASHING_TIMER;
             player.setCurrentState(PlayerState.falling);

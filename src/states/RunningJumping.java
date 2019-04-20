@@ -1,5 +1,6 @@
 package states;
 
+import enums.Direction;
 import gameObject.character.Player;
 import effects.DashInTheAirEffect;
 import effects.VerticalDashEffect;
@@ -23,17 +24,13 @@ public class RunningJumping implements State {
             player.setTired(true);
         }
         //Vertical Dashing
-        if(verticalDashCondition(keys, player)) {
-            player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
+        Direction dir = verticalDashCondition(keys, player);
+        if(dir != null) {
+            if(keys.get(2).down || keys.get(3).down) {
+                player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
+            }
             player.setCurrentState(PlayerState.verticalDashing);
-            player.setCurrentEffect(VerticalDashEffect.getInstance(player));
-            player.setTired(true);
-            player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
-        }
-
-        else if(keys.get(4).down && (keys.get(0).down || keys.get(1).down) && !player.isTired()) {
-            player.setCurrentState(PlayerState.verticalDashing);
-            player.setCurrentEffect(VerticalDashEffect.getInstance(player));
+            player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
         }
@@ -54,14 +51,21 @@ public class RunningJumping implements State {
         return "RunningJumping";
     }
 
-    public boolean verticalDashCondition(List<Input.Key> keys, Player player) {
-        return          // UP LEFT
-                keys.get(4).down && keys.get(0).down && keys.get(2).down && !player.isTired()
-                        // UP RIGHT
-                        || keys.get(4).down && keys.get(0).down && keys.get(3).down && !player.isTired()
-                        // DOWN LEFT
-                        || keys.get(4).down && keys.get(1).down && keys.get(2).down && !player.isTired()
-                        // DOWN RIGHT
-                        || keys.get(4).down && keys.get(1).down && keys.get(3).down && !player.isTired();
+    public Direction verticalDashCondition(List<Input.Key> keys, Player player) {
+        // UP LEFT
+        if(keys.get(4).down && keys.get(0).down && keys.get(2).down && !player.isTired()) return Direction.UP_LEFT;
+        // UP RIGHT
+        if(keys.get(4).down && keys.get(0).down && keys.get(3).down && !player.isTired()) return Direction.UP_RIGHT;
+        // DOWN LEFT
+        if(keys.get(4).down && keys.get(1).down && keys.get(2).down && !player.isTired()) return Direction.DOWN_LEFT;
+        // DOWN RIGHT
+        if(keys.get(4).down && keys.get(1).down && keys.get(3).down && !player.isTired()) return Direction.DOWN_RIGHT;
+        // UP
+        if(keys.get(4).down && keys.get(0).down && !player.isTired()) return Direction.UP;
+        // DOWN
+        if(keys.get(4).down && keys.get(1).down && !player.isTired()) return Direction.DOWN;
+        else {
+            return null;
+        }
     }
 }

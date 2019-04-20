@@ -3,7 +3,9 @@ package UI;
 import enums.GameStatus;
 import enums.Id;
 import gameObject.character.Entity;
+import gameObject.character.Player;
 import input.Input;
+import states.PlayerState;
 import util.Camera;
 import util.Handler;
 import graphics.SpriteManager;
@@ -22,7 +24,7 @@ public class Game extends Canvas implements Runnable {
     public static boolean debugMode;
 
     //Size
-    public static final int WIDTH = 270;
+    public static final int WIDTH = 350;
     public static final int HEIGHT = WIDTH / 14*10;
     public static final int SCALE = 4;
 
@@ -62,8 +64,8 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0,0, getWidth(), getHeight());
-        g.drawImage(backgroundImage, cam.getX(), Camera.backGroundY, WIDTH * SCALE, HEIGHT * SCALE, null);
-        g.translate(cam.getX(), Camera.backGroundY);
+        g.drawImage(backgroundImage, cam.getX(), cam.getY(), WIDTH * SCALE, HEIGHT * SCALE, null);
+        g.translate(cam.getX(), cam.getY());
         handler.paint(g);
         g.dispose();
         bs.show();
@@ -75,6 +77,12 @@ public class Game extends Canvas implements Runnable {
             Entity e = handler.getEntities().get(i);
             if(e.getId() == Id.player) {
                 cam.update(e);
+                if(e.getCurrentState() == PlayerState.dashing || e.getCurrentState() == PlayerState.dashingInTheAir) {
+                    cam.setShaking(true, 10, 1, 'x');
+                }
+                else if(e.getCurrentState() == PlayerState.verticalDashing) {
+                    cam.setShaking(true, 10, 1, 'y');
+                }
             }
         }
     }
@@ -118,7 +126,7 @@ public class Game extends Canvas implements Runnable {
         init();
         requestFocus();
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 70;
+        final double amountOfTicks = 60;
         long timer = System.currentTimeMillis();
         double delta = 0.0;
         double ns = 1000000000.0 / amountOfTicks;

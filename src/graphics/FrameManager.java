@@ -1,8 +1,11 @@
 package graphics;
 
+import enums.Direction;
 import enums.Id;
 import effects.Effect;
 import states.*;
+
+import static enums.Direction.*;
 
 public class FrameManager {
     public static Sprite[] playerMoveFrame = new Sprite[8];
@@ -80,12 +83,40 @@ public class FrameManager {
                 effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 18,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
             }
         }
-        else if(id == Id.verticalDashEffect) {
-            for(int i=0;i<24;i++) {
+        return effectFrame;
+    }
+
+    public static Sprite[] getVerticalDashEffectFrame(Direction dir) {
+        if(dir == UP ) {
+            for(int i=0;i<12;i++) {
+                effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 15,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
+            }
+        }
+        else if(dir == DOWN) {
+            for(int i=0;i<12;i++) {
+                effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 13, 15,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
+            }
+        }
+        else if(dir == DOWN_RIGHT) {
+            for(int i=0;i<12;i++) {
+                effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 16,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
+            }
+        }
+        else if(dir == DOWN_LEFT) {
+            for(int i=0;i<12;i++) {
+                effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 13, 16,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
+            }
+        }
+        else if(dir == UP_RIGHT) {
+            for(int i=0;i<12;i++) {
                 effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 17,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
             }
         }
-
+        else if(dir == UP_LEFT) {
+            for(int i=0;i<12;i++) {
+                effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 13, 17,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
+            }
+        }
         return effectFrame;
     }
 
