@@ -1,8 +1,11 @@
-package tiles;
+package gameObject.tiles;
 
 import UI.Game;
+import enums.Direction;
 import enums.Id;
+import gameObject.ICollidable;
 import graphics.SpriteManager;
+import util.CollisionCondition;
 
 import java.awt.*;
 
@@ -53,4 +56,24 @@ public class Wall extends Tile {
     }
     @Override
     public  Rectangle getBoundsRight() { return new Rectangle(x+width, y+20, 1,height-40 ); }
+
+    @Override
+    public void die() {
+
+    }
+
+    @Override
+    public Direction collidesWith(ICollidable other, CollisionCondition collisionCondition) {
+        return null;
+    }
+
+    @Override
+    public void handleCollision(ICollidable other, Direction direction) {
+
+    }
+
+    @Override
+    public void reactToCollision(ICollidable other, Direction direction) {
+
+    }
 }

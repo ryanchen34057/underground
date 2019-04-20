@@ -1,7 +1,7 @@
-package tiles.trap;
+package gameObject.tiles.trap;
 
 import enums.Id;
-import tiles.Tile;
+import gameObject.tiles.Tile;
 
 
 

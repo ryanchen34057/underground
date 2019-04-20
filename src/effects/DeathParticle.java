@@ -1,8 +1,7 @@
 package effects;
 
+import gameObject.character.Player;
 import graphics.FrameManager;
-import util.Handler;
-
 import java.awt.*;
 
 
@@ -16,7 +15,7 @@ public class DeathParticle extends ParticleSystem {
     private int delayCount;
     private int frame;
 
-    public DeathParticle(int x, int y, int destX, int destY, int size, int life) {
+    private DeathParticle(int x, int y, int destX, int destY, int size, int life) {
         super(x, y, destX, destY, size, life);
         xD = (destX - x)>0?1:-1;
         yD = (destY - y)>0?1:-1;
@@ -27,6 +26,16 @@ public class DeathParticle extends ParticleSystem {
         }
         delayCount = 0;
         frame = 0;
+    }
+
+    public static DeathParticle getInstance(Player player, int index) { return new DeathParticle(player.getX()-(int)player.getVelX(),
+            player.getY()-(int)player.getVelY(), (int)(DeathParticle.RANGE * Math.cos(index * 45 * 2 * Math.PI / 360) + player.getX()-(int)player.getVelX()),
+            (int)(DeathParticle.RANGE * Math.sin(index * 45 * 2 * Math.PI / 360) + player.getY()-(int)player.getVelY()), 64, 5); }
+
+    @Override
+    public void paint(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(FrameManager.getDeathFrame()[frame].getBufferedImage(), x, y, size, size, null);
     }
 
     @Override
@@ -45,19 +54,13 @@ public class DeathParticle extends ParticleSystem {
             y += yD * distance;
         }
         if(!getDest(xD, x, destX) && !getDest(yD, y, destY)){
-            Handler.particles.remove(this);
             frame = 0;
+            die();
         }
     }
 
     private boolean getDest(int d, int v, int dest){
         return (d >= 0)?v <= dest:v >= dest;
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(FrameManager.getDeathFrame()[frame].getBufferedImage(), x, y, size, size, null);
     }
 
     @Override

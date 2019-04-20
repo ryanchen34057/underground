@@ -1,10 +1,11 @@
-package tiles;
+package gameObject.tiles;
 
 import enums.Id;
+import gameObject.ICollidable;
 
 import java.awt.*;
 
-public abstract class Tile {
+public abstract class Tile implements ICollidable {
     //Coordinate
     protected int x;
     protected int y;
@@ -16,6 +17,7 @@ public abstract class Tile {
 
     //info
     private Id id;
+    protected boolean isDead;
 
     public Tile(int x, int y, int width, int height, boolean breakable, Id id) {
         this.x = x;
@@ -24,6 +26,7 @@ public abstract class Tile {
         this.height = height;
         this.id = id;
         this.breakable = breakable;
+        this.isDead = false;
     }
 
     //getters and setters
@@ -54,6 +57,9 @@ public abstract class Tile {
     public Id getId() {
         return id;
     }
+    public boolean isDead() {
+        return isDead;
+    }
 
     // Drawing method
     public abstract void paint(Graphics g);
@@ -67,4 +73,8 @@ public abstract class Tile {
     public abstract Rectangle getBoundsBottom();
     public abstract Rectangle getBoundsLeft();
     public abstract Rectangle getBoundsRight();
+
+    // Die
+    public abstract void die();
+
 }

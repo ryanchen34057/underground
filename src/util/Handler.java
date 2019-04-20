@@ -1,27 +1,28 @@
 package util;
 
+import effects.DeathParticle;
 import effects.Effect;
 import effects.ParticleSystem;
 import input.Input;
-import tiles.*;
-import tiles.movable.Torch;
-import character.Entity;
+import gameObject.tiles.*;
+import gameObject.tiles.movable.Torch;
+import gameObject.character.Entity;
 import enums.Id;
-import character.Player;
-import tiles.prize.Coin;
-import tiles.portal.BluePortal;
-import tiles.portal.PurplePortal;
-import tiles.trap.*;
+import gameObject.character.Player;
+import gameObject.tiles.prize.Coin;
+import gameObject.tiles.portal.BluePortal;
+import gameObject.tiles.portal.PurplePortal;
+import gameObject.tiles.trap.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Handler {
-    public static LinkedList<Entity> entities;
-    public static LinkedList<Tile> tiles;
-    public static LinkedList<Effect> effects;
-    public static LinkedList<ParticleSystem> particles;
+    private LinkedList<Entity> entities;
+    private LinkedList<Tile> tiles;
+    private LinkedList<Effect> effects;
+    private LinkedList<ParticleSystem> particles;
     private Dimension bluePortalCor;
 
 
@@ -32,18 +33,18 @@ public class Handler {
         particles = new LinkedList<>();
     }
 
-    public static void addObject(Entity en) {
+    public void addObject(Entity en) {
         entities.add(en);
     }
-    public static void addObject(Tile en) {
+    public void addObject(Tile en) {
         tiles.add(en);
     }
-    public static void addObject(Effect e) {
+    public void addObject(Effect e) {
         if(!effects.contains(e)) {
             effects.add(e);
         }
     }
-    public static void addObject(ParticleSystem p) { particles.add(p); }
+    public void addObject(ParticleSystem p) { particles.add(p); }
 
 
     public void paint(Graphics g) {
@@ -62,24 +63,48 @@ public class Handler {
     }
 
     public void update() {
+        Player player;
         for(int i=0;i<entities.size();i++) {
-            entities.get(i).update();
+            player = (Player) entities.get(i);
+            player.update();
+            if(player.getCurrentEffect() != null && effects.size() == 0) {
+                addObject(player.getCurrentEffect());
+            }
+            if(player.isDead()) {
+                for(int j=0;j<8;j++) {
+                    addObject(DeathParticle.getInstance(player,j));
+                }
+                entities.remove(player);
+            }
         }
+        Effect e;
         for(int i=0;i<effects.size();i++) {
-            effects.get(i).update();
+            e = effects.get(i);
+            e.update();
+            if(e.isDead()) {
+                effects.remove(e);
+            }
         }
+        ParticleSystem p;
         for(int i=0;i<particles.size();i++) {
-            particles.get(i).update();
+            p =  particles.get(i);
+            p.update();
+            if(p.isDead()) {
+                particles.remove(p);
+            }
         }
         for(int i=0;i<tiles.size();i++) {
             if(tiles.get(i).getId() == Id.bluePortal || tiles.get(i).getId() == Id.torch) {
                 tiles.get(i).update();
             }
+            if(tiles.get(i).isDead()) {
+                tiles.remove(i);
+            }
         }
 
         // Respawn player
-        if(Handler.entities.size() == 0 && Input.keys.get(6).down) {
-            Handler.addObject(new Player((int)(bluePortalCor.getWidth()+35), (int)(bluePortalCor.getHeight()+35), Player.WIDTH, Player.HEIGHT, Id.player));
+        if(entities.size() == 0 && Input.keys.get(6).down) {
+            addObject(new Player((int)(bluePortalCor.getWidth()+35), (int)(bluePortalCor.getHeight()+35), Player.WIDTH, Player.HEIGHT, Id.player));
         }
     }
 
@@ -144,6 +169,19 @@ public class Handler {
         }
     }
 
-    public static Player getPlayer() { return (Player) entities.get(0); }
-    public static void effectRemove() { effects.clear(); }
+    public LinkedList<Entity> getEntities() {
+        return entities;
+    }
+
+    public LinkedList<Tile> getTiles() {
+        return tiles;
+    }
+
+    public LinkedList<Effect> getEffects() {
+        return effects;
+    }
+
+    public LinkedList<ParticleSystem> getParticles() {
+        return particles;
+    }
 }

@@ -19,6 +19,7 @@ public abstract class Effect {
 
     //info
     protected Id id;
+    protected boolean isDead;
 
     public Effect(int x, int y, int width, int height, Id id) {
         this.x = x;
@@ -28,6 +29,7 @@ public abstract class Effect {
         this.id = id;
         frame = 0;
         frameDelay = 0;
+        isDead = false;
     }
 
     //getters and setters
@@ -59,9 +61,18 @@ public abstract class Effect {
         return id;
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
+
     // Drawing method
     public abstract void paint(Graphics g);
 
     // Update method
     public abstract void update();
+
+    // Die
+    public void die() {
+        isDead = true;
+    }
 }

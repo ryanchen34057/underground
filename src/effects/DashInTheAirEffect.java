@@ -1,9 +1,8 @@
 package effects;
 
 import enums.Id;
-import character.Player;
+import gameObject.character.Player;
 import graphics.FrameManager;
-import util.Handler;
 
 import java.awt.*;
 
@@ -27,12 +26,12 @@ public class DashInTheAirEffect extends Effect {
     @Override
     public void paint(Graphics g) {
         if(direction == 1) {
-            g.drawImage(FrameManager.getEffectFrame(id)[frame].getBufferedImage(), super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(FrameManager.getEffectFrame(id)[frame].getBufferedImage(), x, y,
+                    width, height, null);
         }
         else {
-            g.drawImage(FrameManager.getEffectFrame(id)[frame+12].getBufferedImage(), super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(FrameManager.getEffectFrame(id)[frame+12].getBufferedImage(), x, y,
+                    width, height, null);
         }
     }
 
@@ -43,7 +42,7 @@ public class DashInTheAirEffect extends Effect {
             frame++;
             if (frame >= 12) {
                 frame = 0;
-                Handler.effectRemove();
+                die();
             }
             frameDelay = 0;
         }

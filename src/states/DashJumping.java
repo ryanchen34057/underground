@@ -1,11 +1,11 @@
 package states;
 
-import character.Player;
+import gameObject.character.Player;
 import input.Input;
 
 import java.util.List;
 
-public class DashJumping implements StateMachine {
+public class DashJumping implements State {
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
 
@@ -17,7 +17,7 @@ public class DashJumping implements StateMachine {
         player.setGravity(player.getGravity() - Player.DASHJUMPING_GRAVITY_OFFSET);
         player.setVelY((int) -player.getGravity());
         if (player.getGravity() <= 0.0) {
-            player.currentState = PlayerState.falling;
+            player.setCurrentState(PlayerState.falling);
         }
     }
 

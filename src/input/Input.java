@@ -65,7 +65,12 @@ public class Input implements KeyListener {
             r.toggle(pressed);
         }
         if (e.getKeyCode() == KeyEvent.VK_X) x.toggle(pressed);
-        if (e.getKeyCode() == KeyEvent.VK_C) c.toggle(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_C) {
+            if(c.down) {
+                c.toggle(false);
+            }
+            c.toggle(pressed);
+        }
         if(e.getKeyCode() == KeyEvent.VK_R) r.toggle(pressed);
     }
 

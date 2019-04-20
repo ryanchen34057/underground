@@ -1,8 +1,11 @@
-package tiles.prize;
+package gameObject.tiles.prize;
 
 import UI.Game;
+import enums.Direction;
 import enums.Id;
+import gameObject.ICollidable;
 import graphics.FrameManager;
+import util.CollisionCondition;
 
 import java.awt.*;
 
@@ -38,6 +41,11 @@ public class Coin extends Prize {
     }
 
     @Override
+    public void die() {
+        isDead = true;
+    }
+
+    @Override
     public Rectangle getBounds() {
         return new Rectangle(x+10, y+10, width-20,height-20);
     }
@@ -60,5 +68,20 @@ public class Coin extends Prize {
     @Override
     public Rectangle getBoundsRight() {
         return null;
+    }
+
+    @Override
+    public Direction collidesWith(ICollidable other, CollisionCondition collisionCondition) {
+        return null;
+    }
+
+    @Override
+    public void handleCollision(ICollidable other, Direction direction) {
+
+    }
+
+    @Override
+    public void reactToCollision(ICollidable other, Direction direction) {
+        die();
     }
 }

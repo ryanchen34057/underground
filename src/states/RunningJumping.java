@@ -1,14 +1,13 @@
 package states;
 
-import character.Player;
+import gameObject.character.Player;
 import effects.DashInTheAirEffect;
 import effects.VerticalDashEffect;
 import input.Input;
-import util.Handler;
 
 import java.util.List;
 
-public class RunningJumping implements StateMachine{
+public class RunningJumping implements State {
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(2).down) {
@@ -17,25 +16,26 @@ public class RunningJumping implements StateMachine{
         else if(keys.get(3).down) {
             player.setFacing(1);
         }
-        if(keys.get(4).down && !Player.isTired && (!keys.get(0).down && !keys.get(1).down)) {
+        if(keys.get(4).down && !player.isTired() && (!keys.get(0).down && !keys.get(1).down)) {
             player.setVelY(0);
-            player.currentState = PlayerState.dashingInTheAir;
-            Player.isTired = true;
-            Handler.addObject(DashInTheAirEffect.getInstance(player));
+            player.setCurrentState(PlayerState.dashingInTheAir);
+            player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
+            player.setTired(true);
         }
         //Vertical Dashing
-        if(verticalDashCondition(keys)) {
-            player.setVelX(Player.VERTICAL_DASHING_VELX * player.getFacing());
-            player.currentState = PlayerState.verticalDashing;
-            Player.isTired = true;
-            player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
-            Handler.addObject(VerticalDashEffect.getInstance(player));
+        if(verticalDashCondition(keys, player)) {
+            player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
+            player.setCurrentState(PlayerState.verticalDashing);
+            player.setCurrentEffect(VerticalDashEffect.getInstance(player));
+            player.setTired(true);
+            player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
         }
-        //Vertical Dashing
-        else if(keys.get(4).down && (keys.get(0).down || keys.get(1).down) && !Player.isTired) {
-            player.currentState = PlayerState.verticalDashing;
-            Player.isTired = true;
-            player.CURRENT_DASH_SPEED = Player.VERTICAL_DASH_SPEED;
+
+        else if(keys.get(4).down && (keys.get(0).down || keys.get(1).down) && !player.isTired()) {
+            player.setCurrentState(PlayerState.verticalDashing);
+            player.setCurrentEffect(VerticalDashEffect.getInstance(player));
+            player.setTired(true);
+            player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
         }
     }
 
@@ -45,7 +45,7 @@ public class RunningJumping implements StateMachine{
         player.setGravity(player.getGravity() - Player.RUNNINGJUMPING_GRAVITY_OFFSET);
         player.setVelY((int) -player.getGravity());
         if (player.getGravity() <= 0.0) {
-            player.currentState = PlayerState.falling;
+            player.setCurrentState(PlayerState.falling);
         }
     }
 
@@ -54,14 +54,14 @@ public class RunningJumping implements StateMachine{
         return "RunningJumping";
     }
 
-    public boolean verticalDashCondition(List<Input.Key> keys) {
+    public boolean verticalDashCondition(List<Input.Key> keys, Player player) {
         return          // UP LEFT
-                keys.get(4).down && keys.get(0).down && keys.get(2).down && !Player.isTired
+                keys.get(4).down && keys.get(0).down && keys.get(2).down && !player.isTired()
                         // UP RIGHT
-                        || keys.get(4).down && keys.get(0).down && keys.get(3).down && !Player.isTired
+                        || keys.get(4).down && keys.get(0).down && keys.get(3).down && !player.isTired()
                         // DOWN LEFT
-                        || keys.get(4).down && keys.get(1).down && keys.get(2).down && !Player.isTired
+                        || keys.get(4).down && keys.get(1).down && keys.get(2).down && !player.isTired()
                         // DOWN RIGHT
-                        || keys.get(4).down && keys.get(1).down && keys.get(3).down && !Player.isTired;
+                        || keys.get(4).down && keys.get(1).down && keys.get(3).down && !player.isTired();
     }
 }

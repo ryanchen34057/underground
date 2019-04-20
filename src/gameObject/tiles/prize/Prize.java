@@ -1,7 +1,7 @@
-package tiles.prize;
+package gameObject.tiles.prize;
 
 import enums.Id;
-import tiles.Tile;
+import gameObject.tiles.Tile;
 
 import java.awt.*;
 
@@ -60,10 +60,16 @@ public abstract class Prize extends Tile {
     public void setPoint(int point) {
         this.point = point;
     }
+    public boolean isDead() {
+        return isDead;
+    }
 
     // Drawing method
     public abstract void paint(Graphics g);
 
     // Update method
     public abstract void update();
+
+    // Die
+    public abstract void die();
 }

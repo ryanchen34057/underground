@@ -1,28 +1,28 @@
 package states;
 
-import character.Player;
+import gameObject.character.Player;
 import input.Input;
 
 import java.util.List;
 
-public class Sliding implements StateMachine {
+public class Sliding implements State {
     private float friction = 0;
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(5).down) {
             player.setGravity(Player.BOUNCING_GRAVITY);
-            player.currentState = PlayerState.bouncing;
+            player.setCurrentState(PlayerState.bouncing);
         }
         if(player.getFacing() == -1) {
             if(!keys.get(2).down) {
                 player.setGravity(Player.FALLING_GRAVITY_VEL);
-                player.currentState = PlayerState.falling;
+                player.setCurrentState(PlayerState.falling);
             }
         }
         else {
             if(!keys.get(3).down) {
                 player.setGravity(Player.FALLING_GRAVITY_VEL);
-                player.currentState = PlayerState.falling;
+                player.setCurrentState(PlayerState.falling);
             }
         }
     }
@@ -33,7 +33,7 @@ public class Sliding implements StateMachine {
         friction += 0.1;
         player.setVelY(friction);
         if(friction >= 5 || player.getFatigue() >= player.getSTAMINA()) {
-            player.currentState = PlayerState.falling;
+            player.setCurrentState(PlayerState.falling);
             friction = 0;
         }
     }

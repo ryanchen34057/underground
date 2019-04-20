@@ -1,5 +1,7 @@
 package enums;
 
 public enum Id {
-    wall, player, coin, upwardSpike, downwardSpike, dashEffect, rightwardSpike, leftwardSpike, deathEffect, landingEffect, bluePortal, torch, breakableWall, dashInTheAirEffect, verticalDashEffect,
+    wall, player, coin,
+    upwardSpike, downwardSpike, rightwardSpike, leftwardSpike,
+    landingEffect, bluePortal, torch, breakableWall, dashInTheAirEffect, verticalDashEffect,dashEffect
 }

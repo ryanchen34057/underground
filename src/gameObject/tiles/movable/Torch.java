@@ -1,8 +1,11 @@
-package tiles.movable;
+package gameObject.tiles.movable;
 
+import enums.Direction;
 import enums.Id;
+import gameObject.ICollidable;
 import graphics.FrameManager;
-import tiles.Tile;
+import gameObject.tiles.Tile;
+import util.CollisionCondition;
 
 import java.awt.*;
 
@@ -58,5 +61,25 @@ public class Torch extends Tile {
     @Override
     public Rectangle getBoundsRight() {
         return null;
+    }
+
+    @Override
+    public void die() {
+
+    }
+
+    @Override
+    public Direction collidesWith(ICollidable other, CollisionCondition collisionCondition) {
+        return null;
+    }
+
+    @Override
+    public void handleCollision(ICollidable other, Direction direction) {
+
+    }
+
+    @Override
+    public void reactToCollision(ICollidable other, Direction direction) {
+
     }
 }

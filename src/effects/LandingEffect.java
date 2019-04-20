@@ -1,9 +1,8 @@
 package effects;
 
 import enums.Id;
-import character.Player;
+import gameObject.character.Player;
 import graphics.FrameManager;
-import util.Handler;
 
 import java.awt.*;
 
@@ -22,8 +21,8 @@ public class LandingEffect extends Effect {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getEffectFrame(id)[frame].getBufferedImage(), super.getX(), super.getY(),
-                super.getWidth(), super.getHeight(), null);
+        g.drawImage(FrameManager.getEffectFrame(id)[frame].getBufferedImage(), x, y,
+                width, height, null);
     }
 
     @Override
@@ -33,7 +32,7 @@ public class LandingEffect extends Effect {
             frame++;
             if (frame >= 17) {
                 frame = 0;
-                Handler.effectRemove();
+                die();
             }
             frameDelay = 0;
         }

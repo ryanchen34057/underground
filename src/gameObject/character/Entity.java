@@ -1,25 +1,36 @@
-package character;
+package gameObject.character;
 
+import effects.Effect;
 import enums.Id;
+import gameObject.ICollidable;
+import states.State;
 
 import java.awt.*;
 
-public abstract class Entity {
+public abstract class Entity implements ICollidable {
     //Coordinate
     protected int x;
     protected int y;
     protected int width;
     protected int height;
-    protected double velX;
-    protected double velY;
+    protected float velX;
+    protected float velY;
     protected int facing;  //-1 -> left, 1 -> right
 
     //Physics
-    protected double gravity;
+    protected float gravity;
 
     //info
     protected Id id;
+    protected boolean isDead;
+    protected State currentState;
+    protected State prevState;
+    protected Effect currentEffect;
 
+    // State
+    protected boolean isOnTheGround;
+    protected int fatigue;
+    protected boolean isTired;
 
     public Entity(int x, int y, int width, int height, Id id) {
         this.x = x;
@@ -31,6 +42,7 @@ public abstract class Entity {
         gravity = 0;
         this.id = id;
         facing = 0;
+        isDead = false;
     }
 
     //getters and setters
@@ -61,13 +73,13 @@ public abstract class Entity {
     public double getVelX() {
         return velX;
     }
-    public void setVelX(double velX) {
+    public void setVelX(float velX) {
         this.velX = velX;
     }
     public double getVelY() {
         return velY;
     }
-    public void setVelY(double velY) {
+    public void setVelY(float velY) {
         this.velY = velY;
     }
     public int getFacing() {
@@ -76,14 +88,29 @@ public abstract class Entity {
     public Id getId() {
         return id;
     }
-    public double getGravity() {
+    public float getGravity() {
         return gravity;
     }
-    public void setGravity(double gravity) {
+    public void setGravity(float gravity) {
         this.gravity = gravity;
     }
     public void setFacing(int facing) {
         this.facing = facing;
+    }
+    public boolean isDead() {
+        return isDead;
+    }
+    public State getCurrentState() {
+        return currentState;
+    }
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
+    }
+    public Effect getCurrentEffect() {
+        return currentEffect;
+    }
+    public void setCurrentEffect(Effect currentEffect) {
+        this.currentEffect = currentEffect;
     }
 
     // Drawing method
@@ -98,5 +125,8 @@ public abstract class Entity {
     public abstract Rectangle getBoundsBottom();
     public abstract Rectangle getBoundsLeft();
     public abstract Rectangle getBoundsRight();
+
+    // Die
+    public abstract void die();
 
 }

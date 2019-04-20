@@ -13,7 +13,7 @@ public class FrameManager {
     public static Sprite[] purplePortalFrame = new Sprite[9];
     public static Sprite[] torchFrame = new Sprite[10];
 
-    public static Sprite[] getPlayerMoveFrame(StateMachine currentState) {
+    public static Sprite[] getPlayerMoveFrame(State currentState) {
         int y = 0;
         if(currentState instanceof Standing) {
            y = 28;

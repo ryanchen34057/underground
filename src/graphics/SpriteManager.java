@@ -1,7 +1,5 @@
 package graphics;
 
-import util.ResourceManager;
-
 import java.awt.image.BufferedImage;
 
 public class SpriteManager {

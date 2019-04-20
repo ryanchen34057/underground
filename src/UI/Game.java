@@ -1,11 +1,13 @@
 package UI;
 
+import enums.GameStatus;
 import enums.Id;
+import gameObject.character.Entity;
 import input.Input;
 import util.Camera;
 import util.Handler;
 import graphics.SpriteManager;
-import util.ResourceManager;
+import graphics.ResourceManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,6 +41,9 @@ public class Game extends Canvas implements Runnable {
     // Background Image
     private BufferedImage backgroundImage;
 
+    // Current Status
+    private GameStatus currentStatus;
+
     public Game() {
         running = false;
         debugMode = true;
@@ -66,9 +71,10 @@ public class Game extends Canvas implements Runnable {
 
     public void update() {
         handler.update();
-        for(int i=0;i<Handler.entities.size();i++) {
-            if(Handler.entities.get(i).getId() == Id.player) {
-                cam.update(Handler.entities.get(i));
+        for(int i=0;i<handler.getEntities().size();i++) {
+            Entity e = handler.getEntities().get(i);
+            if(e.getId() == Id.player) {
+                cam.update(e);
             }
         }
     }
@@ -81,6 +87,7 @@ public class Game extends Canvas implements Runnable {
         cam = new Camera();
 
         //Create currentLevel
+        currentStatus = GameStatus.MENU;
         handler.createLevel(SpriteManager.currentLevel);
 
         keyListener = new Input();

@@ -1,9 +1,9 @@
 package util;
 
-import tiles.Tile;
+import gameObject.tiles.Tile;
 
 import java.awt.*;
 
-public interface TileCollisionCondition {
+public interface CollisionCondition {
     Rectangle checkCollision(Tile t);
 }

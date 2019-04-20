@@ -1,7 +1,7 @@
 package util;
 
 import UI.Game;
-import character.Entity;
+import gameObject.character.Entity;
 
 public class Camera {
     public static int x;

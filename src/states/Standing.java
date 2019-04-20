@@ -1,44 +1,40 @@
 package states;
 
-import character.Player;
+import gameObject.character.Player;
 import effects.DashEffect;
 import input.Input;
-import util.Handler;
-
 import java.util.List;
 
-public class Standing implements StateMachine {
+public class Standing implements State {
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         //Dash Jumping
-        if(keys.get(5).down && keys.get(4).down && !Player.isTired) {
+        if(keys.get(5).down && keys.get(4).down && !player.isTired()) {
             player.setGravity(Player.DASHJUMPING_GRAVITY);
-            player.currentState = PlayerState.dashJumping;
-            Handler.addObject(DashEffect.getInstance(player));
+            player.setCurrentState(PlayerState.dashJumping);
         }
         else if(keys.get(2).down) {
             player.setFacing(-1);
-            player.currentState = PlayerState.running;
+            player.setCurrentState(PlayerState.running);
         }
         else if(keys.get(3).down) {
             player.setFacing(1);
-            player.currentState = PlayerState.running;
+            player.setCurrentState(PlayerState.running);
         }
         //Standing Jump
-        else if(keys.get(5).down && Player.isOnTheGround) {
+        else if(keys.get(5).down && player.isOnTheGround()) {
             player.setVelX(0);
             player.setGravity(Player.STANDINGJUMPING_GRAVITY);
-            player.currentState = PlayerState.standingJumping;
+            player.setCurrentState(PlayerState.standingJumping);
         }
         //Dashing
-        else if(keys.get(4).down && !Player.isTired) {
-            player.currentState = PlayerState.dashing;
-            //Dash Effect
-            Handler.addObject(DashEffect.getInstance(player));
-            Player.isTired = true;
+        else if(keys.get(4).down && !player.isTired()) {
+            player.setCurrentState(PlayerState.dashing);
+            player.setCurrentEffect(DashEffect.getInstance(player));
+            player.setTired(true);
         }
         else if(!keys.get(4).down) {
-            Player.isTired = false;
+            player.setTired(false);
         }
     }
 

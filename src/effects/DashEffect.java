@@ -1,7 +1,7 @@
 package effects;
 
 import enums.Id;
-import character.Player;
+import gameObject.character.Player;
 import graphics.FrameManager;
 import util.Handler;
 
@@ -26,12 +26,12 @@ public class DashEffect extends Effect{
     @Override
     public void paint(Graphics g) {
         if(direction == 1) {
-            g.drawImage(FrameManager.getEffectFrame(id)[frame].getBufferedImage(), super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(FrameManager.getEffectFrame(id)[frame].getBufferedImage(), x, y,
+                    width, height, null);
         }
         else {
-            g.drawImage(FrameManager.getEffectFrame(id)[frame+15].getBufferedImage(), super.getX(), super.getY(),
-                        super.getWidth(), super.getHeight(), null);
+            g.drawImage(FrameManager.getEffectFrame(id)[frame+15].getBufferedImage(), x, y,
+                        width, height, null);
         }
     }
 
@@ -42,7 +42,7 @@ public class DashEffect extends Effect{
             frame++;
             if (frame >= 15) {
                 frame = 0;
-                Handler.effectRemove();
+                die();
             }
             frameDelay = 0;
         }

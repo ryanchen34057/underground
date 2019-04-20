@@ -1,7 +1,4 @@
-package util;
-
-import graphics.Sprite;
-import graphics.SpriteSheet;
+package graphics;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
