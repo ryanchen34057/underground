@@ -44,6 +44,7 @@ public class Player extends Entity {
     // Dash
     public static final int DASH_SPEED = 10;
     public static final float DASH_TIMER = 1.5f;
+    public static final float ICESKATING_SPEED = 15;
     public float currentDashSpeed = 10;
     public static final float DASH_SPEED_BUMP = 0.1f;
 
@@ -91,13 +92,13 @@ public class Player extends Entity {
             g.setColor(Color.BLUE);
             g.drawRect(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT);
             //TOP
-            g.drawRect(x+40, y, WIDTH -80, 1);
+            g.drawRect(x+40, y, WIDTH - 80, 1);
             //BOTTOM
-            g.drawRect(x+40, y+ HEIGHT, WIDTH -80, 1);
+            g.drawRect(x+40, y+ HEIGHT, WIDTH - 80, 1);
             //LEFT
-            g.drawRect(x+25, y+20, 1, WIDTH -40);
+            g.drawRect(x+25, y+10, 1, WIDTH - 20);
             //RIGHT
-            g.drawRect(x+ WIDTH -30, y+20,1, WIDTH -40);
+            g.drawRect(x+ WIDTH -25, y+10,1, WIDTH - 20);
         }
 
     }
@@ -125,42 +126,17 @@ public class Player extends Entity {
                 handleCollision(t, checkCollisionBounds(t, Tile::getBounds));
             }
         }
+        // Check if on the ice
+        if(isOnTheIce) {
+            currentState = PlayerState.iceSkating;
+        }
 
         //Check if on the ground
         if(isOnTheGroundCondition()) {
             currentState = PlayerState.falling;
         }
 
-        if(currentState == PlayerState.standing) {
-            frameDelay++;
-            if (frameDelay >= 30) {
-                frame++;
-                if (frame >= FrameManager.playerMoveFrame.length / 2) {
-                    frame = 0;
-                }
-                frameDelay = 0;
-            }
-        }
-        else if(currentState == PlayerState.dashing || currentState == PlayerState.dashJumping) {
-            frameDelay++;
-            if (frameDelay >= 4) {
-                frame++;
-                if (frame >= FrameManager.playerMoveFrame.length / 2) {
-                    frame = 0;
-                }
-                frameDelay = 0;
-            }
-        }
-        else {
-            frameDelay++;
-            if (frameDelay >= 5) {
-                frame++;
-                if (frame >= FrameManager.playerMoveFrame.length / 2) {
-                    frame = 0;
-                }
-                frameDelay = 0;
-            }
-        }
+        frameSpeedManager();
     }
 
     // Getter and Setter
@@ -183,9 +159,44 @@ public class Player extends Entity {
         isTired = tired;
     }
 
+
     public void handleKeyInput() {
         currentState.handleKeyInput(this, Input.keys);
     }
+
+    private void frameSpeedManager() {
+        if(currentState == PlayerState.standing) {
+            frameDelay++;
+            if (frameDelay >= 30) {
+                frame++;
+                if (frame >= FrameManager.playerMoveFrame.length / 2) {
+                    frame = 0;
+                }
+                frameDelay = 0;
+            }
+        }
+        else if(currentState == PlayerState.iceSkating) {
+            frameDelay++;
+            if (frameDelay >= 20) {
+                frame++;
+                if (frame >= FrameManager.playerMoveFrame.length / 2) {
+                    frame = 0;
+                }
+                frameDelay = 0;
+            }
+        }
+        else {
+            frameDelay++;
+            if (frameDelay >= 4) {
+                frame++;
+                if (frame >= FrameManager.playerMoveFrame.length / 2) {
+                    frame = 0;
+                }
+                frameDelay = 0;
+            }
+        }
+    }
+
 
     @Override
     // Collision test
@@ -200,7 +211,7 @@ public class Player extends Entity {
         return new Rectangle(getX()+25, getY()+20, 1, HEIGHT -40 );
     }
     public Rectangle getBoundsRight() {
-        return new Rectangle(getX()+ WIDTH -30, getY()+20, 1, HEIGHT -40 );
+        return new Rectangle(getX()+ WIDTH -25, getY()+20, 1, HEIGHT -40 );
     }
 
     @Override
@@ -251,20 +262,32 @@ public class Player extends Entity {
         switch (t.getId()) {
             case upwardSpike:
                 if(direction == Direction.BOTTOM) {
+                    System.out.println("upward");
                     die();
                 }
+                ifHitWall(t, direction);
+                break;
             case downwardSpike:
                 if(direction == Direction.TOP) {
+                    System.out.println("downward");
                     die();
                 }
+                ifHitWall(t, direction);
+                break;
             case leftwardSpike:
                 if(direction == Direction.RIGHT) {
+                    System.out.println("leftward");
                     die();
                 }
+                ifHitWall(t, direction);
+                break;
             case rightwardSpike:
                 if(direction == Direction.LEFT) {
+                    System.out.println("rightward");
                     die();
                 }
+                ifHitWall(t, direction);
+                break;
             case breakableWall:
             case icewall1:
             case icewall2:
@@ -283,12 +306,14 @@ public class Player extends Entity {
     private void ifHitWall(Tile t, Direction direction) {
         switch (direction) {
             case TOP:
+//                System.out.println("TOP");
                 gravity = 0;
                 velY = 0;
                 y = t.getY() + t.getHeight();
                 currentState = PlayerState.falling;
                 break;
             case BOTTOM:
+//                System.out.println("BOTTOM");
                 if(currentState == PlayerState.falling || currentState == PlayerState.sliding
                         || currentState == PlayerState.verticalDashing) {
                     velY = 0;
@@ -300,24 +325,30 @@ public class Player extends Entity {
                     }
                 }
                 if(t instanceof IceWall) {
-                    if(currentState != PlayerState.standing){
-                        velX += facing * IceWall.ICE_ACCELERATION;
+                    isOnTheIce = true;
+                }
+                else {
+                    if(currentState == PlayerState.iceSkating) {
+                        currentState = PlayerState.standing;
                     }
+                    isOnTheIce = false;
                 }
                 isOnTheGround = true;
                 fatigue = 0;
                 break;
             case LEFT:
+//                System.out.println("LEFT");
                 velX = 0;
-                x = t.getX() + t.getWidth() - 25;
+                x = t.getX() + t.getWidth() - 20;
                 if(currentState == PlayerState.falling &&
                         Input.keys.get(2).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
                 }
                 break;
             case RIGHT:
+//                System.out.println("RIGHT");
                 velX = 0;
-                x = t.getX() - getWidth() + 28;
+                x = t.getX() - width + 20;
                 if(currentState == PlayerState.falling && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
                 }

@@ -1,5 +1,6 @@
 package util;
 
+import UI.Game;
 import effects.DeathParticle;
 import effects.Effect;
 import effects.ParticleSystem;
@@ -76,6 +77,7 @@ public class Handler {
                 for(int j=0;j<8;j++) {
                     addObject(DeathParticle.getInstance(player,j));
                 }
+                Game.cam.setShaking(true, 20, 5);
                 entities.remove(player);
             }
         }

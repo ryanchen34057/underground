@@ -29,6 +29,7 @@ public abstract class Entity implements ICollidable {
 
     // State
     protected boolean isOnTheGround;
+    protected boolean isOnTheIce;
     protected int fatigue;
     protected boolean isTired;
 
@@ -43,6 +44,7 @@ public abstract class Entity implements ICollidable {
         this.id = id;
         facing = 0;
         isDead = false;
+        isOnTheIce = false;
     }
 
     //getters and setters
@@ -111,6 +113,12 @@ public abstract class Entity implements ICollidable {
     }
     public void setCurrentEffect(Effect currentEffect) {
         this.currentEffect = currentEffect;
+    }
+    public boolean isOnTheIce() {
+        return isOnTheIce;
+    }
+    public void setOnTheIce(boolean onTheIce) {
+        isOnTheIce = onTheIce;
     }
 
     // Drawing method

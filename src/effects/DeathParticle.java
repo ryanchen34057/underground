@@ -1,5 +1,6 @@
 package effects;
 
+import UI.Game;
 import gameObject.character.Player;
 import graphics.FrameManager;
 import java.awt.*;

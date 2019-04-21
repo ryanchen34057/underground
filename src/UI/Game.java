@@ -32,7 +32,7 @@ public class Game extends Canvas implements Runnable {
     public static  Handler handler;
 
     // Camera
-    private Camera cam;
+    public static Camera cam;
 
     //Resource Manager
     private SpriteManager spriteManager;
@@ -64,9 +64,8 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0,0, getWidth(), getHeight());
-        g.drawImage(backgroundImage, cam.getX(), cam.getY(), WIDTH * SCALE, HEIGHT * SCALE, null);
-        System.out.println(cam.getX() + "," + cam.getY());
         g.translate(cam.getX(), cam.getY());
+//        g.drawImage(backgroundImage, cam.getX(), cam.getY(), WIDTH * SCALE, HEIGHT * SCALE, null);
         handler.paint(g);
         g.dispose();
         bs.show();
@@ -76,14 +75,8 @@ public class Game extends Canvas implements Runnable {
         handler.update();
         for(int i=0;i<handler.getEntities().size();i++) {
             Entity e = handler.getEntities().get(i);
-            if(e.getId() == Id.player) {
+            if (e.getId() == Id.player) {
                 cam.update(e);
-                if(e.getCurrentState() == PlayerState.dashing || e.getCurrentState() == PlayerState.dashingInTheAir) {
-                    cam.setShaking(true, 15, 1, 'x');
-                }
-                else if(e.getCurrentState() == PlayerState.verticalDashing) {
-                    cam.setShaking(true, 15, 1, 'y');
-                }
             }
         }
     }
@@ -127,7 +120,7 @@ public class Game extends Canvas implements Runnable {
         init();
         requestFocus();
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 60;
+        final double amountOfTicks = 70;
         long timer = System.currentTimeMillis();
         double delta = 0.0;
         double ns = 1000000000.0 / amountOfTicks;

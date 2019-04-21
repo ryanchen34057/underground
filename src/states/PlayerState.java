@@ -15,4 +15,5 @@ public class PlayerState {
     public static DashingInTheAir dashingInTheAir = new DashingInTheAir();
     public static VerticalDashing verticalDashing = new VerticalDashing();
     public static Idle idle = new Idle();
+    public static IceSkating iceSkating = new IceSkating();
 }

@@ -3,6 +3,8 @@ package states;
 import gameObject.character.Player;
 import effects.DashEffect;
 import input.Input;
+import util.Camera;
+
 import java.util.List;
 
 public class Standing implements State {
