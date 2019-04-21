@@ -15,8 +15,8 @@ public class Camera {
     public int level = 0;
 
     public void update(Entity player) {
-        x = -player.getX() + Game.WIDTH/2;
-        y = -player.getY() + Game.HEIGHT*2 + 200;
+        x = -player.getX() + Game.WIDTH / 2;
+        y = -player.getY() + Game.HEIGHT * 2;
         if(shaking) {
             counter++;
             if(shakingAxis == 'x') {

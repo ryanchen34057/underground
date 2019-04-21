@@ -13,7 +13,7 @@ public class DashJumping implements State {
 
     @Override
     public void update(Player player) {
-        player.setVelX(player.getFacing() * (Player.STEP * 2));
+        player.setVelX(player.getFacing() * (Player.STEP * 3));
         player.setGravity(player.getGravity() - Player.DASHJUMPING_GRAVITY_OFFSET);
         player.setVelY((int) -player.getGravity());
         if (player.getGravity() <= 0.0) {

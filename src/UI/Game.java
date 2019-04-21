@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable {
     public static boolean debugMode;
 
     //Size
-    public static final int WIDTH = 350;
+    public static final int WIDTH = 400;
     public static final int HEIGHT = WIDTH / 14*10;
     public static final int SCALE = 4;
 
@@ -65,6 +65,7 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0,0, getWidth(), getHeight());
         g.drawImage(backgroundImage, cam.getX(), cam.getY(), WIDTH * SCALE, HEIGHT * SCALE, null);
+        System.out.println(cam.getX() + "," + cam.getY());
         g.translate(cam.getX(), cam.getY());
         handler.paint(g);
         g.dispose();
@@ -78,10 +79,10 @@ public class Game extends Canvas implements Runnable {
             if(e.getId() == Id.player) {
                 cam.update(e);
                 if(e.getCurrentState() == PlayerState.dashing || e.getCurrentState() == PlayerState.dashingInTheAir) {
-                    cam.setShaking(true, 10, 1, 'x');
+                    cam.setShaking(true, 15, 1, 'x');
                 }
                 else if(e.getCurrentState() == PlayerState.verticalDashing) {
-                    cam.setShaking(true, 10, 1, 'y');
+                    cam.setShaking(true, 15, 1, 'y');
                 }
             }
         }

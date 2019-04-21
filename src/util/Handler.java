@@ -3,6 +3,8 @@ package util;
 import effects.DeathParticle;
 import effects.Effect;
 import effects.ParticleSystem;
+import gameObject.tiles.wall.IceWall;
+import gameObject.tiles.wall.Wall;
 import input.Input;
 import gameObject.tiles.*;
 import gameObject.tiles.movable.Torch;
@@ -123,6 +125,16 @@ public class Handler {
                 //Wall
                 if(red == 0 && green == 0 && blue == 0) {
                     addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall));
+                }
+
+                //Icewall1
+                if(red == 0 && green == 100 && blue == 100) {
+                    addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.icewall1));
+                }
+
+                //Icewall2
+                if(red == 0 && green == 150 && blue == 100) {
+                    addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.icewall2));
                 }
 
                 //Breakable Wall

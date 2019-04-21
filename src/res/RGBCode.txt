@@ -1,5 +1,7 @@
 Player		255,0,255
 Wall1		0,0,0
+IceWall1	0,100,100
+IceWall2	0,150,100
 Breakable Wall	0,0,150
 UpwardSpike	0,255,0
 DownwardSpike	0,100,0

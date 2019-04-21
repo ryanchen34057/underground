@@ -9,6 +9,8 @@ public class SpriteManager {
 
     //UI.Game object
     public static Sprite wall1;
+    public static Sprite iceWall1;
+    public static Sprite iceWall2;
     public static Sprite wall2Breakable;
     public static Sprite upwardSpike;
     public static Sprite downwardSpike;
@@ -23,6 +25,8 @@ public class SpriteManager {
         //Sprite object
         spriteSheet = new SpriteSheet("/res/spriteSheet.png");
         wall1 = new Sprite(spriteSheet, 2, 1, 32, 32);
+        iceWall1 = new Sprite(spriteSheet, 1, 3, 32, 32);
+        iceWall2 = new Sprite(spriteSheet, 2, 3, 32, 32);
         wall2Breakable = new Sprite(spriteSheet, 3, 1, 32, 32);
         upwardSpike = new Sprite(spriteSheet, 1, 2, 32, 32);
         downwardSpike = new Sprite(spriteSheet, 2, 2,32, 32);

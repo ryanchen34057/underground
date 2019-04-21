@@ -5,6 +5,7 @@ import effects.LandingEffect;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
+import gameObject.tiles.wall.IceWall;
 import graphics.FrameManager;
 import input.Input;
 import gameObject.tiles.Tile;
@@ -27,7 +28,7 @@ public class Player extends Entity {
     private final int STAMINA = 100;
 
     // Running
-    public static final int STEP = 4;
+    public static final int STEP = 5;
 
     // StandingJump
     public static final float STANDINGJUMPING_GRAVITY = 18f;
@@ -51,13 +52,13 @@ public class Player extends Entity {
     public static final float DASHJUMPING_GRAVITY_OFFSET = 0.8f;
 
     // Sliding and Bouncing
-    public static final float BOUNCING_RANGE = 3.0f;
+    public static final float BOUNCING_RANGE = 4.0f;
     public static final float BOUNCING_GRAVITY_OFFSET = 0.6f;
     public static final float BOUNCING_GRAVITY = 13;
 
     // Falling
     public static final float FALLING_GRAVITY_VEL = 0.5f;
-    public static final int FALLING_VELX = 6;
+    public static final int FALLING_VELX = 5;
 
     // Vertical Dashing
     public static final float VERTICALDASHING_SPEED = 8;
@@ -265,6 +266,8 @@ public class Player extends Entity {
                     die();
                 }
             case breakableWall:
+            case icewall1:
+            case icewall2:
             case wall:
                 ifHitWall(t, direction);
                 break;
@@ -296,6 +299,11 @@ public class Player extends Entity {
                         currentEffect = LandingEffect.getInstance(this);
                     }
                 }
+                if(t instanceof IceWall) {
+                    if(currentState != PlayerState.standing){
+                        velX += facing * IceWall.ICE_ACCELERATION;
+                    }
+                }
                 isOnTheGround = true;
                 fatigue = 0;
                 break;
@@ -310,7 +318,7 @@ public class Player extends Entity {
             case RIGHT:
                 velX = 0;
                 x = t.getX() - getWidth() + 28;
-                if(currentState == PlayerState.falling&& Input.keys.get(3).down && fatigue < STAMINA) {
+                if(currentState == PlayerState.falling && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
                 }
                 break;

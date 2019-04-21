@@ -1,9 +1,10 @@
-package gameObject.tiles;
+package gameObject.tiles.wall;
 
 import UI.Game;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
+import gameObject.tiles.Tile;
 import graphics.SpriteManager;
 import util.CollisionCondition;
 
@@ -18,17 +19,17 @@ public class Wall extends Tile {
     @Override
     public void paint(Graphics g) {
         if(!breakable) {
-            g.drawImage(SpriteManager.wall1.getBufferedImage(), super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(SpriteManager.wall1.getBufferedImage(), x, y,
+                    width, height, null);
         }
         else {
-            g.drawImage(SpriteManager.wall2Breakable.getBufferedImage(), super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(SpriteManager.wall2Breakable.getBufferedImage(), x, y,
+                    width, height, null);
         }
 
         if(Game.debugMode) {
             g.setColor(Color.GREEN);
-            g.drawRect(getX(), getY(), super.getWidth(),getHeight() );
+            g.drawRect(x, y, width,height);
         }
     }
 
