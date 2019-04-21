@@ -1,5 +1,12 @@
 Player		255,0,255
-Wall1		0,0,0
+CavernWall1	0,0,0
+CavernWall2	10,10,10
+CavernWall3	20,20,20
+CavernWall4	30,30,30
+CavernWall5	40,40,40
+CavernWall6	50,50,50
+CavernWall7	60,60,60
+CavernWall8	70,70,70
 IceWall1	0,100,100
 IceWall2	0,150,100
 Breakable Wall	0,0,150

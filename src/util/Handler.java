@@ -6,6 +6,8 @@ import effects.Effect;
 import effects.ParticleSystem;
 import gameObject.tiles.wall.IceWall;
 import gameObject.tiles.wall.Wall;
+import graphics.Sprite;
+import graphics.SpriteManager;
 import input.Input;
 import gameObject.tiles.*;
 import gameObject.tiles.movable.Torch;
@@ -22,11 +24,11 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public class Handler {
-    private LinkedList<Entity> entities;
-    private LinkedList<Tile> tiles;
-    private LinkedList<Effect> effects;
-    private LinkedList<ParticleSystem> particles;
-    private Dimension bluePortalCor;
+    public static LinkedList<Entity> entities;
+    public static LinkedList<Tile> tiles;
+    public static LinkedList<Effect> effects;
+    public static LinkedList<ParticleSystem> particles;
+    public static Dimension bluePortalCor;
 
 
     public Handler() {
@@ -69,6 +71,7 @@ public class Handler {
         Player player;
         for(int i=0;i<entities.size();i++) {
             player = (Player) entities.get(i);
+            player.setInTheGame(true);
             player.update();
             if(player.getCurrentEffect() != null && effects.size() == 0) {
                 addObject(player.getCurrentEffect());
@@ -98,7 +101,7 @@ public class Handler {
             }
         }
         for(int i=0;i<tiles.size();i++) {
-            if(tiles.get(i).getId() == Id.bluePortal || tiles.get(i).getId() == Id.torch) {
+            if(tiles.get(i).getId() == Id.bluePortal || tiles.get(i).getId() == Id.torch || tiles.get(i).getId() == Id.coin) {
                 tiles.get(i).update();
             }
             if(tiles.get(i).isDead()) {
@@ -112,7 +115,7 @@ public class Handler {
         }
     }
 
-    public void createLevel(BufferedImage level) {
+    public void createLevel1(BufferedImage level) {
         int width = level.getWidth();
         int height = level.getHeight();
 
@@ -124,10 +127,7 @@ public class Handler {
                 int blue = (pixel) & 0xff;
 
 
-                //Wall
-                if(red == 0 && green == 0 && blue == 0) {
-                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall));
-                }
+                genWalls(red, green, blue, x, y);
 
                 //Icewall1
                 if(red == 0 && green == 100 && blue == 100) {
@@ -137,11 +137,6 @@ public class Handler {
                 //Icewall2
                 if(red == 0 && green == 150 && blue == 100) {
                     addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.icewall2));
-                }
-
-                //Breakable Wall
-                if(red == 0 && green == 0 && blue == 150) {
-                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, true, Id.breakableWall));
                 }
 
                 //Spike
@@ -180,6 +175,34 @@ public class Handler {
                     addObject(new Torch(x*64, y*64, Torch.TILE_SIZE, Torch.TILE_SIZE, false, Id.torch));
                 }
             }
+        }
+    }
+
+    public void genWalls(int red, int green, int blue, int x, int y) {
+        //CavernWall
+        if(red == 0 && green == 0 && blue == 0) {
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall1.getBufferedImage()));
+        }
+        if(red == 10 && green == 10 && blue == 10) {
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall2.getBufferedImage()));
+        }
+        if(red == 20 && green == 20 && blue == 20) {
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall3.getBufferedImage()));
+        }
+        if(red == 30 && green == 30 && blue == 30) {
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall4.getBufferedImage()));
+        }
+        if(red == 40 && green == 40 && blue == 40) {
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall5.getBufferedImage()));
+        }
+        if(red == 50 && green == 50 && blue == 50) {
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall6.getBufferedImage()));
+        }
+        if(red == 60 && green == 60 && blue == 60) {
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall7.getBufferedImage()));
+        }
+        if(red == 70 && green == 70 && blue == 70) {
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall1.getBufferedImage()));
         }
     }
 

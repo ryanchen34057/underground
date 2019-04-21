@@ -1,15 +1,9 @@
 package UI;
 
-import enums.GameStatus;
-import enums.Id;
-import gameObject.character.Entity;
-import gameObject.character.Player;
+import gameStates.GameStateManager;
 import input.Input;
-import states.PlayerState;
 import util.Camera;
-import util.Handler;
 import graphics.SpriteManager;
-import graphics.ResourceManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,12 +18,9 @@ public class Game extends Canvas implements Runnable {
     public static boolean debugMode;
 
     //Size
-    public static final int WIDTH = 400;
-    public static final int HEIGHT = WIDTH / 14*10;
+    public static final int WIDTH = 320;
+    public static final int HEIGHT = 240;
     public static final int SCALE = 4;
-
-    //Handler
-    public static  Handler handler;
 
     // Camera
     public static Camera cam;
@@ -41,14 +32,14 @@ public class Game extends Canvas implements Runnable {
     private Input keyListener;
 
     // Background Image
-    private BufferedImage backgroundImage;
+    private BufferedImage img;
 
     // Current Status
-    private GameStatus currentStatus;
+    private GameStateManager gameStateManager;
 
     public Game() {
         running = false;
-        debugMode = true;
+        debugMode = false;
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
@@ -65,32 +56,23 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0,0, getWidth(), getHeight());
         g.translate(cam.getX(), cam.getY());
-//        g.drawImage(backgroundImage, cam.getX(), cam.getY(), WIDTH * SCALE, HEIGHT * SCALE, null);
-        handler.paint(g);
+        gameStateManager.paint(g);
         g.dispose();
         bs.show();
     }
 
     public void update() {
-        handler.update();
-        for(int i=0;i<handler.getEntities().size();i++) {
-            Entity e = handler.getEntities().get(i);
-            if (e.getId() == Id.player) {
-                cam.update(e);
-            }
-        }
+        gameStateManager.update();
+
     }
 
     public void init() {
         spriteManager = new SpriteManager();
-        backgroundImage = ResourceManager.getInstance().getImage("/res/back-walls.png");
-        //Game object
-        handler = new Handler();
+        img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         cam = new Camera();
 
-        //Create currentLevel
-        currentStatus = GameStatus.MENU;
-        handler.createLevel(SpriteManager.currentLevel);
+        //Create level1
+        gameStateManager = new GameStateManager();
 
         keyListener = new Input();
 

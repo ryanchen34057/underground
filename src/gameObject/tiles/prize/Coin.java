@@ -33,7 +33,7 @@ public class Coin extends Prize {
         frameDelay++;
         if (frameDelay >= 5) {
             frame++;
-            if (frame >= FrameManager.getPrizeFrame().length / 2) {
+            if (frame >= FrameManager.getPrizeFrame().length) {
                 frame = 0;
             }
             frameDelay = 0;

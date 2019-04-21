@@ -7,5 +7,6 @@ public enum Keys {
     RIGHT,
     X,
     C,
-    R
+    R,
+    ENTER
 }

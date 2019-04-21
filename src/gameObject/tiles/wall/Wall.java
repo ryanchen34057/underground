@@ -5,28 +5,25 @@ import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
 import gameObject.tiles.Tile;
+import graphics.Sprite;
 import graphics.SpriteManager;
 import util.CollisionCondition;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Wall extends Tile {
     public static final int TILE_SIZE = 64;
-    public Wall(int x, int y, int width, int height,boolean breakable,  Id id) {
+    private BufferedImage img;
+    public Wall(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height,breakable, id);
+        img = bufferedImage;
     }
 
     @Override
     public void paint(Graphics g) {
-        if(!breakable) {
-            g.drawImage(SpriteManager.wall1.getBufferedImage(), x, y,
+        g.drawImage(img, x, y,
                     width, height, null);
-        }
-        else {
-            g.drawImage(SpriteManager.wall2Breakable.getBufferedImage(), x, y,
-                    width, height, null);
-        }
-
         if(Game.debugMode) {
             g.setColor(Color.GREEN);
             g.drawRect(x, y, width,height);

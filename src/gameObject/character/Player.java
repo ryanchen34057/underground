@@ -12,6 +12,7 @@ import gameObject.tiles.Tile;
 import org.omg.PortableInterceptor.INACTIVE;
 import states.PlayerState;
 import util.CollisionCondition;
+import util.Handler;
 
 
 import java.awt.*;
@@ -21,6 +22,7 @@ public class Player extends Entity {
 
     private int frame;
     private int frameDelay;
+    private boolean inTheGame;
 
     //Stats
     public static final int WIDTH = 96;
@@ -77,6 +79,7 @@ public class Player extends Entity {
         currentEffect = null;
         fatigue = 0;
         isTired = false;
+        inTheGame = false;
     }
 
     @Override
@@ -116,12 +119,14 @@ public class Player extends Entity {
         x += velX;
         y += velY;
 
-        handleKeyInput();
+        if(inTheGame) {
+            handleKeyInput();
+        }
         currentState.update(this);
         isOnTheGround = false;
         Tile t;
-        for (int i = 0; i < Game.handler.getTiles().size(); i++) {
-            t = Game.handler.getTiles().get(i);
+        for (int i = 0; i < Handler.tiles.size(); i++) {
+            t = Handler.tiles.get(i);
             if(t.getBounds() != null) {
                 handleCollision(t, checkCollisionBounds(t, Tile::getBounds));
             }
@@ -158,7 +163,12 @@ public class Player extends Entity {
     public void setTired(boolean tired) {
         isTired = tired;
     }
-
+    public boolean isInTheGame() {
+        return inTheGame;
+    }
+    public void setInTheGame(boolean inTheGame) {
+        this.inTheGame = inTheGame;
+    }
 
     public void handleKeyInput() {
         currentState.handleKeyInput(this, Input.keys);
