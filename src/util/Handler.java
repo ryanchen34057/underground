@@ -29,6 +29,7 @@ public class Handler {
     public static LinkedList<Effect> effects;
     public static LinkedList<ParticleSystem> particles;
     public static Dimension bluePortalCor;
+    private Player player;
 
 
     public Handler() {
@@ -53,8 +54,13 @@ public class Handler {
 
 
     public void paint(Graphics g) {
+        Tile t;
         for(int i=0;i<tiles.size();i++) {
-            tiles.get(i).paint(g);
+            t = tiles.get(i);
+            if(inTheScreen(t)) {
+                tiles.get(i).paint(g);
+            }
+
         }
         for(int i=0;i<effects.size();i++) {
             effects.get(i).paint(g);
@@ -68,7 +74,6 @@ public class Handler {
     }
 
     public void update() {
-        Player player;
         for(int i=0;i<entities.size();i++) {
             player = (Player) entities.get(i);
             player.setInTheGame(true);
@@ -220,5 +225,10 @@ public class Handler {
 
     public LinkedList<ParticleSystem> getParticles() {
         return particles;
+    }
+
+    private boolean inTheScreen(Tile t) {
+        return (t.getX() >= player.getX() - (Game.WIDTH * Game.SCALE) / 1.5) && (t.getX() < player.getX() + (Game.WIDTH * Game.SCALE))
+                && (t.getY() >= player.getY() - (Game.HEIGHT * Game.SCALE) / 1.5) && (t.getY() < player.getY() + (Game.HEIGHT * Game.SCALE) / 1.5);
     }
 }

@@ -12,11 +12,17 @@ public class Camera {
     private char shakingAxis;
     private int counter;
     private int intensity;
-    public int level = 0;
 
     public void update(Entity player) {
-        x = -player.getX() + Game.WIDTH * 2;
-        y = -player.getY() + Game.HEIGHT * 2;
+//        System.out.println("Cam: " + x + "," + y);
+        x = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
+        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2;
+        if(x > 0) {
+            x = 0;
+        }
+        if(y > 0) {
+            y = 0;
+        }
         if(shaking) {
             counter++;
             x += Math.random() * intensity - intensity/ 2;
