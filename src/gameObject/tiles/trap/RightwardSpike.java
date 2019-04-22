@@ -8,16 +8,17 @@ import graphics.SpriteManager;
 import util.CollisionCondition;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class RightwardSpike extends Spike {
 
-    public RightwardSpike(int x, int y, int width, int height, boolean breakable, Id id) {
-        super(x, y, width, height, breakable, id);
+    public RightwardSpike(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
+        super(x, y, width, height, breakable, id, bufferedImage);
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(SpriteManager.rightwardSpike.getBufferedImage(), super.getX(), super.getY(),
+        g.drawImage(bufferedImage, super.getX(), super.getY(),
                 super.getWidth(), super.getHeight(), null);
         if(Game.debugMode) {
             g.drawRect(x, y, width/2-5, height);

@@ -1,29 +1,23 @@
-package gameObject.tiles.trap;
+package gameObject.tiles;
 
-import UI.Game;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
-import graphics.SpriteManager;
 import util.CollisionCondition;
-
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class UpwardSpike extends Spike {
-    public UpwardSpike(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
-        super(x, y, width, height, breakable, id, bufferedImage);
+public class Decor extends Tile {
+    public Decor(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
+        super(x, y, width, height, breakable, id);
+        this.bufferedImage = bufferedImage;
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(bufferedImage, super.getX(), super.getY(),
-                super.getWidth(), super.getHeight(), null);
-        if(Game.debugMode) {
-            g.drawRect(x, y+height/2, width, height/2);
-            g.drawRect(x+6, y+30, width-12,1);
-        }
+        g.drawImage(bufferedImage, x, y,
+                width, height, null);
     }
 
     @Override
@@ -33,13 +27,12 @@ public class UpwardSpike extends Spike {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y+height/2, width, height/2);
+        return null;
     }
-
 
     @Override
     public Rectangle getBoundsTop() {
-        return new Rectangle(x+6, y+30, width-12,1 );
+        return null;
     }
 
     @Override

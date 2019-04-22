@@ -6,7 +6,6 @@ import gameObject.character.Entity;
 public class Camera {
     private int x;
     private int y;
-    private int backGroundY;
     private boolean shaking;
     private int shakingLength;
     private char shakingAxis;
@@ -14,9 +13,8 @@ public class Camera {
     private int intensity;
 
     public void update(Entity player) {
-//        System.out.println("Cam: " + x + "," + y);
         x = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
-        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2;
+        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2 + 100;
         if(x > 0) {
             x = 0;
         }
@@ -55,9 +53,4 @@ public class Camera {
         this.intensity = intensity;
         this.shakingLength = shakingLength;
     }
-
-    public void setBackGroundY(int y) {
-        backGroundY = y;
-    }
-
 }

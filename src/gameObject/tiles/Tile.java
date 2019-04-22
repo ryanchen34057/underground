@@ -4,6 +4,7 @@ import enums.Id;
 import gameObject.ICollidable;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class Tile implements ICollidable {
     //Coordinate
@@ -18,6 +19,9 @@ public abstract class Tile implements ICollidable {
     //info
     protected Id id;
     protected boolean isDead;
+
+    //BufferedImage
+    protected BufferedImage bufferedImage;
 
     public Tile(int x, int y, int width, int height, boolean breakable, Id id) {
         this.x = x;

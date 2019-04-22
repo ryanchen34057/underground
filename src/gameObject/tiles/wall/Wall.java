@@ -14,15 +14,14 @@ import java.awt.image.BufferedImage;
 
 public class Wall extends Tile {
     public static final int TILE_SIZE = 64;
-    private BufferedImage img;
     public Wall(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height,breakable, id);
-        img = bufferedImage;
+        this.bufferedImage = bufferedImage;
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(img, x, y,
+        g.drawImage(bufferedImage, x, y,
                     width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.GREEN);

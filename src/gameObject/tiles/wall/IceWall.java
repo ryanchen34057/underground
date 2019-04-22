@@ -9,21 +9,19 @@ import graphics.SpriteManager;
 import util.CollisionCondition;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class IceWall extends Tile {
     public static int ICE_ACCELERATION = 8;
-    public IceWall(int x, int y, int width, int height, boolean breakable, Id id) {
+    public IceWall(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height, breakable, id);
+        this.bufferedImage = bufferedImage;
     }
 
     @Override
     public void paint(Graphics g) {
         if(id == Id.icewall1) {
-            g.drawImage(SpriteManager.iceWall1.getBufferedImage(), x,y,
-                    width, height, null);
-        }
-        else if(id == Id.icewall2) {
-            g.drawImage(SpriteManager.iceWall2.getBufferedImage(), x, y,
+            g.drawImage(bufferedImage, x,y,
                     width, height, null);
         }
         if(Game.debugMode) {
