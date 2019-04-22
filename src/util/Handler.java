@@ -131,15 +131,27 @@ public class Handler {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 
-                if(red == 100 && green == 0 && blue <= 16) {
+                if(red == 100 && green == 0 && blue <= 20) {
                     addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
 
-                if(red == 100 && green == 0 && blue <= 25) {
+                if(red == 100 && green == 0 && blue <= 29) {
                     addObject(new Decor(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
-                if(red == 100 && green == 0 && blue == 26) {
+                if(red == 100 && green == 0 && blue == 30) {
                     addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
+                if(red == 100 && green == 0 && blue == 31) {
+                    addObject(new UpwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
+                if(red == 100 && green == 0 && blue == 32) {
+                    addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
+                if(red == 100 && green == 0 && blue == 33) {
+                    addObject(new LeftwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
+                if(red == 100 && green == 0 && blue == 34) {
+                    addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
 
 
@@ -151,94 +163,6 @@ public class Handler {
                     addObject(player);
                     bluePortalCor = new Dimension(x*64, y*64);
                 }
-//
-//                    else if(i <= 25) {
-//                        if(red == 100 && green == 0 && blue == i) {
-//                            addObject(new Decor(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.decor, SpriteManager.level1Sprites.get(i - 1).getBufferedImage()));
-//                        }
-//                    }
-//                    else if(i == 26) {
-//                        if(red == 100 && green == 0 && blue == i) {
-//                            addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.icewall1, SpriteManager.level1Sprites.get(i - 1).getBufferedImage()));
-//                        }
-//                    }
-//                    else if(i == 27){
-//                        addObject(new UpwardSpike(x*64, y*64, Spike.TILE_SIZE, Spike.TILE_SIZE, false, Id.upwardSpike, SpriteManager.level1Sprites.get(i - 1).getBufferedImage()));
-//                    }
-//                    else if(i == 28) {
-//                        addObject(new DownwardSpike(x*64, y*64, Spike.TILE_SIZE, Spike.TILE_SIZE, false, Id.downwardSpike, SpriteManager.level1Sprites.get(i - 1).getBufferedImage()));
-//                    }
-//                    else if(i == 29) {
-//                        addObject(new LeftwardSpike(x*64, y*64, Spike.TILE_SIZE, Spike.TILE_SIZE, false, Id.leftwardSpike, SpriteManager.level1Sprites.get(i - 1).getBufferedImage()));
-//                    }
-//                    else if(i == 30) {
-//                        addObject(new RightwardSpike(x*64, y*64, Spike.TILE_SIZE, Spike.TILE_SIZE, false, Id.rightwardSpike, SpriteManager.level1Sprites.get(i - 1).getBufferedImage()));
-//                    }
-//                }
-//                //Coin
-//                if(red == 255 && green == 0 && blue == 0) {
-//                    addObject(new Coin(x*64, y*64, Coin.PRIZE_SIZE, Coin.PRIZE_SIZE,  false, 1000, Id.coin));
-//                }
-//
-//                //Portal
-//                //Blue
-//                if(red == 0 && green == 0 && blue == 255) {
-//                    addObject(new BluePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.bluePortal));
-//                    player = new Player(x*64+35, y*64+35, Player.WIDTH, Player.HEIGHT, Id.player);
-//                    addObject(player);
-//                    bluePortalCor = new Dimension(x*64, y*64);
-//                }
-
-
-
-//                genWalls(red, green, blue, x, y);
-//
-//                //Icewall1
-//                if(red == 0 && green == 100 && blue == 100) {
-//                    addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.icewall1));
-//                }
-//
-//                //Icewall2
-//                if(red == 0 && green == 150 && blue == 100) {
-//                    addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.icewall2));
-//                }
-//
-//                //Spike
-//                if(red == 0 && green == 255 && blue == 0) {
-//                    addObject(new UpwardSpike(x*64, y*64, Spike.TILE_SIZE, Spike.TILE_SIZE, false, Id.upwardSpike));
-//                }
-//                if(red == 0 && green == 100 && blue == 0) {
-//                    addObject(new DownwardSpike(x*64, y*64, Spike.TILE_SIZE, Spike.TILE_SIZE, false, Id.downwardSpike));
-//                }
-//                if(red == 0 && green == 150 && blue == 0) {
-//                    addObject(new LeftwardSpike(x*64, y*64, Spike.TILE_SIZE, Spike.TILE_SIZE, false, Id.leftwardSpike));
-//                }
-//                if(red == 0 && green == 200 && blue == 0) {
-//                    addObject(new RightwardSpike(x*64, y*64, Spike.TILE_SIZE, Spike.TILE_SIZE, false, Id.rightwardSpike));
-//                }
-//
-//                //Coin
-//                if(red == 255 && green == 0 && blue == 0) {
-//                    addObject(new Coin(x*64, y*64, Coin.PRIZE_SIZE, Coin.PRIZE_SIZE,  false, 1000, Id.coin));
-//                }
-//
-//                //Portal
-//                //Blue
-//                if(red == 0 && green == 0 && blue == 255) {
-//                    addObject(new BluePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.bluePortal));
-//                    player = new Player(x*64+35, y*64+35, Player.WIDTH, Player.HEIGHT, Id.player);
-//                    addObject(player);
-//                    bluePortalCor = new Dimension(x*64, y*64);
-//                }
-//                //Purple
-//                if(red == 100 && green == 0 && blue == 255) {
-//                    addObject(new PurplePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.bluePortal));
-//                }
-//
-//                //Torch
-//                if(red == 200 && green == 100 && blue == 0) {
-//                    addObject(new Torch(x*64, y*64, Torch.TILE_SIZE, Torch.TILE_SIZE, false, Id.torch));
-//                }
             }
         }
     }

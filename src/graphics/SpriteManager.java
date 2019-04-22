@@ -13,7 +13,6 @@ public class SpriteManager {
     public static ArrayList<Sprite> level1Sprites;
 
     public static Sprite coin;
-    public static Sprite bluePortal;
 
     //level1
     public static BufferedImage level1;
@@ -29,7 +28,7 @@ public class SpriteManager {
 
     public static void level1Init() {
         level1Sprites = new ArrayList<>();
-        for(int i=1;i<=26;i++) {
+        for(int i=1;i<=30;i++) {
             level1Sprites.add(new Sprite(spriteSheet, i, 1, 32, 32));
         }
         for(int i=1;i<=4;i++) {
