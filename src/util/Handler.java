@@ -167,7 +167,8 @@ public class Handler {
                 //Blue
                 if(red == 0 && green == 0 && blue == 255) {
                     addObject(new BluePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.bluePortal));
-                    addObject(new Player(x*64+35, y*64+35, Player.WIDTH, Player.HEIGHT, Id.player));
+                    player = new Player(x*64+35, y*64+35, Player.WIDTH, Player.HEIGHT, Id.player);
+                    addObject(player);
                     bluePortalCor = new Dimension(x*64, y*64);
                 }
                 //Purple
@@ -207,7 +208,7 @@ public class Handler {
             addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall7.getBufferedImage()));
         }
         if(red == 70 && green == 70 && blue == 70) {
-            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall1.getBufferedImage()));
+            addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.cavernWall8.getBufferedImage()));
         }
     }
 

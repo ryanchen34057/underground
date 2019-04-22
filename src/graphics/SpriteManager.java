@@ -38,7 +38,7 @@ public class SpriteManager {
         cavernWall5 = new Sprite(spriteSheet, 5, 1, 32, 32);
         cavernWall6 = new Sprite(spriteSheet, 6, 1, 32, 32);
         cavernWall7 = new Sprite(spriteSheet, 7, 1, 32, 32);
-        cavernWall8 = new Sprite(spriteSheet, 7, 1, 32, 32);
+        cavernWall8 = new Sprite(spriteSheet, 8, 1, 32, 32);
         iceWall1 = new Sprite(spriteSheet, 1, 3, 32, 32);
         iceWall2 = new Sprite(spriteSheet, 2, 3, 32, 32);
         wall2Breakable = new Sprite(spriteSheet, 3, 1, 32, 32);
