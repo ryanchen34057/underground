@@ -119,6 +119,8 @@ public class Handler {
             addObject(new Player((int)(bluePortalCor.getWidth()+35), (int)(bluePortalCor.getHeight()+35), Player.WIDTH, Player.HEIGHT, Id.player));
         }
     }
+    
+   
 
     public void createLevel1(BufferedImage level) {
         int width = level.getWidth();

@@ -27,6 +27,7 @@ public class SpriteManager {
 
     //level1
     public static BufferedImage level1;
+    public static BufferedImage menu;
 
     public SpriteManager() {
         //Sprite object
@@ -50,5 +51,6 @@ public class SpriteManager {
 
         //BufferedImage object
         level1 = ResourceManager.getInstance().getImage("/res/level1.png");
+        menu = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
     }
 }

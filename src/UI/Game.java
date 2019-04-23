@@ -63,7 +63,7 @@ public class Game extends Canvas implements Runnable {
 
     public void update() {
         gameStateManager.update();
-
+        gameStateManager.handleKeyInput();
     }
 
     public void init() {
@@ -73,6 +73,7 @@ public class Game extends Canvas implements Runnable {
 
         //Create level1
         gameStateManager = new GameStateManager();
+        
 
         keyListener = new Input();
 
