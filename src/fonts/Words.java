@@ -2,6 +2,8 @@
 package fonts;
 
 import UI.Game;
+import util.Camera;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -23,12 +25,17 @@ public class Words {
         this.size = size;
     }
     public void paint(Graphics g){
-            Font font1 = Fonts.getBitFont(size);    
-            g.setFont(font1);
-            g.setColor(Color.LIGHT_GRAY);
-            FontMetrics fm = g.getFontMetrics();
-            int sw = fm.stringWidth(msg);
-            int sa = fm.getAscent();   
-            g.drawString(msg, x-sw/2,y-sa/2);
-    }        
+        Font font1 = Fonts.getBitFont(size);
+        g.setFont(font1);
+        g.setColor(Color.LIGHT_GRAY);
+        FontMetrics fm = g.getFontMetrics();
+        int sw = fm.stringWidth(msg);
+        int sa = fm.getAscent();
+        g.drawString(msg, x-sw/2,y-sa/2);
+    }
+
+    public void update(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }

@@ -19,8 +19,8 @@ public class Game extends Canvas implements Runnable {
 
     //Size
     public static final int WIDTH = 320;
-    public static final int HEIGHT = 240;
-    public static final int SCALE = 4;
+    public static final int HEIGHT = 180;
+    public static final int SCALE = 6;
 
     // Camera
     public static Camera cam;
@@ -102,7 +102,7 @@ public class Game extends Canvas implements Runnable {
         init();
         requestFocus();
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 70;
+        final double amountOfTicks = 75;
         long timer = System.currentTimeMillis();
         double delta = 0.0;
         double ns = 1000000000.0 / amountOfTicks;

@@ -62,7 +62,7 @@ public class Player extends Entity {
 
     // Falling
     public static final float FALLING_GRAVITY_VEL = 0.5f;
-    public static final int FALLING_VELX = 5;
+    public static final int FALLING_VELX = 6;
 
     // Vertical Dashing
     public static final float VERTICALDASHING_SPEED = 8;
