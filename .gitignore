@@ -1,3 +1,10 @@
 /out
 gamePrototype.iml
+build
+build.xml
+manifest.xml
+manifest.mf
+/nbproject
+/dist
+.git
 /.idea

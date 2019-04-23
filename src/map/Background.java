@@ -12,7 +12,7 @@ public class Background {
     private float y;
     private float velX;
     private float velY;
-
+    
     private int width;
     private int height;
 
@@ -22,6 +22,11 @@ public class Background {
         bcakgroundImage = ResourceManager.getInstance().getImage(s);
         width = Game.WIDTH * Game.SCALE;
         height = Game.HEIGHT * Game.SCALE;
+    }
+    public Background(String s, int width, int height){
+        bcakgroundImage = ResourceManager.getInstance().getImage(s);
+        this.width = width;
+        this.height = height;
     }
 
     public void setPos(float x, float y) {
