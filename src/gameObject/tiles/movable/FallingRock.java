@@ -7,6 +7,7 @@ import enums.Id;
 import gameObject.ICollidable;
 import gameObject.character.Player;
 import gameObject.tiles.Tile;
+import gameObject.tiles.wall.Wall;
 import gameStates.GameState;
 import util.CollisionCondition;
 import util.Handler;
@@ -72,7 +73,7 @@ public class FallingRock extends Tile {
         for (int i = 0; i < Handler.tiles.size(); i++) {
             t = Handler.tiles.get(i);
             if(!inTheScreen(t)) { continue; }
-            if(t.getBounds() != null && collidesWith(t, Tile::getBounds)){
+            if(t.getBounds() != null && t instanceof Wall && collidesWith(t, Tile::getBounds)){
                 handleCollision(t, null);
             }
         }

@@ -5,6 +5,7 @@ import effects.DeathParticle;
 import effects.Effect;
 import effects.ParticleSystem;
 import gameObject.tiles.movable.FallingRock;
+import gameObject.tiles.portal.PurplePortal;
 import gameObject.tiles.prize.Coin;
 import gameObject.tiles.wall.IceWall;
 import gameObject.tiles.wall.Wall;
@@ -139,7 +140,12 @@ public class Handler {
                 if(red == 99 && green == 99 && blue == 99) {
                     addObject(new Hole(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.hole));
                 }
-
+                else if(red == 50 && green == 50 && blue == 19) {
+                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE*5, Wall.TILE_SIZE*5, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
+                else if(red == 100 && green == 50 && blue == 19) {
+                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
                 else if(red == 100 && green == 0 && blue <= 20) {
                     if(blue == 5 || blue == 4) {
                         addObject(new Wall(x*64, y*64, Wall.TILE_SIZE/2, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
@@ -187,12 +193,16 @@ public class Handler {
 
 
                 //Portal
-//                //Blue
+//              //Blue
                 else if(red == 0 && green == 0 && blue == 255) {
                     addObject(new BluePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.bluePortal));
                     player = new Player(x*64+35, y*64+35, Player.WIDTH, Player.HEIGHT, Id.player);
                     addObject(player);
                     bluePortalCor = new Dimension(x*64, y*64);
+                }
+                //Purple
+                else if(red == 255 && green == 0 && blue == 255) {
+                    addObject(new PurplePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.purplePortal));
                 }
             }
         }
@@ -215,7 +225,7 @@ public class Handler {
     }
 
     private boolean inTheScreen(Tile t) {
-        return (t.getX() >= player.getX() - (Game.WIDTH * Game.SCALE) / 1.5) && (t.getX() < player.getX() + (Game.WIDTH * Game.SCALE))
+        return (t.getX() >= player.getX() - (Game.WIDTH * Game.SCALE)) && (t.getX() < player.getX() + (Game.WIDTH * Game.SCALE))
                 && (t.getY() >= player.getY() - (Game.HEIGHT * Game.SCALE)) && (t.getY() < player.getY() + (Game.HEIGHT * Game.SCALE));
     }
 }

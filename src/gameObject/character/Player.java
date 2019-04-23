@@ -363,7 +363,7 @@ public class Player extends Entity {
                 System.out.println("LEFT");
                 velX = 0;
                 x = collisionRect.x + collisionRect.width - 20;
-                if(currentState == PlayerState.falling &&
+                if(t.getId() != Id.icewall1 && currentState == PlayerState.falling &&
                         Input.keys.get(2).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
                 }

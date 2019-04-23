@@ -32,7 +32,7 @@ public class Sliding implements State {
         player.accumulateFatigue();
         friction += 0.1;
         player.setVelY(friction);
-        if(friction >= 5 || player.getFatigue() >= player.getSTAMINA()) {
+        if(friction >= 10 || player.getFatigue() >= player.getSTAMINA()) {
             player.setCurrentState(PlayerState.falling);
             friction = 0;
         }

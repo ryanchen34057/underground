@@ -14,7 +14,7 @@ public class Camera {
 
     public void update(Entity player) {
         x = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
-        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2 + 100;
+        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2 + 150;
         if(x > 0 && !shaking) {
             x = 0;
         }

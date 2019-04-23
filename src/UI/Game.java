@@ -39,7 +39,7 @@ public class Game extends Canvas implements Runnable {
 
     public Game() {
         running = false;
-        debugMode = true;
+        debugMode = false;
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
