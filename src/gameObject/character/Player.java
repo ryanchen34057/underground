@@ -58,7 +58,7 @@ public class Player extends Entity {
     // Sliding and Bouncing
     public static final float BOUNCING_RANGE = 4.0f;
     public static final float BOUNCING_GRAVITY_OFFSET = 0.6f;
-    public static final float BOUNCING_GRAVITY = 13;
+    public static final float BOUNCING_GRAVITY = 15;
 
     // Falling
     public static final float FALLING_GRAVITY_VEL = 0.5f;
