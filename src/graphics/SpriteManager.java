@@ -34,5 +34,8 @@ public class SpriteManager {
         for(int i=1;i<=4;i++) {
             level1Sprites.add( new Sprite(spriteSheet, i, 5, 32, 32));
         }
+        for(int i=1;i<=10;i++) {
+            level1Sprites.add(new Sprite(spriteSheet, i, 2, 32, 32));
+        }
     }
 }

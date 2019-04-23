@@ -39,7 +39,7 @@ public class Game extends Canvas implements Runnable {
 
     public Game() {
         running = false;
-        debugMode = false;
+        debugMode = true;
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
@@ -55,7 +55,6 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0,0, getWidth(), getHeight());
-        g.translate(cam.getX(), cam.getY());
         gameStateManager.paint(g);
         g.dispose();
         bs.show();

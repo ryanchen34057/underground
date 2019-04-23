@@ -4,19 +4,17 @@ import UI.Game;
 import effects.DeathParticle;
 import effects.Effect;
 import effects.ParticleSystem;
+import gameObject.tiles.movable.FallingRock;
+import gameObject.tiles.prize.Coin;
 import gameObject.tiles.wall.IceWall;
 import gameObject.tiles.wall.Wall;
-import graphics.Sprite;
 import graphics.SpriteManager;
 import input.Input;
 import gameObject.tiles.*;
-import gameObject.tiles.movable.Torch;
 import gameObject.character.Entity;
 import enums.Id;
 import gameObject.character.Player;
-import gameObject.tiles.prize.Coin;
 import gameObject.tiles.portal.BluePortal;
-import gameObject.tiles.portal.PurplePortal;
 import gameObject.tiles.trap.*;
 
 import java.awt.*;
@@ -46,6 +44,11 @@ public class Handler {
         tiles.add(en);
     }
     public void addObject(Effect e) {
+        if(!effects.contains(e)) {
+            effects.add(e);
+        }
+    }
+    public static void addEffect(Effect e) {
         if(!effects.contains(e)) {
             effects.add(e);
         }
@@ -85,7 +88,6 @@ public class Handler {
                 for(int j=0;j<8;j++) {
                     addObject(DeathParticle.getInstance(player,j));
                 }
-                Game.cam.setShaking(true, 20, 5);
                 entities.remove(player);
             }
         }
@@ -105,11 +107,14 @@ public class Handler {
                 particles.remove(p);
             }
         }
+        Tile t;
         for(int i=0;i<tiles.size();i++) {
-            if(tiles.get(i).getId() == Id.bluePortal || tiles.get(i).getId() == Id.torch || tiles.get(i).getId() == Id.coin) {
-                tiles.get(i).update();
+            t = tiles.get(i);
+            if(t instanceof FallingRock && Math.abs(player.getX() - t.getX()) < 100 && !((FallingRock) t).isFallen()) {
+                ((FallingRock) t).setShaking(true);
             }
-            if(tiles.get(i).isDead()) {
+           t.update();
+            if(t.isDead()) {
                 tiles.remove(i);
             }
         }
@@ -131,33 +136,59 @@ public class Handler {
                 int green = (pixel >> 8) & 0xff;
                 int blue = (pixel) & 0xff;
 
-                if(red == 100 && green == 0 && blue <= 20) {
-                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                if(red == 99 && green == 99 && blue == 99) {
+                    addObject(new Hole(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.hole));
                 }
 
-                if(red == 100 && green == 0 && blue <= 29) {
-                    addObject(new Decor(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                else if(red == 100 && green == 0 && blue <= 20) {
+                    if(blue == 5 || blue == 4) {
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE/2, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    }
+                    else {
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    }
+
                 }
-                if(red == 100 && green == 0 && blue == 30) {
-                    addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+
+                else if(red == 100 && green == 100 && blue <= 29) {
+                    addObject(new Decor(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.decor, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
-                if(red == 100 && green == 0 && blue == 31) {
+
+                else if(red == 0 && green == 30 && blue == 255) {
+                    addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.icewall1, SpriteManager.level1Sprites.get(green - 1).getBufferedImage()));
+                }
+                else if(red == 0 && green == 255 && blue == 31) {
                     addObject(new UpwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
-                if(red == 100 && green == 0 && blue == 32) {
+                else if(red == 0 && green == 255 && blue == 32) {
                     addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
-                if(red == 100 && green == 0 && blue == 33) {
+                else if(red == 0 && green == 255 && blue == 33) {
                     addObject(new LeftwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
-                if(red == 100 && green == 0 && blue == 34) {
+                else if(red == 0 && green == 255 && blue == 34) {
                     addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
+                else if(red == 100 && green == 0 && blue == 35) {
+                    addObject(new FallingRock(x*64, y*64, Wall.TILE_SIZE * 3, Wall.TILE_SIZE * 3, false, Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
+                else if(red == 100 && green == 0 && blue >= 36) {
+                    if(blue == 42 || blue == 43) {
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE/2, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    }
+                    else {
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    }
+
+                }
+                else if(red == 255 && green == 0 && blue == 0) {
+                    addObject(new Coin(x*64, y*64, Coin.PRIZE_SIZE, Coin.PRIZE_SIZE, false,1000, Id.coin));
                 }
 
 
                 //Portal
 //                //Blue
-                if(red == 0 && green == 0 && blue == 255) {
+                else if(red == 0 && green == 0 && blue == 255) {
                     addObject(new BluePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.bluePortal));
                     player = new Player(x*64+35, y*64+35, Player.WIDTH, Player.HEIGHT, Id.player);
                     addObject(player);
@@ -185,6 +216,6 @@ public class Handler {
 
     private boolean inTheScreen(Tile t) {
         return (t.getX() >= player.getX() - (Game.WIDTH * Game.SCALE) / 1.5) && (t.getX() < player.getX() + (Game.WIDTH * Game.SCALE))
-                && (t.getY() >= player.getY() - (Game.HEIGHT * Game.SCALE) / 1.5) && (t.getY() < player.getY() + (Game.HEIGHT * Game.SCALE) / 1.5);
+                && (t.getY() >= player.getY() - (Game.HEIGHT * Game.SCALE)) && (t.getY() < player.getY() + (Game.HEIGHT * Game.SCALE));
     }
 }

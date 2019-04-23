@@ -13,7 +13,7 @@ public class Bouncing implements State {
         keys.get(5).down = false;
         //Vertical Dashing
         Direction dir = verticalDashCondition(keys, player);
-        if(dir != null) {
+        if(dir != null && !player.isTired()) {
             player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
             player.setCurrentState(PlayerState.verticalDashing);
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));

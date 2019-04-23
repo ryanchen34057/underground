@@ -17,7 +17,7 @@ public class Level1AState extends GameState {
     public void init() {
         SpriteManager.level1Init();
         handler.createLevel1(SpriteManager.level1);
-        background = new Background("/res/background.png", 1.0f);
+        background = new Background("/res/background2.jpg", 1.0f);
     }
 
 

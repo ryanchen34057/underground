@@ -5,6 +5,7 @@ import effects.LandingEffect;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
+import gameObject.tiles.movable.FallingRock;
 import gameObject.tiles.wall.IceWall;
 import graphics.FrameManager;
 import input.Input;
@@ -30,7 +31,7 @@ public class Player extends Entity {
     private final int STAMINA = 100;
 
     // Running
-    public static final int STEP = 5;
+    public static final int STEP = 6;
 
     // StandingJump
     public static final float STANDINGJUMPING_GRAVITY = 18f;
@@ -99,9 +100,12 @@ public class Player extends Entity {
             //BOTTOM
             g.drawRect(x+40, y+ HEIGHT, WIDTH - 80, 1);
             //LEFT
-            g.drawRect(x+25, y+10, 1, WIDTH - 20);
+            g.drawRect(x+25, y+20, 1, HEIGHT -40 );
             //RIGHT
-            g.drawRect(x+ WIDTH -25, y+10,1, WIDTH - 20);
+            g.drawRect(x+ WIDTH -25, y+20, 1, HEIGHT -40);
+            // Original Size
+            g.setColor(Color.RED);
+            g.drawRect(x, y, WIDTH, HEIGHT);
         }
 
     }
@@ -127,6 +131,7 @@ public class Player extends Entity {
         Tile t;
         for (int i = 0; i < Handler.tiles.size(); i++) {
             t = Handler.tiles.get(i);
+            if(!inTheScreen(t)) { continue; }
             if(t.getBounds() != null) {
                 handleCollision(t, checkCollisionBounds(t, Tile::getBounds));
             }
@@ -212,16 +217,16 @@ public class Player extends Entity {
     // Collision test
     public Rectangle getBounds() { return new Rectangle(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT);}
     public Rectangle getBoundsTop() {
-        return new Rectangle(getX()+40, getY(), WIDTH -80,1 );
+        return new Rectangle(x+40, y, WIDTH -80,1 );
     }
     public Rectangle getBoundsBottom() {
-        return new Rectangle(getX()+40, getY()+ HEIGHT, WIDTH -80,1 );
+        return new Rectangle(x+40, y+ HEIGHT, WIDTH -80,1 );
     }
     public Rectangle getBoundsLeft() {
-        return new Rectangle(getX()+25, getY()+20, 1, HEIGHT -40 );
+        return new Rectangle(x+25, y+20, 1, HEIGHT -40 );
     }
     public Rectangle getBoundsRight() {
-        return new Rectangle(getX()+ WIDTH -25, getY()+20, 1, HEIGHT -40 );
+        return new Rectangle(x+ WIDTH -25, y+20, 1, HEIGHT -40 );
     }
 
     @Override
@@ -251,9 +256,8 @@ public class Player extends Entity {
     }
 
     @Override
-    public Direction collidesWith(ICollidable other, CollisionCondition collisionCondition) {
-        Tile t = (Tile) other;
-        return checkCollisionBounds(t, collisionCondition);
+    public boolean collidesWith(ICollidable other, CollisionCondition collisionCondition) {
+        return false;
     }
 
     @Override
@@ -270,6 +274,15 @@ public class Player extends Entity {
     public void reactToCollision(ICollidable other, Direction direction) {
         Tile t = (Tile) other;
         switch (t.getId()) {
+            case hole:
+                die();
+                break;
+            case fallingRock:
+                if(((FallingRock) t).isFalling()) {
+                    die();
+                }
+                ifHitWall(t, direction);
+                break;
             case upwardSpike:
                 if(direction == Direction.BOTTOM) {
                     System.out.println("upward");
@@ -300,7 +313,6 @@ public class Player extends Entity {
                 break;
             case breakableWall:
             case icewall1:
-            case icewall2:
             case wall:
                 ifHitWall(t, direction);
                 break;
@@ -314,12 +326,13 @@ public class Player extends Entity {
     }
 
     private void ifHitWall(Tile t, Direction direction) {
+        Rectangle collisionRect = t.getBounds();
         switch (direction) {
             case TOP:
-//                System.out.println("TOP");
+                System.out.println("TOP");
                 gravity = 0;
                 velY = 0;
-                y = t.getY() + t.getHeight();
+                y = collisionRect.y + t.getHeight();
                 currentState = PlayerState.falling;
                 break;
             case BOTTOM:
@@ -328,7 +341,7 @@ public class Player extends Entity {
                         || currentState == PlayerState.verticalDashing) {
                     velY = 0;
                     gravity = 0;
-                    y = t.getY() - getHeight();
+                    y = collisionRect.y - height;
                     currentState = PlayerState.standing;
                     if(!isDead()) {
                         currentEffect = LandingEffect.getInstance(this);
@@ -347,9 +360,9 @@ public class Player extends Entity {
                 fatigue = 0;
                 break;
             case LEFT:
-//                System.out.println("LEFT");
+                System.out.println("LEFT");
                 velX = 0;
-                x = t.getX() + t.getWidth() - 20;
+                x = collisionRect.x + collisionRect.width - 20;
                 if(currentState == PlayerState.falling &&
                         Input.keys.get(2).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
@@ -358,7 +371,7 @@ public class Player extends Entity {
             case RIGHT:
 //                System.out.println("RIGHT");
                 velX = 0;
-                x = t.getX() - width + 20;
+                x = collisionRect.x - getWidth() + 20;
                 if(currentState == PlayerState.falling && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
                 }

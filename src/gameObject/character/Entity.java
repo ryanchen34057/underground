@@ -1,8 +1,10 @@
 package gameObject.character;
 
+import UI.Game;
 import effects.Effect;
 import enums.Id;
 import gameObject.ICollidable;
+import gameObject.tiles.Tile;
 import states.State;
 
 import java.awt.*;
@@ -136,5 +138,10 @@ public abstract class Entity implements ICollidable {
 
     // Die
     public abstract void die();
+
+    public boolean inTheScreen(Tile t) {
+        return (t.getX() >= x - (Game.WIDTH * Game.SCALE) / 1.5) && (t.getX() < x + (Game.WIDTH * Game.SCALE))
+                && (t.getY() >= y - (Game.HEIGHT * Game.SCALE) / 1.5) && (t.getY() < y + (Game.HEIGHT * Game.SCALE) / 1.5);
+    }
 
 }

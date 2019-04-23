@@ -86,6 +86,11 @@ public class FrameManager {
                 effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 18,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
             }
         }
+        else if(id == Id.rockLandingEffect) {
+            for(int i=0;i<30;i++) {
+                effectFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 14,Effect.EFFECT_SIZE, Effect.EFFECT_SIZE);
+            }
+        }
         return effectFrame;
     }
 

@@ -24,6 +24,7 @@ public class GameStateManager {
     }
 
     public void update() {
+
         currentGameState.update();
     }
 }

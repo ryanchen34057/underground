@@ -56,8 +56,8 @@ public class Decor extends Tile {
     }
 
     @Override
-    public Direction collidesWith(ICollidable other, CollisionCondition collisionCondition) {
-        return null;
+    public boolean collidesWith(ICollidable other, CollisionCondition collisionCondition) {
+        return false;
     }
 
     @Override
