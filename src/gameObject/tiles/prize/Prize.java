@@ -16,8 +16,8 @@ public abstract class Prize extends Tile {
     private Id id;
     private int point;
 
-    public Prize(int x, int y, int width, int height,  boolean breakable, int point, Id id) {
-        super(x, y, width, height, breakable, id);
+    public Prize(int x, int y, int width, int height, int point, Id id) {
+        super(x, y, width, height, id);
         this.x = x;
         this.y = y;
         this.width = width;

@@ -14,8 +14,8 @@ import java.awt.image.BufferedImage;
 
 public class Wall extends Tile {
     public static final int TILE_SIZE = 64;
-    public Wall(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
-        super(x, y, width, height,breakable, id);
+    public Wall(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
+        super(x, y, width, height, id);
         this.bufferedImage = bufferedImage;
     }
 

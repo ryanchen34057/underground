@@ -4,15 +4,14 @@ import UI.Game;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
-import graphics.SpriteManager;
 import util.CollisionCondition;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class DownwardSpike extends Spike {
-    public DownwardSpike(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
-        super(x, y, width, height, breakable, id, bufferedImage);
+    public DownwardSpike(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
+        super(x, y, width, height, id, bufferedImage);
     }
 
     @Override

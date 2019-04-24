@@ -13,8 +13,8 @@ public class Torch extends Tile {
     public static int TILE_SIZE = 80;
     private int frame;
     private int frameDelay;
-    public Torch(int x, int y, int width, int height, boolean breakable, Id id) {
-        super(x, y, width, height, breakable, id);
+    public Torch(int x, int y, int width, int height, Id id) {
+        super(x, y, width, height, id);
         frame = 0;
         frameDelay = 0;
 

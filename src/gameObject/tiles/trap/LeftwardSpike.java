@@ -11,8 +11,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class LeftwardSpike extends Spike {
-    public LeftwardSpike(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
-        super(x, y, width, height, breakable, id, bufferedImage);
+    public LeftwardSpike(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
+        super(x, y, width, height, id, bufferedImage);
     }
 
     @Override

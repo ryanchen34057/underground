@@ -18,10 +18,14 @@ public class Running implements State {
         if(!keys.get(2).down && !keys.get(3).down) {
             player.setCurrentState(PlayerState.standing);
         }
-        if(keys.get(5).down) {
+        if(keys.get(5).down && !player.isJumped()) {
             player.setVelX(0);
             player.setGravity(Player.RUNNINGJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.runningJumping);
+            player.setJumped(true);
+        }
+        else if(!keys.get(5).down) {
+            player.setJumped(false);
         }
         if(keys.get(4).down && !player.isTired()) {
             player.setCurrentState(PlayerState.dashing);

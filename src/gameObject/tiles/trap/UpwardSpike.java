@@ -12,8 +12,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class UpwardSpike extends Spike {
-    public UpwardSpike(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
-        super(x, y, width, height, breakable, id, bufferedImage);
+    public UpwardSpike(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
+        super(x, y, width, height, id, bufferedImage);
     }
 
     @Override

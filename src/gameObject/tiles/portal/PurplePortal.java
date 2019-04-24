@@ -14,8 +14,8 @@ public class PurplePortal extends Tile {
     public static final int PORTAL_SIZE = 200;
     private int frame;
     private int frameDelay;
-    public PurplePortal(int x, int y, int width, int height, boolean breakable, Id id) {
-        super(x, y, width, height, breakable, id);
+    public PurplePortal(int x, int y, int width, int height, Id id) {
+        super(x, y, width, height, id);
         frame = 0;
         frameDelay = 0;
     }

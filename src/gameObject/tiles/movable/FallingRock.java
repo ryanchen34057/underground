@@ -26,8 +26,8 @@ public class FallingRock extends Tile {
     private final int FALLING_SPEED = 25;
     private boolean fallen;
 
-    public FallingRock(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
-        super(x, y, width, height, breakable, id);
+    public FallingRock(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
+        super(x, y, width, height, id);
         originalX = x;
         originalY = y;
         isFalling = false;

@@ -24,13 +24,12 @@ public abstract class Tile implements ICollidable {
     //BufferedImage
     protected BufferedImage bufferedImage;
 
-    public Tile(int x, int y, int width, int height, boolean breakable, Id id) {
+    public Tile(int x, int y, int width, int height, Id id) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.id = id;
-        this.breakable = breakable;
         this.isDead = false;
     }
 

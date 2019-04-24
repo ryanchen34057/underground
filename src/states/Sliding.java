@@ -6,13 +6,17 @@ import input.Input;
 import java.util.List;
 
 public class Sliding implements State {
-    private float friction = 0;
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
-        if(keys.get(5).down) {
+        if(keys.get(5).down && !player.isJumped()) {
             player.setGravity(Player.BOUNCING_GRAVITY);
             player.setCurrentState(PlayerState.bouncing);
+            player.setJumped(true);
         }
+        if(!keys.get(5).down) {
+            player.setJumped(false);
+        }
+
         if(player.getFacing() == -1) {
             if(!keys.get(2).down) {
                 player.setGravity(Player.FALLING_GRAVITY_VEL);
@@ -30,11 +34,10 @@ public class Sliding implements State {
     @Override
     public void update(Player player) {
         player.accumulateFatigue();
-        friction += 0.1;
-        player.setVelY(friction);
-        if(friction >= 10 || player.getFatigue() >= player.getSTAMINA()) {
+        player.setFriction(player.getFriction() + 0.1f);
+        player.setVelY(player.getFriction());
+        if(player.getFriction() >= 5 || player.getFatigue() >= player.getSTAMINA() || !player.isOnTheWall()) {
             player.setCurrentState(PlayerState.falling);
-            friction = 0;
         }
     }
 

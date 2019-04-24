@@ -24,8 +24,9 @@ public class Standing implements State {
             player.setCurrentState(PlayerState.running);
         }
         //Standing Jump
-        else if(keys.get(5).down && player.isOnTheGround()) {
+        if(keys.get(5).down && player.isOnTheGround() && !player.isJumped()) {
             player.setVelX(0);
+            player.setJumped(true);
             player.setGravity(Player.STANDINGJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.standingJumping);
         }
@@ -35,8 +36,11 @@ public class Standing implements State {
             player.setCurrentEffect(DashEffect.getInstance(player));
             player.setTired(true);
         }
-        else if(!keys.get(4).down) {
+        if(!keys.get(4).down) {
             player.setTired(false);
+        }
+        if(!keys.get(5).down) {
+            player.setJumped(false);
         }
     }
 

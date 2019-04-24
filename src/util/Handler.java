@@ -8,6 +8,7 @@ import gameObject.tiles.movable.FallingRock;
 import gameObject.tiles.portal.PurplePortal;
 import gameObject.tiles.prize.Coin;
 import gameObject.tiles.wall.IceWall;
+import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
 import graphics.SpriteManager;
 import input.Input;
@@ -114,6 +115,9 @@ public class Handler {
             if(t instanceof FallingRock && Math.abs(player.getX() - t.getX()) < 100 && !((FallingRock) t).isFallen()) {
                 ((FallingRock) t).setShaking(true);
             }
+            if(t instanceof VanishingRock && t.isDead()) {
+                tiles.remove(t);
+            }
            t.update();
             if(t.isDead()) {
                 tiles.remove(i);
@@ -140,71 +144,74 @@ public class Handler {
                 int blue = (pixel) & 0xff;
 
                 if(red == 99 && green == 99 && blue == 99) {
-                    addObject(new Hole(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.hole));
+                    addObject(new Hole(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.hole));
                 }
                 else if(red == 50 && green == 50 && blue == 19) {
-                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE*5, Wall.TILE_SIZE*5, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE*5, Wall.TILE_SIZE*5, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
                 else if(red == 100 && green == 50 && blue == 19) {
-                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
                 else if(red == 100 && green == 0 && blue <= 20) {
                     if(blue == 5 || blue == 4) {
-                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE/2, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE/2, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
                     else {
-                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE,Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
 
                 }
 
                 else if(red == 100 && green == 100 && blue <= 29) {
-                    addObject(new Decor(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.decor, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new Decor(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.decor, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                }
+                else if(red == 255 && green == 255 && blue == 0) {
+                    addObject(new VanishingRock(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.vanishingRock));
                 }
 
                 else if(red == 0 && green == 30 && blue == 255) {
-                    addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.icewall1, SpriteManager.level1Sprites.get(green - 1).getBufferedImage()));
+                    addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.icewall1, SpriteManager.level1Sprites.get(green - 1).getBufferedImage()));
                 }
                 else if(red == 0 && green == 255 && blue == 31) {
-                    addObject(new UpwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new UpwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
                 else if(red == 0 && green == 255 && blue == 32) {
-                    addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
                 else if(red == 0 && green == 255 && blue == 33) {
-                    addObject(new LeftwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new LeftwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
                 else if(red == 0 && green == 255 && blue == 34) {
-                    addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
-                else if(red == 100 && green == 0 && blue == 35) {
-                    addObject(new FallingRock(x*64, y*64, Wall.TILE_SIZE * 3, Wall.TILE_SIZE * 3, false, Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                else if(red == 255 && green == 100 && blue == 35) {
+                    addObject(new FallingRock(x*64, y*64, Wall.TILE_SIZE * 3, Wall.TILE_SIZE * 3, Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
                 else if(red == 100 && green == 0 && blue >= 36) {
                     if(blue == 42 || blue == 43) {
-                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE/2, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE/2, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
                     else {
-                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, false, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
 
                 }
                 else if(red == 255 && green == 0 && blue == 0) {
-                    addObject(new Coin(x*64, y*64, Coin.PRIZE_SIZE, Coin.PRIZE_SIZE, false,1000, Id.coin));
+                    addObject(new Coin(x*64, y*64, Coin.PRIZE_SIZE, Coin.PRIZE_SIZE, 1000, Id.coin));
                 }
 
 
                 //Portal
 //              //Blue
                 else if(red == 0 && green == 0 && blue == 255) {
-                    addObject(new BluePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.bluePortal));
+                    addObject(new BluePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, Id.bluePortal));
                     player = new Player(x*64+35, y*64+35, Player.WIDTH, Player.HEIGHT, Id.player);
                     addObject(player);
                     bluePortalCor = new Dimension(x*64, y*64);
                 }
                 //Purple
                 else if(red == 255 && green == 0 && blue == 255) {
-                    addObject(new PurplePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, false, Id.purplePortal));
+                    addObject(new PurplePortal(x*64, y*64, BluePortal.PORTAL_SIZE, BluePortal.PORTAL_SIZE, Id.purplePortal));
                 }
             }
         }

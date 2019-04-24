@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
 
 public class IceWall extends Tile {
     public static int ICE_ACCELERATION = 8;
-    public IceWall(int x, int y, int width, int height, boolean breakable, Id id, BufferedImage bufferedImage) {
-        super(x, y, width, height, breakable, id);
+    public IceWall(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
+        super(x, y, width, height, id);
         this.bufferedImage = bufferedImage;
     }
 

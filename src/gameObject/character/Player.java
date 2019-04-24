@@ -24,6 +24,9 @@ public class Player extends Entity {
     private int frame;
     private int frameDelay;
     private boolean inTheGame;
+    private boolean isJumped;
+    private boolean isOnTheWall;
+    private float friction;
 
     //Stats
     public static final int WIDTH = 96;
@@ -75,12 +78,15 @@ public class Player extends Entity {
         frameDelay = 0;
         frame = 0;
         isOnTheGround = false;
+        isJumped = false;
+        isOnTheWall = false;
         prevState = null;
         currentState = PlayerState.idle;
         currentEffect = null;
         fatigue = 0;
         isTired = false;
         inTheGame = false;
+        friction = 0;
     }
 
     @Override
@@ -112,11 +118,9 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        if(Game.debugMode) {
-            if (prevState != currentState) {
-                prevState = currentState;
-                System.out.println(prevState);
-            }
+        if (prevState != currentState) {
+            prevState = currentState;
+            System.out.println(prevState);
         }
 
         // Predict collision
@@ -142,7 +146,7 @@ public class Player extends Entity {
         }
 
         //Check if on the ground
-        if(isOnTheGroundCondition()) {
+        if(!isInTheAir() && !isOnTheGround) {
             currentState = PlayerState.falling;
         }
 
@@ -174,11 +178,31 @@ public class Player extends Entity {
     public void setInTheGame(boolean inTheGame) {
         this.inTheGame = inTheGame;
     }
+    public boolean isJumped() {
+        return isJumped;
+    }
+    public void setJumped(boolean jumped) {
+        isJumped = jumped;
+    }
+    public boolean isOnTheWall() {
+        return isOnTheWall;
+    }
+    public void setOnTheWall(boolean onTheWall) {
+        isOnTheWall = onTheWall;
+    }
+    public float getFriction() {
+        return friction;
+    }
+    public void setFriction(float friction) {
+        this.friction = friction;
+    }
 
+    // Handle keyInput from player
     public void handleKeyInput() {
         currentState.handleKeyInput(this, Input.keys);
     }
 
+    // Determine the frame to use depending on the currentState
     private void frameSpeedManager() {
         if(currentState == PlayerState.standing) {
             frameDelay++;
@@ -242,17 +266,15 @@ public class Player extends Entity {
         return null;
     }
 
-    private boolean isOnTheGroundCondition() {
-        return !isOnTheGround &&
-                currentState != PlayerState.standingJumping &&
-                currentState != PlayerState.runningJumping &&
-                currentState != PlayerState.dashJumping &&
-                currentState != PlayerState.falling &&
-                currentState != PlayerState.standing &&
-                currentState != PlayerState.sliding &&
-                currentState != PlayerState.bouncing &&
-                currentState != PlayerState.dashingInTheAir &&
-                currentState != PlayerState.verticalDashing;
+    private boolean isInTheAir() {
+        return currentState == PlayerState.standingJumping ||
+                currentState == PlayerState.runningJumping ||
+                currentState == PlayerState.dashJumping ||
+                currentState == PlayerState.falling ||
+                currentState == PlayerState.sliding ||
+                currentState == PlayerState.bouncing ||
+                currentState == PlayerState.dashingInTheAir ||
+                currentState == PlayerState.verticalDashing;
     }
 
     @Override
@@ -285,34 +307,35 @@ public class Player extends Entity {
                 break;
             case upwardSpike:
                 if(direction == Direction.BOTTOM) {
-                    System.out.println("upward");
+//                    System.out.println("upward");
                     die();
                 }
                 ifHitWall(t, direction);
                 break;
             case downwardSpike:
                 if(direction == Direction.TOP) {
-                    System.out.println("downward");
+//                    System.out.println("downward");
                     die();
                 }
                 ifHitWall(t, direction);
                 break;
             case leftwardSpike:
                 if(direction == Direction.RIGHT) {
-                    System.out.println("leftward");
+//                    System.out.println("leftward");
                     die();
                 }
                 ifHitWall(t, direction);
                 break;
             case rightwardSpike:
                 if(direction == Direction.LEFT) {
-                    System.out.println("rightward");
+//                    System.out.println("rightward");
                     die();
                 }
                 ifHitWall(t, direction);
                 break;
             case breakableWall:
             case icewall1:
+            case vanishingRock:
             case wall:
                 ifHitWall(t, direction);
                 break;
@@ -329,7 +352,7 @@ public class Player extends Entity {
         Rectangle collisionRect = t.getBounds();
         switch (direction) {
             case TOP:
-                System.out.println("TOP");
+//                System.out.println("TOP");
                 gravity = 0;
                 velY = 0;
                 y = collisionRect.y + t.getHeight();
@@ -341,6 +364,7 @@ public class Player extends Entity {
                         || currentState == PlayerState.verticalDashing) {
                     velY = 0;
                     gravity = 0;
+                    friction = 0;
                     y = collisionRect.y - height;
                     currentState = PlayerState.standing;
                     if(!isDead()) {
@@ -357,15 +381,20 @@ public class Player extends Entity {
                     isOnTheIce = false;
                 }
                 isOnTheGround = true;
+                isOnTheWall = false;
                 fatigue = 0;
                 break;
             case LEFT:
-                System.out.println("LEFT");
+//                System.out.println("LEFT");
                 velX = 0;
                 x = collisionRect.x + collisionRect.width - 20;
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling &&
                         Input.keys.get(2).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
+                    isOnTheWall = true;
+                }
+                else {
+                    isOnTheWall = false;
                 }
                 break;
             case RIGHT:
@@ -374,6 +403,10 @@ public class Player extends Entity {
                 x = collisionRect.x - getWidth() + 20;
                 if(currentState == PlayerState.falling && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
+                    isOnTheWall = true;
+                }
+                else {
+                    isOnTheWall = false;
                 }
                 break;
         }

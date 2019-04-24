@@ -10,7 +10,9 @@ import java.util.List;
 public class Bouncing implements State {
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
-        keys.get(5).down = false;
+        if(!keys.get(5).down) {
+            player.setJumped(false);
+        }
         //Vertical Dashing
         Direction dir = verticalDashCondition(keys, player);
         if(dir != null && !player.isTired()) {

@@ -1,51 +1,53 @@
-package gameObject.tiles.portal;
+package gameObject.tiles.wall;
 
 import UI.Game;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
-import graphics.FrameManager;
 import gameObject.tiles.Tile;
+import graphics.FrameManager;
 import util.CollisionCondition;
 
 import java.awt.*;
 
-public class BluePortal extends Tile {
-    public static final int PORTAL_SIZE = 200;
+public class VanishingRock extends Tile {
+    private boolean isStepOn;
     private int frame;
     private int frameDelay;
-    public BluePortal(int x, int y, int width, int height, Id id) {
-        super(x, y, width, height, id);
+    public VanishingRock(int x, int y, int width, int height, Id id) {
+        super(x, y, width, height,id);
+        isStepOn = false;
         frame = 0;
         frameDelay = 0;
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getBluePortalFrame()[frame].getBufferedImage(), x, y,
-                width, height, null);
-
-        if (Game.debugMode) {
-            g.setColor(Color.RED);
-            g.drawRect(getX()+20, getY(), super.getWidth()-50, getHeight());
+        g.drawImage(FrameManager.getVanishingRockFrame()[frame].getBufferedImage(), x, y, width, height, null);
+        if(Game.debugMode) {
+            g.setColor(Color.GRAY);
+            g.drawRect(x, y, width,height);
         }
     }
 
     @Override
     public void update() {
-        frameDelay++;
-        if (frameDelay >= 3) {
-            frame++;
-            if (frame >= FrameManager.getBluePortalFrame().length) {
-                frame = 0;
+        if(isStepOn) {
+            frameDelay++;
+            if (frameDelay >= 8) {
+                frame++;
+                if (frame >= FrameManager.getVanishingRockFrame().length) {
+                    frame = 0;
+                    die();
+                }
+                frameDelay = 0;
             }
-            frameDelay = 0;
         }
     }
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x+20, y, width-50, height);
+        return new Rectangle(x, y, width, height);
     }
 
     @Override
@@ -70,7 +72,7 @@ public class BluePortal extends Tile {
 
     @Override
     public void die() {
-
+        isDead = true;
     }
 
     @Override
@@ -85,6 +87,8 @@ public class BluePortal extends Tile {
 
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
-
+        if(direction == Direction.BOTTOM) {
+            isStepOn = true;
+        }
     }
 }

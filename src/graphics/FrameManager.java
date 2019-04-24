@@ -15,6 +15,7 @@ public class FrameManager {
     public static Sprite[] bluePortalFrame = new Sprite[9];
     public static Sprite[] purplePortalFrame = new Sprite[9];
     public static Sprite[] torchFrame = new Sprite[10];
+    public static Sprite[] vanishingRockFrame = new Sprite[8];
 
     public static Sprite[] getPlayerMoveFrame(State currentState) {
         int y = 0;
@@ -154,5 +155,12 @@ public class FrameManager {
             torchFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 7, 32,  32);
         }
         return torchFrame;
+    }
+
+    public static Sprite[] getVanishingRockFrame() {
+        for(int i = 0; i< vanishingRockFrame.length; i++) {
+            vanishingRockFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 6, 32,  32);
+        }
+        return vanishingRockFrame;
     }
 }

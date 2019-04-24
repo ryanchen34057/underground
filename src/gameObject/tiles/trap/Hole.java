@@ -9,8 +9,8 @@ import util.CollisionCondition;
 import java.awt.*;
 
 public class Hole extends Tile {
-    public Hole(int x, int y, int width, int height, boolean breakable, Id id) {
-        super(x, y, width, height, breakable, id);
+    public Hole(int x, int y, int width, int height, Id id) {
+        super(x, y, width, height, id);
     }
 
     @Override

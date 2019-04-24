@@ -21,7 +21,7 @@ public class StandingJumping implements State {
         }
         //Vertical Dashing
         Direction dir = verticalDashCondition(keys, player);
-        if(dir != null) {
+        if(dir != null && !player.isTired()) {
             if(keys.get(2).down || keys.get(3).down) {
                 player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
             }
