@@ -3,7 +3,8 @@ package gameStates;
 
 import UI.Game;
 import fonts.Words;
-import graphics.SpriteManager;
+import gameStates.level1.Level1AState;
+import gameStates.level1.Level1BState;
 import input.Input;
 import java.awt.Graphics;
 import map.Background;
@@ -32,7 +33,7 @@ public class MenuState extends GameState{
     @Override
     public void handleKeyInput() {
         if(Input.keys.get(7).down){
-            gameStateManager.setGameState(new Level1AState());
+            gameStateManager.setGameState(new Level1BState());
         } 
         
     }

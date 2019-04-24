@@ -15,8 +15,9 @@ public class SpriteManager {
     public static Sprite coin;
 
     //level1
-    public static BufferedImage level1;
+    public static BufferedImage level1A;
     public static BufferedImage menu;
+    public static BufferedImage level1B;
 
     public SpriteManager() {
         //Sprite object
@@ -24,7 +25,8 @@ public class SpriteManager {
         coin = new Sprite(spriteSheet, 1, 9, 32, 32);
 
         //BufferedImage object
-        level1 = ResourceManager.getInstance().getImage("/res/level1.png");
+        level1A = ResourceManager.getInstance().getImage("/res/level1A.png");
+        level1B = ResourceManager.getInstance().getImage("/res/level1B.png");
         menu = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
     }
 

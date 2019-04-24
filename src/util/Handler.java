@@ -146,6 +146,7 @@ public class Handler {
                 if(red == 99 && green == 99 && blue == 99) {
                     addObject(new Hole(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.hole));
                 }
+                // Bigger block
                 else if(red == 50 && green == 50 && blue == 19) {
                     addObject(new Wall(x*64, y*64, Wall.TILE_SIZE*5, Wall.TILE_SIZE*5, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }

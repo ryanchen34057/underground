@@ -1,30 +1,26 @@
-package gameStates;
+package gameStates.level1;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
 import enums.Id;
 import fonts.Words;
 import gameObject.character.Entity;
+import gameStates.GameState;
 import graphics.SpriteManager;
 import map.Background;
 
 import java.awt.*;
 
-public class Level1AState extends GameState {
-    private Words timer;
+public class Level1BState extends GameState {
 
-    public Level1AState() {
+    public Level1BState() {
         super();
         init();
     }
-
     public void init() {
         SpriteManager.level1Init();
-        handler.createLevel1(SpriteManager.level1);
+        handler.createLevel1(SpriteManager.level1B);
         background = new Background("/res/background2.jpg", 1.0f);
-        timer = new Words("00:00:00", 30, 100, 50);
+
     }
-
-
     @Override
     public void handleKeyInput() {
 
@@ -48,6 +44,5 @@ public class Level1AState extends GameState {
         g.translate(cam.getX(), cam.getY());
         handler.paint(g);
         g.translate(-cam.getX(), -cam.getY());
-        timer.paint(g);
     }
 }
