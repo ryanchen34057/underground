@@ -28,7 +28,7 @@ public class Player extends Entity {
     //Stats
     public static final int WIDTH = 96;
     public static final int HEIGHT = 96;
-    private final int STAMINA = 100;
+    private final int STAMINA = 150;
 
     // Running
     public static final int STEP = 6;

@@ -19,8 +19,8 @@ public class Game extends Canvas implements Runnable {
 
     //Size
     public static final int WIDTH = 320;
-    public static final int HEIGHT = 180;
-    public static final int SCALE = 6;
+    public static final int HEIGHT = 220;
+    public static final int SCALE = 4;
 
     // Camera
     public static Camera cam;
