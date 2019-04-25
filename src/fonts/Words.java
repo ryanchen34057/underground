@@ -16,6 +16,8 @@ public class Words {
     int x;
     int y;
     int size;
+    int sWidth;
+    int sHeight;
     
     
     public Words(String msg,int size,int x,int y){
@@ -25,16 +27,36 @@ public class Words {
         this.size = size;
     }
     public void paint(Graphics g){
-        Font font1 = Fonts.getBitFont(size);
+        Font font1 = Fonts.getBitFont(size,"/res/half_bold_pixel-7.ttf");
         g.setFont(font1);
         g.setColor(Color.LIGHT_GRAY);
         FontMetrics fm = g.getFontMetrics();
         int sw = fm.stringWidth(msg);
+        sWidth = sw;
         int sa = fm.getAscent();
+        sHeight = sa;
         g.drawString(msg, x-sw/2,y-sa/2);
     }
+    public void setWord(String msg){
+        this.msg = msg;
+    }
+    
+    public int getWordX(){
+        return this.x;
+    }
+    public int getWordY(){
+        return this.y;
+    }
+    public int getWidth(){
+        
+        return sWidth;    
+    }
+    public int getHeight(){
+        return sHeight;
+    }
+    
 
-    public void update(int x, int y) {
+    public void updatePos(int x, int y) {
         this.x = x;
         this.y = y;
     }

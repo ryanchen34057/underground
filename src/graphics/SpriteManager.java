@@ -17,10 +17,14 @@ public class SpriteManager {
 
     //Menu
     public static BufferedImage menu;
+
     //level1
     public static BufferedImage level1A;
     public static BufferedImage level1B;
     public static BufferedImage level1C;
+
+    //cursor
+    public static BufferedImage cursor;
 
     public SpriteManager() {
         //Sprite object
@@ -32,6 +36,7 @@ public class SpriteManager {
         level1A = ResourceManager.getInstance().getImage("/res/level1A.png");
         level1B = ResourceManager.getInstance().getImage("/res/level1B.png");
         menu = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
+        cursor = ResourceManager.getInstance().getImage("/res/CursorA.png");
     }
 
     public static void level1Init() {

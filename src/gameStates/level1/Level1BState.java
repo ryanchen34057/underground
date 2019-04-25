@@ -8,6 +8,7 @@ import gameStates.GameState;
 import gameStates.GameStateManager;
 import graphics.SpriteManager;
 import map.Background;
+import record.Timer;
 
 import java.awt.*;
 
@@ -21,7 +22,6 @@ public class Level1BState extends GameState {
         SpriteManager.level1Init();
         handler.createLevel1(SpriteManager.level1B);
         background = new Background("/res/background2.jpg", 1.0f);
-
     }
     @Override
     public void handleKeyInput() {
