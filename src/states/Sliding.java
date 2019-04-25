@@ -38,6 +38,7 @@ public class Sliding implements State {
         player.setVelY(player.getFriction());
         if(player.getFriction() >= 5 || player.getFatigue() >= player.getSTAMINA() || !player.isOnTheWall()) {
             player.setCurrentState(PlayerState.falling);
+            player.setFriction(0);
         }
     }
 

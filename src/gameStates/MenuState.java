@@ -15,11 +15,9 @@ public class MenuState extends GameState{
     private Words wordStart;
     private Words wordOption;
     private Words wordExit;
-    private GameStateManager gameStateManager;
  
     public MenuState(GameStateManager gameStateManager) {
-        super();
-        this.gameStateManager = gameStateManager;
+        super(gameStateManager);
         init(); 
     }
     
@@ -33,7 +31,7 @@ public class MenuState extends GameState{
     @Override
     public void handleKeyInput() {
         if(Input.keys.get(7).down){
-            gameStateManager.setGameState(new Level1AState());
+            gameStateManager.setLevelState(new Level1AState(gameStateManager));
         } 
         
     }

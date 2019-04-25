@@ -19,6 +19,7 @@ public class IceSkating implements State {
             player.setGravity(Player.DASHJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.dashJumping);
             player.setOnTheIce(false);
+            player.setTired(true);
         }
     }
 

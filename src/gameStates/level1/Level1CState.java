@@ -1,9 +1,5 @@
 package gameStates.level1;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
-import enums.Id;
-import fonts.Words;
-import gameObject.character.Entity;
 import gameObject.character.Player;
 import gameStates.GameState;
 import gameStates.GameStateManager;
@@ -12,22 +8,17 @@ import map.Background;
 
 import java.awt.*;
 
-public class Level1AState extends GameState {
-    private Words timer;
-
-    public Level1AState(GameStateManager gameStateManager) {
+public class Level1CState extends GameState {
+    public Level1CState(GameStateManager gameStateManager) {
         super(gameStateManager);
-        init();
     }
 
     public void init() {
         SpriteManager.level1Init();
-        handler.createLevel1(SpriteManager.level1A);
+        handler.createLevel1(SpriteManager.level1B);
         background = new Background("/res/background2.jpg", 1.0f);
-        timer = new Words("00:00:00", 30, 100, 50);
+
     }
-
-
     @Override
     public void handleKeyInput() {
 
@@ -43,7 +34,7 @@ public class Level1AState extends GameState {
                 player = (Player) handler.getEntities().get(i);
                 cam.update(player);
                 if((player.isGoaled())) {
-                    gameStateManager.setLevelState(new Level1BState(gameStateManager));
+//                    gameStateManager.setLevelState(new Level1AState(gameStateManager));
                 }
             }
         }
@@ -51,7 +42,7 @@ public class Level1AState extends GameState {
             deathDelay++;
             if(deathDelay >= DEATH_DELAY_TIME) {
                 deathDelay = 0;
-                gameStateManager.setLevelState(new Level1AState(gameStateManager));
+                gameStateManager.setLevelState(new Level1BState(gameStateManager));
             }
         }
     }
@@ -62,6 +53,5 @@ public class Level1AState extends GameState {
         g.translate(cam.getX(), cam.getY());
         handler.paint(g);
         g.translate(-cam.getX(), -cam.getY());
-        timer.paint(g);
     }
 }

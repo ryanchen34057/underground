@@ -8,7 +8,6 @@ public class Camera {
     private int y;
     private boolean shaking;
     private int shakingLength;
-    private char shakingAxis;
     private int counter;
     private int intensity;
 
@@ -20,6 +19,9 @@ public class Camera {
         }
         if(y > 0 && !shaking) {
             y = 0;
+        }
+        if(y < -700) {
+            y = -700;
         }
         if(shaking) {
             counter++;

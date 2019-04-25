@@ -15,10 +15,12 @@ public class SpriteManager {
     public static Sprite coin;
     public static Sprite vanishingRock;
 
+    //Menu
+    public static BufferedImage menu;
     //level1
     public static BufferedImage level1A;
-    public static BufferedImage menu;
     public static BufferedImage level1B;
+    public static BufferedImage level1C;
 
     public SpriteManager() {
         //Sprite object

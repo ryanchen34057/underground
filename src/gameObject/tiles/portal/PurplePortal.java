@@ -4,6 +4,8 @@ import UI.Game;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
+import gameObject.character.Player;
+import gameStates.GameStateManager;
 import graphics.FrameManager;
 import gameObject.tiles.Tile;
 import util.CollisionCondition;
@@ -85,6 +87,8 @@ public class PurplePortal extends Tile {
 
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
-
+        if(other instanceof Player) {
+            ((Player) other).setGoaled(true);
+        }
     }
 }

@@ -11,6 +11,7 @@ import graphics.FrameManager;
 import input.Input;
 import gameObject.tiles.Tile;
 import org.omg.PortableInterceptor.INACTIVE;
+import states.IceSkating;
 import states.PlayerState;
 import util.CollisionCondition;
 import util.Handler;
@@ -23,9 +24,6 @@ public class Player extends Entity {
 
     private int frame;
     private int frameDelay;
-    private boolean inTheGame;
-    private boolean isJumped;
-    private boolean isOnTheWall;
     private float friction;
 
     //Stats
@@ -34,7 +32,7 @@ public class Player extends Entity {
     private final int STAMINA = 150;
 
     // Running
-    public static final int STEP = 6;
+    public static final int STEP = 8;
 
     // StandingJump
     public static final float STANDINGJUMPING_GRAVITY = 18f;
@@ -48,10 +46,10 @@ public class Player extends Entity {
 
 
     // Dash
-    public static final int DASH_SPEED = 10;
+    public static final int DASH_SPEED = 17;
     public static final float DASH_TIMER = 1.5f;
     public static final float ICESKATING_SPEED = 15;
-    public float currentDashSpeed = 10;
+    public float currentDashSpeed = 17;
     public static final float DASH_SPEED_BUMP = 0.1f;
 
     // DashJumping
@@ -68,61 +66,69 @@ public class Player extends Entity {
     public static final int FALLING_VELX = 6;
 
     // Vertical Dashing
-    public static final float VERTICALDASHING_SPEED = 8;
+    public static final float VERTICALDASHING_SPEED = 10;
     public static final float VERTICALDASHING_TIMER = 1.2f;
-    public static final float VERTICALDASHING_VELX = 8;
+    public static final float VERTICALDASHING_VELX = 12;
+
+    //State
+    private boolean inTheGame;
+    private boolean isJumped;
+    private boolean isOnTheWall;
+    private boolean isGoaled;
 
     public Player(int x, int y, int width, int height, Id id) {
         super(x, y, width, height, id);
+        currentState = PlayerState.idle;
         velX = 5;
         frameDelay = 0;
         frame = 0;
+        friction = 0;
+        fatigue = 0;
+        prevState = null;
+        currentEffect = null;
+        isTired = false;
+        inTheGame = false;
+        isGoaled = false;
         isOnTheGround = false;
         isJumped = false;
         isOnTheWall = false;
-        prevState = null;
-        currentState = PlayerState.idle;
-        currentEffect = null;
-        fatigue = 0;
-        isTired = false;
-        inTheGame = false;
-        friction = 0;
+
     }
 
     @Override
     public void paint(Graphics g) {
-        if (facing == -1) {
-            g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame + 4].getBufferedImage(), x, y,
-                    WIDTH, HEIGHT, null);
-        } else {
-            g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame].getBufferedImage(), x, y,
-                    WIDTH, HEIGHT, null);
+        if(!isDead) {
+            if (facing == -1) {
+                g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame + 4].getBufferedImage(), x, y,
+                        WIDTH, HEIGHT, null);
+            } else {
+                g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame].getBufferedImage(), x, y,
+                        WIDTH, HEIGHT, null);
+            }
+            if(Game.debugMode) {
+                g.setColor(Color.BLUE);
+                g.drawRect(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT);
+                //TOP
+                g.drawRect(x+40, y, WIDTH - 80, 1);
+                //BOTTOM
+                g.drawRect(x+40, y+ HEIGHT, WIDTH - 80, 1);
+                //LEFT
+                g.drawRect(x+25, y+20, 1, HEIGHT -40 );
+                //RIGHT
+                g.drawRect(x+ WIDTH -25, y+20, 1, HEIGHT -40);
+                // Original Size
+                g.setColor(Color.RED);
+                g.drawRect(x, y, WIDTH, HEIGHT);
+            }
         }
-        if(Game.debugMode) {
-            g.setColor(Color.BLUE);
-            g.drawRect(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT);
-            //TOP
-            g.drawRect(x+40, y, WIDTH - 80, 1);
-            //BOTTOM
-            g.drawRect(x+40, y+ HEIGHT, WIDTH - 80, 1);
-            //LEFT
-            g.drawRect(x+25, y+20, 1, HEIGHT -40 );
-            //RIGHT
-            g.drawRect(x+ WIDTH -25, y+20, 1, HEIGHT -40);
-            // Original Size
-            g.setColor(Color.RED);
-            g.drawRect(x, y, WIDTH, HEIGHT);
-        }
-
     }
 
     @Override
     public void update() {
-        if (prevState != currentState) {
-            prevState = currentState;
-            System.out.println(prevState);
-        }
-
+//        if (prevState != currentState) {
+//            prevState = currentState;
+//            System.out.println(prevState);
+//        }
         // Predict collision
         x += velX;
         y += velY;
@@ -141,7 +147,7 @@ public class Player extends Entity {
             }
         }
         // Check if on the ice
-        if(isOnTheIce) {
+        if(isOnTheIce && currentState != PlayerState.standing) {
             currentState = PlayerState.iceSkating;
         }
 
@@ -187,14 +193,20 @@ public class Player extends Entity {
     public boolean isOnTheWall() {
         return isOnTheWall;
     }
-    public void setOnTheWall(boolean onTheWall) {
-        isOnTheWall = onTheWall;
-    }
     public float getFriction() {
         return friction;
     }
     public void setFriction(float friction) {
         this.friction = friction;
+    }
+    public boolean isGoaled() {
+        return isGoaled;
+    }
+    public void setGoaled(boolean goaled) {
+        isGoaled = goaled;
+    }
+    public void reSpawn() {
+        isDead = false;
     }
 
     // Handle keyInput from player
@@ -297,6 +309,7 @@ public class Player extends Entity {
         Tile t = (Tile) other;
         switch (t.getId()) {
             case hole:
+                ifHitWall(t, direction);
                 die();
                 break;
             case fallingRock:
@@ -371,7 +384,7 @@ public class Player extends Entity {
                         currentEffect = LandingEffect.getInstance(this);
                     }
                 }
-                if(t instanceof IceWall) {
+                if(t instanceof IceWall && (currentState == PlayerState.running || currentState == PlayerState.iceSkating)) {
                     isOnTheIce = true;
                 }
                 else {
@@ -396,17 +409,25 @@ public class Player extends Entity {
                 else {
                     isOnTheWall = false;
                 }
+                if(currentState == PlayerState.iceSkating) {
+                    currentState = PlayerState.standing;
+                }
+
                 break;
             case RIGHT:
 //                System.out.println("RIGHT");
                 velX = 0;
                 x = collisionRect.x - getWidth() + 20;
-                if(currentState == PlayerState.falling && Input.keys.get(3).down && fatigue < STAMINA) {
+                if(t.getId() != Id.icewall1 && currentState == PlayerState.falling
+                        && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
                     isOnTheWall = true;
                 }
                 else {
                     isOnTheWall = false;
+                }
+                if(currentState == PlayerState.iceSkating) {
+                    currentState = PlayerState.standing;
                 }
                 break;
         }

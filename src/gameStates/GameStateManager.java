@@ -7,13 +7,12 @@ public class GameStateManager {
     private Stack<GameState> gameStates;
     private GameState currentGameState;
     private GameState previousGameState;
-    public GameState menu = new MenuState(this);
 
 
 
     public GameStateManager() {
         gameStates = new Stack<>();
-        gameStates.push(menu);
+        setGameState(new MenuState(this));
         currentGameState = gameStates.peek();//創建時指定場景
         
     }
@@ -21,6 +20,11 @@ public class GameStateManager {
     public void setGameState(GameState gameState) {
         gameStates.push(gameState);
         currentGameState = gameStates.peek();
+    }
+
+    public void setLevelState(GameState levelState) {
+        gameStates.push(levelState);
+        currentGameState = gameStates.pop();
     }
 
     public void paint(Graphics g) {

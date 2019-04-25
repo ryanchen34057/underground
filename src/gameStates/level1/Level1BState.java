@@ -3,7 +3,9 @@ package gameStates.level1;
 import enums.Id;
 import fonts.Words;
 import gameObject.character.Entity;
+import gameObject.character.Player;
 import gameStates.GameState;
+import gameStates.GameStateManager;
 import graphics.SpriteManager;
 import map.Background;
 
@@ -11,8 +13,8 @@ import java.awt.*;
 
 public class Level1BState extends GameState {
 
-    public Level1BState() {
-        super();
+    public Level1BState(GameStateManager gameStateManager) {
+        super(gameStateManager);
         init();
     }
     public void init() {
@@ -30,10 +32,21 @@ public class Level1BState extends GameState {
     public void update() {
         background.setPos(cam.getX(), cam.getY());
         handler.update();
+        Player player = null;
         for(int i=0;i<handler.getEntities().size();i++) {
-            Entity e = handler.getEntities().get(i);
-            if (e.getId() == Id.player) {
-                cam.update(e);
+            if (handler.getEntities().get(i) instanceof Player) {
+                player = (Player) handler.getEntities().get(i);
+                cam.update(player);
+                if((player.isGoaled())) {
+                    gameStateManager.setLevelState(new Level1CState(gameStateManager));
+                }
+            }
+        }
+        if(player == null) {
+            deathDelay++;
+            if(deathDelay >= DEATH_DELAY_TIME) {
+                deathDelay = 0;
+                gameStateManager.setLevelState(new Level1BState(gameStateManager));
             }
         }
     }

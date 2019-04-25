@@ -4,12 +4,14 @@ import UI.Game;
 import effects.DeathParticle;
 import effects.Effect;
 import effects.ParticleSystem;
+import enums.Direction;
 import gameObject.tiles.movable.FallingRock;
 import gameObject.tiles.portal.PurplePortal;
 import gameObject.tiles.prize.Coin;
 import gameObject.tiles.wall.IceWall;
 import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
+import gameStates.GameStateManager;
 import graphics.SpriteManager;
 import input.Input;
 import gameObject.tiles.*;
@@ -124,13 +126,11 @@ public class Handler {
             }
         }
 
-        // Respawn player
-        if(entities.size() == 0 && Input.keys.get(6).down) {
-            addObject(new Player((int)(bluePortalCor.getWidth()+35), (int)(bluePortalCor.getHeight()+35), Player.WIDTH, Player.HEIGHT, Id.player));
-        }
+//        // Respawn player
+//        if(entities.size() == 0 && Input.keys.get(6).down) {
+//            addObject(new Player((int)(bluePortalCor.getWidth()+35), (int)(bluePortalCor.getHeight()+35), Player.WIDTH, Player.HEIGHT, Id.player));
+//        }
     }
-    
-   
 
     public void createLevel1(BufferedImage level) {
         int width = level.getWidth();
@@ -157,6 +157,9 @@ public class Handler {
                     if(blue == 5 || blue == 4) {
                         addObject(new Wall(x*64, y*64, Wall.TILE_SIZE/2, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
+                    if(blue == 17) {
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE/2, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    }
                     else {
                         addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE,Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
@@ -174,23 +177,23 @@ public class Handler {
                     addObject(new IceWall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.icewall1, SpriteManager.level1Sprites.get(green - 1).getBufferedImage()));
                 }
                 else if(red == 0 && green == 255 && blue == 31) {
-                    addObject(new UpwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new Spike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.UP));
                 }
                 else if(red == 0 && green == 255 && blue == 32) {
-                    addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
-                }
+                    addObject(new Spike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.DOWN));
+            }
                 else if(red == 0 && green == 255 && blue == 33) {
-                    addObject(new LeftwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new Spike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.LEFT));
                 }
                 else if(red == 0 && green == 255 && blue == 34) {
-                    addObject(new DownwardSpike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    addObject(new Spike(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.RIGHT));
                 }
                 else if(red == 255 && green == 100 && blue == 35) {
                     addObject(new FallingRock(x*64, y*64, Wall.TILE_SIZE * 3, Wall.TILE_SIZE * 3, Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 }
                 else if(red == 100 && green == 0 && blue >= 36) {
                     if(blue == 42 || blue == 43) {
-                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE/2, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE/2-10, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
                     else {
                         addObject(new Wall(x*64, y*64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
@@ -228,10 +231,6 @@ public class Handler {
 
     public LinkedList<Effect> getEffects() {
         return effects;
-    }
-
-    public LinkedList<ParticleSystem> getParticles() {
-        return particles;
     }
 
     private boolean inTheScreen(Tile t) {
