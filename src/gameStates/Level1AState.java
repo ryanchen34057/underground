@@ -1,8 +1,7 @@
 package gameStates;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
+import record.Timer;
 import enums.Id;
-import fonts.Words;
 import gameObject.character.Entity;
 import graphics.SpriteManager;
 import map.Background;
@@ -10,8 +9,8 @@ import map.Background;
 import java.awt.*;
 
 public class Level1AState extends GameState {
-    private Words timer;
-
+    private Timer timer;
+    
     public Level1AState() {
         super();
         init();
@@ -21,7 +20,7 @@ public class Level1AState extends GameState {
         SpriteManager.level1Init();
         handler.createLevel1(SpriteManager.level1);
         background = new Background("/res/background2.jpg", 1.0f);
-        timer = new Words("00:00:00", 30, 100, 50);
+        timer = new Timer();
     }
 
 
@@ -40,6 +39,7 @@ public class Level1AState extends GameState {
                 cam.update(e);
             }
         }
+        timer.update();
     }
 
     @Override
@@ -48,6 +48,6 @@ public class Level1AState extends GameState {
         g.translate(cam.getX(), cam.getY());
         handler.paint(g);
         g.translate(-cam.getX(), -cam.getY());
-        timer.paint(g);
+        timer.paint(g);        
     }
 }

@@ -1,7 +1,6 @@
 package gameStates;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class GameStateManager {
