@@ -5,6 +5,7 @@ import gameStates.GameState;
 import gameStates.GameStateManager;
 import graphics.SpriteManager;
 import map.Background;
+import record.Timer;
 
 import java.awt.*;
 
@@ -42,7 +43,7 @@ public class Level1CState extends GameState {
             deathDelay++;
             if(deathDelay >= DEATH_DELAY_TIME) {
                 deathDelay = 0;
-                gameStateManager.setLevelState(new Level1BState(gameStateManager));
+                gameStateManager.setLevelState(new Level1CState(gameStateManager));
             }
         }
     }
