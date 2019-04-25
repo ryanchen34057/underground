@@ -156,11 +156,4 @@ public class FrameManager {
         }
         return torchFrame;
     }
-
-    public static Sprite[] getVanishingRockFrame() {
-        for(int i = 0; i< vanishingRockFrame.length; i++) {
-            vanishingRockFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 6, 32,  32);
-        }
-        return vanishingRockFrame;
-    }
 }

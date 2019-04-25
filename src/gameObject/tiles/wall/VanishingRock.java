@@ -6,12 +6,14 @@ import enums.Id;
 import gameObject.ICollidable;
 import gameObject.tiles.Tile;
 import graphics.FrameManager;
+import graphics.SpriteManager;
 import util.CollisionCondition;
 
 import java.awt.*;
 
 public class VanishingRock extends Tile {
     private boolean isStepOn;
+    private float alpha;
     private int frame;
     private int frameDelay;
     public VanishingRock(int x, int y, int width, int height, Id id) {
@@ -19,28 +21,37 @@ public class VanishingRock extends Tile {
         isStepOn = false;
         frame = 0;
         frameDelay = 0;
+        alpha = 1;
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getVanishingRockFrame()[frame].getBufferedImage(), x, y, width, height, null);
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setComposite(ac);
+        g2.drawImage(SpriteManager.vanishingRock.getBufferedImage(), x, y, width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.GRAY);
             g.drawRect(x, y, width,height);
         }
+        ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1);
+        g2.setComposite(ac);
     }
 
     @Override
     public void update() {
         if(isStepOn) {
             frameDelay++;
-            if (frameDelay >= 8) {
+            if (frameDelay >= 3) {
                 frame++;
-                if (frame >= FrameManager.getVanishingRockFrame().length) {
+                if (frame >= 3) {
                     frame = 0;
-                    die();
+                    alpha -= 0.1;
                 }
                 frameDelay = 0;
+            }
+            if(alpha <= 0) {
+                die();
             }
         }
     }

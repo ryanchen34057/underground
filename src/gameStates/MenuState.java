@@ -33,7 +33,7 @@ public class MenuState extends GameState{
     @Override
     public void handleKeyInput() {
         if(Input.keys.get(7).down){
-            gameStateManager.setGameState(new Level1BState());
+            gameStateManager.setGameState(new Level1AState());
         } 
         
     }

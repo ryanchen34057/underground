@@ -13,6 +13,7 @@ public class SpriteManager {
     public static ArrayList<Sprite> level1Sprites;
 
     public static Sprite coin;
+    public static Sprite vanishingRock;
 
     //level1
     public static BufferedImage level1A;
@@ -23,6 +24,7 @@ public class SpriteManager {
         //Sprite object
         spriteSheet = new SpriteSheet("/res/spriteSheet.png");
         coin = new Sprite(spriteSheet, 1, 9, 32, 32);
+        vanishingRock = new Sprite(spriteSheet, 1,6,32,32);
 
         //BufferedImage object
         level1A = ResourceManager.getInstance().getImage("/res/level1A.png");
