@@ -1,5 +1,9 @@
 package cursor;
 
+import fonts.Words;
+import graphics.ResourceManager;
+import graphics.SpriteManager;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Cursor {
@@ -12,19 +16,39 @@ public class Cursor {
     protected int pointer;
 
     //BufferedImage
-    protected BufferedImage bufferedImage;
+    protected BufferedImage cursorImage;
+    
+    public Cursor() {
+        
+    }
 
-    public Cursor(int x, int y, int width, int height, BufferedImage bufferedImage) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.bufferedImage = bufferedImage;   
+    public Cursor(int x, int y, int size) {
+        this.width = size;
+        this.height = size;
+        this.x  = x ;
+        this.y  = y ;
+        this.pointer = 0;
+        this.cursorImage = SpriteManager.cursor;
     }
     
-    public void setPos(int x, int y){
-        this.x = x;
-        this.y = y;
+    public void setPos(Words[] words){
+        this.x = words[pointer].getWordX() - words[pointer].getWidth()/2 - width;
+        this.y = words[pointer].getWordY() - words[pointer].getHeight()/2 - height;
     }
-    
+    public void chagePointer(int add,Words[] words){ 
+        if(this.pointer+add<0 ||this.pointer+add>=words.length){
+        
+        }else{
+            this.pointer += add;
+            System.out.print(pointer);
+        }    
+    }
+    public int getPointer(){
+        return this.pointer;
+    }
+   
+    public void paint(Graphics g){
+        g.drawImage(cursorImage, x, y, width, height, null);
+    }
+   
 }
