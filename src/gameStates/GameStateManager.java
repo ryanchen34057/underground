@@ -1,7 +1,6 @@
 package gameStates;
 
 import record.Timer;
-
 import java.awt.*;
 import java.util.Stack;
 
@@ -13,7 +12,6 @@ public class GameStateManager {
     public GameStateManager() {
         gameStates = new Stack<>();
         setGameState(new MenuState(this));
-        currentGameState = gameStates.peek();//創建時指定場景
     }
 
     public void setGameState(GameState gameState) {

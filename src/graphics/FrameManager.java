@@ -5,6 +5,8 @@ import enums.Id;
 import effects.Effect;
 import states.*;
 
+import java.awt.*;
+
 import static enums.Direction.*;
 
 public class FrameManager {
@@ -136,18 +138,21 @@ public class FrameManager {
         return deathFrame;
     }
 
-    public static Sprite[] getBluePortalFrame() {
-        for(int i = 0; i< bluePortalFrame.length; i++) {
-            bluePortalFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 10, 32,  32);
+    public static Sprite[] getPortalFrame(Color color, Direction direction) {
+        if(color == Color.BLUE) {
+            int y = (direction == LEFT) ? 10 :11;
+            for(int i = 0; i< bluePortalFrame.length; i++) {
+                bluePortalFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 32,  32);
+            }
+            return bluePortalFrame;
         }
-        return bluePortalFrame;
-    }
-
-    public static Sprite[] getPurplePortalFramePortalFrame() {
-        for(int i = 0; i< purplePortalFrame.length; i++) {
-            purplePortalFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 11, 32,  32);
+        else {
+            int y = (direction == LEFT) ? 12 :13;
+            for(int i = 0; i< purplePortalFrame.length; i++) {
+                purplePortalFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 32,  32);
+            }
+            return purplePortalFrame;
         }
-        return purplePortalFrame;
     }
 
     public static Sprite[] getTorchFrame() {

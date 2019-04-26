@@ -3,7 +3,6 @@ package effects;
 import enums.Id;
 import gameObject.character.Player;
 import graphics.FrameManager;
-import util.Handler;
 
 import java.awt.*;
 

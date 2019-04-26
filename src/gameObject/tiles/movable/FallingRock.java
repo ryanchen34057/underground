@@ -7,10 +7,10 @@ import enums.Id;
 import gameObject.ICollidable;
 import gameObject.character.Player;
 import gameObject.tiles.Tile;
+import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
 import gameStates.GameState;
 import util.CollisionCondition;
-import util.Handler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -47,7 +47,7 @@ public class FallingRock extends Tile {
         g.drawImage(bufferedImage, x, y, width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.GREEN);
-            g.drawRect(x+11, y, width-30,height);
+            g.drawRect(x+10, y+height, width/2+20,1);
         }
     }
 
@@ -70,13 +70,13 @@ public class FallingRock extends Tile {
             y += FALLING_SPEED;
         }
         Tile t;
-        for (int i = 0; i < Handler.tiles.size(); i++) {
-            t = Handler.tiles.get(i);
-            if(!inTheScreen(t)) { continue; }
-            if(t.getBounds() != null && t instanceof Wall && collidesWith(t, Tile::getBounds)){
-                handleCollision(t, null);
-            }
-        }
+//        for (int i = 0; i < Handler.tiles.size(); i++) {
+//            t = Handler.tiles.get(i);
+//            if(!inTheScreen(t)) { continue; }
+//            if(t.getBounds() != null && !(t instanceof FallingRock) && collidesWith(t, Tile::getBounds)){
+//                handleCollision(t, null);
+//            }
+//        }
     }
 
     public boolean isFalling() {
@@ -89,7 +89,7 @@ public class FallingRock extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x+11, y, width-30, height);
+        return new Rectangle(x+11, y, width-65, height);
     }
     @Override
     public  Rectangle getBoundsTop() {
@@ -97,7 +97,7 @@ public class FallingRock extends Tile {
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(x+10, y+height, width-20,1 );
+        return new Rectangle(x+10, y+height, width/2+20,1 );
     }
     @Override
     public  Rectangle getBoundsLeft() {
@@ -129,10 +129,11 @@ public class FallingRock extends Tile {
         if(!(other instanceof Player)) {
             if(isFalling) {
                 y = ((Tile) other).getY() - height;
+
             }
             isFalling = false;
             if(!fallen) {
-                Handler.addEffect(LandingEffect.getInstance(this));
+//                Handler.addEffect(LandingEffect.getInstance(this));
                 GameState.cam.setShaking(true, 20, 10);
             }
             fallen = true;

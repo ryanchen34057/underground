@@ -8,7 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-
+import java.util.HashMap;
 
 
 public class Words {
@@ -18,17 +18,24 @@ public class Words {
     int size;
     int sWidth;
     int sHeight;
-    
+    private static HashMap<Integer, Font> fontMap;
+    private Font font;
     
     public Words(String msg,int size,int x,int y){
         this.msg = msg;
         this.x = x;
         this.y = y;
         this.size = size;
+        if(fontMap == null) {
+            fontMap = new HashMap<>();
+        }
+        if(!fontMap.containsKey(size)){
+            fontMap.put(size, Fonts.getBitFont(size, "/res/half_bold_pixel-7.ttf"));
+        }
+        font = fontMap.get(size);
     }
     public void paint(Graphics g){
-        Font font1 = Fonts.getBitFont(size,"/res/half_bold_pixel-7.ttf");
-        g.setFont(font1);
+        g.setFont(font);
         g.setColor(Color.LIGHT_GRAY);
         FontMetrics fm = g.getFontMetrics();
         int sw = fm.stringWidth(msg);

@@ -122,6 +122,12 @@ public abstract class Entity implements ICollidable {
     public void setOnTheIce(boolean onTheIce) {
         isOnTheIce = onTheIce;
     }
+    public boolean isOnTheGround() {
+        return isOnTheGround;
+    }
+    public void setOnTheGround(boolean onTheGround) {
+        isOnTheGround = onTheGround;
+    }
 
     // Drawing method
     public abstract void paint(Graphics g);

@@ -22,24 +22,18 @@ public class Game extends Canvas implements Runnable {
     public static final int HEIGHT = 220;
     public static final int SCALE = 4;
 
-    // Camera
-    public static Camera cam;
-
     //Resource Manager
     private SpriteManager spriteManager;
 
     // KeyListener
     private Input keyListener;
 
-    // Background Image
-    private BufferedImage img;
-
     // Current Status
     private GameStateManager gameStateManager;
 
     public Game() {
         running = false;
-        debugMode = false;
+        debugMode = true;
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
@@ -67,8 +61,6 @@ public class Game extends Canvas implements Runnable {
 
     public void init() {
         spriteManager = new SpriteManager();
-        img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-        cam = new Camera();
 
         //Create level1
         gameStateManager = new GameStateManager();
@@ -121,7 +113,7 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-//                System.out.println(frames + " Frame Per Second " + ticks + " Updates Per Second");
+                System.out.println(frames + " Frame Per Second " + ticks + " Updates Per Second");
                 frames = 0;
                 ticks = 0;
             }

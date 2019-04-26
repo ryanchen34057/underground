@@ -5,10 +5,11 @@ import UI.Game;
 import cursor.Cursor;
 import fonts.Words;
 import gameStates.level1.Level1AState;
-import gameStates.level1.Level1BState;
 import input.Input;
 import java.awt.Graphics;
 import map.Background;
+import util.HandlerInterface;
+import util.LevelHandler;
 
 
 public class MenuState extends GameState{
@@ -22,7 +23,7 @@ public class MenuState extends GameState{
  
     public MenuState(GameStateManager gameStateManager) {
         super(gameStateManager);
-        init(); 
+        init();
     }
     
     public void init() {
@@ -37,7 +38,6 @@ public class MenuState extends GameState{
         words[1] = wordOption;
         words[2] = wordExit;
         cursor = new Cursor(0,0,32);
-       
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MenuState extends GameState{
             if(Input.keys.get(7).down){//Enter
                 switch(cursor.getPointer()){
                     case 0:
-                        gameStateManager.setGameState(new Level1AState(gameStateManager));
+                        gameStateManager.setLevelState(new Level1AState(gameStateManager, new LevelHandler(cam)));
                         locked = true;
                         break;
                     case 1:
@@ -59,12 +59,12 @@ public class MenuState extends GameState{
             }
             if(Input.keys.get(0).down){//上
                 cursor.chagePointer(-1, words);
-                System.out.println("up");
+                //System.out.println("up");
                 locked = true;
             }
             if(Input.keys.get(1).down){//下
                 cursor.chagePointer(1, words);
-                System.out.println("down");
+                //System.out.println("down");
                 locked = true;
             }
         }
@@ -87,5 +87,10 @@ public class MenuState extends GameState{
         wordOption.paint(g);
         wordExit.paint(g);
         cursor.paint(g);
+    }
+
+    @Override
+    public String toString() {
+        return "MenuState";
     }
 }

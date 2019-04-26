@@ -6,15 +6,13 @@ import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
 import gameObject.tiles.movable.FallingRock;
+import gameObject.tiles.portal.Portal;
 import gameObject.tiles.wall.IceWall;
 import graphics.FrameManager;
 import input.Input;
 import gameObject.tiles.Tile;
-import org.omg.PortableInterceptor.INACTIVE;
-import states.IceSkating;
 import states.PlayerState;
 import util.CollisionCondition;
-import util.Handler;
 
 
 import java.awt.*;
@@ -125,37 +123,14 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-//        if (prevState != currentState) {
-//            prevState = currentState;
-//            System.out.println(prevState);
-//        }
-        // Predict collision
+        if (prevState != currentState) {
+            prevState = currentState;
+            System.out.println(prevState);
+        }
         x += velX;
         y += velY;
 
-        if(inTheGame) {
-            handleKeyInput();
-        }
         currentState.update(this);
-        isOnTheGround = false;
-        Tile t;
-        for (int i = 0; i < Handler.tiles.size(); i++) {
-            t = Handler.tiles.get(i);
-            if(!inTheScreen(t)) { continue; }
-            if(t.getBounds() != null) {
-                handleCollision(t, checkCollisionBounds(t, Tile::getBounds));
-            }
-        }
-        // Check if on the ice
-        if(isOnTheIce && currentState != PlayerState.standing) {
-            currentState = PlayerState.iceSkating;
-        }
-
-        //Check if on the ground
-        if(!isInTheAir() && !isOnTheGround) {
-            currentState = PlayerState.falling;
-        }
-
         frameSpeedManager();
     }
 
@@ -208,6 +183,7 @@ public class Player extends Entity {
     public void reSpawn() {
         isDead = false;
     }
+
 
     // Handle keyInput from player
     public void handleKeyInput() {
@@ -270,7 +246,7 @@ public class Player extends Entity {
         isDead = true;
     }
 
-    private Direction checkCollisionBounds(Tile t, CollisionCondition collisionCondition) {
+    public Direction checkCollisionBounds(Tile t, CollisionCondition collisionCondition) {
         if(getBoundsTop().intersects(collisionCondition.checkCollision(t))) return Direction.TOP;
         else if(getBoundsBottom().intersects(collisionCondition.checkCollision(t))) return Direction.BOTTOM;
         else if(getBoundsLeft().intersects(collisionCondition.checkCollision(t))) return Direction.LEFT;
@@ -278,7 +254,7 @@ public class Player extends Entity {
         return null;
     }
 
-    private boolean isInTheAir() {
+    public boolean isInTheAir() {
         return currentState == PlayerState.standingJumping ||
                 currentState == PlayerState.runningJumping ||
                 currentState == PlayerState.dashJumping ||
@@ -355,24 +331,27 @@ public class Player extends Entity {
             case coin:
                 break;
             case bluePortal:
-                velX += 3;
+                if(((Portal)t).getDirection() == Direction.LEFT) { velX -= 3; }
+                else { velX += 3; }
                 break;
-
+            case purplePortal:
+                isGoaled = true;
+                break;
         }
     }
 
-    private void ifHitWall(Tile t, Direction direction) {
+    public void ifHitWall(Tile t, Direction direction) {
         Rectangle collisionRect = t.getBounds();
         switch (direction) {
             case TOP:
-//                System.out.println("TOP");
+                System.out.println("TOP");
                 gravity = 0;
                 velY = 0;
                 y = collisionRect.y + t.getHeight();
                 currentState = PlayerState.falling;
                 break;
             case BOTTOM:
-//                System.out.println("BOTTOM");
+                System.out.println("BOTTOM");
                 if(currentState == PlayerState.falling || currentState == PlayerState.sliding
                         || currentState == PlayerState.verticalDashing) {
                     velY = 0;
@@ -398,7 +377,7 @@ public class Player extends Entity {
                 fatigue = 0;
                 break;
             case LEFT:
-//                System.out.println("LEFT");
+                System.out.println("LEFT");
                 velX = 0;
                 x = collisionRect.x + collisionRect.width - 20;
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling &&
@@ -415,7 +394,7 @@ public class Player extends Entity {
 
                 break;
             case RIGHT:
-//                System.out.println("RIGHT");
+                System.out.println("RIGHT");
                 velX = 0;
                 x = collisionRect.x - getWidth() + 20;
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling

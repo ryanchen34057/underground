@@ -22,32 +22,28 @@ public class Spike extends Tile {
     @Override
     public void paint(Graphics g) {
         if(direction == Direction.UP) {
-            g.drawImage(bufferedImage, super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(bufferedImage, x, y, width, height, null);
             if(Game.debugMode) {
                 g.drawRect(x, y+height/2, width, height/2);
                 g.drawRect(x+6, y+30, width-12,1);
             }
         }
         else if(direction == Direction.DOWN) {
-            g.drawImage(bufferedImage, super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(bufferedImage, x, y, width, height, null);
             if(Game.debugMode) {
                 g.drawRect(x, y, width, height/2-5);
                 g.drawRect(x+6, y+30, width-12,1);
             }
         }
         else if(direction == Direction.LEFT) {
-            g.drawImage(bufferedImage, super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(bufferedImage, x, y, width, height, null);
             if(Game.debugMode) {
                 g.drawRect(x+width/2+5, y, width/2, height);
                 g.drawRect(x+35, y+6, 1,height-12);
             }
         }
         else {
-            g.drawImage(bufferedImage, super.getX(), super.getY(),
-                    super.getWidth(), super.getHeight(), null);
+            g.drawImage(bufferedImage, x, y, width, height, null);
             if(Game.debugMode) {
                 g.drawRect(x, y, width/2-5, height);
                 g.drawRect(x+width-35, y+6, 1,height-12);

@@ -5,7 +5,6 @@ import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
 import gameObject.tiles.Tile;
-import graphics.FrameManager;
 import graphics.SpriteManager;
 import util.CollisionCondition;
 
@@ -16,12 +15,17 @@ public class VanishingRock extends Tile {
     private float alpha;
     private int frame;
     private int frameDelay;
+    private Direction direction;
     public VanishingRock(int x, int y, int width, int height, Id id) {
         super(x, y, width, height,id);
         isStepOn = false;
         frame = 0;
         frameDelay = 0;
         alpha = 1;
+    }
+
+    public boolean isStepOn() {
+        return isStepOn;
     }
 
     @Override
@@ -98,8 +102,6 @@ public class VanishingRock extends Tile {
 
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
-        if(direction == Direction.BOTTOM) {
-            isStepOn = true;
-        }
+        isStepOn = true;
     }
 }
