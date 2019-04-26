@@ -17,6 +17,7 @@ public class SpriteManager {
     //level1
     public static BufferedImage level1;
     public static BufferedImage menu;
+    public static BufferedImage option;
     
     //cursor
     public static BufferedImage cursor;
@@ -27,9 +28,11 @@ public class SpriteManager {
         coin = new Sprite(spriteSheet, 1, 9, 32, 32);
 
         //BufferedImage object
+        cursor = ResourceManager.getInstance().getImage("/res/CursorA.png");
         level1 = ResourceManager.getInstance().getImage("/res/level1.png");
         menu = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
-        cursor = ResourceManager.getInstance().getImage("/res/CursorA.png");
+        option = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
+        cursor = ResourceManager.getInstance().getImage("/res/pause3.png");        
     }
 
     public static void level1Init() {

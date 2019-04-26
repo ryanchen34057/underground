@@ -6,7 +6,7 @@ import java.util.Stack;
 public class GameStateManager {
     private Stack<GameState> gameStates;
     private GameState currentGameState;
-    private GameState previousGameState;
+//    private GameState previousGameState;
     public GameState menu = new MenuState(this);
 
 
@@ -14,8 +14,6 @@ public class GameStateManager {
     public GameStateManager() {
         gameStates = new Stack<>();
         gameStates.push(menu);
-        currentGameState = gameStates.peek();//創建時指定場景
-        
     }
 
     public void setGameState(GameState gameState) {
@@ -24,15 +22,30 @@ public class GameStateManager {
     }
 
     public void paint(Graphics g) {
-        currentGameState.paint(g);
+        if(currentGameState != null){
+            currentGameState.paint(g);
+        }
     }
 
     public void update() {
+        currentGameState = gameStates.peek();
         currentGameState.update();
     }
     
     public void handleKeyInput(){
-        currentGameState.handleKeyInput();
-        
+        if(currentGameState != null) {
+          currentGameState.handleKeyInput();   
+        }
+           
     }
+    public void back(){
+        gameStates.pop(); 
+    }
+    
+    public void toMenu(){
+        if(gameStates.size() > 1){
+            gameStates.pop(); 
+        }
+    }
+    
 }

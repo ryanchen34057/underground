@@ -9,6 +9,7 @@ import java.awt.*;
 public abstract class GameState {
     protected Background background;
     protected Handler handler;
+    public static boolean locked;
     public static  Camera cam;
 
     public GameState() {

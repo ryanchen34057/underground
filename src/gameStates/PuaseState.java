@@ -4,64 +4,62 @@ package gameStates;
 import UI.Game;
 import cursor.Cursor;
 import fonts.Words;
+import static gameStates.GameState.locked;
 import input.Input;
 import java.awt.Graphics;
 import map.Background;
 
 
-public class MenuState extends GameState{
+public class PuaseState extends GameState{
     private GameStateManager gameStateManager;
     private Words[] words ;
-    private Cursor cursor;
     private Words wordTitle;
-    private Words wordStart;
-    private Words wordOption;
-    private Words wordExit;
-    private Words wordLeaderboard;
-
-
-
-    public MenuState(GameStateManager gameStateManager) {
+    private Words wordResume;
+    private Words wordRetry;
+    private Words wordSelect;
+    private Words wordMenu;
+    private Words wordSaveQuit;
+    private Cursor cursor;
+    
+    public PuaseState(GameStateManager gameStateManager) {
         super();
         this.gameStateManager = gameStateManager;
         init(); 
     }
     
     public void init() {
-        background = new Background("/res/Cave1.png", Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
-        wordTitle = new Words("UnderGround", 80, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-120);
-
-        wordStart = new Words("Start", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+80);
-        wordLeaderboard = new Words("Leaderboard", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+140);
-        wordOption = new Words("Option", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+200);
-        wordExit = new Words("Exit", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+260);
-        words = new Words[4];
-        words[0] = wordStart;
-        words[1] = wordLeaderboard;
-        words[2] = wordOption;
-        words[3] = wordExit;
+        background = new Background("/res/pause3.png", 2);
+        wordTitle = new Words("Puase", 60, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-180);
+        wordResume = new Words("Resume", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-40);
+        wordRetry = new Words("Retry", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+20);
+        wordSelect = new Words("Select Level", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+80);
+        wordMenu = new Words("Back to Menu", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+140);
+        wordSaveQuit = new Words("Save & Quit", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+200);
+        words = new Words[5];
+        words[0] = wordResume;
+        words[1] = wordRetry;
+        words[2] = wordSelect;
+        words[3] = wordMenu;
+        words[4] = wordSaveQuit;
         cursor = new Cursor(0,0,32);
-       
     }
-
+    
     @Override
     public void handleKeyInput() {
         if(!locked){
             if(Input.keys.get(7).down){//Enter
                 switch(cursor.getPointer()){
                     case 0:
-                        gameStateManager.setGameState(new Level1AState(gameStateManager));
+                        gameStateManager.back();
                         locked = true;
                         break;
                     case 1:
-                        
                         break;
                     case 2:
-                        gameStateManager.setGameState(new OptionState(gameStateManager));
+                        gameStateManager.toMenu();
                         locked = true;
                         break;
                     case 3:
-                        System.exit(0);
                         break;
                 }        
                 
@@ -78,26 +76,24 @@ public class MenuState extends GameState{
         if(!Input.keys.get(0).down &&!Input.keys.get(1).down && !Input.keys.get(7).down){//放開
             locked = false;
         }
-   
     }
+    
     @Override   
     public void update() {
         if(cursor != null){
             cursor.setPos(words);
         }
     }
+    
     @Override
     public void paint(Graphics g) {
         background.paint(g);
         wordTitle.paint(g);
-        wordStart.paint(g);
-        wordLeaderboard.paint(g);
-        wordOption.paint(g);
-        wordExit.paint(g);
+        wordResume.paint(g);
+        wordRetry.paint(g);
+        wordSelect.paint(g);
+        wordMenu.paint(g);
+        wordSaveQuit.paint(g);
         cursor.paint(g);
-    }
-    
-    public String toString(){
-        return "MenuState";
     }
 }
