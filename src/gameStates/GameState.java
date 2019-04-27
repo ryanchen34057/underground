@@ -7,8 +7,7 @@ public abstract class GameState {
     protected GameStateManager gameStateManager;
     protected Background background;
     protected int deathDelay;
-    public static final int DEATH_DELAY_TIME = 20;
-
+    public static boolean locked;
 
     public GameState(GameStateManager gameStateManager) {
         this.gameStateManager = gameStateManager;

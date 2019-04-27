@@ -1,7 +1,6 @@
 package cursor;
 
 import fonts.Words;
-import graphics.ResourceManager;
 import graphics.SpriteManager;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

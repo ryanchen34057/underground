@@ -20,6 +20,7 @@ public class Input implements KeyListener {
     public Key c = new Key(Keys.C);
     public Key r = new Key(Keys.R);
     public Key enter = new Key(Keys.ENTER);
+    public Key esc = new Key(Keys.ESC);
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -74,6 +75,7 @@ public class Input implements KeyListener {
         }
         if(e.getKeyCode() == KeyEvent.VK_R) r.toggle(pressed);
         if(e.getKeyCode() == KeyEvent.VK_ENTER) enter.toggle(pressed);
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE) esc.toggle(pressed);
     }
 
     public void releaseAll() {

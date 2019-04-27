@@ -19,6 +19,7 @@ import gameObject.tiles.wall.IceWall;
 import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
 import graphics.SpriteManager;
+import input.Input;
 import map.Background;
 import states.PlayerState;
 import util.Camera;
@@ -28,6 +29,7 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public abstract class LevelState extends GameState {
+    public static final int DEATH_DELAY_TIME = 20;
     protected Player player;
     protected LinkedList<Tile> tiles;
     protected  LinkedList<Effect> effects;
@@ -48,6 +50,10 @@ public abstract class LevelState extends GameState {
     public void handleKeyInput() {
         if(player != null) {
             player.handleKeyInput();
+        }
+        //ESC - pause
+        if(Input.keys.get(8).down) {
+            gameStateManager.setGameState(new PauseState(gameStateManager));
         }
     }
 

@@ -1,15 +1,11 @@
 
 package fonts;
 
-import UI.Game;
-import util.Camera;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.util.HashMap;
-
 
 public class Words {
     String msg;
@@ -20,7 +16,7 @@ public class Words {
     int sHeight;
     private static HashMap<Integer, Font> fontMap;
     private Font font;
-    
+
     public Words(String msg,int size,int x,int y){
         this.msg = msg;
         this.x = x;
@@ -33,6 +29,7 @@ public class Words {
             fontMap.put(size, Fonts.getBitFont(size, "/res/half_bold_pixel-7.ttf"));
         }
         font = fontMap.get(size);
+
     }
     public void paint(Graphics g){
         g.setFont(font);

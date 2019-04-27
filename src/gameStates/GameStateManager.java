@@ -8,10 +8,13 @@ public class GameStateManager {
     private Stack<GameState> gameStates;
     private GameState currentGameState;
     private Timer timer;
+    private GameState menu;
+
 
     public GameStateManager() {
+        menu = new MenuState(this);
         gameStates = new Stack<>();
-        setGameState(new MenuState(this));
+        setGameState(menu);
     }
 
     public void setGameState(GameState gameState) {
@@ -21,20 +24,22 @@ public class GameStateManager {
 
     public void setLevelState(GameState levelState) {
         gameStates.push(levelState);
-        currentGameState = gameStates.pop();
         if(timer == null) {
             timer = new Timer();
         }
     }
 
     public void paint(Graphics g) {
-        currentGameState.paint(g);
         if(timer != null) {
             timer.paint(g);
+        }
+        if(currentGameState != null){
+            currentGameState.paint(g);
         }
     }
 
     public void update() {
+        currentGameState = gameStates.peek();
         currentGameState.update();
         if(timer != null) {
             timer.update();
@@ -42,6 +47,19 @@ public class GameStateManager {
     }
     
     public void handleKeyInput(){
-        currentGameState.handleKeyInput();
+        if(currentGameState != null) {
+          currentGameState.handleKeyInput();   
+        }
+           
     }
+    public void back(){
+        gameStates.pop();
+    }
+    
+    public void toMenu(){
+        if(gameStates.size() > 1){
+            gameStates.pop(); 
+        }
+    }
+    
 }
