@@ -28,8 +28,8 @@ public class PauseState extends GameState{
     }
     
     public void init() {
-        background = new Background("/res/pause3.png", 2);
-        wordTitle = new Words("Puase", 60, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-180);
+        background = new Background("/res/Cave1.png", 2);
+        wordTitle = new Words("Pause", 60, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-180);
         wordResume = new Words("Resume", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-40);
         wordRetry = new Words("Retry", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+20);
         wordSelect = new Words("Select Level", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+80);

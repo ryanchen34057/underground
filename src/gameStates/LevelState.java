@@ -21,6 +21,7 @@ import gameObject.tiles.wall.Wall;
 import graphics.SpriteManager;
 import input.Input;
 import map.Background;
+import record.Timer;
 import states.PlayerState;
 import util.Camera;
 
@@ -34,8 +35,10 @@ public abstract class LevelState extends GameState {
     protected LinkedList<Tile> tiles;
     protected  LinkedList<Effect> effects;
     protected  LinkedList<ParticleSystem> particles;
+
     // Coordinate of blue portal(where player spawns)
     protected  Dimension bluePortalCor;
+
     protected LinkedList<FallingRock> fallingRocks;
     protected static Camera cam;
 

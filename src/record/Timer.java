@@ -27,7 +27,6 @@ public class Timer {
         usedTime = trans(usedTime,2,1000);
         usedTime = trans(usedTime,3,1);
         word.setWord(formatter.format(min)+":"+formatter.format(sec)+":"+formatter.format(ms/10));
-                
     }
     
     public void paint(Graphics g){
@@ -47,5 +46,4 @@ public class Timer {
         }
         return (int)usedTime % msValue;
     }
-    
 }

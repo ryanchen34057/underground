@@ -7,8 +7,8 @@ import java.util.Stack;
 public class GameStateManager {
     private Stack<GameState> gameStates;
     private GameState currentGameState;
-    private Timer timer;
     private GameState menu;
+    private Timer timer;
 
 
     public GameStateManager() {
@@ -24,24 +24,23 @@ public class GameStateManager {
 
     public void setLevelState(GameState levelState) {
         gameStates.push(levelState);
-        if(timer == null) {
-            timer = new Timer();
-        }
+
     }
 
     public void paint(Graphics g) {
-        if(timer != null) {
-            timer.paint(g);
-        }
         if(currentGameState != null){
             currentGameState.paint(g);
+        }
+        if(timer != null && currentGameState instanceof LevelState) {
+            timer.paint(g);
         }
     }
 
     public void update() {
         currentGameState = gameStates.peek();
         currentGameState.update();
-        if(timer != null) {
+        if(timer == null & currentGameState instanceof LevelState) { timer = new Timer(); }
+        if(timer != null && currentGameState instanceof LevelState) {
             timer.update();
         }
     }
@@ -61,5 +60,8 @@ public class GameStateManager {
             gameStates.pop(); 
         }
     }
-    
+
+    public Timer getTimer() {
+        return timer;
+    }
 }

@@ -19,7 +19,6 @@ import graphics.SpriteManager;
 import map.Background;
 import states.PlayerState;
 import util.Camera;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
