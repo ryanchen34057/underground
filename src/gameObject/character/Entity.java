@@ -35,9 +35,7 @@ public abstract class Entity implements ICollidable {
     protected int fatigue;
     protected boolean isTired;
 
-    public Entity(int x, int y, int width, int height, Id id) {
-        this.x = x;
-        this.y = y;
+    public Entity(int width, int height, Id id) {
         this.width = width;
         this.height = height;
         this.velX = 0;

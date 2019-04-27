@@ -33,7 +33,7 @@ public class Game extends Canvas implements Runnable {
 
     public Game() {
         running = false;
-        debugMode = true;
+        debugMode = false;
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
@@ -56,7 +56,6 @@ public class Game extends Canvas implements Runnable {
 
     public void update() {
         gameStateManager.update();
-        gameStateManager.handleKeyInput();
     }
 
     public void init() {
@@ -64,7 +63,6 @@ public class Game extends Canvas implements Runnable {
 
         //Create level1
         gameStateManager = new GameStateManager();
-        
 
         keyListener = new Input();
 
@@ -113,7 +111,7 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println(frames + " Frame Per Second " + ticks + " Updates Per Second");
+//                System.out.println(frames + " Frame Per Second " + ticks + " Updates Per Second");
                 frames = 0;
                 ticks = 0;
             }

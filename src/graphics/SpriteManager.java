@@ -33,7 +33,7 @@ public class SpriteManager {
         vanishingRock = new Sprite(spriteSheet, 1,6,32,32);
 
         //BufferedImage object
-        level1A = ResourceManager.getInstance().getImage("/res/movementTest.png");
+        level1A = ResourceManager.getInstance().getImage("/res/level1A.png");
         level1B = ResourceManager.getInstance().getImage("/res/level1B.png");
         level1C = ResourceManager.getInstance().getImage("/res/level1C.png");
         menu = ResourceManager.getInstance().getImage("/res/MenuTemp.png");

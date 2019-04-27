@@ -1,6 +1,7 @@
 package gameObject.tiles.movable;
 
 import UI.Game;
+import effects.Effect;
 import effects.LandingEffect;
 import enums.Direction;
 import enums.Id;
@@ -25,6 +26,7 @@ public class FallingRock extends Tile {
     private final int SHAKING_LENGTH = 30;
     private final int FALLING_SPEED = 25;
     private boolean fallen;
+    private Effect currentEffect;
 
     public FallingRock(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height, id);
@@ -36,6 +38,7 @@ public class FallingRock extends Tile {
         this.bufferedImage = bufferedImage;
         intensity = 10;
         shakingCounter = 0;
+        currentEffect = null;
     }
 
     public void setShaking(boolean shaking) {
@@ -69,14 +72,6 @@ public class FallingRock extends Tile {
         if(isFalling) {
             y += FALLING_SPEED;
         }
-        Tile t;
-//        for (int i = 0; i < Handler.tiles.size(); i++) {
-//            t = Handler.tiles.get(i);
-//            if(!inTheScreen(t)) { continue; }
-//            if(t.getBounds() != null && !(t instanceof FallingRock) && collidesWith(t, Tile::getBounds)){
-//                handleCollision(t, null);
-//            }
-//        }
     }
 
     public boolean isFalling() {
@@ -85,6 +80,14 @@ public class FallingRock extends Tile {
 
     public boolean isFallen() {
         return fallen;
+    }
+
+    public Effect getCurrentEffect() {
+        return currentEffect;
+    }
+
+    public void setCurrentEffect(Effect currentEffect) {
+        this.currentEffect = currentEffect;
     }
 
     @Override
@@ -97,7 +100,7 @@ public class FallingRock extends Tile {
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(x+10, y+height, width/2+20,1 );
+        return new Rectangle(x, y+height, width,1 );
     }
     @Override
     public  Rectangle getBoundsLeft() {
@@ -129,14 +132,13 @@ public class FallingRock extends Tile {
         if(!(other instanceof Player)) {
             if(isFalling) {
                 y = ((Tile) other).getY() - height;
-
+                isFalling = false;
             }
-            isFalling = false;
             if(!fallen) {
-//                Handler.addEffect(LandingEffect.getInstance(this));
-                GameState.cam.setShaking(true, 20, 10);
+                System.out.println();
+                currentEffect = LandingEffect.getInstance(this);
+                fallen = true;
             }
-            fallen = true;
         }
     }
 }

@@ -8,8 +8,6 @@ import gameStates.level1.Level1AState;
 import input.Input;
 import java.awt.Graphics;
 import map.Background;
-import util.HandlerInterface;
-import util.LevelHandler;
 
 
 public class MenuState extends GameState{
@@ -46,7 +44,7 @@ public class MenuState extends GameState{
             if(Input.keys.get(7).down){//Enter
                 switch(cursor.getPointer()){
                     case 0:
-                        gameStateManager.setLevelState(new Level1AState(gameStateManager, new LevelHandler(cam)));
+                        gameStateManager.setLevelState(new Level1AState(gameStateManager));
                         locked = true;
                         break;
                     case 1:
@@ -78,6 +76,7 @@ public class MenuState extends GameState{
         if(cursor != null){
             cursor.setPos(words);
         }
+        handleKeyInput();
     }
     @Override
     public void paint(Graphics g) {

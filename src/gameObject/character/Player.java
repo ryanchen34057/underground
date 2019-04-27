@@ -69,13 +69,12 @@ public class Player extends Entity {
     public static final float VERTICALDASHING_VELX = 12;
 
     //State
-    private boolean inTheGame;
     private boolean isJumped;
     private boolean isOnTheWall;
     private boolean isGoaled;
 
-    public Player(int x, int y, int width, int height, Id id) {
-        super(x, y, width, height, id);
+    public Player(int width, int height, Id id) {
+        super(width, height, id);
         currentState = PlayerState.idle;
         velX = 5;
         frameDelay = 0;
@@ -85,12 +84,16 @@ public class Player extends Entity {
         prevState = null;
         currentEffect = null;
         isTired = false;
-        inTheGame = false;
         isGoaled = false;
         isOnTheGround = false;
         isJumped = false;
         isOnTheWall = false;
 
+    }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     @Override
@@ -123,15 +126,22 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        if (prevState != currentState) {
-            prevState = currentState;
-            System.out.println(prevState);
-        }
-        x += velX;
-        y += velY;
+        if(!isDead) {
+//            if (prevState != currentState) {
+//                prevState = currentState;
+//                System.out.println(prevState);
+//            }
+            x += velX;
+            y += velY;
 
-        currentState.update(this);
-        frameSpeedManager();
+            currentState.update(this);
+            frameSpeedManager();
+        }
+        else {
+            // Don't move if dead
+            velX = 0;
+            velY = 0;
+        }
     }
 
     // Getter and Setter
@@ -152,12 +162,6 @@ public class Player extends Entity {
     }
     public void setTired(boolean tired) {
         isTired = tired;
-    }
-    public boolean isInTheGame() {
-        return inTheGame;
-    }
-    public void setInTheGame(boolean inTheGame) {
-        this.inTheGame = inTheGame;
     }
     public boolean isJumped() {
         return isJumped;
@@ -224,7 +228,6 @@ public class Player extends Entity {
         }
     }
 
-
     @Override
     // Collision test
     public Rectangle getBounds() { return new Rectangle(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT);}
@@ -238,7 +241,7 @@ public class Player extends Entity {
         return new Rectangle(x+25, y+20, 1, HEIGHT -40 );
     }
     public Rectangle getBoundsRight() {
-        return new Rectangle(x+ WIDTH -25, y+20, 1, HEIGHT -40 );
+        return new Rectangle(x+ WIDTH -20, y+20, 1, HEIGHT -40 );
     }
 
     @Override
@@ -267,7 +270,7 @@ public class Player extends Entity {
 
     @Override
     public boolean collidesWith(ICollidable other, CollisionCondition collisionCondition) {
-        return false;
+        return getBounds().intersects(collisionCondition.checkCollision((Tile) other));
     }
 
     @Override
@@ -340,18 +343,18 @@ public class Player extends Entity {
         }
     }
 
-    public void ifHitWall(Tile t, Direction direction) {
+    private void ifHitWall(Tile t, Direction direction) {
         Rectangle collisionRect = t.getBounds();
         switch (direction) {
             case TOP:
-                System.out.println("TOP");
+               // System.out.println("TOP");
                 gravity = 0;
                 velY = 0;
                 y = collisionRect.y + t.getHeight();
                 currentState = PlayerState.falling;
                 break;
             case BOTTOM:
-                System.out.println("BOTTOM");
+//                System.out.println("BOTTOM");
                 if(currentState == PlayerState.falling || currentState == PlayerState.sliding
                         || currentState == PlayerState.verticalDashing) {
                     velY = 0;
@@ -377,7 +380,7 @@ public class Player extends Entity {
                 fatigue = 0;
                 break;
             case LEFT:
-                System.out.println("LEFT");
+//                System.out.println("LEFT");
                 velX = 0;
                 x = collisionRect.x + collisionRect.width - 20;
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling &&
@@ -394,9 +397,9 @@ public class Player extends Entity {
 
                 break;
             case RIGHT:
-                System.out.println("RIGHT");
+                //System.out.println("RIGHT");
                 velX = 0;
-                x = collisionRect.x - getWidth() + 20;
+                x = collisionRect.x - getWidth() + 19;
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling
                         && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
