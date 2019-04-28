@@ -7,7 +7,7 @@ import gameObject.character.Player;
 import gameObject.tiles.Decor;
 import gameObject.tiles.movable.FallingRock;
 import gameObject.tiles.portal.Portal;
-import gameObject.tiles.prize.Coin;
+import gameObject.tiles.prize.Emerald;
 import gameObject.tiles.trap.Hole;
 import gameObject.tiles.trap.Spike;
 import gameObject.tiles.wall.IceWall;
@@ -153,7 +153,7 @@ public class Level1AState extends LevelState {
                     }
 
                 } else if (red == 255 && green == 0 && blue == 0) {
-                    tiles.add(new Coin(x * 64, y * 64, Coin.PRIZE_SIZE, Coin.PRIZE_SIZE, 1000, Id.coin));
+                    tiles.add(new Emerald(x * 64, y * 64, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 1000, Id.coin));
                 }
 
 

@@ -1,28 +1,15 @@
 package gameStates;
 
 import UI.Game;
-import effects.DeathParticle;
 import effects.Effect;
 import effects.LandingEffect;
 import effects.ParticleSystem;
-import enums.Direction;
-import gameObject.tiles.Decor;
 import gameObject.tiles.Tile;
-import enums.Id;
 import gameObject.character.Player;
 import gameObject.tiles.movable.FallingRock;
-import gameObject.tiles.portal.Portal;
-import gameObject.tiles.prize.Coin;
-import gameObject.tiles.trap.Hole;
-import gameObject.tiles.trap.Spike;
-import gameObject.tiles.wall.IceWall;
 import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
-import graphics.SpriteManager;
 import input.Input;
-import map.Background;
-import record.Timer;
-import states.PlayerState;
 import util.Camera;
 
 import java.awt.*;
@@ -111,8 +98,15 @@ public abstract class LevelState extends GameState {
 
                 // ********* FallingRock collision detection **********
                 for(FallingRock fr: fallingRocks) {
-                    if (t.getBounds() != null && t instanceof Wall && fr.collidesWith(t, Tile::getBounds)) {
-                        fr.handleCollision(t, null);
+                    if (t.getBounds() != null && fr.collidesWith(t, Tile::getBounds)) {
+                        if(t instanceof VanishingRock) {
+                            if(!((VanishingRock) t).isStepOn()) {
+                                fr.handleCollision(t, null);
+                            }
+                        }
+                        else {
+                            fr.handleCollision(t, null);
+                        }
                     }
                 }
                 // ****************************************************

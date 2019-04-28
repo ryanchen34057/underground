@@ -135,7 +135,6 @@ public class FallingRock extends Tile {
                 isFalling = false;
             }
             if(!fallen) {
-                System.out.println();
                 currentEffect = LandingEffect.getInstance(this);
                 fallen = true;
             }

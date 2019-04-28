@@ -9,10 +9,10 @@ import util.CollisionCondition;
 
 import java.awt.*;
 
-public class Coin extends Prize {
+public class Emerald extends Prize {
     public static final int PRIZE_SIZE = 64;
     private int frameDelay, frame;
-    public Coin(int x, int y, int width, int height, int point, Id id) {
+    public Emerald(int x, int y, int width, int height, int point, Id id) {
         super(x, y, width, height, point, id);
         frameDelay = 0;
         frame = 0;
