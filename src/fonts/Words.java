@@ -31,6 +31,9 @@ public class Words {
         font = fontMap.get(size);
 
     }
+    public void update(String msg) {
+        this.msg = msg;
+    }
     public void paint(Graphics g){
         g.setFont(font);
         g.setColor(Color.LIGHT_GRAY);

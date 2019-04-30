@@ -8,11 +8,8 @@ import enums.Id;
 import gameObject.ICollidable;
 import gameObject.character.Player;
 import gameObject.tiles.Tile;
-import gameObject.tiles.wall.VanishingRock;
-import gameObject.tiles.wall.Wall;
-import gameStates.GameState;
+import gameObject.tiles.prize.Prize;
 import util.CollisionCondition;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -50,7 +47,7 @@ public class FallingRock extends Tile {
         g.drawImage(bufferedImage, x, y, width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.GREEN);
-            g.drawRect(x+10, y+height, width/2+20,1);
+            g.drawRect(x+10, y+height, width-40,1);
         }
     }
 
@@ -100,7 +97,7 @@ public class FallingRock extends Tile {
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(x, y+height, width,1 );
+        return new Rectangle(x+10, y+height, width-40,1);
     }
     @Override
     public  Rectangle getBoundsLeft() {
@@ -129,7 +126,7 @@ public class FallingRock extends Tile {
 
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
-        if(!(other instanceof Player)) {
+        if(!(other instanceof Player) && !(other instanceof Prize)) {
             if(isFalling) {
                 y = ((Tile) other).getY() - height;
                 isFalling = false;

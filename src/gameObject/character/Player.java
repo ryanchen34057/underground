@@ -7,6 +7,7 @@ import enums.Id;
 import gameObject.ICollidable;
 import gameObject.tiles.movable.FallingRock;
 import gameObject.tiles.portal.Portal;
+import gameObject.tiles.trap.Spring;
 import gameObject.tiles.wall.IceWall;
 import graphics.FrameManager;
 import input.Input;
@@ -88,7 +89,6 @@ public class Player extends Entity {
         isOnTheGround = false;
         isJumped = false;
         isOnTheWall = false;
-
     }
 
     public void setPosition(int x, int y) {
@@ -114,9 +114,9 @@ public class Player extends Entity {
                 //BOTTOM
                 g.drawRect(x+40, y+ HEIGHT, WIDTH - 80, 1);
                 //LEFT
-                g.drawRect(x+25, y+20, 1, HEIGHT -40 );
+                g.drawRect(x+25, y+10, 1, HEIGHT -20 );
                 //RIGHT
-                g.drawRect(x+ WIDTH -25, y+20, 1, HEIGHT -40);
+                g.drawRect(x+ WIDTH -25, y+10, 1, HEIGHT -20);
                 // Original Size
                 g.setColor(Color.RED);
                 g.drawRect(x, y, WIDTH, HEIGHT);
@@ -127,10 +127,10 @@ public class Player extends Entity {
     @Override
     public void update() {
         if(!isDead) {
-//            if (prevState != currentState) {
-//                prevState = currentState;
-//                System.out.println(prevState);
-//            }
+            if (prevState != currentState) {
+                prevState = currentState;
+                System.out.println(prevState);
+            }
             x += velX;
             y += velY;
 
@@ -188,7 +188,6 @@ public class Player extends Entity {
         isDead = false;
     }
 
-
     // Handle keyInput from player
     public void handleKeyInput() {
         currentState.handleKeyInput(this, Input.keys);
@@ -238,10 +237,10 @@ public class Player extends Entity {
         return new Rectangle(x+40, y+ HEIGHT, WIDTH -80,1 );
     }
     public Rectangle getBoundsLeft() {
-        return new Rectangle(x+25, y+20, 1, HEIGHT -40 );
+        return new Rectangle(x+25, y+10, 1, HEIGHT-20 );
     }
     public Rectangle getBoundsRight() {
-        return new Rectangle(x+ WIDTH -20, y+20, 1, HEIGHT -40 );
+        return new Rectangle(x+ WIDTH -20, y+10, 1, HEIGHT-20 );
     }
 
     @Override
@@ -328,6 +327,7 @@ public class Player extends Entity {
             case breakableWall:
             case icewall1:
             case vanishingRock:
+            case spring:
             case wall:
                 ifHitWall(t, direction);
                 break;
@@ -369,6 +369,13 @@ public class Player extends Entity {
                 if(t instanceof IceWall && (currentState == PlayerState.running || currentState == PlayerState.iceSkating)) {
                     isOnTheIce = true;
                 }
+                else if(t instanceof Spring) {
+                    y = collisionRect.y - height;
+                    ((Spring) t).setStepOn(true);
+                    isJumped = true;
+                    gravity = STANDINGJUMPING_GRAVITY + 7;
+                    currentState = PlayerState.standingJumping;
+                }
                 else {
                     if(currentState == PlayerState.iceSkating) {
                         currentState = PlayerState.standing;
@@ -388,6 +395,13 @@ public class Player extends Entity {
                     currentState = PlayerState.sliding;
                     isOnTheWall = true;
                 }
+                else if(t instanceof Spring) {
+                    y = collisionRect.y - height;
+                    ((Spring) t).setStepOn(true);
+                    isJumped = true;
+                    gravity = STANDINGJUMPING_GRAVITY + 7;
+                    currentState = PlayerState.standingJumping;
+                }
                 else {
                     isOnTheWall = false;
                 }
@@ -404,6 +418,13 @@ public class Player extends Entity {
                         && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
                     isOnTheWall = true;
+                }
+                else if(t instanceof Spring) {
+                    y = collisionRect.y - height;
+                    ((Spring) t).setStepOn(true);
+                    isJumped = true;
+                    gravity = STANDINGJUMPING_GRAVITY + 7;
+                    currentState = PlayerState.standingJumping;
                 }
                 else {
                     isOnTheWall = false;

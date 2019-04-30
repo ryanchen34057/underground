@@ -12,16 +12,18 @@ public class SpriteManager {
     // Level1
     public static ArrayList<Sprite> level1Sprites;
 
-    public static Sprite coin;
+    public static Sprite emerald;
+    public static Sprite skull;
     public static Sprite vanishingRock;
 
     //Menu
     public static BufferedImage menu;
 
     //level1
-    public static BufferedImage level1A;
-    public static BufferedImage level1B;
-    public static BufferedImage level1C;
+    public static BufferedImage level1;
+    public static BufferedImage level2;
+    public static BufferedImage level3;
+    public static BufferedImage level4;
 
     // Option
     public static BufferedImage option;
@@ -32,20 +34,21 @@ public class SpriteManager {
     public SpriteManager() {
         //Sprite object
         spriteSheet = new SpriteSheet("/res/spriteSheet.png");
-        coin = new Sprite(spriteSheet, 1, 9, 32, 32);
+        emerald = new Sprite(spriteSheet, 1, 9, 32, 32);
+        skull = new Sprite(spriteSheet, 9, 9, 32, 32);
         vanishingRock = new Sprite(spriteSheet, 1,6,32,32);
 
         //BufferedImage object
-        level1A = ResourceManager.getInstance().getImage("/res/level1A.png");
-        level1B = ResourceManager.getInstance().getImage("/res/level1B.png");
-        level1C = ResourceManager.getInstance().getImage("/res/level1C.png");
-
+        level1 = ResourceManager.getInstance().getImage("/res/level1.png");
+        level2 = ResourceManager.getInstance().getImage("/res/level2.png");
+        level3 = ResourceManager.getInstance().getImage("/res/level3.png");
+        level4 = ResourceManager.getInstance().getImage("/res/level4.png");
         cursor = ResourceManager.getInstance().getImage("/res/CursorA.png");
         menu = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
         option = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
     }
 
-    public static void level1Init() {
+    public static void levelInit() {
         level1Sprites = new ArrayList<>();
         for(int i=1;i<=30;i++) {
             level1Sprites.add(new Sprite(spriteSheet, i, 1, 32, 32));

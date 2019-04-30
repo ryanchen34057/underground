@@ -4,10 +4,11 @@ package gameStates;
 import UI.Game;
 import cursor.Cursor;
 import fonts.Words;
-import static gameStates.GameState.locked;
 import input.Input;
 import java.awt.Graphics;
+
 import map.Background;
+import record.Record;
 
 
 public class PauseState extends GameState{
@@ -61,8 +62,10 @@ public class PauseState extends GameState{
                         break;
                     case 3:
                         break;
-                }        
-                
+                    case 4:
+                        gameStateManager.saveAndWriteRecord(new Record(1, "000", 10, "level1", 100));
+                        System.exit(0);
+                }
             }
             if(Input.keys.get(0).down){//上
                 cursor.chagePointer(-1, words);

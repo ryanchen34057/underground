@@ -10,10 +10,13 @@ public class Camera {
     private int shakingLength;
     private int counter;
     private int intensity;
+    private static final float TWEAN = 0.07f;
 
     public void update(Entity player) {
-        x = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
-        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2 + 100;
+        float xTarg = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
+        x += (xTarg - x) * TWEAN;
+        float yTag = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2;
+        y += (yTag - y) * TWEAN;
         if(x > 0) {
             x = 0;
         }

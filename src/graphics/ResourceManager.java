@@ -3,17 +3,17 @@ package graphics;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ResourceManager {
-    private ArrayList<BufferedImage> bufferedImages;
-    private ArrayList<String> paths;
+//    private ArrayList<BufferedImage> bufferedImages;
+//    private ArrayList<String> paths;
+    private HashMap<String, BufferedImage> bufferedImageMap;
     private static ResourceManager resourceManager;
 
 
     private ResourceManager() {
-        bufferedImages = new ArrayList<>();
-        paths = new ArrayList<>();
+        bufferedImageMap = new HashMap<>();
         resourceManager = null;
     }
 
@@ -25,11 +25,10 @@ public class ResourceManager {
     }
 
     public BufferedImage getImage(String path) {
-        int index = findContains(path);
-        if(index == -1) {
-            return addImage(path);
+        if(!bufferedImageMap.containsKey(path)) {
+            addImage(path);
         }
-        return bufferedImages.get(index);
+        return bufferedImageMap.get(path);
     }
 
     public BufferedImage addImage(String path) {
@@ -39,16 +38,7 @@ public class ResourceManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        bufferedImages.add(img);
+        bufferedImageMap.put(path, img);
         return img;
-    }
-
-    public int findContains(String path) {
-        for(int i=0;i<paths.size();i++) {
-            if(paths.get(i).equals(path)) {
-                return i;
-            }
-        }
-        return -1;
     }
 }
