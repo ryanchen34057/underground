@@ -1,4 +1,4 @@
-package gameStates.level1;
+package gameStates.level;
 
 import effects.DeathParticle;
 import enums.Id;
@@ -76,5 +76,10 @@ public class Level1State extends LevelState {
     @Override
     public LevelState getInstance() {
         return new Level1State(gameStateManager);
+    }
+
+    @Override
+    public int getLevel() {
+        return 1;
     }
 }

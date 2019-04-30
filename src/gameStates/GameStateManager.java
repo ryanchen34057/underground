@@ -18,8 +18,12 @@ public class GameStateManager {
     private Timer timer;
     private Words emeraldCountWord;
     private Words deathCountWord;
+    private Words levelWord;
     private int emeraldCount;
     private int deathCount;
+    private int slotId;
+    private int currentLevel;
+
 
     public GameStateManager() {
         menu = new MenuState(this);
@@ -31,14 +35,34 @@ public class GameStateManager {
         setGameState(menu);
     }
 
+    //Getters
+    public int getEmeraldCount() {
+        return emeraldCount;
+    }
+    public int getDeathCount() {
+        return deathCount;
+    }
+    public int getSlotId() {
+        return slotId;
+    }
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
+
+    //Setters
+    public void setSlotId(int id) {
+        slotId = id;
+    }
+
     public void setGameState(GameState gameState) {
         gameStates.push(gameState);
         currentGameState = gameStates.peek();
     }
 
-    public void setLevelState(GameState levelState) {
+    public void setLevelState(LevelState levelState) {
         gameStates.push(levelState);
-
+        currentLevel = levelState.getLevel();
+        levelWord = new Words("Level: " + currentLevel, 30, 85, 40);
     }
 
     public void paint(Graphics g) {
@@ -50,6 +74,7 @@ public class GameStateManager {
             // Display emerald count
             emeraldCountWord.paint(g);
             deathCountWord.paint(g);
+            levelWord.paint(g);
             g.drawImage(SpriteManager.emerald.getBufferedImage(), 1100, 10, 32, 32, null);
             g.drawImage(SpriteManager.skull.getBufferedImage(), 1100, 61, 32, 32, null);
         }
@@ -90,7 +115,7 @@ public class GameStateManager {
         try {
             new File("./record").mkdir();
             FileOutputStream fileOut =
-                    new FileOutputStream("./record/" + record.getId() + ".ser");
+                    new FileOutputStream("./record/" + "record" + record.getId() + ".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(record);
             out.close();

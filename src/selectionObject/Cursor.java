@@ -1,4 +1,4 @@
-package cursor;
+package selectionObject;
 
 import fonts.Words;
 import graphics.SpriteManager;
@@ -6,20 +6,16 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Cursor {
-    protected int x;
-    protected int y;
-    protected int width;
-    protected int height;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
 
     //State
-    protected int pointer;
+    private int pointer;
 
     //BufferedImage
-    protected BufferedImage cursorImage;
-    
-    public Cursor() {
-        
-    }
+    private BufferedImage cursorImage;
 
     public Cursor(int x, int y, int size) {
         this.width = size;
@@ -39,7 +35,7 @@ public class Cursor {
         
         }else{
             this.pointer += add;
-            System.out.print(pointer);
+           // System.out.print(pointer);
         }    
     }
     public int getPointer(){

@@ -61,7 +61,7 @@ public class Game extends Canvas implements Runnable {
     public void init() {
         spriteManager = new SpriteManager();
 
-        //Create level1
+        //Create level
         gameStateManager = new GameStateManager();
 
         keyListener = new Input();

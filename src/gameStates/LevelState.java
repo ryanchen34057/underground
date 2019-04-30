@@ -245,4 +245,6 @@ public abstract class LevelState extends GameState {
             }
         }
     }
+
+    public abstract int getLevel();
 }

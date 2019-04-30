@@ -2,7 +2,7 @@
 package gameStates;
 
 import UI.Game;
-import cursor.Cursor;
+import selectionObject.Cursor;
 import fonts.Words;
 import input.Input;
 import java.awt.Graphics;
@@ -63,7 +63,7 @@ public class PauseState extends GameState{
                     case 3:
                         break;
                     case 4:
-                        gameStateManager.saveAndWriteRecord(new Record(1, "000", 10, "level1", 100));
+                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
                         System.exit(0);
                 }
             }

@@ -18,7 +18,7 @@ public class Timer {
         min = 0;
         sec = 0;
         ms = 0;
-        word = new Words(min+":"+sec+ ":" + ms,30,140,50);
+        word = new Words(min + ":" + sec + ":" + ms,30,150,80);
         startTime = System.currentTimeMillis();
     }
     public void update(){
@@ -26,7 +26,7 @@ public class Timer {
         usedTime = trans(usedTime,1,60*1000);
         usedTime = trans(usedTime,2,1000);
         usedTime = trans(usedTime,3,1);
-        word.setWord(formatter.format(min)+":"+formatter.format(sec)+":"+formatter.format(ms/10));
+        word.setWord("Timer: " + formatter.format(min)+":"+formatter.format(sec)+":"+formatter.format(ms/10));
     }
     
     public void paint(Graphics g){
@@ -45,5 +45,10 @@ public class Timer {
             ms = n;
         }
         return (int)usedTime % msValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Timer: " + min + ":" + sec + ":" + ms;
     }
 }

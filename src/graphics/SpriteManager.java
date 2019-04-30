@@ -19,7 +19,7 @@ public class SpriteManager {
     //Menu
     public static BufferedImage menu;
 
-    //level1
+    //level
     public static BufferedImage level1;
     public static BufferedImage level2;
     public static BufferedImage level3;
@@ -28,7 +28,7 @@ public class SpriteManager {
     // Option
     public static BufferedImage option;
 
-    //cursor
+    //selectionObject
     public static BufferedImage cursor;
 
     public SpriteManager() {

@@ -1,5 +1,4 @@
-package gameStates.level1;
-
+package gameStates.level;
 
 import effects.DeathParticle;
 import enums.Id;
@@ -10,29 +9,34 @@ import graphics.SpriteManager;
 import map.Background;
 import states.PlayerState;
 
-public class Level2State extends LevelState {
-
-    public Level2State(GameStateManager gameStateManager) {
+public class Level4State extends LevelState {
+    public Level4State(GameStateManager gameStateManager) {
         super(gameStateManager);
+    }
+
+    @Override
+    public LevelState getInstance() {
+        return new Level4State(gameStateManager);
+    }
+
+    @Override
+    public int getLevel() {
+        return 4;
     }
 
     @Override
     public void init() {
         SpriteManager.levelInit();
         levelObjectInit();
-        createLevel(SpriteManager.level2);
+        createLevel(SpriteManager.level4);
         background = new Background("/res/background2.jpg", 1.0f);
         player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
     }
 
     @Override
-    public LevelState getInstance() {
-        return new Level2State(gameStateManager);
-    }
-
-    @Override
     public void update() {
+        System.out.println(cam.getX() + "," + cam.getY());
         // handle player's keyInput
         handleKeyInput();
 
