@@ -1,6 +1,7 @@
 package gameObject.tiles.prize;
 
 import UI.Game;
+import audio.SoundEffectPlayer;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
@@ -82,6 +83,7 @@ public class Emerald extends Prize {
 
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
+        SoundEffectPlayer.playSoundEffect("Prize");
         die();
     }
 }

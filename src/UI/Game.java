@@ -1,5 +1,6 @@
 package UI;
 
+import audio.SoundEffectPlayer;
 import gameStates.GameStateManager;
 import input.Input;
 import util.Camera;
@@ -12,7 +13,7 @@ import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
     //Test particle
-    private static final String TITLE = "UnderGound";
+    public static final String TITLE = "UnderGound";
     private Thread thread;
     private boolean running;
     public static boolean debugMode;
@@ -30,6 +31,8 @@ public class Game extends Canvas implements Runnable {
 
     // Current Status
     private GameStateManager gameStateManager;
+
+    private SoundEffectPlayer soundEffectPlayer;
 
     public Game() {
         running = false;
@@ -68,14 +71,17 @@ public class Game extends Canvas implements Runnable {
 
         //KeyInput listener
         addKeyListener(keyListener);
+
+        //SoundEffect player
+        soundEffectPlayer = new SoundEffectPlayer();
     }
 
-    private synchronized void start() {
-        if(running)return;
-        running = true;
-        thread = new Thread(this, "Thread");
-        thread.start();
-    }
+//    private synchronized void start() {
+//        if(running)return;
+//        running = true;
+//        thread = new Thread(this, "Thread");
+//        thread.start();
+//    }
 
     private synchronized void stop() {
         if(!running)return;
@@ -89,6 +95,7 @@ public class Game extends Canvas implements Runnable {
 
     @Override
     public void run() {
+        running = true;
         init();
         requestFocus();
         long lastTime = System.nanoTime();
@@ -117,17 +124,5 @@ public class Game extends Canvas implements Runnable {
             }
         }
         stop();
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        JFrame frame = new JFrame(TITLE);
-        frame.add(game);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        game.start();
     }
 }

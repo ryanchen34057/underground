@@ -1,5 +1,6 @@
 package states;
 
+import audio.SoundEffectPlayer;
 import gameObject.character.Player;
 import effects.DashEffect;
 import input.Input;
@@ -22,12 +23,14 @@ public class Running implements State {
             player.setVelX(0);
             player.setGravity(Player.RUNNINGJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.runningJumping);
+            SoundEffectPlayer.playSoundEffect("Jumping");
             player.setJumped(true);
         }
         else if(!keys.get(5).down) {
             player.setJumped(false);
         }
         if(keys.get(4).down && !player.isTired()) {
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setCurrentState(PlayerState.dashing);
             player.setCurrentEffect(DashEffect.getInstance(player));
             player.setTired(true);

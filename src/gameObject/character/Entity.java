@@ -1,6 +1,7 @@
 package gameObject.character;
 
 import UI.Game;
+import audio.AudioFile;
 import effects.Effect;
 import enums.Id;
 import gameObject.ICollidable;
@@ -28,6 +29,7 @@ public abstract class Entity implements ICollidable {
     protected State currentState;
     protected State prevState;
     protected Effect currentEffect;
+    protected String currentSoundEffect;
 
     // State
     protected boolean isOnTheGround;
@@ -125,6 +127,12 @@ public abstract class Entity implements ICollidable {
     }
     public void setOnTheGround(boolean onTheGround) {
         isOnTheGround = onTheGround;
+    }
+    public String getCurrentSoundEffect() {
+        return currentSoundEffect;
+    }
+    public void setCurrentSoundEffect(String currentSoundEffect) {
+        this.currentSoundEffect = currentSoundEffect;
     }
 
     // Drawing method

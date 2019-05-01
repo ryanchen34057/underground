@@ -3,6 +3,7 @@ package gameStates;
 import UI.Game;
 import fonts.Words;
 import gameStates.level.Level1State;
+import graphics.SpriteManager;
 import input.Input;
 import map.Background;
 import record.Record;
@@ -67,6 +68,9 @@ public class SaveSlotState extends GameState {
                     gameStateManager.setSlotId(selected + 1);
                     gameStateManager.setLevelState(new Level1State(gameStateManager));
                 }
+                else {
+                    gameStateManager.loadRecord(loadRecord(selected + 1));
+                }
             }
             if(Input.keys.get(0).down){//上
                 locked = true;
@@ -118,11 +122,21 @@ public class SaveSlotState extends GameState {
                 new Words("Start New Game", 50, (int) (rectangle.x + rectangle.getWidth() / 2),
                         (int) (rectangle.y + rectangle.getHeight() / 2 + 35)).paint(g);
             }
+            // Display record data
             else {
                 Record record = loadRecord(i + 1);
-                new Words(record.getId() + " " + record.getLevel() + " " + record.getTime() + " " + record.getEmeraldCount() + " " + record.getDeathCount(),
-                        30, (int) (rectangle.x + rectangle.getWidth() / 2),
-                        (int) (rectangle.y + rectangle.getHeight() / 2 + 35)).paint(g);
+                Words saveSlotWords = new Words("Save Slot" + record.getId(), 40, rectangle.x+150, rectangle.y+60);
+                Words levelWords = new Words("Level: " + record.getLevel(), 30,rectangle.x+150, rectangle.y+110);
+                Words timeWords = new Words(record.getTime(), 30,rectangle.x+500, rectangle.y+110);
+                Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), 30, levelWords.getWordX() - levelWords.getWidth()/2+20, levelWords.getWordY() + 60);
+                Words deathCountWords = new Words("X " + record.getDeathCount(), 30, timeWords.getWordX() - timeWords.getWidth()/2-20, timeWords.getWordY() + 60);
+                saveSlotWords.paint(g);
+                levelWords.paint(g);
+                timeWords.paint(g);
+                emeraldCountWords.paint(g);
+                deathCountWords.paint(g);
+                g.drawImage(SpriteManager.emerald.getBufferedImage(), levelWords.getWordX() - levelWords.getWidth()/2-20, levelWords.getWordY() + 5, 64, 64, null);
+                g.drawImage(SpriteManager.skull.getBufferedImage(), timeWords.getWordX() - levelWords.getWidth()/2-70, timeWords.getWordY() + 5, 64, 64, null);
             }
         }
     }

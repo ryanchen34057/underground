@@ -12,8 +12,10 @@ public class Camera {
     private int intensity;
 
     public void update(Entity player) {
-        x = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
-        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2;
+        float xTarg = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
+        float yTarg = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2 + 100;
+        x += (xTarg - x) * 0.07;
+        y += (yTarg - y) * 0.07;
         if(x > 0) {
             x = 0;
         }

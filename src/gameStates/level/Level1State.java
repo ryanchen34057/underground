@@ -57,20 +57,6 @@ public class Level1State extends LevelState {
         if((player.isGoaled())) {
             gameStateManager.setLevelState(new Level2State(gameStateManager));
         }
-
-        // ********* Player death ************
-        if(player.isDead()) {
-            for(int j=0;j<8;j++) {
-                particles.add(DeathParticle.getInstance(player,j));
-            }
-            deathDelay++;
-            if(deathDelay >= DEATH_DELAY_TIME) {
-                deathDelay = 0;
-                gameStateManager.incrementDeathCount();
-                gameStateManager.setLevelState(getInstance());
-            }
-        }
-        // ************************************
     }
 
     @Override

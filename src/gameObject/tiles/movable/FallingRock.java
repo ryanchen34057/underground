@@ -1,6 +1,7 @@
 package gameObject.tiles.movable;
 
 import UI.Game;
+import audio.SoundEffectPlayer;
 import effects.Effect;
 import effects.LandingEffect;
 import enums.Direction;
@@ -128,6 +129,7 @@ public class FallingRock extends Tile {
     public void reactToCollision(ICollidable other, Direction direction) {
         if(!(other instanceof Player) && !(other instanceof Prize)) {
             if(isFalling) {
+//                SoundEffectPlayer.playSoundEffect("FallingRockHit");
                 y = ((Tile) other).getY() - height;
                 isFalling = false;
             }

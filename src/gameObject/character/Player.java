@@ -1,6 +1,8 @@
 package gameObject.character;
 
 import UI.Game;
+import audio.AudioFile;
+import audio.SoundEffectPlayer;
 import effects.LandingEffect;
 import enums.Direction;
 import enums.Id;
@@ -17,6 +19,7 @@ import util.CollisionCondition;
 
 
 import java.awt.*;
+import java.util.HashMap;
 
 
 public class Player extends Entity {
@@ -69,7 +72,7 @@ public class Player extends Entity {
     public static final float VERTICALDASHING_TIMER = 1.2f;
     public static final float VERTICALDASHING_VELX = 12;
 
-    //State
+    // State
     private boolean isJumped;
     private boolean isOnTheWall;
     private boolean isGoaled;
@@ -127,10 +130,10 @@ public class Player extends Entity {
     @Override
     public void update() {
         if(!isDead) {
-            if (prevState != currentState) {
-                prevState = currentState;
-                System.out.println(prevState);
-            }
+//            if (prevState != currentState) {
+//                prevState = currentState;
+//                System.out.println(prevState);
+//            }
             x += velX;
             y += velY;
 
@@ -138,10 +141,12 @@ public class Player extends Entity {
             frameSpeedManager();
         }
         else {
+            SoundEffectPlayer.playSoundEffect("Death");
             // Don't move if dead
             velX = 0;
             velY = 0;
         }
+
     }
 
     // Getter and Setter
@@ -362,6 +367,7 @@ public class Player extends Entity {
                     friction = 0;
                     y = collisionRect.y - height;
                     currentState = PlayerState.standing;
+                    SoundEffectPlayer.playSoundEffect("Landing");
                     if(!isDead()) {
                         currentEffect = LandingEffect.getInstance(this);
                     }
@@ -372,6 +378,7 @@ public class Player extends Entity {
                 else if(t instanceof Spring) {
                     y = collisionRect.y - height;
                     ((Spring) t).setStepOn(true);
+                    SoundEffectPlayer.playSoundEffect("SpringJumping");
                     isJumped = true;
                     gravity = STANDINGJUMPING_GRAVITY + 7;
                     currentState = PlayerState.standingJumping;
@@ -393,6 +400,7 @@ public class Player extends Entity {
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling &&
                         Input.keys.get(2).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
+                    SoundEffectPlayer.playSoundEffect("Landing");
                     isOnTheWall = true;
                 }
                 else if(t instanceof Spring) {
@@ -401,6 +409,7 @@ public class Player extends Entity {
                     isJumped = true;
                     gravity = STANDINGJUMPING_GRAVITY + 7;
                     currentState = PlayerState.standingJumping;
+                    SoundEffectPlayer.playSoundEffect("SpringJumping");
                 }
                 else {
                     isOnTheWall = false;
@@ -417,6 +426,7 @@ public class Player extends Entity {
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling
                         && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
+                    SoundEffectPlayer.playSoundEffect("Landing");
                     isOnTheWall = true;
                 }
                 else if(t instanceof Spring) {
@@ -425,6 +435,7 @@ public class Player extends Entity {
                     isJumped = true;
                     gravity = STANDINGJUMPING_GRAVITY + 7;
                     currentState = PlayerState.standingJumping;
+                    SoundEffectPlayer.playSoundEffect("SpringJumping");
                 }
                 else {
                     isOnTheWall = false;

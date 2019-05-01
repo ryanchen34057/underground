@@ -57,10 +57,11 @@ public class PauseState extends GameState{
                     case 1:
                         break;
                     case 2:
-                        gameStateManager.toMenu();
-                        locked = true;
                         break;
                     case 3:
+                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
+                        gameStateManager.toMenu();
+                        locked = true;
                         break;
                     case 4:
                         gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));

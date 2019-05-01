@@ -2,10 +2,13 @@
 package gameStates;
 
 import UI.Game;
+import UI.Window;
 import selectionObject.Cursor;
 import fonts.Words;
 import input.Input;
-import java.awt.Graphics;
+
+import java.awt.*;
+
 import map.Background;
 
 

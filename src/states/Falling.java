@@ -1,5 +1,6 @@
 package states;
 
+import audio.SoundEffectPlayer;
 import enums.Direction;
 import gameObject.character.Player;
 import effects.DashInTheAirEffect;
@@ -28,6 +29,7 @@ public class Falling implements State {
             if(keys.get(2).down || keys.get(3).down) {
                 player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
             }
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setCurrentState(PlayerState.verticalDashing);
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
@@ -37,6 +39,7 @@ public class Falling implements State {
         //Dashing in the air
         else if(keys.get(4).down && !player.isTired()) {
             player.setVelY(0);
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
