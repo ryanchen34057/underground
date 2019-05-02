@@ -9,25 +9,28 @@ import input.Input;
 import map.Background;
 import record.Record;
 import record.Timer;
-
 import java.awt.*;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SaveSlotState extends GameState {
     private ArrayList<Words> words;
     private ArrayList<Rectangle> rectangles;
     private int selected;
     private Record[] saveDatas;
+    private HashMap<Record, ArrayList<Words>> saveSlotWordsMap;
+    private Words startNewGameWords;
 
     public SaveSlotState(GameStateManager gameStateManager) {
         super(gameStateManager);
         words = new ArrayList<>();
         rectangles = new ArrayList<>();
         saveDatas = new Record[3];
+        saveSlotWordsMap = new HashMap<>();
+        startNewGameWords = new Words("Start New Game", 50);
         selected = 0;
         init();
     }
@@ -120,23 +123,29 @@ public class SaveSlotState extends GameState {
             Record record = loadRecord(i + 1);
             saveDatas[i] = record;
             if(record == null){
-                new Words("Start New Game", 50, (int) (rectangle.x + rectangle.getWidth() / 2),
-                        (int) (rectangle.y + rectangle.getHeight() / 2 + 35)).paint(g);
-                continue;
+                startNewGameWords.setPos((int) (rectangle.x + rectangle.getWidth() / 2), (int) (rectangle.y + rectangle.getHeight() / 2 + 35));
+                startNewGameWords.paint(g);
             }
-            Words saveSlotWords = new Words("Save Slot" + record.getId(), 40, rectangle.x+150, rectangle.y+60);
-            Words levelWords = new Words("Level: " + record.getLevel(), 30,rectangle.x+150, rectangle.y+110);
-            Words timeWords = new Words(record.getTimeString(), 30,rectangle.x+500, rectangle.y+110);
-            Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), 30, levelWords.getWordX() - levelWords.getWidth()/2+20, levelWords.getWordY() + 60);
-            Words deathCountWords = new Words("X " + record.getDeathCount(), 30, timeWords.getWordX() - timeWords.getWidth()/2-20, timeWords.getWordY() + 60);
-            saveSlotWords.paint(g);
-            levelWords.paint(g);
-            timeWords.paint(g);
-            emeraldCountWords.paint(g);
-            deathCountWords.paint(g);
-            g.drawImage(SpriteManager.emerald.getBufferedImage(), levelWords.getWordX() - levelWords.getWidth()/2-20, levelWords.getWordY() + 5, 64, 64, null);
-            g.drawImage(SpriteManager.skull.getBufferedImage(), timeWords.getWordX() - levelWords.getWidth()/2-70, timeWords.getWordY() + 5, 64, 64, null);
-
+            else {
+                if(saveSlotWordsMap.get(record) == null) {
+                    saveSlotWordsMap.put(record, new ArrayList<>());
+                    Words saveSlotWords = new Words("Save Slot" + record.getId(), 40, rectangle.x+150, rectangle.y+60);
+                    Words levelWords = new Words("Level: " + record.getLevel(), 30,rectangle.x+150, rectangle.y+110);
+                    Words timeWords = new Words(record.getTimeString(), 30,rectangle.x+500, rectangle.y+110);
+                    Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), 30, levelWords.getWordX() - levelWords.getWidth()/2+20, levelWords.getWordY() + 60);
+                    Words deathCountWords = new Words("X " + record.getDeathCount(), 30, timeWords.getWordX() - timeWords.getWidth()/2-20, timeWords.getWordY() + 60);
+                    saveSlotWordsMap.get(record).add(saveSlotWords);
+                    saveSlotWordsMap.get(record).add(levelWords);
+                    saveSlotWordsMap.get(record).add(timeWords);
+                    saveSlotWordsMap.get(record).add(emeraldCountWords);
+                    saveSlotWordsMap.get(record).add(deathCountWords);
+                }
+                for(Words words: saveSlotWordsMap.get(record)) {
+                    words.paint(g);
+                }
+                g.drawImage(SpriteManager.emerald.getBufferedImage(), saveSlotWordsMap.get(record).get(1).getWordX() - saveSlotWordsMap.get(record).get(1).getWidth()/2-20, saveSlotWordsMap.get(record).get(1).getWordY() + 5, 64, 64, null);
+                g.drawImage(SpriteManager.skull.getBufferedImage(), saveSlotWordsMap.get(record).get(2).getWordX() - saveSlotWordsMap.get(record).get(1).getWidth()/2-70, saveSlotWordsMap.get(record).get(2).getWordY() + 5, 64, 64, null);
+            }
         }
     }
 }

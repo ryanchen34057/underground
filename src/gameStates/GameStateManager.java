@@ -50,7 +50,8 @@ public class GameStateManager {
         emeraldCountWord = new Words("X " + emeraldCount, 30, 1200, 50);
         deathCountWord = new Words("X " + deathCount, 30, 1200, 100);
         infinityModeWord = new Words("Infinity Mode", 30, 140, 120);
-        setGameState(new MenuState(this));
+//        setGameState(new MenuState(this));
+        setLevelState(new Level4State(this));
     }
 
     //Getters

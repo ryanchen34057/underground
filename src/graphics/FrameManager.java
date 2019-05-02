@@ -162,9 +162,26 @@ public class FrameManager {
         return torchFrame;
     }
 
-    public static Sprite[] getSpringFrame() {
-        for(int i = 0; i< springFrame.length; i++) {
-            springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 4, 32,  32);
+    public static Sprite[] getSpringFrame(Direction direction) {
+        if(direction == UP) {
+            for(int i = 0; i< springFrame.length; i++) {
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 4, 32,  32);
+            }
+        }
+        else if(direction == DOWN) {
+            for(int i = 0; i< springFrame.length; i++) {
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 3, 32,  32);
+            }
+        }
+        else if(direction == LEFT) {
+            for(int i = 0; i< springFrame.length; i++) {
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 12, 3, 32,  32);
+            }
+        }
+        else if(direction == RIGHT) {
+            for(int i = 0; i< springFrame.length; i++) {
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 12, 4, 32,  32);
+            }
         }
         return springFrame;
     }

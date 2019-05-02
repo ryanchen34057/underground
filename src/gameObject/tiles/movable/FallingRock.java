@@ -130,7 +130,7 @@ public class FallingRock extends Tile {
         if(!(other instanceof Player) && !(other instanceof Prize)) {
             if(isFalling) {
                 SoundEffectPlayer.playSoundEffect("FallingRockHit");
-                y = ((Tile) other).getY() - height;
+                y = (int)((Tile) other).getBounds().getY() - height;
                 isFalling = false;
             }
             if(!fallen) {

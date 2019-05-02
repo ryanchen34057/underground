@@ -21,6 +21,8 @@ import util.CollisionCondition;
 import java.awt.*;
 import java.util.HashMap;
 
+import static enums.Direction.*;
+
 
 public class Player extends Entity {
 
@@ -365,14 +367,24 @@ public class Player extends Entity {
         Rectangle collisionRect = t.getBounds();
         switch (direction) {
             case TOP:
-               // System.out.println("TOP");
-                gravity = 0;
-                velY = 0;
-                y = collisionRect.y + t.getHeight();
+                // If bump into top down spring
+                if(t instanceof Spring) {
+                    if(((Spring) t).getDirection() == DOWN) {
+                        gravity = STANDINGJUMPING_GRAVITY + 7;
+                        y = collisionRect.y + (int) t.getBounds().getHeight();
+                        ((Spring) t).setStepOn(true);
+                        SoundEffectPlayer.playSoundEffect("SpringJumping");
+                        isJumped = true;
+                    }
+                }
+                else {
+                    gravity = 0;
+                    velY = 0;
+                    y = collisionRect.y + t.getHeight();
+                }
                 currentState = PlayerState.falling;
                 break;
             case BOTTOM:
-//                System.out.println("BOTTOM");
                 if(currentState == PlayerState.falling || currentState == PlayerState.sliding
                         || currentState == PlayerState.verticalDashing) {
                     velY = 0;
@@ -381,10 +393,12 @@ public class Player extends Entity {
                     y = collisionRect.y - height;
                     currentState = PlayerState.standing;
                     SoundEffectPlayer.playSoundEffect("Landing");
+                    // Don't create landing effect when died
                     if(!isDead()) {
                         currentEffect = LandingEffect.getInstance(this);
                     }
                 }
+                // On the ice is true when player is not running or iceSkating
                 if(t instanceof IceWall && (currentState == PlayerState.running || currentState == PlayerState.iceSkating)) {
                     isOnTheIce = true;
                 }
@@ -393,10 +407,12 @@ public class Player extends Entity {
                     ((Spring) t).setStepOn(true);
                     SoundEffectPlayer.playSoundEffect("SpringJumping");
                     isJumped = true;
+                    isTired = false;
                     gravity = STANDINGJUMPING_GRAVITY + 7;
                     currentState = PlayerState.standingJumping;
                 }
                 else {
+                    // If slide out of the ice
                     if(currentState == PlayerState.iceSkating) {
                         currentState = PlayerState.standing;
                     }
@@ -407,9 +423,10 @@ public class Player extends Entity {
                 fatigue = 0;
                 break;
             case LEFT:
-//                System.out.println("LEFT");
-                velX = 0;
-                x = collisionRect.x + collisionRect.width - 20;
+                if(!(t instanceof Spring)) {
+                    velX = 0;
+                    x = collisionRect.x + collisionRect.width - 20;
+                }
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling &&
                         Input.keys.get(2).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
@@ -417,12 +434,18 @@ public class Player extends Entity {
                     isOnTheWall = true;
                 }
                 else if(t instanceof Spring) {
-                    y = collisionRect.y - height;
-                    ((Spring) t).setStepOn(true);
-                    isJumped = true;
-                    gravity = STANDINGJUMPING_GRAVITY + 7;
-                    currentState = PlayerState.standingJumping;
+                    if(((Spring) t).getDirection() == UP) {
+                        y = collisionRect.y - height;
+                        isJumped = true;
+                        gravity = STANDINGJUMPING_GRAVITY + 7;
+                        currentState = PlayerState.standingJumping;
+                    }
+                    else if(((Spring) t).getDirection() == RIGHT) {
+                        x = collisionRect.x + collisionRect.width - 25;
+                        velX = 20;
+                    }
                     SoundEffectPlayer.playSoundEffect("SpringJumping");
+                    ((Spring) t).setStepOn(true);
                 }
                 else {
                     isOnTheWall = false;
@@ -430,12 +453,13 @@ public class Player extends Entity {
                 if(currentState == PlayerState.iceSkating) {
                     currentState = PlayerState.standing;
                 }
-
                 break;
             case RIGHT:
-                //System.out.println("RIGHT");
-                velX = 0;
-                x = collisionRect.x - getWidth() + 19;
+                if(!(t instanceof Spring)) {
+                    velX = 0;
+                    x = collisionRect.x - getWidth() + 19;
+                }
+                // If player slide on the wall
                 if(t.getId() != Id.icewall1 && currentState == PlayerState.falling
                         && Input.keys.get(3).down && fatigue < STAMINA) {
                     currentState = PlayerState.sliding;
@@ -443,11 +467,17 @@ public class Player extends Entity {
                     isOnTheWall = true;
                 }
                 else if(t instanceof Spring) {
-                    y = collisionRect.y - height;
+                    if(((Spring) t).getDirection() == UP) {
+                        y = collisionRect.y - height;
+                        isJumped = true;
+                        gravity = STANDINGJUMPING_GRAVITY + 7;
+                        currentState = PlayerState.standingJumping;
+                    }
+                    else if(((Spring) t).getDirection() == Direction.LEFT) {
+                        x = collisionRect.x - getWidth() + 25;
+                        velX = -20;
+                    }
                     ((Spring) t).setStepOn(true);
-                    isJumped = true;
-                    gravity = STANDINGJUMPING_GRAVITY + 7;
-                    currentState = PlayerState.standingJumping;
                     SoundEffectPlayer.playSoundEffect("SpringJumping");
                 }
                 else {

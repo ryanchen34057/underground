@@ -29,11 +29,23 @@ public class Words {
             fontMap.put(size, Fonts.getBitFont(size, "/res/half_bold_pixel-7.ttf"));
         }
         font = fontMap.get(size);
-
     }
+    public Words(String msg, int size) {
+        this.msg = msg;
+        this.size = size;
+        if(fontMap == null) {
+            fontMap = new HashMap<>();
+        }
+        if(!fontMap.containsKey(size)){
+            fontMap.put(size, Fonts.getBitFont(size, "/res/half_bold_pixel-7.ttf"));
+        }
+        font = fontMap.get(size);
+    }
+
     public void update(String msg) {
         this.msg = msg;
     }
+
     public void paint(Graphics g){
         g.setFont(font);
         g.setColor(Color.LIGHT_GRAY);
@@ -63,7 +75,7 @@ public class Words {
     }
     
 
-    public void updatePos(int x, int y) {
+    public void setPos(int x, int y) {
         this.x = x;
         this.y = y;
     }

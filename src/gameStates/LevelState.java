@@ -107,7 +107,7 @@ public abstract class LevelState extends GameState {
             if(inTheScreen(t)) {
                 t.update();
                 if(t instanceof FallingRock) {
-                    if (Math.abs(player.getX() - t.getX()) < 100 && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
+                    if (Math.abs(player.getY() - t.getY()) < 500 && Math.abs(player.getX() - t.getX()) < 100 && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
                         ((FallingRock) t).setShaking(true);
                     }
                     if (((FallingRock) t).getCurrentEffect() instanceof LandingEffect) {
@@ -258,7 +258,16 @@ public abstract class LevelState extends GameState {
                     }
                 }
                 else if(red == 255 && green == 150 && blue == 150) {
-                    tiles.add(new Spring(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring));
+                    tiles.add(new Spring(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.UP));
+                }
+                else if(red == 255 && green == 160 && blue == 160) {
+                    tiles.add(new Spring(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.DOWN));
+                }
+                else if(red == 255 && green == 170 && blue == 170) {
+                    tiles.add(new Spring(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.LEFT));
+                }
+                else if(red == 255 && green == 180 && blue == 180) {
+                    tiles.add(new Spring(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.RIGHT));
                 }
 
                 //Portal
