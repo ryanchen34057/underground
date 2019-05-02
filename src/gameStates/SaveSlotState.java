@@ -127,7 +127,7 @@ public class SaveSlotState extends GameState {
                 Record record = loadRecord(i + 1);
                 Words saveSlotWords = new Words("Save Slot" + record.getId(), 40, rectangle.x+150, rectangle.y+60);
                 Words levelWords = new Words("Level: " + record.getLevel(), 30,rectangle.x+150, rectangle.y+110);
-                Words timeWords = new Words(record.getTime(), 30,rectangle.x+500, rectangle.y+110);
+                Words timeWords = new Words(record.getTimeString(), 30,rectangle.x+500, rectangle.y+110);
                 Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), 30, levelWords.getWordX() - levelWords.getWidth()/2+20, levelWords.getWordY() + 60);
                 Words deathCountWords = new Words("X " + record.getDeathCount(), 30, timeWords.getWordX() - timeWords.getWidth()/2-20, timeWords.getWordY() + 60);
                 saveSlotWords.paint(g);

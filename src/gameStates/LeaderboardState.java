@@ -1,16 +1,15 @@
 package gameStates;
 
 import UI.Game;
-import cursor.Cursor;
 import fonts.Words;
 import static gameStates.GameState.locked;
-import gameStates.level1.Level1AState;
 import input.Input;
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import map.Background;
+import selectionObject.Cursor;
 
 public class LeaderboardState extends GameState{
     private static int MIN_TYPE = 1;

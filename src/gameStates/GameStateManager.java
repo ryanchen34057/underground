@@ -144,6 +144,7 @@ public class GameStateManager {
         currentLevel = record.getLevel();
         emeraldCount = record.getEmeraldCount();
         deathCount = record.getDeathCount();
+        timer = new Timer(record.getTime());
         setLevelState(gameStates.getLevelStates().get(record.getLevel() - 1));
     }
 

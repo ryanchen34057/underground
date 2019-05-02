@@ -19,7 +19,7 @@ public class Window {
         frame.setVisible(true);
 //        game.start();
         musicPlayer = new MusicPlayer();
-        musicPlayer.add("Bog-Creatures-On-the-Mov");
+        musicPlayer.add("Desert-Theme");
         pool.runTask(musicPlayer);
         pool.runTask(game);
         pool.join();
