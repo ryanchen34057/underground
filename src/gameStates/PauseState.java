@@ -20,6 +20,7 @@ public class PauseState extends GameState{
     private Words wordMenu;
     private Words wordSaveQuit;
     private Cursor cursor;
+    private long pauseTime;
     
     public PauseState(GameStateManager gameStateManager) {
         super(gameStateManager);
@@ -28,7 +29,7 @@ public class PauseState extends GameState{
     }
     
     public void init() {
-        background = new Background("/res/Cave1.png", 2);
+        background = new Background("/res/Cave1.png",1);
         wordTitle = new Words("Pause", 60, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-180);
         wordResume = new Words("Resume", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-40);
         wordRetry = new Words("Retry", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+20);
@@ -83,6 +84,7 @@ public class PauseState extends GameState{
         if(cursor != null){
             cursor.setPos(words);
         }
+        
         handleKeyInput();
     }
     

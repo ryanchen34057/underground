@@ -26,7 +26,7 @@ public class OptionState extends GameState{
     
     public void init() {
         background = new Background("/res/Cave1.png", Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
-        wordTitle = new Words("Option", 60, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-100);
+        wordTitle = new Words("Option", 60, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-180);
         wordVideo = new  Words("Video", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+80);
         wordAudio = new Words("Audio", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+140);
         wordBack = new Words("Back", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+200);
@@ -84,7 +84,4 @@ public class OptionState extends GameState{
         wordBack.paint(g);
     }
     
-    public String toString(){
-        return "OptionState";
-    }
 }

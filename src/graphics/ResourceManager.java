@@ -1,5 +1,7 @@
 package graphics;
 
+import java.applet.Applet;
+import java.applet.AudioClip;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;

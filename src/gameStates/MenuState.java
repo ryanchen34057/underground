@@ -53,7 +53,8 @@ public class MenuState extends GameState{
                         locked = true;
                         break;
                     case 1:
-                        
+                        gameStateManager.setLevelState(new LeaderboardState(gameStateManager));
+                        locked = true;
                         break;
                     case 2:
                         gameStateManager.setGameState(new OptionState(gameStateManager));
@@ -97,8 +98,5 @@ public class MenuState extends GameState{
         cursor.paint(g);
     }
 
-    @Override
-    public String toString(){
-        return "MenuState";
-    }
+   
 }

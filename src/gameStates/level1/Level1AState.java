@@ -79,7 +79,7 @@ public class Level1AState extends LevelState {
         }
 
         // ********* Player death ************
-        if(player.isDead()) {
+        if(player.isDead()) {            
             for(int j=0;j<8;j++) {
                 particles.add(DeathParticle.getInstance(player,j));
             }
@@ -126,7 +126,6 @@ public class Level1AState extends LevelState {
                     } else {
                         tiles.add(new Wall(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
-
                 } else if (red == 100 && green == 100 && blue <= 29) {
                     tiles.add(new Decor(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.decor, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 255 && green == 255 && blue == 0) {

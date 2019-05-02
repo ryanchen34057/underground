@@ -28,6 +28,9 @@ public class SpriteManager {
 
     //cursor
     public static BufferedImage cursor;
+    
+    //pause
+    public static BufferedImage pause; 
 
     public SpriteManager() {
         //Sprite object
@@ -41,8 +44,9 @@ public class SpriteManager {
         level1C = ResourceManager.getInstance().getImage("/res/level1C.png");
 
         cursor = ResourceManager.getInstance().getImage("/res/CursorA.png");
-        menu = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
-        option = ResourceManager.getInstance().getImage("/res/MenuTemp.png");
+        menu = ResourceManager.getInstance().getImage("/res/Cave1.png");
+        option = ResourceManager.getInstance().getImage("/res/Cave1.png");
+        pause = ResourceManager.getInstance().getImage("/res/Cave1.png");    
     }
 
     public static void level1Init() {

@@ -40,8 +40,11 @@ public class GameStateManager {
         currentGameState = gameStates.peek();
         currentGameState.update();
         if(timer == null & currentGameState instanceof LevelState) { timer = new Timer(); }
-        if(timer != null && currentGameState instanceof LevelState) {
-            timer.update();
+        if(timer != null && currentGameState instanceof LevelState) { 
+            timer.pauseEnd();
+            timer.update();   
+        }else if(timer != null){
+            timer.timerPause();    
         }
     }
     
