@@ -1,5 +1,6 @@
 package states;
 
+import audio.SoundEffectPlayer;
 import effects.DashInTheAirEffect;
 import effects.VerticalDashEffect;
 import enums.Direction;
@@ -16,6 +17,7 @@ public class Bouncing implements State {
         //Vertical Dashing
         Direction dir = verticalDashCondition(keys, player);
         if(dir != null && !player.isTired()) {
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
             player.setCurrentState(PlayerState.verticalDashing);
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
@@ -26,6 +28,7 @@ public class Bouncing implements State {
         //DASHING_IN_THE_AIR
         if(keys.get(4).down && !player.isTired()) {
             player.setVelY(0);
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setFacing(player.getFacing());
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));

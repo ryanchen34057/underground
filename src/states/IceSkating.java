@@ -1,5 +1,6 @@
 package states;
 
+import audio.SoundEffectPlayer;
 import gameObject.character.Player;
 import input.Input;
 
@@ -16,6 +17,7 @@ public class IceSkating implements State {
             player.setFacing(1);
         }
         if(keys.get(5).down) {
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setGravity(Player.DASHJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.dashJumping);
             player.setOnTheIce(false);

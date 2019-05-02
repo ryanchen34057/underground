@@ -2,11 +2,13 @@
 package gameStates;
 
 import UI.Game;
-import cursor.Cursor;
+import UI.Window;
+import selectionObject.Cursor;
 import fonts.Words;
-import gameStates.level1.Level1AState;
 import input.Input;
-import java.awt.Graphics;
+
+import java.awt.*;
+
 import map.Background;
 
 
@@ -49,7 +51,7 @@ public class MenuState extends GameState{
             if(Input.keys.get(7).down){//Enter
                 switch(cursor.getPointer()){
                     case 0:
-                        gameStateManager.setLevelState(new Level1AState(gameStateManager));
+                        gameStateManager.setGameState(new SaveSlotState(gameStateManager));
                         locked = true;
                         break;
                     case 1:

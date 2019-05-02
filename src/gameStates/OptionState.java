@@ -2,7 +2,7 @@
 package gameStates;
 
 import UI.Game;
-import cursor.Cursor;
+import selectionObject.Cursor;
 import fonts.Words;
 import input.Input;
 import java.awt.Graphics;

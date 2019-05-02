@@ -2,12 +2,13 @@
 package gameStates;
 
 import UI.Game;
-import cursor.Cursor;
+import selectionObject.Cursor;
 import fonts.Words;
-import static gameStates.GameState.locked;
 import input.Input;
 import java.awt.Graphics;
+
 import map.Background;
+import record.Record;
 
 
 public class PauseState extends GameState{
@@ -57,13 +58,16 @@ public class PauseState extends GameState{
                     case 1:
                         break;
                     case 2:
+                        break;
+                    case 3:
+                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
                         gameStateManager.toMenu();
                         locked = true;
                         break;
-                    case 3:
-                        break;
-                }        
-                
+                    case 4:
+                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
+                        System.exit(0);
+                }
             }
             if(Input.keys.get(0).down){//上
                 cursor.chagePointer(-1, words);

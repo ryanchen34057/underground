@@ -22,7 +22,7 @@ public class Timer {
         min = 0;
         sec = 0;
         ms = 0;
-        word = new Words(min+":"+sec+ ":" + ms,30,140,50);
+        word = new Words(min + ":" + sec + ":" + ms,30,150,80);
         startTime = System.currentTimeMillis();
         pauseStart = 0;
     }
@@ -64,5 +64,10 @@ public class Timer {
             ms = n;
         }
         return (int)usedTime % msValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Timer: " + min + ":" + sec + ":" + ms;
     }
 }

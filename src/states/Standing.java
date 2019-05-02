@@ -1,10 +1,12 @@
 package states;
 
+import audio.SoundEffectPlayer;
 import gameObject.character.Player;
 import effects.DashEffect;
 import input.Input;
 import util.Camera;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 public class Standing implements State {
@@ -12,6 +14,7 @@ public class Standing implements State {
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         //Dash Jumping
         if(keys.get(5).down && keys.get(4).down && !player.isTired()) {
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setGravity(Player.DASHJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.dashJumping);
         }
@@ -29,9 +32,11 @@ public class Standing implements State {
             player.setJumped(true);
             player.setGravity(Player.STANDINGJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.standingJumping);
+            SoundEffectPlayer.playSoundEffect("Jumping");
         }
         //Dashing
         else if(keys.get(4).down && !player.isTired()) {
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setCurrentState(PlayerState.dashing);
             player.setCurrentEffect(DashEffect.getInstance(player));
             player.setTired(true);
