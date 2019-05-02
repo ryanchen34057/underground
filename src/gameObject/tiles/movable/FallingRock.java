@@ -48,7 +48,7 @@ public class FallingRock extends Tile {
         g.drawImage(bufferedImage, x, y, width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.GREEN);
-            g.drawRect(x+10, y+height, width-40,1);
+            g.drawRect(x+10, y + height/2, width-75,height/2);
         }
     }
 
@@ -98,7 +98,7 @@ public class FallingRock extends Tile {
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(x+10, y+height, width-40,1);
+        return new Rectangle(x+10, y + height/2, width-75,height/2);
     }
     @Override
     public  Rectangle getBoundsLeft() {
@@ -129,11 +129,12 @@ public class FallingRock extends Tile {
     public void reactToCollision(ICollidable other, Direction direction) {
         if(!(other instanceof Player) && !(other instanceof Prize)) {
             if(isFalling) {
-//                SoundEffectPlayer.playSoundEffect("FallingRockHit");
+                SoundEffectPlayer.playSoundEffect("FallingRockHit");
                 y = ((Tile) other).getY() - height;
                 isFalling = false;
             }
             if(!fallen) {
+                SoundEffectPlayer.playSoundEffect("FallingRockShaking");
                 currentEffect = LandingEffect.getInstance(this);
                 fallen = true;
             }

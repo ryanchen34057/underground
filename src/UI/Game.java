@@ -12,11 +12,11 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
-    //Test particle
     public static final String TITLE = "UnderGound";
     private Thread thread;
     private boolean running;
     public static boolean debugMode;
+    public static boolean infinityMode;
 
     //Size
     public static final int WIDTH = 320;

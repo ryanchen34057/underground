@@ -34,11 +34,4 @@ public class Record implements java.io.Serializable {
     public int getDeathCount() {
         return deathCount;
     }
-
-    public void save(String time, int emeraldCount, int level, int deathCount) {
-        this.time = time;
-        this.emeraldCount = emeraldCount;
-        this.level = level;
-        this.deathCount = deathCount;
-    }
 }

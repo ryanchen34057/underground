@@ -1,6 +1,7 @@
 package gameStates;
 
 import UI.Game;
+import audio.SoundEffectPlayer;
 import fonts.Words;
 import gameStates.level.Level1State;
 import graphics.SpriteManager;
@@ -64,6 +65,7 @@ public class SaveSlotState extends GameState {
     public void handleKeyInput() {
         if(!locked){
             if(Input.keys.get(7).down) {//Enter
+                SoundEffectPlayer.playSoundEffect("Enter");
                 if(saveDatas[selected] == null) {
                     gameStateManager.setSlotId(selected + 1);
                     gameStateManager.setLevelState(new Level1State(gameStateManager));
@@ -73,6 +75,7 @@ public class SaveSlotState extends GameState {
                 }
             }
             if(Input.keys.get(0).down){//上
+                SoundEffectPlayer.playSoundEffect("Cursor");
                 locked = true;
                 selected -= 1;
                 selected %= 3;
@@ -81,6 +84,7 @@ public class SaveSlotState extends GameState {
                 }
             }
             if(Input.keys.get(1).down){//下
+                SoundEffectPlayer.playSoundEffect("Cursor");
                 locked = true;
                 selected += 1;
                 selected %= 3;
@@ -127,7 +131,7 @@ public class SaveSlotState extends GameState {
                 Record record = loadRecord(i + 1);
                 Words saveSlotWords = new Words("Save Slot" + record.getId(), 40, rectangle.x+150, rectangle.y+60);
                 Words levelWords = new Words("Level: " + record.getLevel(), 30,rectangle.x+150, rectangle.y+110);
-                Words timeWords = new Words(record.getTime(), 30,rectangle.x+500, rectangle.y+110);
+                Words timeWords = new Words(record.getTime().toString(), 30,rectangle.x+500, rectangle.y+110);
                 Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), 30, levelWords.getWordX() - levelWords.getWidth()/2+20, levelWords.getWordY() + 60);
                 Words deathCountWords = new Words("X " + record.getDeathCount(), 30, timeWords.getWordX() - timeWords.getWidth()/2-20, timeWords.getWordY() + 60);
                 saveSlotWords.paint(g);

@@ -76,6 +76,7 @@ public class Player extends Entity {
     private boolean isJumped;
     private boolean isOnTheWall;
     private boolean isGoaled;
+    private boolean keyLocked;
 
     public Player(int width, int height, Id id) {
         super(width, height, id);
@@ -92,6 +93,7 @@ public class Player extends Entity {
         isOnTheGround = false;
         isJumped = false;
         isOnTheWall = false;
+        keyLocked = false;
     }
 
     public void setPosition(int x, int y) {
@@ -196,6 +198,16 @@ public class Player extends Entity {
     // Handle keyInput from player
     public void handleKeyInput() {
         currentState.handleKeyInput(this, Input.keys);
+        if(!keyLocked) {
+            if(Input.keys.get(6).down) {
+                Game.infinityMode = !Game.infinityMode;
+                keyLocked = true;
+            }
+        }
+        if(!Input.keys.get(6).down) {
+            keyLocked = false;
+        }
+
     }
 
     // Determine the frame to use depending on the currentState
@@ -250,7 +262,7 @@ public class Player extends Entity {
 
     @Override
     public void die() {
-        isDead = true;
+        if(!Game.infinityMode) isDead = true;
     }
 
     public Direction checkCollisionBounds(Tile t, CollisionCondition collisionCondition) {
@@ -339,6 +351,7 @@ public class Player extends Entity {
             case coin:
                 break;
             case bluePortal:
+                SoundEffectPlayer.playSoundEffect("Portal");
                 if(((Portal)t).getDirection() == Direction.LEFT) { velX -= 3; }
                 else { velX += 3; }
                 break;

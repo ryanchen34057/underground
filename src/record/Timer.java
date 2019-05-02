@@ -27,6 +27,17 @@ public class Timer {
         pauseStart = 0;
     }
 
+    public Timer(String time) {
+        String[] times = time.split(":");
+        min = Integer.parseInt(times[1]);
+        sec = Integer.parseInt(times[2]);
+        ms = Integer.parseInt(times[3]);
+        word = new Words(min + ":" + sec + ":" + ms,30,150,80);
+        startTime = System.currentTimeMillis();
+        pauseStart = 0;
+
+    }
+
     public void timerPause(){
         if(pauseStart == 0){
             pauseStart = System.currentTimeMillis();//設定暫停的時間點

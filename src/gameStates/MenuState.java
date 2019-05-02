@@ -3,6 +3,7 @@ package gameStates;
 
 import UI.Game;
 import UI.Window;
+import audio.SoundEffectPlayer;
 import selectionObject.Cursor;
 import fonts.Words;
 import input.Input;
@@ -49,13 +50,14 @@ public class MenuState extends GameState{
     public void handleKeyInput() {
         if(!locked){
             if(Input.keys.get(7).down){//Enter
+                SoundEffectPlayer.playSoundEffect("Enter");
                 switch(cursor.getPointer()){
                     case 0:
                         gameStateManager.setGameState(new SaveSlotState(gameStateManager));
                         locked = true;
                         break;
                     case 1:
-                        gameStateManager.setLevelState(new LeaderboardState(gameStateManager));
+                        gameStateManager.setGameState(new LeaderboardState(gameStateManager));
                         locked = true;
                         break;
                     case 2:
@@ -69,10 +71,12 @@ public class MenuState extends GameState{
                 
             }
             if(Input.keys.get(0).down){//上
+                SoundEffectPlayer.playSoundEffect("Cursor");
                 cursor.chagePointer(-1, words);
                 locked = true;
             }
             if(Input.keys.get(1).down){//下
+                SoundEffectPlayer.playSoundEffect("Cursor");
                 cursor.chagePointer(1, words);
                 locked = true;
             }

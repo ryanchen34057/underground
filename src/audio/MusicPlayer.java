@@ -12,7 +12,7 @@ public class MusicPlayer implements Runnable {
     }
 
     public void add(String file) {
-        musicFiles.add(new AudioFile("./src/audio/" + file + ".wav"));
+        musicFiles.add(new AudioFile("./src/audio/res/" + file + ".wav"));
     }
 
     public int size() {

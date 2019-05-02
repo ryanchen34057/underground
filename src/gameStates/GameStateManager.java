@@ -1,5 +1,6 @@
 package gameStates;
 
+import UI.Game;
 import UI.Window;
 import audio.MusicPlayer;
 import fonts.Words;
@@ -22,6 +23,7 @@ public class GameStateManager {
     private Words emeraldCountWord;
     private Words deathCountWord;
     private Words levelWord;
+    private Words infinityModeWord;
     private int emeraldCount;
     private int deathCount;
     private int slotId;
@@ -36,6 +38,7 @@ public class GameStateManager {
         deathCount = 0;
         emeraldCountWord = new Words("X " + emeraldCount, 30, 1200, 50);
         deathCountWord = new Words("X " + deathCount, 30, 1200, 100);
+        infinityModeWord = new Words("Infinity Mode", 30, 140, 120);
         setGameState(new MenuState(this));
     }
 
@@ -81,6 +84,9 @@ public class GameStateManager {
             levelWord.paint(g);
             g.drawImage(SpriteManager.emerald.getBufferedImage(), 1100, 10, 32, 32, null);
             g.drawImage(SpriteManager.skull.getBufferedImage(), 1100, 61, 32, 32, null);
+            if(Game.infinityMode) {
+                infinityModeWord.paint(g);
+            }
         }
     }
 
@@ -144,6 +150,7 @@ public class GameStateManager {
         currentLevel = record.getLevel();
         emeraldCount = record.getEmeraldCount();
         deathCount = record.getDeathCount();
+        timer = new Timer(record.getTime());
         setLevelState(gameStates.getLevelStates().get(record.getLevel() - 1));
     }
 
