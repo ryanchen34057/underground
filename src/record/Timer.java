@@ -15,6 +15,7 @@ public class Timer {
     private long startTime;
     private long usedTime;
     private long pauseStart;
+    private static long temp;
     private DecimalFormat formatter;
     
     public Timer(){
@@ -26,18 +27,20 @@ public class Timer {
         startTime = System.currentTimeMillis();
         pauseStart = 0;
     }
-
-    public Timer(String time) {
-        String[] times = time.split(":");
-        min = Integer.parseInt(times[1]);
-        sec = Integer.parseInt(times[2]);
-        ms = Integer.parseInt(times[3]);
+    public Timer(long usedTimeRecord){
+        formatter = new DecimalFormat("00");
+        min = 0;
+        sec = 0;
+        ms = 0;
         word = new Words(min + ":" + sec + ":" + ms,30,150,80);
-        startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis()- usedTimeRecord;
         pauseStart = 0;
-
     }
-
+    
+    public long getUsedTimeRecord(){
+        return usedTime;
+    }
+    
     public void timerPause(){
         if(pauseStart == 0){
             pauseStart = System.currentTimeMillis();//設定暫停的時間點
@@ -45,16 +48,17 @@ public class Timer {
     }
     public void pauseEnd(){
         if(pauseStart != 0){
-            startTime  += (System.currentTimeMillis()-pauseStart);//切回遊戲，開始時間後移
+            startTime  += (System.currentTimeMillis() - pauseStart);//切回遊戲，開始時間後移
             pauseStart = 0; //歸零
         }   
     }   
    
     public void update(){
         usedTime = System.currentTimeMillis()- startTime ;
-        usedTime = trans(usedTime,MIN_TYPE,60*1000);
-        usedTime = trans(usedTime,SEC_TYPE,1000);
-        usedTime = trans(usedTime,MS_TYPE,1);
+        temp = usedTime;
+        temp = trans(temp,MIN_TYPE,60*1000);
+        temp = trans(temp,SEC_TYPE,1000);
+        temp = trans(temp,MS_TYPE,1);
         word.setWord(formatter.format(min)+":"+formatter.format(sec)+":"+formatter.format(ms/10));
     }
     
@@ -79,6 +83,6 @@ public class Timer {
 
     @Override
     public String toString() {
-        return "Timer: " + min + ":" + sec + ":" + ms;
+        return "Timer: " + formatter.format(min) + ":" + formatter.format(sec) + ":" + formatter.format(ms/10);
     }
 }

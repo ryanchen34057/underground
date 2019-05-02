@@ -2,14 +2,16 @@ package record;
 
 public class Record implements java.io.Serializable {
     private int id;
-    private String time;
+    private long  time;
+    private String timeString;
     private int emeraldCount;
     private int level;
     private int deathCount;
 
-    public Record(int id, String time, int emeraldCount, int level, int deathCount) {
+    public Record(int id, long time,String timeString, int emeraldCount, int level, int deathCount) {
         this.id = id;
         this.time = time;
+        this.timeString = timeString;
         this.emeraldCount = emeraldCount;
         this.level = level;
         this.deathCount = deathCount;
@@ -19,8 +21,12 @@ public class Record implements java.io.Serializable {
         return id;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
+    }
+    
+    public String getTimeString() {
+        return timeString;
     }
 
     public int getEmeraldCount() {
