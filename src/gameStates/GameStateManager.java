@@ -4,6 +4,11 @@ import UI.Game;
 import UI.Window;
 import audio.MusicPlayer;
 import fonts.Words;
+import gameObject.tiles.prize.Emerald;
+import gameStates.level.Level1State;
+import gameStates.level.Level2State;
+import gameStates.level.Level3State;
+import gameStates.level.Level4State;
 import graphics.SpriteManager;
 import record.Timer;
 import record.Record;
@@ -12,14 +17,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class GameStateManager {
-    private GameStates gameStates;
     private Stack<GameState> gameStateStack;
     private GameState currentGameState;
     private GameState menu;
     private Timer timer;
+    private static HashMap<Integer, Emerald[]> emeraldMap;
     private Words emeraldCountWord;
     private Words deathCountWord;
     private Words levelWord;
@@ -28,10 +35,14 @@ public class GameStateManager {
     private int deathCount;
     private int slotId;
     private int currentLevel;
+    public static final int LEVEL_COUNT = 4;
 
 
     public GameStateManager() {
-        gameStates = new GameStates(this);
+        emeraldMap = new HashMap<>();
+        for(int i=0;i<LEVEL_COUNT;i++) {
+            emeraldMap.put(i+1, new Emerald[5]);
+        }
         menu = new MenuState(this);
         gameStateStack = new Stack<>();
         emeraldCount = 0;
@@ -114,8 +125,8 @@ public class GameStateManager {
         if(currentGameState != null) {
           currentGameState.handleKeyInput();   
         }
-           
     }
+
     public void back(){
         gameStateStack.pop();
     }
@@ -129,6 +140,10 @@ public class GameStateManager {
 
     public Timer getTimer() {
         return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 
     public void saveAndWriteRecord(Record record) {
@@ -151,7 +166,28 @@ public class GameStateManager {
         emeraldCount = record.getEmeraldCount();
         deathCount = record.getDeathCount();
         timer = new Timer(record.getTime());
-        setLevelState(gameStates.getLevelStates().get(record.getLevel() - 1));
+        switch (record.getLevel()) {
+            case 1:
+                setLevelState(new Level1State(this));
+                break;
+            case 2:
+                setLevelState(new Level2State(this));
+                break;
+            case 3:
+                setLevelState(new Level3State(this));
+                break;
+            case 4:
+                setLevelState(new Level4State(this));
+                break;
+        }
+    }
+
+    public void addEmerald(int level, int serialId, Emerald emerald) {
+        emeraldMap.get(level)[serialId] = emerald;
+    }
+
+    public Emerald getEmerald(int level, int serialId) {
+        return emeraldMap.get(level)[serialId];
     }
 
     public void incrementDeathCount() {

@@ -11,15 +11,15 @@ public class GameStates {
     private ArrayList<LevelState> levelStates;
     private GameStateManager gameStateManager;
 
-
-    public GameStates(GameStateManager gameStateManager) {
-        this.gameStateManager = gameStateManager;
-        this.levelStates = new ArrayList<>();
-        levelStates.add(new Level1State(gameStateManager));
-        levelStates.add(new Level2State(gameStateManager));
-        levelStates.add(new Level3State(gameStateManager));
-        levelStates.add(new Level4State(gameStateManager));
-    }
-
-    public ArrayList<LevelState> getLevelStates() { return levelStates;}
+//
+//    public GameStates(GameStateManager gameStateManager) {
+//        this.gameStateManager = gameStateManager;
+//        this.levelStates = new ArrayList<>();
+//        levelStates.add(new Level1State(gameStateManager));
+//        levelStates.add(new Level2State(gameStateManager));
+//        levelStates.add(new Level3State(gameStateManager));
+//        levelStates.add(new Level4State(gameStateManager));
+//    }
+//
+//    public ArrayList<LevelState> getLevelStates() { return levelStates;}
 }

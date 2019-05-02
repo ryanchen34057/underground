@@ -59,7 +59,7 @@ public class Timer {
         temp = trans(temp,MIN_TYPE,60*1000);
         temp = trans(temp,SEC_TYPE,1000);
         temp = trans(temp,MS_TYPE,1);
-        word.setWord(formatter.format(min)+":"+formatter.format(sec)+":"+formatter.format(ms/10));
+        word.setWord("Timer: " + formatter.format(min)+":"+formatter.format(sec)+":"+formatter.format(ms/10));
     }
     
     

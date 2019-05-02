@@ -11,12 +11,16 @@ import util.CollisionCondition;
 import java.awt.*;
 
 public class Emerald extends Prize {
+    private int serial;
+    private boolean isEaten;
     public static final int PRIZE_SIZE = 64;
     private int frameDelay, frame;
-    public Emerald(int x, int y, int width, int height, int point, Id id) {
+    public Emerald(int x, int y, int width, int height, int point, Id id, int serial) {
         super(x, y, width, height, point, id);
         frameDelay = 0;
         frame = 0;
+        this.serial = serial;
+        isEaten = false;
     }
 
     @Override
@@ -39,6 +43,18 @@ public class Emerald extends Prize {
             }
             frameDelay = 0;
         }
+    }
+
+    public int getSerial() {
+        return serial;
+    }
+
+    public boolean isEaten() {
+        return isEaten;
+    }
+
+    public void setEaten(boolean eaten) {
+        isEaten = eaten;
     }
 
     @Override
@@ -84,6 +100,7 @@ public class Emerald extends Prize {
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
         SoundEffectPlayer.playSoundEffect("Prize");
+        isEaten = true;
         die();
     }
 }

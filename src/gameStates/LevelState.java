@@ -38,6 +38,9 @@ public abstract class LevelState extends GameState {
     // Coordinate of blue portal(where player spawns)
     protected  Dimension bluePortalCor;
 
+    // SerialNum of the emerald;
+    protected int emeraldSerial;
+
     protected LinkedList<FallingRock> fallingRocks;
     protected static Camera cam;
 
@@ -54,6 +57,7 @@ public abstract class LevelState extends GameState {
         particles = new LinkedList<>();
         fallingRocks = new LinkedList<>();
         cam = new Camera();
+        emeraldSerial = 0;
     }
 
     @Override
@@ -236,12 +240,26 @@ public abstract class LevelState extends GameState {
                     }
 
                 } else if (red == 255 && green == 0 && blue == 0) {
-                    tiles.add(new Emerald(x * 64, y * 64, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 1000, Id.emerald));
+                    Emerald emerald;
+                    if(gameStateManager.getEmerald(getLevel(), emeraldSerial) == null) {
+                        System.out.println(emeraldSerial);
+                        emerald = new Emerald(x * 64, y * 64, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 1000, Id.emerald, emeraldSerial);
+                        gameStateManager.addEmerald(getLevel(), emeraldSerial, emerald);
+                    }
+                    else {
+                        emerald = gameStateManager.getEmerald(getLevel(), emeraldSerial);
+                        if(emerald.isEaten()) {
+                            emerald = null;
+                        }
+                    }
+                    emeraldSerial++;
+                    if(emerald != null) {
+                        tiles.add(emerald);
+                    }
                 }
                 else if(red == 255 && green == 150 && blue == 150) {
                     tiles.add(new Spring(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring));
                 }
-
 
                 //Portal
 //              //Blue
@@ -257,6 +275,7 @@ public abstract class LevelState extends GameState {
                 }
             }
         }
+        emeraldSerial = 0;
     }
 
     public abstract int getLevel();
