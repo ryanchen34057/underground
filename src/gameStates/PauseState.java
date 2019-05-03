@@ -31,19 +31,19 @@ public class PauseState extends GameState{
     
     public void init() {
         background = new Background("/res/Cave1.png",1);
-        wordTitle = new Words("Pause", 60, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-180);
-        wordResume = new Words("Resume", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-40);
-        wordRetry = new Words("Retry", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+20);
-        wordSelect = new Words("Select Level", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+80);
-        wordMenu = new Words("Back to Menu", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+140);
-        wordSaveQuit = new Words("Save & Quit", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+200);
+        wordTitle = new Words("Pause", (int)(Game.WIDTH*Game.SCALE*0.0469), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/3));
+        wordResume = new Words("Resume", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/2));
+        wordRetry = new Words("Retry", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.75));
+        wordSelect = new Words("Select Level", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.57));
+        wordMenu = new Words("Back to Menu", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.43));
+        wordSaveQuit = new Words("Save & Quit", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.31));
         words = new Words[5];
         words[0] = wordResume;
         words[1] = wordRetry;
         words[2] = wordSelect;
         words[3] = wordMenu;
         words[4] = wordSaveQuit;
-        cursor = new Cursor(0,0,32);
+        cursor = new Cursor(0,0,(int)(Game.WIDTH*Game.SCALE*0.025));
     }
     
     @Override

@@ -1,5 +1,7 @@
 package states;
 
+import audio.SoundEffectPlayer;
+import effects.DashEffect;
 import gameObject.character.Player;
 import input.Input;
 
@@ -20,7 +22,7 @@ public class Idle implements State {
 
     @Override
     public void update(Player player) {
-        player.setVelX(5);
+        player.setVelX(10);
         if(player.getVelX() >= 15) {
             player.setCurrentState(PlayerState.running);
         }

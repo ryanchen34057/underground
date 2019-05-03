@@ -2,6 +2,8 @@ package util;
 
 import UI.Game;
 import gameObject.character.Entity;
+import gameObject.tiles.Tile;
+import gameObject.tiles.wall.Wall;
 
 public class Camera {
     private int x;
@@ -11,19 +13,21 @@ public class Camera {
     private int counter;
     private int intensity;
 
-    public void update(Entity player) {
+    public void update(Entity player, int mapWidth, int mapHeight) {
+//        x = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
+//        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2;
         float xTarg = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
-        float yTarg = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2 + 100;
-        x += (xTarg - x) * 0.07;
-        y += (yTarg - y) * 0.07;
+        float yTarg = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2;
+        x += (xTarg - x) * 0.05;
+        y += (yTarg - y) * 0.05;
         if(x > 0) {
             x = 0;
         }
         if(y > 0) {
             y = 0;
         }
-        if(y < -700) {
-            y = -700;
+        if(y <= (player.getHeight() + Wall.TILE_SIZE)-mapHeight*64 + (int)(Game.HEIGHT*Game.SCALE/1.2)) {
+            y = (player.getHeight() + Wall.TILE_SIZE)-mapHeight*64 + (int)(Game.HEIGHT*Game.SCALE/1.2);
         }
         if(shaking) {
             counter++;

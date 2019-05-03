@@ -36,7 +36,6 @@ public class Level4State extends LevelState {
 
     @Override
     public void update() {
-        System.out.println(cam.getX() + "," + cam.getY());
         // handle player's keyInput
         handleKeyInput();
 
@@ -52,7 +51,7 @@ public class Level4State extends LevelState {
 
         // Update all game object
         updateAllGameObject();
-        cam.update(player);
+        cam.update(player, mapWidth, mapHeight);
 
 
         // Check if on the ice

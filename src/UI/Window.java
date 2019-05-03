@@ -4,6 +4,7 @@ import audio.MusicPlayer;
 import util.ThreadPool;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Window {
     public static MusicPlayer musicPlayer;

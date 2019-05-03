@@ -48,7 +48,7 @@ public class FallingRock extends Tile {
         g.drawImage(bufferedImage, x, y, width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.GREEN);
-            g.drawRect(x+10, y + height/2, width-75,height/2);
+            g.drawRect(x+10, y + (height - height/3), width-75,height/3);
         }
     }
 
@@ -98,7 +98,7 @@ public class FallingRock extends Tile {
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(x+10, y + height/2, width-75,height/2);
+        return new Rectangle(x+10, y + (height - height/3), width-75,height/3);
     }
     @Override
     public  Rectangle getBoundsLeft() {

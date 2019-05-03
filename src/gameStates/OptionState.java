@@ -27,15 +27,15 @@ public class OptionState extends GameState{
     
     public void init() {
         background = new Background("/res/Cave1.png", Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
-        wordTitle = new Words("Option", 60, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-180);
-        wordVideo = new  Words("Video", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+80);
-        wordAudio = new Words("Audio", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+140);
-        wordBack = new Words("Back", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+200);
+        wordTitle = new Words("Option", (int)(Game.WIDTH*Game.SCALE*0.0469), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/2.5));
+        wordVideo = new  Words("Video", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2,(int)(Game.HEIGHT*Game.SCALE/1.7));
+        wordAudio = new Words("Audio", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.51));
+        wordBack = new Words("Back", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.37));
         words = new Words[3];
         words[0] = wordVideo;
         words[1] = wordAudio;
         words[2] = wordBack;
-        cursor = new Cursor(0,0,32);
+        cursor = new Cursor(0,0,(int)(Game.WIDTH*Game.SCALE*0.025));
     }
     
     @Override

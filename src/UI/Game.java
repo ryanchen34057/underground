@@ -19,9 +19,11 @@ public class Game extends Canvas implements Runnable {
     public static boolean infinityMode;
 
     //Size
-    public static final int WIDTH = 320;
-    public static final int HEIGHT = 220;
-    public static final int SCALE = 4;
+    public static final int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
+    public static final int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
+    public static int WIDTH = 320;
+    public static int HEIGHT = 220;
+    public static int SCALE = 4;
 
     //Resource Manager
     private SpriteManager spriteManager;
@@ -36,7 +38,7 @@ public class Game extends Canvas implements Runnable {
 
     public Game() {
         running = false;
-        debugMode = true;
+        debugMode = false;
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
@@ -46,7 +48,7 @@ public class Game extends Canvas implements Runnable {
     public void paint() {
         BufferStrategy bs = getBufferStrategy();
         if(bs == null) {
-            createBufferStrategy(3);
+            createBufferStrategy(2);
             return;
         }
         Graphics g = bs.getDrawGraphics();
@@ -76,13 +78,6 @@ public class Game extends Canvas implements Runnable {
         soundEffectPlayer = new SoundEffectPlayer();
     }
 
-//    private synchronized void start() {
-//        if(running)return;
-//        running = true;
-//        thread = new Thread(this, "Thread");
-//        thread.start();
-//    }
-
     private synchronized void stop() {
         if(!running)return;
         running = false;
@@ -104,23 +99,23 @@ public class Game extends Canvas implements Runnable {
         double delta = 0.0;
         double ns = 1000000000.0 / amountOfTicks;
         int frames = 0;
-        int ticks = 0;
+        int updates = 0;
         while(running) {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
             while(delta >= 1) {
                 update();
-                ticks++;
+                updates++;
                 delta--;
             }
             paint();
             frames++;
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-//                System.out.println(frames + " Frame Per Second " + ticks + " Updates Per Second");
+                System.out.println(frames + " Frame Per Second " + updates + " Updates Per Second");
                 frames = 0;
-                ticks = 0;
+                updates = 0;
             }
         }
         stop();

@@ -1,5 +1,6 @@
 package record;
 
+import UI.Game;
 import fonts.Words;
 import java.awt.Graphics;
 import java.text.DecimalFormat;
@@ -32,7 +33,7 @@ public class Timer {
         min = 0;
         sec = 0;
         ms = 0;
-        word = new Words(min + ":" + sec + ":" + ms,30,150,80);
+        word = new Words(min + ":" + sec + ":" + ms, (int)(Game.WIDTH * Game.SCALE * 0.023),(int)(Game.WIDTH * Game.SCALE * 0.117),(int)(Game.HEIGHT * Game.SCALE * 0.09));
         startTime = System.currentTimeMillis()- usedTimeRecord;
         pauseStart = 0;
     }

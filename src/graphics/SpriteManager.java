@@ -32,7 +32,13 @@ public class SpriteManager {
     public static BufferedImage cursor;
     
     //pause
-    public static BufferedImage pause; 
+    public static BufferedImage pause;
+
+    //Enter key
+    public static Sprite enterKey;
+
+    //X key
+    public static Sprite xKey;
 
     public SpriteManager() {
         //Sprite object
@@ -40,6 +46,8 @@ public class SpriteManager {
         emerald = new Sprite(spriteSheet, 1, 9, 32, 32);
         skull = new Sprite(spriteSheet, 9, 9, 32, 32);
         vanishingRock = new Sprite(spriteSheet, 1,6,32,32);
+        enterKey = new Sprite(spriteSheet, 10,9, 32, 32);
+        xKey = new Sprite(spriteSheet, 11,9, 32, 32);
 
         //BufferedImage object
         level1 = ResourceManager.getInstance().getImage("/res/level1.png");

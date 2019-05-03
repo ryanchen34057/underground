@@ -33,17 +33,17 @@ public class MenuState extends GameState{
     
     public void init() {
         background = new Background("/res/Cave1.png", Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
-        wordTitle = new Words("UnderGround", 80, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2-120);
-        wordStart = new Words("Start", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+80);
-        wordLeaderboard = new Words("Leaderboard", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+140);
-        wordOption = new Words("Option", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+200);
-        wordExit = new Words("Exit", 40, Game.WIDTH*Game.SCALE/2, Game.HEIGHT*Game.SCALE/2+260);
+        wordTitle = new Words("UnderGround", (int)(Game.WIDTH*Game.SCALE*0.0625), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/2.5));
+        wordStart = new Words("Start", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.7));
+        wordLeaderboard = new Words("Leaderboard", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.51));
+        wordOption = new Words("Option", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2,  (int)(Game.HEIGHT*Game.SCALE/1.37));
+        wordExit = new Words("Exit", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.25));
         words = new Words[4];
         words[0] = wordStart;
         words[1] = wordLeaderboard;
         words[2] = wordOption;
         words[3] = wordExit;
-        cursor = new Cursor(0,0,32);
+        cursor = new Cursor(0,0,(int)(Game.WIDTH*Game.SCALE*0.025));
     }
 
     @Override

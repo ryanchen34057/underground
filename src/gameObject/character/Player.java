@@ -354,8 +354,12 @@ public class Player extends Entity {
                 break;
             case bluePortal:
                 SoundEffectPlayer.playSoundEffect("Portal");
-                if(((Portal)t).getDirection() == Direction.LEFT) { velX -= 3; }
-                else { velX += 3; }
+                if(((Portal)t).getDirection() == Direction.LEFT) {
+                    x += (velX == 0) ? -10:0;
+                }
+                else {
+                    x += (velX == 0) ? 10:0;
+                }
                 break;
             case purplePortal:
                 isGoaled = true;
