@@ -42,6 +42,7 @@ public class Bouncing implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
+            player.currentDashTimer = Player.DASH_TIMER;
         }
     }
 

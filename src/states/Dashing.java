@@ -7,7 +7,6 @@ import util.Camera;
 import java.util.List;
 
 public class Dashing implements State {
-    private float dashTimer = Player.DASH_TIMER;
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(2).down) {
@@ -25,11 +24,9 @@ public class Dashing implements State {
     @Override
     public void update(Player player) {
         player.setVelX(player.currentDashSpeed * player.getFacing());
-        dashTimer -= (60.0f / 1000.0f);
+        player.currentDashTimer -= (60.0f / 1000.0f);
         player.currentDashSpeed -= Player.DASH_SPEED_BUMP;
-        if(dashTimer <= 0) {
-            //Reset timer
-            dashTimer = Player.DASH_TIMER;
+        if(player.currentDashTimer <= 0.06) {
             player.setCurrentState(PlayerState.standing);
             player.currentDashSpeed = Player.DASH_SPEED;
         }

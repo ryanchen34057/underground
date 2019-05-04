@@ -49,11 +49,11 @@ public class GameStateManager {
         gameStateStack = new Stack<>();
         emeraldCount = 0;
         deathCount = 0;
-        emeraldCountWord = new Words("X " + emeraldCount, (int)(Game.WIDTH*Game.SCALE*0.023), (int)(Game.WIDTH*Game.SCALE*0.9375), (int)(Game.HEIGHT*Game.SCALE*0.057));
-        deathCountWord = new Words("X " + deathCount, (int)(Game.WIDTH*Game.SCALE*0.023), (int)(Game.WIDTH*Game.SCALE*0.9375), (int)(Game.HEIGHT*Game.SCALE*0.114));
-        infinityModeWord = new Words("Infinity Mode", (int)(Game.WIDTH*Game.SCALE*0.023), (int)(Game.WIDTH*Game.SCALE*0.9375), (int)(Game.HEIGHT*Game.SCALE*0.136));
+        emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(50 * Game.heightRaitio));
+        deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRaitio));
+        infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRaitio));
         setGameState(new MenuState(this));
-//        setLevelState(new Level4State(this));
+//        setLevelState(new Level1State(this));
     }
 
     //Getters
@@ -89,7 +89,7 @@ public class GameStateManager {
     public void setLevelState(LevelState levelState) {
         gameStateStack.push(levelState);
         currentLevel = levelState.getLevel();
-        levelWord = new Words("Level: " + currentLevel, (int)(Game.WIDTH*Game.SCALE*0.023), (int)(Game.WIDTH*Game.SCALE*0.066), (int)(Game.HEIGHT*Game.SCALE*0.045));
+        levelWord = new Words("Level: " + currentLevel, (int)(30 * Game.widthRatio), (int)(85 * Game.widthRatio), (int)(40 * Game.heightRaitio));
     }
 
     public void updateGameState(GameState gameState) {
@@ -108,8 +108,8 @@ public class GameStateManager {
             emeraldCountWord.paint(g);
             deathCountWord.paint(g);
             levelWord.paint(g);
-            g.drawImage(SpriteManager.emerald.getBufferedImage(), (int)(Game.WIDTH*Game.SCALE*0.859), (int)(Game.HEIGHT*Game.SCALE*0.011), (int)(Game.WIDTH*Game.SCALE*0.025), (int)(Game.WIDTH*Game.SCALE*0.025), null);
-            g.drawImage(SpriteManager.skull.getBufferedImage(), (int)(Game.WIDTH*Game.SCALE*0.859), (int)(Game.HEIGHT*Game.SCALE*0.069), (int)(Game.WIDTH*Game.SCALE*0.025), (int)(Game.WIDTH*Game.SCALE*0.025), null);
+            g.drawImage(SpriteManager.emerald.getBufferedImage(), (int)(1100 * Game.widthRatio), (int)(10 * Game.heightRaitio), (int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio), null);
+            g.drawImage(SpriteManager.skull.getBufferedImage(), (int)(1100 * Game.widthRatio), (int)(60 * Game.heightRaitio), (int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio), null);
             if(Game.infinityMode) {
                 infinityModeWord.paint(g);
             }

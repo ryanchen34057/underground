@@ -1,7 +1,6 @@
 package gameObject.character;
 
 import UI.Game;
-import audio.AudioFile;
 import audio.SoundEffectPlayer;
 import effects.LandingEffect;
 import enums.Direction;
@@ -19,7 +18,6 @@ import util.CollisionCondition;
 
 
 import java.awt.*;
-import java.util.HashMap;
 
 import static enums.Direction.*;
 
@@ -31,48 +29,49 @@ public class Player extends Entity {
     private float friction;
 
     //Stats
-    public static final int WIDTH = 96;
-    public static final int HEIGHT = 96;
+    public static final int WIDTH = (int) (96 * Game.widthRatio);
+    public static final int HEIGHT = (int) (96 * Game.widthRatio);
     private final int STAMINA = 150;
 
     // Running
-    public static final int STEP = 8;
+    public static final float STEP = 8 * Game.widthRatio;
 
     // StandingJump
-    public static final float STANDINGJUMPING_GRAVITY = 18f;
-    public static final float STANDINGJUMPING_VELX_OFFSET = 1.5f;
-    public static final float STANDINGJUMPING_GRAVITY_OFFSET = 1.1f;
+    public static final float STANDINGJUMPING_GRAVITY = 18f * Game.widthRatio;
+    public static final float STANDINGJUMPING_VELX_OFFSET = 1.5f * Game.widthRatio;
+    public static final float STANDINGJUMPING_GRAVITY_OFFSET = 1.1f * Game.widthRatio;
 
     // RunningJump
-    public static final float RUNNINGJUMPING_GRAVITY = 16;
-    public static final float RUNNINGJUMPING_GRAVITY_OFFSET = 1f;
-    public static final int RUNNINGJUMPING_STEP = 5;
+    public static final float RUNNINGJUMPING_GRAVITY = 16 * Game.widthRatio;
+    public static final float RUNNINGJUMPING_GRAVITY_OFFSET = 1f * Game.widthRatio;
+    public static final float RUNNINGJUMPING_STEP = 5 * Game.widthRatio;
 
 
     // Dash
-    public static final int DASH_SPEED = 17;
+    public static final float DASH_SPEED = 17 * Game.widthRatio;
     public static final float DASH_TIMER = 1.5f;
-    public static final float ICESKATING_SPEED = 15;
-    public float currentDashSpeed = 17;
-    public static final float DASH_SPEED_BUMP = 0.1f;
+    public static final float ICESKATING_SPEED = 15 * Game.widthRatio;
+    public float currentDashSpeed = 17 * Game.widthRatio;
+    public double currentDashTimer;
+    public static final float DASH_SPEED_BUMP = 0.1f * Game.widthRatio;
 
     // DashJumping
-    public static final float DASHJUMPING_GRAVITY = 16;
-    public static final float DASHJUMPING_GRAVITY_OFFSET = 0.8f;
+    public static final float DASHJUMPING_GRAVITY = 16 * Game.widthRatio;
+    public static final float DASHJUMPING_GRAVITY_OFFSET = 0.8f * Game.widthRatio;
 
     // Sliding and Bouncing
-    public static final float BOUNCING_RANGE = 4.0f;
-    public static final float BOUNCING_GRAVITY_OFFSET = 0.6f;
-    public static final float BOUNCING_GRAVITY = 15;
+    public static final float BOUNCING_RANGE = 4.0f * Game.widthRatio;
+    public static final float BOUNCING_GRAVITY_OFFSET = 0.6f * Game.widthRatio;
+    public static final float BOUNCING_GRAVITY = 15 * Game.widthRatio;
 
     // Falling
-    public static final float FALLING_GRAVITY_VEL = 0.5f;
-    public static final int FALLING_VELX = 6;
+    public static final float FALLING_GRAVITY_VEL = 0.5f * Game.widthRatio;
+    public static final float FALLING_VELX = 6 * Game.widthRatio;
 
     // Vertical Dashing
-    public static final float VERTICALDASHING_SPEED = 10;
+    public static final float VERTICALDASHING_SPEED = 10 * Game.widthRatio;
     public static final float VERTICALDASHING_TIMER = 1.2f;
-    public static final float VERTICALDASHING_VELX = 12;
+    public static final float VERTICALDASHING_VELX = 12 * Game.widthRatio;
 
     // State
     private boolean isJumped;
@@ -83,7 +82,7 @@ public class Player extends Entity {
     public Player(int width, int height, Id id) {
         super(width, height, id);
         currentState = PlayerState.idle;
-        velX = 5;
+        velX = 5 * Game.widthRatio;
         frameDelay = 0;
         frame = 0;
         friction = 0;
@@ -296,7 +295,9 @@ public class Player extends Entity {
         if(direction == null) {
             return;
         }
-        this.reactToCollision(other, direction);
+        if(!isDead) {
+            this.reactToCollision(other, direction);
+        }
         other.reactToCollision(this, direction);
 
     }
@@ -347,6 +348,8 @@ public class Player extends Entity {
             case icewall1:
             case vanishingRock:
             case spring:
+            case halfHeightWall:
+            case halfWidthWall:
             case wall:
                 ifHitWall(t, direction);
                 break;
@@ -355,11 +358,14 @@ public class Player extends Entity {
             case bluePortal:
                 SoundEffectPlayer.playSoundEffect("Portal");
                 if(((Portal)t).getDirection() == Direction.LEFT) {
-                    x += (velX == 0) ? -10:0;
+                    x += (velX == 0) ? -20 * Game.widthRatio:0;
+                    t.die();
                 }
                 else {
-                    x += (velX == 0) ? 10:0;
+                    x += (velX == 0) ? 20 * Game.widthRatio:0;
+                    t.die();
                 }
+
                 break;
             case purplePortal:
                 isGoaled = true;
@@ -375,18 +381,22 @@ public class Player extends Entity {
                 if(t instanceof Spring) {
                     if(((Spring) t).getDirection() == DOWN) {
                         gravity = STANDINGJUMPING_GRAVITY + 7;
-                        y = collisionRect.y + (int) t.getBounds().getHeight();
+                        y = collisionRect.y + (int)collisionRect.getHeight();
                         ((Spring) t).setStepOn(true);
                         SoundEffectPlayer.playSoundEffect("SpringJumping");
                         isJumped = true;
+
                     }
+                    currentState = PlayerState.falling;
                 }
                 else {
-                    gravity = 0;
-                    velY = 0;
-                    y = collisionRect.y + t.getHeight();
+                    if(!(x >= t.getX() && x <= t.getX() + collisionRect.getWidth())) {
+                        gravity = 0;
+                        velY = 0;
+                        y = collisionRect.y + (int)collisionRect.getHeight();
+                        currentState = PlayerState.falling;
+                    }
                 }
-                currentState = PlayerState.falling;
                 break;
             case BOTTOM:
                 if(currentState == PlayerState.falling || currentState == PlayerState.sliding
@@ -441,12 +451,15 @@ public class Player extends Entity {
                     if(((Spring) t).getDirection() == UP) {
                         y = collisionRect.y - height;
                         isJumped = true;
+                        isTired = false;
                         gravity = STANDINGJUMPING_GRAVITY + 7;
                         currentState = PlayerState.standingJumping;
                     }
                     else if(((Spring) t).getDirection() == RIGHT) {
                         x = collisionRect.x + collisionRect.width - 25;
-                        velX = 20;
+                        velX = 30  * Game.widthRatio;
+                        if(isOnTheIce) velX *= 5;
+                        facing = 1;
                     }
                     SoundEffectPlayer.playSoundEffect("SpringJumping");
                     ((Spring) t).setStepOn(true);
@@ -454,7 +467,7 @@ public class Player extends Entity {
                 else {
                     isOnTheWall = false;
                 }
-                if(currentState == PlayerState.iceSkating) {
+                if(currentState == PlayerState.iceSkating && velX == 0) {
                     currentState = PlayerState.standing;
                 }
                 break;
@@ -474,12 +487,15 @@ public class Player extends Entity {
                     if(((Spring) t).getDirection() == UP) {
                         y = collisionRect.y - height;
                         isJumped = true;
+                        isTired = false;
                         gravity = STANDINGJUMPING_GRAVITY + 7;
                         currentState = PlayerState.standingJumping;
                     }
                     else if(((Spring) t).getDirection() == Direction.LEFT) {
                         x = collisionRect.x - getWidth() + 25;
-                        velX = -20;
+                        velX = -30 * Game.widthRatio;
+                        if(isOnTheIce) velX *= 5;
+                        facing = -1;
                     }
                     ((Spring) t).setStepOn(true);
                     SoundEffectPlayer.playSoundEffect("SpringJumping");
@@ -487,7 +503,7 @@ public class Player extends Entity {
                 else {
                     isOnTheWall = false;
                 }
-                if(currentState == PlayerState.iceSkating) {
+                if(currentState == PlayerState.iceSkating && velX == 0) {
                     currentState = PlayerState.standing;
                 }
                 break;

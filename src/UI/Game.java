@@ -19,11 +19,17 @@ public class Game extends Canvas implements Runnable {
     public static boolean infinityMode;
 
     //Size
+    public static final float DEFAULT_WIDTH = 1280.0f;
+    public static final float DEFAULT_HEIGHT = 880.0f;
     public static final int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
     public static final int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
     public static int WIDTH = 320;
     public static int HEIGHT = 220;
     public static int SCALE = 4;
+    public static float SCALED_WIDTH = WIDTH * SCALE;
+    public static float SCALED_HEIGHT = HEIGHT * SCALE;
+    public static float widthRatio = (SCALED_WIDTH)/(DEFAULT_WIDTH);
+    public static float heightRaitio = (SCALED_HEIGHT)/(DEFAULT_HEIGHT);
 
     //Resource Manager
     private SpriteManager spriteManager;
@@ -38,7 +44,7 @@ public class Game extends Canvas implements Runnable {
 
     public Game() {
         running = false;
-        debugMode = false;
+        debugMode = true;
         Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
@@ -48,7 +54,7 @@ public class Game extends Canvas implements Runnable {
     public void paint() {
         BufferStrategy bs = getBufferStrategy();
         if(bs == null) {
-            createBufferStrategy(2);
+            createBufferStrategy(3);
             return;
         }
         Graphics g = bs.getDrawGraphics();
@@ -113,7 +119,7 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println(frames + " Frame Per Second " + updates + " Updates Per Second");
+//                System.out.println(frames + " Frame Per Second " + updates + " Updates Per Second");
                 frames = 0;
                 updates = 0;
             }

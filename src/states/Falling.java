@@ -34,6 +34,7 @@ public class Falling implements State {
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
         }
 
         //Dashing in the air
@@ -43,6 +44,7 @@ public class Falling implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
+            player.currentDashTimer = Player.DASH_TIMER;
         }
     }
 

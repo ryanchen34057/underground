@@ -15,7 +15,7 @@ public class VanishingRock extends Tile {
     private float alpha;
     private int frame;
     private int frameDelay;
-    private Direction direction;
+
     public VanishingRock(int x, int y, int width, int height, Id id) {
         super(x, y, width, height,id);
         isStepOn = false;

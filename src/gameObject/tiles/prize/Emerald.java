@@ -13,7 +13,7 @@ import java.awt.*;
 public class Emerald extends Prize {
     private int serial;
     private boolean isEaten;
-    public static final int PRIZE_SIZE = 64;
+    public static final int PRIZE_SIZE = (int)(64* Game.widthRatio);
     private int frameDelay, frame;
     public Emerald(int x, int y, int width, int height, int point, Id id, int serial) {
         super(x, y, width, height, point, id);

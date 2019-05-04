@@ -25,6 +25,7 @@ public class FallingRock extends Tile {
     private final int FALLING_SPEED = 25;
     private boolean fallen;
     private Effect currentEffect;
+    private boolean onTheGround;
 
     public FallingRock(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height, id);
@@ -32,6 +33,7 @@ public class FallingRock extends Tile {
         originalY = y;
         isFalling = false;
         isShaking = false;
+        onTheGround = false;
         fallen = false;
         this.bufferedImage = bufferedImage;
         intensity = 10;
@@ -41,6 +43,14 @@ public class FallingRock extends Tile {
 
     public void setShaking(boolean shaking) {
         isShaking = shaking;
+    }
+
+    public void setOnTheGround(boolean onTheGround) {
+        this.onTheGround = onTheGround;
+    }
+
+    public boolean isOnTheGround() {
+        return onTheGround;
     }
 
     @Override
@@ -78,6 +88,10 @@ public class FallingRock extends Tile {
 
     public boolean isFallen() {
         return fallen;
+    }
+
+    public void setFalling(boolean falling) {
+        isFalling = falling;
     }
 
     public Effect getCurrentEffect() {

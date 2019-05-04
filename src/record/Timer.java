@@ -24,7 +24,7 @@ public class Timer {
         min = 0;
         sec = 0;
         ms = 0;
-        word = new Words(min + ":" + sec + ":" + ms,30,150,80);
+        word = new Words(min + ":" + sec + ":" + ms,(int)(30*Game.widthRatio),(int)(150*Game.widthRatio),(int)(80*Game.heightRaitio));
         startTime = System.currentTimeMillis();
         pauseStart = 0;
     }
@@ -33,7 +33,7 @@ public class Timer {
         min = 0;
         sec = 0;
         ms = 0;
-        word = new Words(min + ":" + sec + ":" + ms, (int)(Game.WIDTH * Game.SCALE * 0.023),(int)(Game.WIDTH * Game.SCALE * 0.117),(int)(Game.HEIGHT * Game.SCALE * 0.09));
+        word = new Words(min + ":" + sec + ":" + ms, (int)(30*Game.widthRatio),(int)(150*Game.widthRatio),(int)(80*Game.heightRaitio));
         startTime = System.currentTimeMillis()- usedTimeRecord;
         pauseStart = 0;
     }

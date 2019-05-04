@@ -132,7 +132,7 @@ public abstract class LevelState extends GameState {
             if(inTheScreen(t)) {
                 t.update();
                 if(t instanceof FallingRock) {
-                    if (Math.abs(player.getY() - t.getY()) < 700 && Math.abs(player.getX() - t.getX()) < 100 && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
+                    if (Math.abs(player.getY() - t.getY()) < 1000 * Game.heightRaitio && Math.abs(player.getX() - t.getX()) <  150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
                         ((FallingRock) t).setShaking(true);
                     }
                     if (((FallingRock) t).getCurrentEffect() instanceof LandingEffect) {
@@ -233,11 +233,13 @@ public abstract class LevelState extends GameState {
                     tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 100 && green == 0 && blue <= 20) {
                     if (blue == 5 || blue == 4) {
-                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE / 2, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        System.out.println(blue);
+                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.halfWidthWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
-                    if (blue == 17) {
-                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE / 2, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
-                    } else {
+                    else if (blue == 17 || blue == 18 || blue == 20) {
+                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.halfHeightWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    }
+                    else {
                         tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
 
@@ -261,7 +263,7 @@ public abstract class LevelState extends GameState {
                     fallingRocks.add(fr);
                 } else if (red == 100 && green == 0 && blue >= 36) {
                     if (blue == 42 || blue == 43) {
-                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE / 2 - 10, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, (int)(22*Game.widthRatio), Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     } else {
                         tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
@@ -300,13 +302,13 @@ public abstract class LevelState extends GameState {
 //              //Blue
                 else if (red == 0 && green == 0 && blue == 255 || red == 0 && green == 1 && blue == 255) {
                     Direction direction = (green == 1) ? Direction.LEFT : Direction.RIGHT;
-                    tiles.add(new Portal(x *  64, y *  64, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.bluePortal, Color.BLUE, direction));
-                    bluePortalCor = new Dimension(x *  64, y * 64);
+                    tiles.add(new Portal(x *  Wall.TILE_SIZE, y *  Wall.TILE_SIZE, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.bluePortal, Color.BLUE, direction));
+                    bluePortalCor = new Dimension(x *  Wall.TILE_SIZE, y * Wall.TILE_SIZE);
                 }
                 //Purple
                 else if (red == 255 && green == 0 && blue == 255 || red == 255 && green == 1 && blue == 255) {
                     Direction direction = (green == 1) ? Direction.LEFT : Direction.RIGHT;
-                    tiles.add(new Portal(x *  64, y *  64, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.purplePortal, Color.MAGENTA, direction));
+                    tiles.add(new Portal(x *  Wall.TILE_SIZE, y *  Wall.TILE_SIZE, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.purplePortal, Color.MAGENTA, direction));
                 }
             }
         }

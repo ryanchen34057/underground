@@ -13,7 +13,7 @@ import java.awt.*;
 public class Portal extends Tile {
     private Color color;
     private Direction direction;
-    public static final int PORTAL_SIZE = 200;
+    public static final int PORTAL_SIZE = (int)(Game.WIDTH*Game.SCALE*0.15625);
     private int frame;
     private int frameDelay;
     public Portal(int x, int y, int width, int height, Id id, Color color, Direction direction) {
@@ -75,7 +75,7 @@ public class Portal extends Tile {
 
     @Override
     public void die() {
-
+        isDead = true;
     }
 
     @Override

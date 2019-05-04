@@ -31,6 +31,7 @@ public class StandingJumping implements State {
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
         }
         else if(keys.get(4).down && !player.isTired()) {
             player.setVelY(0);
@@ -38,6 +39,7 @@ public class StandingJumping implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
+            player.currentDashTimer = Player.DASH_TIMER;
         }
 
     }

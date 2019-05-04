@@ -24,6 +24,8 @@ public class RunningJumping implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
+            player.currentDashSpeed = Player.DASH_SPEED;
+            player.currentDashTimer = Player.DASH_TIMER;
         }
         //Vertical Dashing
         Direction dir = verticalDashCondition(keys, player);
@@ -36,6 +38,7 @@ public class RunningJumping implements State {
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
         }
     }
 
