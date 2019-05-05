@@ -63,19 +63,7 @@ public class LeaderboardState extends GameState{
             System.out.println("找不到資料!");   
         }    
     }
-    public int trans(int usedTime,int type, int msValue){
-        int n = usedTime/msValue;
-//        if(type == MIN_TYPE){
-//            min = n;
-//        }
-//        if(type == SEC_TYPE){
-//            sec = n;
-//        }
-//        if(type == MS_TYPE){
-//            ms = n;
-//        }
-        return (int)usedTime % msValue;
-    }
+ 
     @Override
     public void handleKeyInput() {
         if(!locked){

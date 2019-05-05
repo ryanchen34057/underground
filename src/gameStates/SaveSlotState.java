@@ -2,7 +2,7 @@ package gameStates;
 
 import UI.Game;
 import fonts.Words;
-import gameStates.level.Level1State;
+import gameStates.level.Level0State;
 import graphics.SpriteManager;
 import input.Input;
 import map.Background;
@@ -66,7 +66,7 @@ public class SaveSlotState extends GameState {
             if(Input.keys.get(7).down) {//Enter
                 if(saveDatas[selected] == null) {
                     gameStateManager.setSlotId(selected + 1);
-                    gameStateManager.setLevelState(new Level1State(gameStateManager));
+                    gameStateManager.setLevelState(new Level0State(gameStateManager));
                 }
                 else {
                     gameStateManager.loadRecord(loadRecord(selected + 1));

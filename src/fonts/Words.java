@@ -62,7 +62,6 @@ public class Words {
         return sHeight;
     }
     
-
     public void updatePos(int x, int y) {
         this.x = x;
         this.y = y;
