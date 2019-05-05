@@ -7,7 +7,7 @@ import java.awt.*;
 
 
 public class DeathParticle extends ParticleSystem {
-    public static final int EFFECT_SIZE = 64;
+    public static final int EFFECT_SIZE = (int)(64 * Game.widthRatio);
     public static final int RANGE  = 70;
     private static final int DELAY = 1;
     private int xD;
@@ -31,7 +31,7 @@ public class DeathParticle extends ParticleSystem {
 
     public static DeathParticle getInstance(Player player, int index) { return new DeathParticle(player.getX()-(int)player.getVelX(),
             player.getY()-(int)player.getVelY(), (int)(DeathParticle.RANGE * Math.cos(index * 45 * 2 * Math.PI / 360) + player.getX()-(int)player.getVelX()),
-            (int)(DeathParticle.RANGE * Math.sin(index * 45 * 2 * Math.PI / 360) + player.getY()-(int)player.getVelY()), 64, 5); }
+            (int)(DeathParticle.RANGE * Math.sin(index * 45 * 2 * Math.PI / 360) + player.getY()-(int)player.getVelY()), EFFECT_SIZE, 5); }
 
     @Override
     public void paint(Graphics g) {

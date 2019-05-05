@@ -26,10 +26,22 @@ public class Window {
         GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice graphicsDevice = graphicsEnvironment.getDefaultScreenDevice();
         if(graphicsDevice.isFullScreenSupported()) {
-            frame.dispose();
-            frame.setUndecorated(true);
+            //frame.remove(game);
+           //frame.dispose();
             graphicsDevice.setFullScreenWindow(frame);
+            scaledGameWidth = frame.getWidth();
+            scaledGameHeight = frame.getHeight();
+            resetGameSize();
+//            frame.setUndecorated(true);
+
         }
+    }
+
+    public static void resetGameSize() {
+        game = new Game();
+        game.setPreferredSize(new Dimension(scaledGameWidth, scaledGameHeight));
+        frame.add(game);
+        frame.setVisible(true);
     }
 
     public static String[] getSizeList() {

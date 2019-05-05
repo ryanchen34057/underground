@@ -61,8 +61,8 @@ public class VideoOptionState extends GameState {
                 SoundEffectPlayer.playSoundEffect("Enter");
                 if(isFullScreen) {
                     Window.makeFullScreen();
+                    gameStateManager.toMenu();
                 }
-                gameStateManager.back();
                 locked = true;
             }
             if(Input.keys.get(0).down){//上

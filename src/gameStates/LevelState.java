@@ -231,7 +231,6 @@ public abstract class LevelState extends GameState {
                     tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 100 && green == 0 && blue <= 20) {
                     if (blue == 5 || blue == 4) {
-                        System.out.println(blue);
                         tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.halfWidthWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
                     else if (blue == 17 || blue == 18 || blue == 20) {

@@ -23,7 +23,8 @@ public class Spring extends Tile {
         frame = 0;
         frameDelay = 0;
         isStepOn = false;
-        heightList = new int[]{15, 16, 32, 64, 63, 63, 63, 62, 42, 29, 15};
+        heightList = new int[]{(int)(height*(15.0/64.0)), (int)(height*(16.0/64.0)), (int)(height*(32.0/64.0)), (int)(height*(64.0/64.0)),
+                (int)(height*(63.0/64.0)), (int)(height*(63.0/64.0)), (int)(height*(63.0/64.0)), (int)(height*(62.0/64.0)), (int)(height*(42.0/64.0)), (int)(height*(29.0/64.0)), (int)(height*(15.0/64.0))};
         this.direction = direction;
         switch (direction) {
             case UP:

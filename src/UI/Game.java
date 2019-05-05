@@ -39,7 +39,7 @@ public class Game extends Canvas implements Runnable {
         widthRatio = (Window.scaledGameWidth)/(DEFAULT_WIDTH);
         heightRatio = (Window.scaledGameHeight)/(DEFAULT_HEIGHT);
         running = false;
-        debugMode = false;
+        debugMode = true;
 //        Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
 //        setPreferredSize(size);
 //        setMaximumSize(size);

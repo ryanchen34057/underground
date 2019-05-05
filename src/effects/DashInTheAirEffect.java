@@ -1,5 +1,6 @@
 package effects;
 
+import UI.Game;
 import enums.Id;
 import gameObject.character.Player;
 import graphics.FrameManager;
@@ -8,7 +9,7 @@ import java.awt.*;
 
 public class DashInTheAirEffect extends Effect {
     private int direction;
-    public final static int EFFECT_SIZE = 150;
+    public final static int EFFECT_SIZE = (int)(150 * Game.widthRatio);
     public DashInTheAirEffect(int x, int y, int width, int height, int direction, Id id) {
         super(x, y, width, height, id);
         this.direction = direction;

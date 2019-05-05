@@ -58,7 +58,7 @@ public class FallingRock extends Tile {
         g.drawImage(bufferedImage, x, y, width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.GREEN);
-            g.drawRect(x+10, y + (height - height/3), width-75,height/3);
+            g.drawRect(x+(int)(width*0.05), y + (height - height/3), width-(int)(width*0.39),height/3);
         }
     }
 

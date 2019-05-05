@@ -1,5 +1,6 @@
 package states;
 
+import UI.Game;
 import audio.SoundEffectPlayer;
 import enums.Direction;
 import gameObject.character.Player;
@@ -53,8 +54,8 @@ public class Falling implements State {
     public void update(Player player) {
         player.setGravity(player.getGravity() + Player.FALLING_GRAVITY_VEL);
         player.setVelY((int) player.getGravity());
-        if(player.getGravity() > 15) {
-            player.setGravity(15);
+        if(player.getGravity() > (15* Game.heightRatio)) {
+            player.setGravity((15* Game.heightRatio));
         }
     }
 

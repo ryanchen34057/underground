@@ -1,5 +1,6 @@
 package effects;
 
+import UI.Game;
 import enums.Id;
 import gameObject.character.Player;
 import graphics.FrameManager;
@@ -7,7 +8,7 @@ import graphics.FrameManager;
 import java.awt.*;
 
 public class DashEffect extends Effect{
-    public static final int EFFECT_SIZE = 100;
+    public static final int EFFECT_SIZE = (int)(100 * Game.widthRatio);
     private int direction;
 
     private DashEffect(int x, int y, int width, int height, int direction, Id id) {
