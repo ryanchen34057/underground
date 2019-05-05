@@ -45,6 +45,7 @@ public class OptionState extends GameState{
                 SoundEffectPlayer.playSoundEffect("Enter");
                  switch(cursor.getPointer()){
                     case 0:
+                        gameStateManager.setGameState(new VideoOptionState(gameStateManager));
                         break;
                     case 1:
                         

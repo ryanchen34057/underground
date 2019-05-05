@@ -14,6 +14,10 @@ public class VideoOptionState extends GameState {
     @Override
     public void init() {
         sizes = new ArrayList<>();
+        sizes.add(new Dimension(960, 660));
+        sizes.add(new Dimension(1280, 880));
+        sizes.add(new Dimension(1600, 1100));
+        
 
 
     }
