@@ -1,8 +1,6 @@
 package gameStates;
 
 import UI.Game;
-import UI.Window;
-import audio.MusicPlayer;
 import fonts.Words;
 import gameObject.tiles.prize.Emerald;
 import gameStates.level.Level1State;
@@ -10,7 +8,6 @@ import gameStates.level.Level2State;
 import gameStates.level.Level3State;
 import gameStates.level.Level4State;
 import graphics.SpriteManager;
-import input.Input;
 import record.Timer;
 import record.Record;
 import java.awt.*;
@@ -18,9 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Stack;
 
 public class GameStateManager {
@@ -49,9 +44,9 @@ public class GameStateManager {
         gameStateStack = new Stack<>();
         emeraldCount = 0;
         deathCount = 0;
-        emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(50 * Game.heightRaitio));
-        deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRaitio));
-        infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRaitio));
+        emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(50 * Game.heightRatio));
+        deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRatio));
+        infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
         setGameState(new MenuState(this));
 //        setLevelState(new Level1State(this));
     }
@@ -89,7 +84,7 @@ public class GameStateManager {
     public void setLevelState(LevelState levelState) {
         gameStateStack.push(levelState);
         currentLevel = levelState.getLevel();
-        levelWord = new Words("Level: " + currentLevel, (int)(30 * Game.widthRatio), (int)(85 * Game.widthRatio), (int)(40 * Game.heightRaitio));
+        levelWord = new Words("Level: " + currentLevel, (int)(30 * Game.widthRatio), (int)(85 * Game.widthRatio), (int)(40 * Game.heightRatio));
     }
 
     public void updateGameState(GameState gameState) {
@@ -108,8 +103,8 @@ public class GameStateManager {
             emeraldCountWord.paint(g);
             deathCountWord.paint(g);
             levelWord.paint(g);
-            g.drawImage(SpriteManager.emerald.getBufferedImage(), (int)(1100 * Game.widthRatio), (int)(10 * Game.heightRaitio), (int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio), null);
-            g.drawImage(SpriteManager.skull.getBufferedImage(), (int)(1100 * Game.widthRatio), (int)(60 * Game.heightRaitio), (int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio), null);
+            g.drawImage(SpriteManager.emerald.getBufferedImage(), (int)(1100 * Game.widthRatio), (int)(10 * Game.heightRatio), (int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio), null);
+            g.drawImage(SpriteManager.skull.getBufferedImage(), (int)(1100 * Game.widthRatio), (int)(60 * Game.heightRatio), (int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio), null);
             if(Game.infinityMode) {
                 infinityModeWord.paint(g);
             }

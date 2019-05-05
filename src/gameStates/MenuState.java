@@ -14,36 +14,28 @@ import map.Background;
 
 
 public class MenuState extends GameState{
-    private GameStateManager gameStateManager;
     private Words[] words ;
     private Cursor cursor;
     private Words wordTitle;
-    private Words wordStart;
-    private Words wordOption;
-    private Words wordExit;
-    private Words wordLeaderboard;
-
 
 
     public MenuState(GameStateManager gameStateManager) {
         super(gameStateManager);
-        init();
-        this.gameStateManager = gameStateManager;
     }
     
     public void init() {
-        background = new Background("/res/Cave1.png", Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
-        wordTitle = new Words("UnderGround", (int)(Game.WIDTH*Game.SCALE*0.0625), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/2.5));
-        wordStart = new Words("Start", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.7));
-        wordLeaderboard = new Words("Leaderboard", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.51));
-        wordOption = new Words("Option", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2,  (int)(Game.HEIGHT*Game.SCALE/1.37));
-        wordExit = new Words("Exit", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.25));
+        background = new Background("/res/Cave1.png", Window.scaledGameWidth, Window.scaledGameHeight);
+        wordTitle = new Words("Underground", (int) (80 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (350 * Game.heightRatio));
+        Words wordStart = new Words("Start", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (550 * Game.heightRatio));
+        Words wordLeaderboard = new Words("Leaderboard", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (620 * Game.heightRatio));
+        Words wordOption = new Words("Option", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (690 * Game.heightRatio));
+        Words wordExit = new Words("Exit", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (760 * Game.heightRatio));
         words = new Words[4];
         words[0] = wordStart;
         words[1] = wordLeaderboard;
         words[2] = wordOption;
         words[3] = wordExit;
-        cursor = new Cursor(0,0,(int)(Game.WIDTH*Game.SCALE*0.025));
+        cursor = new Cursor((int)(32*Game.widthRatio), 1);
     }
 
     @Override
@@ -57,7 +49,7 @@ public class MenuState extends GameState{
                         locked = true;
                         break;
                     case 1:
-                        gameStateManager.setGameState(new LeaderboardState(gameStateManager));
+                        //gameStateManager.setGameState(new LeaderboardState(gameStateManager));
                         locked = true;
                         break;
                     case 2:
@@ -97,10 +89,9 @@ public class MenuState extends GameState{
     public void paint(Graphics g) {
         background.paint(g);
         wordTitle.paint(g);
-        wordStart.paint(g);
-        wordLeaderboard.paint(g);
-        wordOption.paint(g);
-        wordExit.paint(g);
+        for(Words words: words) {
+            words.paint(g);
+        }
         cursor.paint(g);
     }
 

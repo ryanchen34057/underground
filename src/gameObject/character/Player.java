@@ -14,10 +14,13 @@ import graphics.FrameManager;
 import input.Input;
 import gameObject.tiles.Tile;
 import states.PlayerState;
+import sun.awt.image.ImageWatched;
 import util.CollisionCondition;
 
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import static enums.Direction.*;
 
@@ -189,12 +192,6 @@ public class Player extends Entity {
     public boolean isGoaled() {
         return isGoaled;
     }
-    public void setGoaled(boolean goaled) {
-        isGoaled = goaled;
-    }
-    public void reSpawn() {
-        isDead = false;
-    }
 
     // Handle keyInput from player
     public void handleKeyInput() {
@@ -247,7 +244,7 @@ public class Player extends Entity {
 
     @Override
     // Collision test
-    public Rectangle getBounds() { return new Rectangle(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT);}
+    public Rectangle getBounds() { return new Rectangle(x+ WIDTH /4, y, WIDTH - WIDTH /2, HEIGHT); }
     public Rectangle getBoundsTop() {
         return new Rectangle(x+40, y, WIDTH -80,1 );
     }

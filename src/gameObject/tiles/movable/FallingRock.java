@@ -104,8 +104,9 @@ public class FallingRock extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x+11, y, width-65, height);
+        return new Rectangle(x + 11, y, width - 65, height);
     }
+
     @Override
     public  Rectangle getBoundsTop() {
         return new Rectangle(x+10, y, width-20,1 );

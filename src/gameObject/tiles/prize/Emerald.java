@@ -21,6 +21,7 @@ public class Emerald extends Prize {
         frame = 0;
         this.serial = serial;
         isEaten = false;
+        boundsRectangle = new Rectangle(x+10, y+10, width-20,height-20);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class Emerald extends Prize {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x+10, y+10, width-20,height-20);
+        return boundsRectangle;
     }
 
     @Override

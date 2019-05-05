@@ -45,6 +45,7 @@ public class Falling implements State {
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
             player.currentDashTimer = Player.DASH_TIMER;
+            player.currentDashSpeed = Player.DASH_SPEED;
         }
     }
 

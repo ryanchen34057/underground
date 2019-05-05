@@ -1,6 +1,7 @@
 package gameObject.tiles;
 
 import UI.Game;
+import UI.Window;
 import enums.Id;
 import gameObject.ICollidable;
 
@@ -23,6 +24,9 @@ public abstract class Tile implements ICollidable {
 
     //BufferedImage
     protected BufferedImage bufferedImage;
+
+    //BoundsRect
+    protected Rectangle boundsRectangle;
 
     public Tile(int x, int y, int width, int height, Id id) {
         this.x = x;
@@ -82,8 +86,8 @@ public abstract class Tile implements ICollidable {
     public abstract void die();
 
     public boolean inTheScreen(Tile t) {
-        return (t.getX() >= x - (Game.WIDTH * Game.SCALE) / 1.5) && (t.getX() < x + (Game.WIDTH * Game.SCALE))
-                && (t.getY() >= y - (Game.HEIGHT * Game.SCALE) / 1.5) && (t.getY() < y + (Game.HEIGHT * Game.SCALE) / 1.5);
+        return (t.getX() >= x - (Window.gameWidth * Window.scale) / 1.5) && (t.getX() < x + (Window.gameWidth * Window.scale))
+                && (t.getY() >= y - (Window.gameHeight * Window.scale) / 1.5) && (t.getY() < y + (Window.gameHeight * Window.scale) / 1.5);
     }
 
 }

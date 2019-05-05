@@ -16,6 +16,7 @@ public class Words {
     int sHeight;
     private static HashMap<Integer, Font> fontMap;
     private Font font;
+    private Color color;
 
     public Words(String msg,int size,int x,int y){
         this.msg = msg;
@@ -29,6 +30,7 @@ public class Words {
             fontMap.put(size, Fonts.getBitFont(size, "/res/half_bold_pixel-7.ttf"));
         }
         font = fontMap.get(size);
+        color = Color.LIGHT_GRAY;
     }
     public Words(String msg, int size) {
         this.msg = msg;
@@ -48,7 +50,7 @@ public class Words {
 
     public void paint(Graphics g){
         g.setFont(font);
-        g.setColor(Color.LIGHT_GRAY);
+        g.setColor(color);
         FontMetrics fm = g.getFontMetrics();
         int sw = fm.stringWidth(msg);
         sWidth = sw;
@@ -78,5 +80,9 @@ public class Words {
     public void setPos(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

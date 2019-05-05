@@ -21,15 +21,8 @@ public class Game extends Canvas implements Runnable {
     //Size
     public static final float DEFAULT_WIDTH = 1280.0f;
     public static final float DEFAULT_HEIGHT = 880.0f;
-    public static final int SCREEN_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
-    public static final int SCREEN_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
-    public static int WIDTH = 320;
-    public static int HEIGHT = 220;
-    public static int SCALE = 4;
-    public static float SCALED_WIDTH = WIDTH * SCALE;
-    public static float SCALED_HEIGHT = HEIGHT * SCALE;
-    public static float widthRatio = (SCALED_WIDTH)/(DEFAULT_WIDTH);
-    public static float heightRaitio = (SCALED_HEIGHT)/(DEFAULT_HEIGHT);
+    public static float widthRatio;
+    public static float heightRatio;
 
     //Resource Manager
     private SpriteManager spriteManager;
@@ -43,12 +36,14 @@ public class Game extends Canvas implements Runnable {
     private SoundEffectPlayer soundEffectPlayer;
 
     public Game() {
+        widthRatio = (Window.scaledGameWidth)/(DEFAULT_WIDTH);
+        heightRatio = (Window.scaledGameHeight)/(DEFAULT_HEIGHT);
         running = false;
-        debugMode = true;
-        Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
-        setPreferredSize(size);
-        setMaximumSize(size);
-        setMinimumSize(size);
+        debugMode = false;
+//        Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
+//        setPreferredSize(size);
+//        setMaximumSize(size);
+//        setMinimumSize(size);
     }
 
     public void paint() {

@@ -29,7 +29,8 @@ public class SpriteManager {
     public static BufferedImage option;
 
     //selectionObject
-    public static BufferedImage cursor;
+    public static Sprite rightCursor;
+    public static Sprite leftCursor;
     
     //pause
     public static BufferedImage pause;
@@ -48,13 +49,15 @@ public class SpriteManager {
         vanishingRock = new Sprite(spriteSheet, 1,6,32,32);
         enterKey = new Sprite(spriteSheet, 10,9, 32, 32);
         xKey = new Sprite(spriteSheet, 11,9, 32, 32);
+        rightCursor = new Sprite(spriteSheet, 12, 9, 32, 32);
+        leftCursor = new Sprite(spriteSheet, 13, 9, 32, 32);
+
 
         //BufferedImage object
         level1 = ResourceManager.getInstance().getImage("/res/movementTest.png");
         level2 = ResourceManager.getInstance().getImage("/res/level2.png");
         level3 = ResourceManager.getInstance().getImage("/res/level3.png");
         level4 = ResourceManager.getInstance().getImage("/res/level4.png");
-        cursor = ResourceManager.getInstance().getImage("/res/CursorA.png");
         menu = ResourceManager.getInstance().getImage("/res/Cave1.png");
         option = ResourceManager.getInstance().getImage("/res/Cave1.png");
         pause = ResourceManager.getInstance().getImage("/res/Cave1.png");    

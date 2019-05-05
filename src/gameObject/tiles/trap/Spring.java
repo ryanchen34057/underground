@@ -25,6 +25,16 @@ public class Spring extends Tile {
         isStepOn = false;
         heightList = new int[]{15, 16, 32, 64, 63, 63, 63, 62, 42, 29, 15};
         this.direction = direction;
+        switch (direction) {
+            case UP:
+                boundsRectangle = new Rectangle(x, y + height - heightList[frame], width, heightList[frame]);
+            case DOWN:
+                boundsRectangle = new Rectangle(x, y, width, heightList[frame]);
+            case LEFT:
+                boundsRectangle = new Rectangle(x + height - heightList[frame], y, heightList[frame], height);
+            case RIGHT:
+                boundsRectangle = new Rectangle(x, y, heightList[frame], height);
+        }
     }
 
     public void setStepOn(boolean stepOn) {
@@ -74,17 +84,7 @@ public class Spring extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        switch (direction) {
-            case UP:
-                return new Rectangle(x, y + height - heightList[frame], width, heightList[frame]);
-            case DOWN:
-                return new Rectangle(x, y, width, heightList[frame]);
-            case LEFT:
-                return new Rectangle(x + height - heightList[frame], y, heightList[frame], height);
-            case RIGHT:
-                return new Rectangle(x, y, heightList[frame], height);
-        }
-        return null;
+        return boundsRectangle;
     }
 
     @Override

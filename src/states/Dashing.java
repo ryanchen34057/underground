@@ -28,7 +28,6 @@ public class Dashing implements State {
         player.currentDashSpeed -= Player.DASH_SPEED_BUMP;
         if(player.currentDashTimer <= 0.06) {
             player.setCurrentState(PlayerState.standing);
-            player.currentDashSpeed = Player.DASH_SPEED;
         }
     }
 

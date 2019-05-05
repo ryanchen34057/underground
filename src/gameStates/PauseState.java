@@ -2,6 +2,7 @@
 package gameStates;
 
 import UI.Game;
+import UI.Window;
 import selectionObject.Cursor;
 import fonts.Words;
 import input.Input;
@@ -12,7 +13,6 @@ import record.Record;
 
 
 public class PauseState extends GameState{
-    private GameStateManager gameStateManager;
     private Words[] words ;
     private Words wordTitle;
     private Words wordResume;
@@ -25,25 +25,23 @@ public class PauseState extends GameState{
     
     public PauseState(GameStateManager gameStateManager) {
         super(gameStateManager);
-        this.gameStateManager = gameStateManager;
-        init(); 
     }
     
     public void init() {
         background = new Background("/res/Cave1.png",1);
-        wordTitle = new Words("Pause", (int)(Game.WIDTH*Game.SCALE*0.0469), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/3));
-        wordResume = new Words("Resume", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/2));
-        wordRetry = new Words("Retry", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.75));
-        wordSelect = new Words("Select Level", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.57));
-        wordMenu = new Words("Back to Menu", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.43));
-        wordSaveQuit = new Words("Save & Quit", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.31));
+        wordTitle = new Words("Pause", (int)(60*Game.widthRatio), Window.scaledGameWidth /2, (int)(Window.scaledGameHeight/3));
+        wordResume = new Words("Resume", (int)(30*Game.widthRatio), Window.scaledGameWidth/2, (int)(Window.scaledGameHeight/2));
+        wordRetry = new Words("Retry", (int)(30*Game.widthRatio), Window.scaledGameWidth/2, (int)(Window.scaledGameHeight/1.75));
+        wordSelect = new Words("Select Level", (int)(30*Game.widthRatio), Window.scaledGameWidth/2, (int)(Window.scaledGameHeight/1.57));
+        wordMenu = new Words("Back to Menu", (int)(30*Game.widthRatio), Window.scaledGameWidth/2, (int)(Window.scaledGameHeight/1.43));
+        wordSaveQuit = new Words("Save & Quit", (int)(30*Game.widthRatio), Window.scaledGameWidth/2, (int)(Window.scaledGameHeight/1.31));
         words = new Words[5];
         words[0] = wordResume;
         words[1] = wordRetry;
         words[2] = wordSelect;
         words[3] = wordMenu;
         words[4] = wordSaveQuit;
-        cursor = new Cursor(0,0,(int)(Game.WIDTH*Game.SCALE*0.025));
+        cursor = new Cursor((int)(32 * Game.widthRatio), 1);
     }
     
     @Override

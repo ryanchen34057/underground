@@ -22,6 +22,7 @@ public class VanishingRock extends Tile {
         frame = 0;
         frameDelay = 0;
         alpha = 1;
+        boundsRectangle = new Rectangle(x, y, width, height);
     }
 
     public boolean isStepOn() {
@@ -62,7 +63,7 @@ public class VanishingRock extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return boundsRectangle;
     }
 
     @Override

@@ -17,6 +17,18 @@ public class Spike extends Tile {
         super(x, y, width, height, id);
         this.bufferedImage = bufferedImage;
         this.direction = direction;
+        if(id == Id.upwardSpike) {
+            boundsRectangle =  new Rectangle(x, y+height/2, width, height/2);
+        }
+        else if(id == Id.downwardSpike) {
+            boundsRectangle = new Rectangle(x, y, width, height/2-5);
+        }
+        else if(id == Id.leftwardSpike) {
+            boundsRectangle = new Rectangle(x+width/2+5, y, width/2, height);
+        }
+        else {
+            boundsRectangle = new Rectangle(x, y, width/2-5, height);
+        }
     }
 
     @Override
@@ -58,18 +70,7 @@ public class Spike extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        if(id == Id.upwardSpike) {
-            return new Rectangle(x, y+height/2, width, height/2);
-        }
-        else if(id == Id.downwardSpike) {
-            return new Rectangle(x, y, width, height/2-5);
-        }
-        else if(id == Id.leftwardSpike) {
-            return new Rectangle(x+width/2+5, y, width/2, height);
-        }
-        else {
-            return new Rectangle(x, y, width/2-5, height);
-        }
+        return boundsRectangle;
     }
 
     @Override

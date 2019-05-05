@@ -32,6 +32,7 @@ public class Bouncing implements State {
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
         }
 
         //DASHING_IN_THE_AIR
@@ -43,6 +44,7 @@ public class Bouncing implements State {
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
             player.currentDashTimer = Player.DASH_TIMER;
+            player.currentDashSpeed = Player.DASH_SPEED;
         }
     }
 

@@ -2,6 +2,7 @@
 package gameStates;
 
 import UI.Game;
+import UI.Window;
 import audio.SoundEffectPlayer;
 import selectionObject.Cursor;
 import fonts.Words;
@@ -11,7 +12,6 @@ import map.Background;
 
 
 public class OptionState extends GameState{
-    private GameStateManager gameStateManager;
     private Words[] words ;
     private Words wordTitle;
     private Words wordVideo;
@@ -21,21 +21,19 @@ public class OptionState extends GameState{
     
     public OptionState(GameStateManager gameStateManager) {
        super(gameStateManager);
-       this.gameStateManager = gameStateManager;
-       init(); 
     }
     
     public void init() {
-        background = new Background("/res/Cave1.png", Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
-        wordTitle = new Words("Option", (int)(Game.WIDTH*Game.SCALE*0.0469), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/2.5));
-        wordVideo = new  Words("Video", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2,(int)(Game.HEIGHT*Game.SCALE/1.7));
-        wordAudio = new Words("Audio", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.51));
-        wordBack = new Words("Back", (int)(Game.WIDTH*Game.SCALE*0.03125), Game.WIDTH*Game.SCALE/2, (int)(Game.HEIGHT*Game.SCALE/1.37));
+        background = new Background("/res/Cave1.png", Window.scaledGameWidth, Window.scaledGameHeight);
+        wordTitle = new Words("Option", (int)(60*Game.widthRatio), Window.scaledGameWidth/2, (int)(Window.scaledGameHeight/2.5));
+        wordVideo = new  Words("Video", (int)(40*Game.widthRatio), Window.scaledGameWidth/2,(int) (550 * Game.heightRatio));
+        wordAudio = new Words("Audio", (int)(40*Game.widthRatio), Window.scaledGameWidth/2, (int) (620 * Game.heightRatio));
+        wordBack = new Words("Back", (int)(40*Game.widthRatio), Window.scaledGameWidth/2, (int) (690 * Game.heightRatio));
         words = new Words[3];
         words[0] = wordVideo;
         words[1] = wordAudio;
         words[2] = wordBack;
-        cursor = new Cursor(0,0,(int)(Game.WIDTH*Game.SCALE*0.025));
+        cursor = new Cursor((int)(32*Game.widthRatio), 1);
     }
     
     @Override
@@ -48,7 +46,7 @@ public class OptionState extends GameState{
                         gameStateManager.setGameState(new VideoOptionState(gameStateManager));
                         break;
                     case 1:
-                        
+                        gameStateManager.setGameState(new AudioOptionState(gameStateManager));
                         break;
                     case 2:
                         gameStateManager.back();

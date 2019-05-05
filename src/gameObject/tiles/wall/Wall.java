@@ -15,6 +15,15 @@ public class Wall extends Tile {
     public Wall(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height, id);
         this.bufferedImage = bufferedImage;
+        if(id == Id.halfHeightWall) {
+            boundsRectangle =  new Rectangle(x, y, width, height/2);
+        }
+        else if(id == Id.halfWidthWall) {
+            boundsRectangle = new Rectangle(x, y, width/2, height);
+        }
+        else {
+            boundsRectangle = new Rectangle(x, y, width, height);
+        }
     }
 
     @Override
@@ -42,13 +51,7 @@ public class Wall extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        if(id == Id.halfHeightWall) {
-            return new Rectangle(x, y, width, height/2);
-        }
-        else if(id == Id.halfWidthWall) {
-            return new Rectangle(x, y, width/2, height);
-        }
-        return new Rectangle(x, y, width, height);
+        return boundsRectangle;
     }
 
     @Override

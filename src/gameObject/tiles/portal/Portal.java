@@ -13,13 +13,14 @@ import java.awt.*;
 public class Portal extends Tile {
     private Color color;
     private Direction direction;
-    public static final int PORTAL_SIZE = (int)(Game.WIDTH*Game.SCALE*0.15625);
+    public static final int PORTAL_SIZE = (int)(200*Game.widthRatio);
     private int frame;
     private int frameDelay;
     public Portal(int x, int y, int width, int height, Id id, Color color, Direction direction) {
         super(x, y, width, height, id);
         this.color = color;
         this.direction = direction;
+        boundsRectangle = new Rectangle(x+20, y, width-50, height);
     }
 
     public Direction getDirection() {
@@ -50,7 +51,7 @@ public class Portal extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x+20, y, width-50, height);
+        return boundsRectangle;
     }
 
     @Override

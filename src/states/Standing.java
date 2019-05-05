@@ -41,6 +41,7 @@ public class Standing implements State {
             player.setCurrentEffect(DashEffect.getInstance(player));
             player.setTired(true);
             player.currentDashTimer = Player.DASH_TIMER;
+            player.currentDashSpeed = Player.DASH_SPEED;
         }
         if(!keys.get(4).down) {
             player.setTired(false);

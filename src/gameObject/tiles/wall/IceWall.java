@@ -16,6 +16,7 @@ public class IceWall extends Tile {
     public IceWall(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height, id);
         this.bufferedImage = bufferedImage;
+        boundsRectangle = new Rectangle(x, y, width, height);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class IceWall extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return boundsRectangle;
     }
 
     @Override

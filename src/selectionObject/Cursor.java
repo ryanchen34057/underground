@@ -2,6 +2,8 @@ package selectionObject;
 
 import fonts.Words;
 import graphics.SpriteManager;
+import sun.util.locale.provider.SPILocaleProviderAdapter;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
@@ -17,19 +19,40 @@ public class Cursor {
     //BufferedImage
     private BufferedImage cursorImage;
 
-    public Cursor(int x, int y, int size) {
+    //Direction
+    private int direction;
+
+    public Cursor(int size, int direction) {
         this.width = size;
         this.height = size;
-        this.x  = x ;
-        this.y  = y ;
         this.pointer = 0;
-        this.cursorImage = SpriteManager.cursor;
+        this.direction = direction;
+        if(direction == -1) {
+            this.cursorImage = SpriteManager.leftCursor.getBufferedImage();
+        }
+        else {
+            this.cursorImage = SpriteManager.rightCursor.getBufferedImage();
+        }
+
     }
     
     public void setPos(Words[] words){
-        this.x = words[pointer].getWordX() - words[pointer].getWidth()/2 - width;
-        this.y = words[pointer].getWordY() - words[pointer].getHeight()/2 - height;
+        if(direction == 1) {
+            this.x = words[pointer].getWordX() - words[pointer].getWidth()/2 - width;
+            this.y = words[pointer].getWordY() - words[pointer].getHeight()/2 - height;
+        }
+        else {
+            this.x = words[pointer].getWordX() + words[pointer].getWidth()/2 + width;
+            this.y = words[pointer].getWordY() + words[pointer].getHeight()/2 - height;
+        }
+
     }
+
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public void chagePointer(int add,Words[] words){ 
         if(this.pointer+add<0 ||this.pointer+add>=words.length){
         
@@ -41,7 +64,15 @@ public class Cursor {
     public int getPointer(){
         return this.pointer;
     }
-   
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public void paint(Graphics g){
         g.drawImage(cursorImage, x, y, width, height, null);
     }

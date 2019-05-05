@@ -1,13 +1,13 @@
 package gameStates;
 
 import UI.Game;
+import UI.Window;
 import effects.DeathParticle;
 import effects.Effect;
 import effects.LandingEffect;
 import effects.ParticleSystem;
 import enums.Direction;
 import enums.Id;
-import fonts.Words;
 import gameObject.tiles.Decor;
 import gameObject.tiles.Tile;
 import gameObject.character.Player;
@@ -26,7 +26,6 @@ import util.Camera;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.GenericArrayType;
 import java.util.LinkedList;
 
 public abstract class LevelState extends GameState {
@@ -50,7 +49,6 @@ public abstract class LevelState extends GameState {
 
     public LevelState(GameStateManager gameStateManager) {
         super(gameStateManager);
-        init();
     }
 
     public abstract LevelState getInstance();
@@ -132,7 +130,7 @@ public abstract class LevelState extends GameState {
             if(inTheScreen(t)) {
                 t.update();
                 if(t instanceof FallingRock) {
-                    if (Math.abs(player.getY() - t.getY()) < 1000 * Game.heightRaitio && Math.abs(player.getX() - t.getX()) <  150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
+                    if (Math.abs(player.getY() - t.getY()) < 1000 * Game.heightRatio && Math.abs(player.getX() - t.getX()) <  150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
                         ((FallingRock) t).setShaking(true);
                     }
                     if (((FallingRock) t).getCurrentEffect() instanceof LandingEffect) {
@@ -206,8 +204,8 @@ public abstract class LevelState extends GameState {
     }
 
     private boolean inTheScreen(Tile t) {
-        return (t.getX() >= player.getX() - (Game.WIDTH * Game.SCALE)) && (t.getX() < player.getX() + (Game.WIDTH * Game.SCALE))
-                && (t.getY() >= player.getY() - (Game.HEIGHT * Game.SCALE)) && (t.getY() < player.getY() + (Game.HEIGHT * Game.SCALE));
+        return (t.getX() >= player.getX() - (Window.scaledGameWidth)) && (t.getX() < player.getX() + (Window.scaledGameWidth))
+                && (t.getY() >= player.getY() - (Window.scaledGameHeight)) && (t.getY() < player.getY() + (Window.scaledGameHeight));
     }
 
     public void createLevel(BufferedImage level) {

@@ -12,6 +12,7 @@ public abstract class GameState {
     public GameState(GameStateManager gameStateManager) {
         this.gameStateManager = gameStateManager;
         deathDelay = 0;
+        init();
     }
 
     public abstract void init();

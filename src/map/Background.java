@@ -1,6 +1,7 @@
 package map;
 
 import UI.Game;
+import UI.Window;
 import graphics.ResourceManager;
 
 import java.awt.*;
@@ -20,8 +21,8 @@ public class Background {
 
     public Background(String s, float scale) {
         bcakgroundImage = ResourceManager.getInstance().getImage(s);
-        width = Game.WIDTH * Game.SCALE;
-        height = Game.HEIGHT * Game.SCALE;
+        width = Window.scaledGameWidth;
+        height = Window.scaledGameHeight;
     }
     public Background(String s, int width, int height){
         bcakgroundImage = ResourceManager.getInstance().getImage(s);

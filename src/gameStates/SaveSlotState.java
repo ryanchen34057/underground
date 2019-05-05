@@ -1,6 +1,7 @@
 package gameStates;
 
 import UI.Game;
+import UI.Window;
 import audio.SoundEffectPlayer;
 import fonts.Words;
 import gameStates.level.Level1State;
@@ -28,14 +29,6 @@ public class SaveSlotState extends GameState {
 
     public SaveSlotState(GameStateManager gameStateManager) {
         super(gameStateManager);
-        words = new ArrayList<>();
-        rectangles = new ArrayList<>();
-        saveDatas = new Record[3];
-        saveSlotWordsMap = new HashMap<>();
-        startNewGameWords = new Words[3];
-        selected = 0;
-        isLoaded = false;
-        init();
     }
 
     public GameState getInstance() { return new SaveSlotState(gameStateManager); }
@@ -56,13 +49,20 @@ public class SaveSlotState extends GameState {
 
     @Override
     public void init() {
-        background = new Background("/res/SaveSlot.png", Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE);
-        words.add(new Words("Load Game", (int) (Game.WIDTH * Game.SCALE * 0.04), (int) (Game.WIDTH * Game.SCALE * 0.16), (int) (Game.HEIGHT * Game.SCALE * 0.14)));
-        words.add(new Words("Load", (int) (Game.WIDTH * Game.SCALE * 0.02), (int)(Game.WIDTH*Game.SCALE/1.33),(int)(Game.HEIGHT*Game.SCALE/1.04)));
-        words.add(new Words("Delete", (int) (Game.WIDTH * Game.SCALE * 0.02), (int)(Game.WIDTH*Game.SCALE/1.13),(int)(Game.HEIGHT*Game.SCALE/1.04)));
-        rectangles.add(new Rectangle((Game.WIDTH * Game.SCALE) / 11, (Game.HEIGHT * Game.SCALE) / 6, (int) ((Game.WIDTH * Game.SCALE) * 0.83), (int) ((Game.HEIGHT * Game.SCALE) * 0.22)));
-        rectangles.add(new Rectangle((Game.WIDTH * Game.SCALE) / 11, (int) ((Game.HEIGHT * Game.SCALE) / 2.4), (int) ((Game.WIDTH * Game.SCALE) * 0.83), (int) ((Game.HEIGHT * Game.SCALE) * 0.22)));
-        rectangles.add(new Rectangle((Game.WIDTH * Game.SCALE) / 11, (int) ((Game.HEIGHT * Game.SCALE) / 1.49), (int) ((Game.WIDTH * Game.SCALE) * 0.83), (int) ((Game.HEIGHT * Game.SCALE) * 0.22)));
+        background = new Background("/res/SaveSlot.png", Window.scaledGameWidth, Window.scaledGameHeight);
+        words = new ArrayList<>();
+        rectangles = new ArrayList<>();
+        saveDatas = new Record[3];
+        saveSlotWordsMap = new HashMap<>();
+        startNewGameWords = new Words[3];
+        selected = 0;
+        isLoaded = false;
+        words.add(new Words("Load Game", (int) (Window.scaledGameWidth* 0.04), (int) (Window.scaledGameWidth* 0.16), (int) (Window.scaledGameHeight * 0.14)));
+        words.add(new Words("Load", (int) (Window.scaledGameWidth* 0.02), (int)(Window.scaledGameWidth/1.33),(int)(Window.scaledGameHeight/1.04)));
+        words.add(new Words("Delete", (int) (Window.scaledGameWidth* 0.02), (int)(Window.scaledGameWidth/1.13),(int)(Window.scaledGameHeight/1.04)));
+        rectangles.add(new Rectangle((Window.scaledGameWidth) / 11, (Window.scaledGameHeight) / 6, (int) ((Window.scaledGameWidth) * 0.83), (int) ((Window.scaledGameHeight) * 0.22)));
+        rectangles.add(new Rectangle((Window.scaledGameWidth) / 11, (int) ((Window.scaledGameHeight) / 2.4), (int) ((Window.scaledGameWidth) * 0.83), (int) ((Window.scaledGameHeight) * 0.22)));
+        rectangles.add(new Rectangle((Window.scaledGameWidth) / 11, (int) ((Window.scaledGameHeight) / 1.49), (int) ((Window.scaledGameWidth) * 0.83), (int) ((Window.scaledGameHeight) * 0.22)));
     }
 
     @Override
@@ -120,18 +120,18 @@ public class SaveSlotState extends GameState {
                 saveDatas[i] = record;
                 if (record == null) {
                     if (startNewGameWords[i] == null) {
-                        Words temp = new Words("Start New Game", (int) (Game.WIDTH * Game.SCALE * 0.04));
+                        Words temp = new Words("Start New Game", (int) (Window.scaledGameWidth* 0.04));
                         temp.setPos((int) (rectangle.x + rectangle.getWidth() / 2), (int) (rectangle.y + rectangle.getHeight() / 1.4));
                         startNewGameWords[i] = temp;
                     }
                 } else {
                     if (!(saveSlotWordsMap.containsKey(record))) {
                         saveSlotWordsMap.put(record, new ArrayList<>());
-                        Words saveSlotWords = new Words("Save Slot" + record.getId(), (int) (Game.WIDTH * Game.SCALE * 0.025), (int) (rectangle.x + rectangle.getWidth()/7), (int) (rectangle.y + (rectangle.getHeight()/3.33)));
-                        Words levelWords = new Words("Level: " + record.getLevel(), (int) (Game.WIDTH * Game.SCALE * 0.023), (int) (rectangle.x + rectangle.getWidth()/5), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
-                        Words timeWords = new Words(record.getTimeString(), (int) (Game.WIDTH * Game.SCALE * 0.023), (int) (rectangle.x + rectangle.getWidth()/2), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
-                        Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), (int) (Game.WIDTH * Game.SCALE * 0.023), rectangle.x + (int) (rectangle.getWidth()/4.5), (int) (rectangle.y + (rectangle.getHeight()/1.1)));
-                        Words deathCountWords = new Words("X " + record.getDeathCount(), (int) (Game.WIDTH * Game.SCALE * 0.023), rectangle.x + (int) (rectangle.getWidth()/2.05), emeraldCountWords.getWordY());
+                        Words saveSlotWords = new Words("Save Slot" + record.getId(), (int) (Window.scaledGameWidth* 0.025), (int) (rectangle.x + rectangle.getWidth()/7), (int) (rectangle.y + (rectangle.getHeight()/3.33)));
+                        Words levelWords = new Words("Level: " + record.getLevel(), (int) (Window.scaledGameWidth* 0.023), (int) (rectangle.x + rectangle.getWidth()/5), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
+                        Words timeWords = new Words(record.getTimeString(), (int) (Window.scaledGameWidth* 0.023), (int) (rectangle.x + rectangle.getWidth()/2), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
+                        Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), (int) (Window.scaledGameWidth* 0.023), rectangle.x + (int) (rectangle.getWidth()/4.5), (int) (rectangle.y + (rectangle.getHeight()/1.1)));
+                        Words deathCountWords = new Words("X " + record.getDeathCount(), (int) (Window.scaledGameWidth* 0.023), rectangle.x + (int) (rectangle.getWidth()/2.05), emeraldCountWords.getWordY());
                         saveSlotWordsMap.get(record).add(saveSlotWords);
                         saveSlotWordsMap.get(record).add(levelWords);
                         saveSlotWordsMap.get(record).add(timeWords);
@@ -159,7 +159,7 @@ public class SaveSlotState extends GameState {
                 Graphics2D g2 = (Graphics2D) g;
                 Color newColor = new Color(139, 0, 150);
                 g2.setColor(newColor);
-                float thickness = Game.WIDTH * Game.SCALE * 0.01f;
+                float thickness = Window.scaledGameWidth* 0.01f;
                 Stroke oldStroke = g2.getStroke();
                 g2.setStroke(new BasicStroke(thickness));
                 g2.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
@@ -172,8 +172,8 @@ public class SaveSlotState extends GameState {
                     words.paint(g);
                 }
                 if(saveDatas[i] != null) {
-                    g.drawImage(SpriteManager.emerald.getBufferedImage(), (int)(rectangle.x + rectangle.getWidth()/8.5), (int)(rectangle.y + rectangle.getHeight()/1.65), (int)(Game.WIDTH*Game.SCALE*0.04), (int)(Game.WIDTH*Game.SCALE*0.04), null);
-                    g.drawImage(SpriteManager.skull.getBufferedImage(), (int)(rectangle.x + rectangle.getWidth()/2.7),  (int)(rectangle.y + rectangle.getHeight()/1.65), (int)(Game.WIDTH*Game.SCALE*0.04), (int)(Game.WIDTH*Game.SCALE*0.04), null);
+                    g.drawImage(SpriteManager.emerald.getBufferedImage(), (int)(rectangle.x + rectangle.getWidth()/8.5), (int)(rectangle.y + rectangle.getHeight()/1.65), (int)(Window.scaledGameWidth*0.04), (int)(Window.scaledGameWidth*0.04), null);
+                    g.drawImage(SpriteManager.skull.getBufferedImage(), (int)(rectangle.x + rectangle.getWidth()/2.7),  (int)(rectangle.y + rectangle.getHeight()/1.65), (int)(Window.scaledGameWidth*0.04), (int)(Window.scaledGameWidth*0.04), null);
                 }
             }
 
@@ -185,8 +185,8 @@ public class SaveSlotState extends GameState {
             }
 
             // Paint key hint
-            g.drawImage(SpriteManager.enterKey.getBufferedImage(), (int)(Game.WIDTH*Game.SCALE/1.5), (int)(Game.HEIGHT*Game.SCALE/1.12), (int)(Game.WIDTH*Game.SCALE*0.05), (int)(Game.WIDTH*Game.SCALE*0.05), null);
-            g.drawImage(SpriteManager.xKey.getBufferedImage(), (int)(Game.WIDTH*Game.SCALE/1.25), (int)(Game.HEIGHT*Game.SCALE/1.12), (int)(Game.WIDTH*Game.SCALE*0.05), (int)(Game.WIDTH*Game.SCALE*0.05), null);
+            g.drawImage(SpriteManager.enterKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.5), (int)(Window.scaledGameHeight/1.12), (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
+            g.drawImage(SpriteManager.xKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.25), (int)(Window.scaledGameHeight/1.12), (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
         }
     }
 }

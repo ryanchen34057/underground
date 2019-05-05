@@ -10,7 +10,9 @@ import java.awt.*;
 
 public class Hole extends Tile {
     public Hole(int x, int y, int width, int height, Id id) {
+
         super(x, y, width, height, id);
+        boundsRectangle = new Rectangle(x, y, width, height);
     }
 
     @Override
@@ -25,7 +27,7 @@ public class Hole extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return boundsRectangle;
     }
 
     @Override
