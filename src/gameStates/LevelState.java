@@ -22,6 +22,7 @@ import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
 import graphics.SpriteManager;
 import input.Input;
+import states.PlayerState;
 import util.Camera;
 
 import java.awt.*;
@@ -86,8 +87,6 @@ public abstract class LevelState extends GameState {
             paintAllGameObject(g2);
             g2.translate(-cam.getX(), -cam.getY());
         }
-
-
     }
 
     private void fadeIn(Graphics2D g2) {
@@ -120,6 +119,7 @@ public abstract class LevelState extends GameState {
 
     public void updateAllGameObject() {
         if(alpha <= 0.97) alpha += 0.03;
+
         //Update player
         player.update();
 
@@ -141,7 +141,8 @@ public abstract class LevelState extends GameState {
                 }
                 // ********* Player collision detection **********
                 if (t.getBounds() != null && player.inTheScreen(t)) {
-                    player.handleCollision(t, player.checkCollisionBounds(t, Tile::getBounds));
+                    Direction direction = player.checkCollisionBounds(t, Tile::getBounds);
+                    player.handleCollision(t, direction);
                 }
                 // ***********************************************
 

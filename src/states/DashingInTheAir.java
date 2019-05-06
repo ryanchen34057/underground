@@ -1,5 +1,6 @@
 package states;
 
+import UI.Game;
 import gameObject.character.Player;
 import input.Input;
 
@@ -14,9 +15,9 @@ public class DashingInTheAir implements State {
     @Override
     public void update(Player player) {
         player.setVelX(player.currentDashSpeed * player.getFacing());
-        player.currentDashTimer -= (60.0f / 1000.0f);
+        player.currentDashTimer -= (Game.FPS / 1000.0f);
         player.currentDashSpeed -= Player.DASH_SPEED_BUMP;
-        if(player.currentDashTimer <= 0.07) {
+        if(player.currentDashTimer <= (Game.FPS / 1000.0f)) {
             player.setGravity(Player.FALLING_GRAVITY_VEL);
             player.setCurrentState(PlayerState.falling);
         }

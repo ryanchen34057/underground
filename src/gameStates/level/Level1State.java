@@ -43,7 +43,6 @@ public class Level1State extends LevelState {
         updateAllGameObject();
         cam.update(player, mapWidth, mapHeight);
 
-
         // Check if on the ice
         if(player.isOnTheIce() && player.getCurrentState() != PlayerState.standing) {
             player.setCurrentState(PlayerState.iceSkating);

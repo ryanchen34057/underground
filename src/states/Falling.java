@@ -53,10 +53,10 @@ public class Falling implements State {
     @Override
     public void update(Player player) {
         player.setGravity(player.getGravity() + Player.FALLING_GRAVITY_VEL);
-        player.setVelY((int) player.getGravity());
-        if(player.getGravity() > (15* Game.heightRatio)) {
-            player.setGravity((15* Game.heightRatio));
-        }
+        player.setVelY(player.getGravity());
+//        if(player.getGravity() > (15* Game.heightRatio)) {
+//            player.setGravity((15* Game.heightRatio));
+//        }
     }
 
     @Override

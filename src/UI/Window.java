@@ -28,12 +28,13 @@ public class Window {
         if(graphicsDevice.isFullScreenSupported()) {
             //frame.remove(game);
            //frame.dispose();
+            frame.dispose();
+            frame.setUndecorated(true);
             graphicsDevice.setFullScreenWindow(frame);
             scaledGameWidth = frame.getWidth();
             scaledGameHeight = frame.getHeight();
             resetGameSize();
-//            frame.setUndecorated(true);
-
+            frame.setVisible(true);
         }
     }
 
@@ -41,7 +42,6 @@ public class Window {
         game = new Game();
         game.setPreferredSize(new Dimension(scaledGameWidth, scaledGameHeight));
         frame.add(game);
-        frame.setVisible(true);
     }
 
     public static String[] getSizeList() {

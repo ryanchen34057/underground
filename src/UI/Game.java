@@ -35,9 +35,13 @@ public class Game extends Canvas implements Runnable {
 
     private SoundEffectPlayer soundEffectPlayer;
 
+    private static int defaultFPS = 75;
+    public static final int FPS = 300;
+    public static float FPSRatio = defaultFPS/(float)FPS;
+
     public Game() {
-        widthRatio = (Window.scaledGameWidth)/(DEFAULT_WIDTH);
-        heightRatio = (Window.scaledGameHeight)/(DEFAULT_HEIGHT);
+        widthRatio = (float)(Window.scaledGameWidth)/(DEFAULT_WIDTH);
+        heightRatio = (float)(Window.scaledGameHeight)/(DEFAULT_HEIGHT);
         running = false;
         debugMode = true;
 //        Dimension size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
@@ -95,7 +99,7 @@ public class Game extends Canvas implements Runnable {
         init();
         requestFocus();
         long lastTime = System.nanoTime();
-        final double amountOfTicks = 75;
+        final double amountOfTicks = FPS;
         long timer = System.currentTimeMillis();
         double delta = 0.0;
         double ns = 1000000000.0 / amountOfTicks;
