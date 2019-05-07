@@ -3,10 +3,7 @@ package gameStates;
 import UI.Game;
 import fonts.Words;
 import gameObject.tiles.prize.Emerald;
-import gameStates.level.Level1State;
-import gameStates.level.Level2State;
-import gameStates.level.Level3State;
-import gameStates.level.Level4State;
+import gameStates.level.*;
 import graphics.SpriteManager;
 import record.Timer;
 import record.Record;
@@ -32,7 +29,7 @@ public class GameStateManager {
     private int deathCount;
     private int slotId;
     private int currentLevel;
-    public static final int LEVEL_COUNT = 4;
+    public static final int LEVEL_COUNT = 5;
 
 
     public GameStateManager() {
@@ -47,8 +44,8 @@ public class GameStateManager {
         emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(50 * Game.heightRatio));
         deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRatio));
         infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
-        setGameState(new MenuState(this));
-        //setLevelState(new Level1State(this));
+        //setGameState(new MenuState(this));
+        setLevelState(new LastLevelState(this));
     }
 
     //Getters
@@ -146,6 +143,8 @@ public class GameStateManager {
                 return new Level3State(this);
             case 4:
                 return new Level4State(this);
+            case 5:
+                return new LastLevelState(this);
         }
         return null;
     }

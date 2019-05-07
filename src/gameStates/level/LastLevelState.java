@@ -1,6 +1,5 @@
 package gameStates.level;
 
-import effects.DeathParticle;
 import enums.Id;
 import gameObject.character.Player;
 import gameStates.GameStateManager;
@@ -9,27 +8,17 @@ import graphics.SpriteManager;
 import map.Background;
 import states.PlayerState;
 
-public class Level4State extends LevelState {
-    public Level4State(GameStateManager gameStateManager) {
+public class LastLevelState extends LevelState {
+    public LastLevelState(GameStateManager gameStateManager) {
         super(gameStateManager);
-    }
-
-    @Override
-    public LevelState getInstance() {
-        return new Level4State(gameStateManager);
-    }
-
-    @Override
-    public int getLevel() {
-        return 4;
     }
 
     @Override
     public void init() {
         SpriteManager.levelInit();
         levelObjectInit();
-        createLevel(SpriteManager.level4);
-        background = new Background("/res/background2.jpg", 1.0f);
+        createLevel(SpriteManager.lastLevel);
+        background = new Background("/res/lastLevelBackground.png", 1.0f);
         player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
     }
@@ -53,7 +42,6 @@ public class Level4State extends LevelState {
         updateAllGameObject();
         cam.update(player, mapWidth, mapHeight);
 
-
         // Check if on the ice
         if(player.isOnTheIce() && player.getCurrentState() != PlayerState.standing) {
             player.setCurrentState(PlayerState.iceSkating);
@@ -65,7 +53,17 @@ public class Level4State extends LevelState {
         }
 
         if((player.isGoaled())) {
-            gameStateManager.setLevelState(new LastLevelState(gameStateManager));
+            gameStateManager.setLevelState(new Level2State(gameStateManager));
         }
+    }
+
+    @Override
+    public LevelState getInstance() {
+        return new LastLevelState(gameStateManager);
+    }
+
+    @Override
+    public int getLevel() {
+        return 5;
     }
 }

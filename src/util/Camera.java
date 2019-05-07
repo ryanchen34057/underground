@@ -19,7 +19,7 @@ public class Camera {
         float xTarg = -player.getX() + (Window.scaledGameWidth) / 2.0f;
         float yTarg = -player.getY() + (Window.scaledGameHeight) / 2.0f;
         x += (xTarg - x) * (0.08 * Game.UpdatesRatio * Game.widthRatio);
-        y += (yTarg - y) * (0.04 * Game.UpdatesRatio * Game.heightRatio);
+        y += (yTarg - y) * (0.07 * Game.UpdatesRatio * Game.heightRatio);
         if(x > 0) {
             x = 0;
         }

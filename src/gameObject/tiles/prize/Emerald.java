@@ -26,7 +26,7 @@ public class Emerald extends Prize {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getPrizeFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
+        g.drawImage(FrameManager.getEmeralFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
                 super.getWidth(), super.getHeight(), null);
         if(Game.debugMode) {
             g.setColor(Color.YELLOW);
@@ -39,7 +39,7 @@ public class Emerald extends Prize {
         frameDelay++;
         if (frameDelay >= 5/Game.UpdatesRatio) {
             frame++;
-            if (frame >= FrameManager.getPrizeFrame().length) {
+            if (frame >= FrameManager.getEmeralFrame().length) {
                 frame = 0;
             }
             frameDelay = 0;

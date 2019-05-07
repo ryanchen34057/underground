@@ -11,12 +11,12 @@ import static enums.Direction.*;
 
 public class FrameManager {
     public static Sprite[] playerMoveFrame = new Sprite[8];
-    public static Sprite[] prizeFrame = new Sprite[8];
+    public static Sprite[] emeralFrame = new Sprite[8];
     public static Sprite[] effectFrame = new Sprite[30];
     public static Sprite[] deathFrame = new Sprite[8];
     public static Sprite[] bluePortalFrame = new Sprite[9];
     public static Sprite[] purplePortalFrame = new Sprite[9];
-    public static Sprite[] torchFrame = new Sprite[10];
+    public static Sprite[] diamondFrame = new Sprite[10];
     public static Sprite[] springFrame = new Sprite[11];
 
     public static Sprite[] getPlayerMoveFrame(State currentState) {
@@ -69,12 +69,21 @@ public class FrameManager {
         return playerMoveFrame;
     }
 
-    public static Sprite[] getPrizeFrame() {
-        for(int i=0;i<prizeFrame.length;i++) {
-            prizeFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 9, 32, 32);
+    public static Sprite[] getEmeralFrame() {
+        for(int i = 0; i< emeralFrame.length; i++) {
+            emeralFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 9, 32, 32);
         }
-        return prizeFrame;
+        return emeralFrame;
     }
+
+
+    public static Sprite[] getDiamondFrame() {
+        for(int i = 0; i< diamondFrame.length; i++) {
+            diamondFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 7, 32,  32);
+        }
+        return diamondFrame;
+    }
+
 
     public static Sprite[] getEffectFrame(Id id) {
         if(id == Id.dashEffect) {
@@ -156,13 +165,6 @@ public class FrameManager {
             }
             return purplePortalFrame;
         }
-    }
-
-    public static Sprite[] getTorchFrame() {
-        for(int i = 0; i< torchFrame.length; i++) {
-            torchFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 7, 32,  32);
-        }
-        return torchFrame;
     }
 
     public static Sprite[] getSpringFrame(Direction direction) {

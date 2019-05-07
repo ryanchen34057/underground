@@ -40,7 +40,7 @@ public class Player extends Entity {
 
     // StandingJump
     // 18f * Game.UpdatesRatio  *
-    public static final float STANDINGJUMPING_GRAVITY =  4.5f * Game.heightRatio;
+    public static final float STANDINGJUMPING_GRAVITY = 18f * Game.UpdatesRatio * Game.heightRatio;
     public static final float STANDINGJUMPING_VELX_OFFSET = 2.5f * Game.UpdatesRatio * Game.widthRatio;
     public static final float STANDINGJUMPING_GRAVITY_OFFSET = (STANDINGJUMPING_GRAVITY / (18f/0.8f)) * Game.UpdatesRatio;
 
@@ -63,16 +63,16 @@ public class Player extends Entity {
     public static final float DASHJUMPING_GRAVITY_OFFSET = (DASHJUMPING_GRAVITY / (17f/0.8f)) * Game.UpdatesRatio;
 
     // Sliding and Bouncing
-    public static final float BOUNCING_RANGE = 5f * Game.UpdatesRatio * Game.widthRatio;
-    public static final float BOUNCING_GRAVITY = 17 * Game.UpdatesRatio *  Game.heightRatio;
+    public static final float BOUNCING_RANGE = 3.2f * Game.UpdatesRatio * Game.widthRatio;
+    public static final float BOUNCING_GRAVITY = 18 * Game.UpdatesRatio *  Game.heightRatio;
     public static final float BOUNCING_GRAVITY_OFFSET = (BOUNCING_GRAVITY / (17f/0.6f)) * Game.UpdatesRatio;
 
     // Falling
     public static final float FALLING_GRAVITY_VEL = 0.3f * (Game.UpdatesRatio) *  Game.heightRatio;
-    public static final float FALLING_VELX = 5.5f * Game.UpdatesRatio *  Game.widthRatio;
+    public static final float FALLING_VELX = 5.3f * Game.UpdatesRatio *  Game.widthRatio;
 
     // Vertical Dashing
-    public static final float VERTICALDASHING_SPEED = 12f * Game.UpdatesRatio * Game.widthRatio;
+    public static final float VERTICALDASHING_SPEED = 10f * Game.UpdatesRatio * Game.heightRatio;
     public static final float VERTICALDASHING_TIMER = (Game.UPDATES /1000f) * Game.UPDATES * (1.3f/3.6f);
     public static final float VERTICALDASHING_VELX = 9 * Game.UpdatesRatio * Game.widthRatio;
 
@@ -200,6 +200,9 @@ public class Player extends Entity {
     }
     public boolean isOnTheWall() {
         return isOnTheWall;
+    }
+    public void setOnTheWall(boolean onTheWall) {
+        isOnTheWall = onTheWall;
     }
     public float getFriction() {
         return friction;
@@ -341,6 +344,11 @@ public class Player extends Entity {
     public void reactToCollision(ICollidable other, Direction direction) {
         Tile t = (Tile) other;
         switch (t.getId()) {
+            case diamond:
+                if(isTired) {
+                    isTired = false;
+                }
+                break;
             case hole:
                 ifHitWall(t, direction);
                 die();
@@ -388,8 +396,6 @@ public class Player extends Entity {
             case wall:
                 ifHitWall(t, direction);
                 break;
-            case coin:
-                break;
             case bluePortal:
                 SoundEffectPlayer.playSoundEffect("Portal");
                 if(((Portal)t).getDirection() == Direction.LEFT) {
@@ -430,7 +436,6 @@ public class Player extends Entity {
                 }
                 break;
             case BOTTOM:
-                Sliding.delay = 0;
                 if(t instanceof Spring && ((Spring) t).getDirection() == UP) {
                     y = collisionRect.y - HEIGHT;
                     ((Spring) t).setStepOn(true);
@@ -488,9 +493,6 @@ public class Player extends Entity {
                     SoundEffectPlayer.playSoundEffect("Landing");
                     isOnTheWall = true;
                 }
-                else {
-                    isOnTheWall = false;
-                }
                 if(currentState == PlayerState.iceSkating && velX == 0) {
                     currentState = PlayerState.standing;
                 }
@@ -515,9 +517,6 @@ public class Player extends Entity {
                     currentState = PlayerState.sliding;
                     SoundEffectPlayer.playSoundEffect("Landing");
                     isOnTheWall = true;
-                }
-                else {
-                    isOnTheWall = false;
                 }
                 if(currentState == PlayerState.iceSkating && velX == 0) {
                     currentState = PlayerState.standing;

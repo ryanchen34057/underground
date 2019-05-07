@@ -1,37 +1,40 @@
-package gameObject.tiles.movable;
+package gameObject.tiles.prize;
 
+import UI.Game;
+import audio.SoundEffectPlayer;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
 import graphics.FrameManager;
-import gameObject.tiles.Tile;
 import util.CollisionCondition;
 
 import java.awt.*;
 
-public class Torch extends Tile {
-    public static int TILE_SIZE = 80;
-    private int frame;
-    private int frameDelay;
-    public Torch(int x, int y, int width, int height, Id id) {
-        super(x, y, width, height, id);
-        frame = 0;
+public class Diamond extends Prize {
+    private int frameDelay, frame;
+    public Diamond(int x, int y, int width, int height, int point, Id id) {
+        super(x, y, width, height, point, id);
         frameDelay = 0;
-
+        frame = 0;
+        boundsRectangle = new Rectangle(x+10, y+10, width-20,height-20);
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getDiamondFrame()[frame].getBufferedImage(), x, y,
-                width, height, null);
+        g.drawImage(FrameManager.getDiamondFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
+                super.getWidth(), super.getHeight(), null);
+        if(Game.debugMode) {
+            g.setColor(Color.YELLOW);
+            g.drawRect(x+10, y+10, width-20,height-20);
+        }
     }
 
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 10) {
+        if (frameDelay >= 5/Game.UpdatesRatio) {
             frame++;
-            if (frame >= FrameManager.getDiamondFrame().length) {
+            if (frame >= FrameManager.getEmeralFrame().length) {
                 frame = 0;
             }
             frameDelay = 0;
@@ -39,8 +42,13 @@ public class Torch extends Tile {
     }
 
     @Override
+    public void die() {
+        isDead = true;
+    }
+
+    @Override
     public Rectangle getBounds() {
-        return null;
+        return boundsRectangle;
     }
 
     @Override
@@ -64,11 +72,6 @@ public class Torch extends Tile {
     }
 
     @Override
-    public void die() {
-
-    }
-
-    @Override
     public boolean collidesWith(ICollidable other, CollisionCondition collisionCondition) {
         return false;
     }
@@ -80,6 +83,7 @@ public class Torch extends Tile {
 
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
-
+        SoundEffectPlayer.playSoundEffect("Prize");
+        die();
     }
 }

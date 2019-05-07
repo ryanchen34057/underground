@@ -7,7 +7,6 @@ import input.Input;
 import java.util.List;
 
 public class Sliding implements State {
-    public static int delay = 0;
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(5).down && !player.isJumped()) {
@@ -35,20 +34,13 @@ public class Sliding implements State {
 
     @Override
     public void update(Player player) {
-        if(delay <= Game.UPDATES /2) {
-            delay++;
+        player.accumulateFatigue();
+        player.setFriction(1);
+        player.setVelY(player.getFriction());
+        if((player.getFriction() >= (Game.UPDATES *5)/Game.UpdatesRatio *Game.heightRatio) || player.getFatigue() >= player.getSTAMINA() || !player.isOnTheWall()) {
+            player.setCurrentState(PlayerState.falling);
+            player.setFriction(0);
         }
-        else {
-            player.accumulateFatigue();
-            player.setFriction(1);
-            player.setVelY(player.getFriction());
-            if((player.getFriction() >= (Game.UPDATES *5)/Game.UpdatesRatio *Game.heightRatio) || player.getFatigue() >= player.getSTAMINA() || !player.isOnTheWall()) {
-                player.setCurrentState(PlayerState.falling);
-                player.setFriction(0);
-                delay = 0;
-            }
-        }
-
     }
 
     @Override

@@ -24,6 +24,7 @@ public class SpriteManager {
     public static BufferedImage level2;
     public static BufferedImage level3;
     public static BufferedImage level4;
+    public static BufferedImage lastLevel;
 
     // Option
     public static BufferedImage option;
@@ -58,6 +59,7 @@ public class SpriteManager {
         level2 = ResourceManager.getInstance().getImage("/res/level2.png");
         level3 = ResourceManager.getInstance().getImage("/res/level3.png");
         level4 = ResourceManager.getInstance().getImage("/res/level4.png");
+        lastLevel = ResourceManager.getInstance().getImage("/res/lastLevel.png");
         menu = ResourceManager.getInstance().getImage("/res/Cave1.png");
         option = ResourceManager.getInstance().getImage("/res/Cave1.png");
         pause = ResourceManager.getInstance().getImage("/res/Cave1.png");    

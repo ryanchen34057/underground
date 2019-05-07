@@ -13,6 +13,7 @@ import gameObject.tiles.Tile;
 import gameObject.character.Player;
 import gameObject.tiles.movable.FallingRock;
 import gameObject.tiles.portal.Portal;
+import gameObject.tiles.prize.Diamond;
 import gameObject.tiles.prize.Emerald;
 import gameObject.tiles.trap.Hole;
 import gameObject.tiles.trap.Spike;
@@ -142,8 +143,8 @@ public abstract class LevelState extends GameState {
             t = tiles.get(i);
             if(inTheScreen(t)) {
                 t.update();
-                if(t instanceof FallingRock) {
-                    if (Math.abs(player.getY() - t.getY()) < (1000*Game.heightRatio) && Math.abs(player.getX() - t.getX()) <  150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
+                if (t instanceof FallingRock) {
+                    if (Math.abs(player.getY() - t.getY()) < (500 * Game.heightRatio) && Math.abs(player.getX() - t.getX()) < 150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
                         ((FallingRock) t).setShaking(true);
                     }
                     if (((FallingRock) t).getCurrentEffect() instanceof LandingEffect) {
@@ -158,6 +159,7 @@ public abstract class LevelState extends GameState {
                     player.handleCollision(t, direction);
                 }
                 // ***********************************************
+            }
 
                 // ********* FallingRock collision detection **********
                 for(FallingRock fr: fallingRocks) {
@@ -173,7 +175,6 @@ public abstract class LevelState extends GameState {
                     }
                 }
                 // ****************************************************
-            }
             if(t.isDead()) {
                 if(t instanceof Emerald) {
                     gameStateManager.incrementEmeraldCount();
@@ -269,7 +270,7 @@ public abstract class LevelState extends GameState {
                 } else if (red == 0 && green == 255 && blue == 34) {
                     tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.RIGHT));
                 } else if (red == 255 && green == 100 && blue == 35) {
-                    FallingRock fr = new FallingRock(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE * 3, Wall.TILE_SIZE * 3, Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage());
+                    FallingRock fr = new FallingRock(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, (int)(Wall.TILE_SIZE * 2.5), (int)(Wall.TILE_SIZE * 2.5), Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage());
                     tiles.add(fr);
                     fallingRocks.add(fr);
                 } else if (red == 100 && green == 0 && blue >= 36) {
@@ -295,6 +296,9 @@ public abstract class LevelState extends GameState {
                     if(emerald != null) {
                         tiles.add(emerald);
                     }
+                }
+                else if (red == 255 && green == 150 && blue == 255) {
+                    tiles.add( new Diamond(x * Emerald.PRIZE_SIZE, y * Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 0, Id.diamond));
                 }
                 else if(red == 255 && green == 150 && blue == 150) {
                     tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.UP));
