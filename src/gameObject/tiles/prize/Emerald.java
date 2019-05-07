@@ -37,7 +37,7 @@ public class Emerald extends Prize {
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 5) {
+        if (frameDelay >= 5/Game.UpdatesRatio) {
             frame++;
             if (frame >= FrameManager.getPrizeFrame().length) {
                 frame = 0;
@@ -54,9 +54,6 @@ public class Emerald extends Prize {
         return isEaten;
     }
 
-    public void setEaten(boolean eaten) {
-        isEaten = eaten;
-    }
 
     @Override
     public void die() {

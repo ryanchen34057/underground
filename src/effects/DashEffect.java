@@ -38,7 +38,7 @@ public class DashEffect extends Effect{
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 2) {
+        if (frameDelay >= 2 / Game.UpdatesRatio) {
             frame++;
             if (frame >= 15) {
                 frame = 0;

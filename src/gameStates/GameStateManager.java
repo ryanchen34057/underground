@@ -48,7 +48,7 @@ public class GameStateManager {
         deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRatio));
         infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
         setGameState(new MenuState(this));
-//        setLevelState(new Level1State(this));
+        //setLevelState(new Level1State(this));
     }
 
     //Getters
@@ -134,6 +134,20 @@ public class GameStateManager {
 
     public void back(){
         gameStateStack.pop();
+    }
+
+    public LevelState getNewLevel(int currentLevel) {
+        switch (currentLevel) {
+            case 1:
+                return new Level1State(this);
+            case 2:
+                return new Level2State(this);
+            case 3:
+                return new Level3State(this);
+            case 4:
+                return new Level4State(this);
+        }
+        return null;
     }
     
     public void toMenu(){

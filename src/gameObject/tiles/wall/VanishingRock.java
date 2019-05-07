@@ -47,9 +47,9 @@ public class VanishingRock extends Tile {
     public void update() {
         if(isStepOn) {
             frameDelay++;
-            if (frameDelay >= 3) {
+            if (frameDelay >= 2/Game.UpdatesRatio) {
                 frame++;
-                if (frame >= 3) {
+                if (frame >= 2/Game.UpdatesRatio) {
                     frame = 0;
                     alpha -= 0.1;
                 }

@@ -1,12 +1,13 @@
 package states;
 
 import UI.Game;
+import audio.SoundEffectPlayer;
 import gameObject.character.Player;
 import input.Input;
 
 import java.util.List;
 
-public class Dashing implements State {
+public class SpringHorizontal implements State {
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(2).down) {
@@ -16,6 +17,7 @@ public class Dashing implements State {
             player.setFacing(1);
         }
         if(keys.get(5).down) {
+            SoundEffectPlayer.playSoundEffect("Dashing");
             player.setGravity(Player.DASHJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.dashJumping);
         }
@@ -23,16 +25,11 @@ public class Dashing implements State {
 
     @Override
     public void update(Player player) {
-        player.setVelX(player.currentDashSpeed * player.getFacing());
+        player.setVelX(player.currentDashSpeed * -player.getFacing());
         player.currentDashTimer -= (Game.UPDATES / 1000.0f);
         player.currentDashSpeed -= Player.DASH_SPEED_BUMP;
         if(player.currentDashTimer <= (Game.UPDATES / 1000.0f)) {
             player.setCurrentState(PlayerState.standing);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Dashing";
     }
 }

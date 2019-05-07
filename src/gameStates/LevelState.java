@@ -22,7 +22,6 @@ import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
 import graphics.SpriteManager;
 import input.Input;
-import states.PlayerState;
 import util.Camera;
 
 import java.awt.*;
@@ -61,7 +60,7 @@ public abstract class LevelState extends GameState {
         fallingRocks = new LinkedList<>();
         cam = new Camera();
         emeraldSerial = 0;
-        alpha = 0;
+        alpha = 0.0f;
     }
 
     @Override
@@ -69,16 +68,30 @@ public abstract class LevelState extends GameState {
         if(player != null) {
             player.handleKeyInput();
         }
-        //ESC - pause
-        if(Input.keys.get(8).down) {
-            gameStateManager.setGameState(new PauseState(gameStateManager));
+        if(!locked) {
+            //ESC - pause
+            if(Input.keys.get(8).down) {
+                gameStateManager.setGameState(new PauseState(gameStateManager));
+                locked = true;
+            }
+
+            //Debug mode G + B
+            if(Input.keys.get(9).down && Input.keys.get(10).down) {
+                Game.debugMode = !(Game.debugMode);
+                locked = true;
+            }
         }
+        if(!Input.keys.get(8).down &&!Input.keys.get(9).down && !Input.keys.get(10).down){//放開
+            locked = false;
+        }
+
+
     }
 
     @Override
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        if(alpha <= 0.99) {
+        if(alpha <= 0.99f) {
             fadeIn(g2);
         }
         else {
@@ -118,7 +131,7 @@ public abstract class LevelState extends GameState {
     }
 
     public void updateAllGameObject() {
-        if(alpha <= 0.97) alpha += 0.03;
+        if(alpha <= 0.97f) alpha += 0.99 / (1.3f*Game.UPDATES);
 
         //Update player
         player.update();
@@ -130,12 +143,12 @@ public abstract class LevelState extends GameState {
             if(inTheScreen(t)) {
                 t.update();
                 if(t instanceof FallingRock) {
-                    if (Math.abs(player.getY() - t.getY()) < 1000 * Game.heightRatio && Math.abs(player.getX() - t.getX()) <  150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
+                    if (Math.abs(player.getY() - t.getY()) < (1000*Game.heightRatio) && Math.abs(player.getX() - t.getX()) <  150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
                         ((FallingRock) t).setShaking(true);
                     }
                     if (((FallingRock) t).getCurrentEffect() instanceof LandingEffect) {
                         effects.add(LandingEffect.getInstance(t));
-                        cam.setShaking(true, 10, 5);
+                        cam.setShaking(true, 20, 5);
                     }
                     ((FallingRock) t).setCurrentEffect(null);
                 }

@@ -3,13 +3,10 @@ package UI;
 import audio.SoundEffectPlayer;
 import gameStates.GameStateManager;
 import input.Input;
-import util.Camera;
 import graphics.SpriteManager;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 
 public class Game extends Canvas implements Runnable {
     public static final String TITLE = "UnderGound";
@@ -35,9 +32,9 @@ public class Game extends Canvas implements Runnable {
 
     private SoundEffectPlayer soundEffectPlayer;
 
-    private static int defaultFPS = 75;
-    public static final int FPS = 300;
-    public static float FPSRatio = defaultFPS/(float)FPS;
+    private static int defaultUpdates = 75;
+    public static final int UPDATES = 150;
+    public static float UpdatesRatio = defaultUpdates /(float) UPDATES;
 
     public Game() {
         widthRatio = (float)(Window.scaledGameWidth)/(DEFAULT_WIDTH);
@@ -99,7 +96,7 @@ public class Game extends Canvas implements Runnable {
         init();
         requestFocus();
         long lastTime = System.nanoTime();
-        final double amountOfTicks = FPS;
+        final double amountOfTicks = UPDATES;
         long timer = System.currentTimeMillis();
         double delta = 0.0;
         double ns = 1000000000.0 / amountOfTicks;
@@ -118,7 +115,7 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-//                System.out.println(frames + " Frame Per Second " + updates + " Updates Per Second");
+                //System.out.println(frames + " Frame Per Second " + updates + " Updates Per Second");
                 frames = 0;
                 updates = 0;
             }

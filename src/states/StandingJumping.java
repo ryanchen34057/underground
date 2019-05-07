@@ -14,11 +14,11 @@ public class StandingJumping implements State {
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(2).down) {
             player.setFacing(-1);
-            player.setVelX(-1 * (Player.STEP / Player.STANDINGJUMPING_VELX_OFFSET));
+            player.setVelX(-Player.STANDINGJUMPING_VELX_OFFSET);
         }
         else if(keys.get(3).down) {
             player.setFacing(1);
-            player.setVelX((Player.STEP / Player.STANDINGJUMPING_VELX_OFFSET));
+            player.setVelX(Player.STANDINGJUMPING_VELX_OFFSET);
         }
         //Vertical Dashing
         Direction dir = verticalDashCondition(keys, player);

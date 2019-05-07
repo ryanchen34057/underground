@@ -54,7 +54,7 @@ public class SpriteManager {
 
 
         //BufferedImage object
-        level1 = ResourceManager.getInstance().getImage("/res/movementTest.png");
+        level1 = ResourceManager.getInstance().getImage("/res/level1.png");
         level2 = ResourceManager.getInstance().getImage("/res/level2.png");
         level3 = ResourceManager.getInstance().getImage("/res/level3.png");
         level4 = ResourceManager.getInstance().getImage("/res/level4.png");

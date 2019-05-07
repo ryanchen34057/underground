@@ -40,7 +40,7 @@ public class Portal extends Tile {
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 3) {
+        if (frameDelay >= 3/Game.UpdatesRatio) {
             frame++;
             if (frame >= FrameManager.getPortalFrame(color, direction).length) {
                 frame = 0;

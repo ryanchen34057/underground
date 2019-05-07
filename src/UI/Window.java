@@ -7,13 +7,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Window {
-    private static MusicPlayer musicPlayer;
-    private static JFrame frame;
-    private static Game game;
-    private static int canvasWidth = 0;
-    private static int canvasHeight = 0;
-    private static final int DEFAULT_WIDTH = 320;
-    private static final int DEFAULT_HEIGHT = 220;
+    public static MusicPlayer musicPlayer;
+    public static JFrame frame;
+    public static Game game;
+    public static int canvasWidth = 0;
+    public static int canvasHeight = 0;
+    public static final int DEFAULT_WIDTH = 320;
+    public static final int DEFAULT_HEIGHT = 220;
     public static int gameWidth = 0;
     public static int gameHeight = 0;
     public static int scale = 3;
@@ -22,35 +22,6 @@ public class Window {
     public static int screenWidth;
     public static int screenHeight;
 
-    public static void makeFullScreen() {
-        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice graphicsDevice = graphicsEnvironment.getDefaultScreenDevice();
-        if(graphicsDevice.isFullScreenSupported()) {
-            //frame.remove(game);
-           //frame.dispose();
-            frame.dispose();
-            frame.setUndecorated(true);
-            graphicsDevice.setFullScreenWindow(frame);
-            scaledGameWidth = frame.getWidth();
-            scaledGameHeight = frame.getHeight();
-            resetGameSize();
-            frame.setVisible(true);
-        }
-    }
-
-    public static void resetGameSize() {
-        game = new Game();
-        game.setPreferredSize(new Dimension(scaledGameWidth, scaledGameHeight));
-        frame.add(game);
-    }
-
-    public static String[] getSizeList() {
-        String[] sizeList = new String[screenWidth / gameWidth];
-        for(int i=0;i<screenWidth / gameWidth;i++) {
-            sizeList[i] = "  " + (gameWidth*(i+1)) + " x " + (gameHeight*(i+1)) + "  ";
-        }
-        return sizeList;
-    }
 
     private static void getBestSize() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -73,6 +44,15 @@ public class Window {
         gameHeight = canvasHeight / factor + yDiff / factor;
         screenWidth = screenSize.width;
         screenHeight = screenSize.height;
+    }
+
+
+    public static String[] getSizeList() {
+        String[] sizeList = new String[2];
+        for(int i=2;i<Window.screenWidth / Window.gameWidth;i++) {
+            sizeList[i-2] = "  " + (Window.gameWidth*(i+1)) + " x " + (Window.gameHeight*(i+1)) + "  ";
+        }
+        return sizeList;
     }
 
     public Window() {

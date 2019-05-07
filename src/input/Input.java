@@ -21,6 +21,8 @@ public class Input implements KeyListener {
     public Key r = new Key(Keys.R);
     public Key enter = new Key(Keys.ENTER);
     public Key esc = new Key(Keys.ESC);
+    public Key g = new Key(Keys.G);
+    public Key b = new Key(Keys.B);
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -76,6 +78,8 @@ public class Input implements KeyListener {
         if(e.getKeyCode() == KeyEvent.VK_R) r.toggle(pressed);
         if(e.getKeyCode() == KeyEvent.VK_ENTER) enter.toggle(pressed);
         if(e.getKeyCode() == KeyEvent.VK_ESCAPE) esc.toggle(pressed);
+        if(e.getKeyCode() == KeyEvent.VK_G) g.toggle(pressed);
+        if(e.getKeyCode() == KeyEvent.VK_B) b.toggle(pressed);
     }
 
     public void releaseAll() {

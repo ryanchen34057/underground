@@ -18,16 +18,16 @@ public class Camera {
 //        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2;
         float xTarg = -player.getX() + (Window.scaledGameWidth) / 2.0f;
         float yTarg = -player.getY() + (Window.scaledGameHeight) / 2.0f;
-        x += (xTarg - x) * 0.05;
-        y += (yTarg - y) * 0.05;
+        x += (xTarg - x) * (0.08 * Game.UpdatesRatio * Game.widthRatio);
+        y += (yTarg - y) * (0.04 * Game.UpdatesRatio * Game.heightRatio);
         if(x > 0) {
             x = 0;
         }
         if(y > 0) {
             y = 0;
         }
-        if(y <= (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.3)) {
-            y = (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.3);
+        if(y <= (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5)) {
+            y = (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5);
         }
         if(shaking) {
             counter++;

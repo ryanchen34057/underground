@@ -36,7 +36,7 @@ public class LandingEffect extends Effect {
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 1) {
+        if (frameDelay >= 1 / Game.UpdatesRatio) {
             frame++;
             if (frame >= 17) {
                 frame = 0;

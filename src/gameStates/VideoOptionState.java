@@ -59,8 +59,15 @@ public class VideoOptionState extends GameState {
         if(!locked){
             if(Input.keys.get(7).down && selectedVer == 2){//Enter
                 SoundEffectPlayer.playSoundEffect("Enter");
-                if(isFullScreen) {
-                    Window.makeFullScreen();
+                if(selectedHorType == 1) {
+                    makeFullScreen();
+                    gameStateManager.toMenu();
+                }
+                else {
+                    if(isFullScreen) {
+                        endFullScreen();
+                    }
+                    changeWindowSize(selectedHorSize);
                     gameStateManager.toMenu();
                 }
                 locked = true;
@@ -154,5 +161,46 @@ public class VideoOptionState extends GameState {
         }
         leftCursor.paint(g);
         rightCursor.paint(g);
+    }
+
+
+    private void makeFullScreen() {
+        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice graphicsDevice = graphicsEnvironment.getDefaultScreenDevice();
+        if(graphicsDevice.isFullScreenSupported()) {
+            Window.frame.dispose();
+            Window.frame.setUndecorated(true);
+            graphicsDevice.setFullScreenWindow(Window.frame);
+            Window.scaledGameWidth = Window.frame.getWidth();
+            Window.scaledGameHeight = Window.frame.getHeight();
+            resetGameSize();
+            Window.frame.setVisible(true);
+            isFullScreen = true;
+        }
+    }
+
+    private void endFullScreen() {
+        GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice graphicsDevice = graphicsEnvironment.getDefaultScreenDevice();
+        Window.frame.dispose();
+        graphicsDevice.setFullScreenWindow(null);
+        isFullScreen = false;
+    }
+
+    private void changeWindowSize(int scale) {
+        Window.scaledGameWidth = (Window.screenWidth / 4) * (scale+3);
+        Window.scaledGameHeight = (Window.screenHeight / 4) * (scale+3);
+        resetGameSize();
+    }
+
+    private void resetGameSize() {
+        Window.frame.setSize(new Dimension(Window.scaledGameWidth+30, Window.scaledGameHeight+30));
+        Window.game = new Game();
+        Window.game.setPreferredSize(new Dimension(Window.scaledGameWidth, Window.scaledGameHeight));
+        Window.frame.add(Window.game);
+        Window.frame.pack();
+        Window.frame.setResizable(false);
+        Window.frame.setLocationRelativeTo(null);
+        Window.frame.setVisible(true);
     }
 }

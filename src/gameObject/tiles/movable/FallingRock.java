@@ -21,8 +21,8 @@ public class FallingRock extends Tile {
     private boolean isShaking;
     private int intensity;
     private int shakingCounter;
-    private final int SHAKING_LENGTH = 30;
-    private final int FALLING_SPEED = 25;
+    private final float SHAKING_LENGTH = 0.6f * Game.UPDATES;
+    private final float FALLING_SPEED = 30f * Game.UpdatesRatio * Game.heightRatio;
     private boolean fallen;
     private Effect currentEffect;
     private boolean onTheGround;
@@ -36,7 +36,7 @@ public class FallingRock extends Tile {
         onTheGround = false;
         fallen = false;
         this.bufferedImage = bufferedImage;
-        intensity = 10;
+        intensity = (int)(20 * Game.UpdatesRatio * Game.widthRatio);
         shakingCounter = 0;
         currentEffect = null;
     }
@@ -57,8 +57,10 @@ public class FallingRock extends Tile {
     public void paint(Graphics g) {
         g.drawImage(bufferedImage, x, y, width, height, null);
         if(Game.debugMode) {
+            g.drawRect(x, y, width, height);
+            g.setColor(Color.RED);
+            g.drawRect(x+(int)(width*0.05), y + (height - height/3), width-(int)(width*0.05),height/3);
             g.setColor(Color.GREEN);
-            g.drawRect(x+(int)(width*0.05), y + (height - height/3), width-(int)(width*0.39),height/3);
         }
     }
 
@@ -104,7 +106,7 @@ public class FallingRock extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x + 11, y, width - 65, height);
+        return new Rectangle(x, y, width, height);
     }
 
     @Override
@@ -113,7 +115,7 @@ public class FallingRock extends Tile {
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(x+10, y + (height - height/3), width-75,height/3);
+        return new Rectangle(x+(int)(width*0.05), y + (height - height/3), width-(int)(width*0.05),height/3);
     }
     @Override
     public  Rectangle getBoundsLeft() {

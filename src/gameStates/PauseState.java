@@ -54,6 +54,13 @@ public class PauseState extends GameState{
                         locked = true;
                         break;
                     case 1:
+                        // Return from PauseState
+                        gameStateManager.back();
+                        // Return from level
+                        gameStateManager.back();
+                        // Set a new evel
+                        gameStateManager.setLevelState(gameStateManager.getNewLevel(gameStateManager.getCurrentLevel()));
+                        locked = true;
                         break;
                     case 2:
                         break;

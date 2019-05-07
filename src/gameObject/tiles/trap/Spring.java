@@ -26,16 +26,6 @@ public class Spring extends Tile {
         heightList = new int[]{(int)(height*(15.0/64.0)), (int)(height*(16.0/64.0)), (int)(height*(32.0/64.0)), (int)(height*(64.0/64.0)),
                 (int)(height*(63.0/64.0)), (int)(height*(63.0/64.0)), (int)(height*(63.0/64.0)), (int)(height*(62.0/64.0)), (int)(height*(42.0/64.0)), (int)(height*(29.0/64.0)), (int)(height*(15.0/64.0))};
         this.direction = direction;
-        switch (direction) {
-            case UP:
-                boundsRectangle = new Rectangle(x, y + height - heightList[frame], width, heightList[frame]);
-            case DOWN:
-                boundsRectangle = new Rectangle(x, y, width, heightList[frame]);
-            case LEFT:
-                boundsRectangle = new Rectangle(x + height - heightList[frame], y, heightList[frame], height);
-            case RIGHT:
-                boundsRectangle = new Rectangle(x, y, heightList[frame], height);
-        }
     }
 
     public void setStepOn(boolean stepOn) {
@@ -48,8 +38,7 @@ public class Spring extends Tile {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getSpringFrame(direction)[frame].getBufferedImage(), x, y,
-                width, height, null);
+        g.drawImage(FrameManager.getSpringFrame(direction)[frame].getBufferedImage(), x, y, width, height, null);
         if(Game.debugMode) {
             if(direction == UP) {
                 g.drawRect(x, y + height - heightList[frame], width, heightList[frame]);
@@ -71,7 +60,7 @@ public class Spring extends Tile {
     public void update() {
         if(isStepOn) {
             frameDelay++;
-            if (frameDelay >= 2) {
+            if (frameDelay >= 2/Game.UpdatesRatio) {
                 frame++;
                 if (frame >= FrameManager.getSpringFrame(direction).length) {
                     frame = 0;
@@ -85,7 +74,17 @@ public class Spring extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return boundsRectangle;
+        switch (direction) {
+            case UP:
+                return new Rectangle(x, y + height - heightList[frame], width, heightList[frame]);
+            case DOWN:
+                return new Rectangle(x, y, width, heightList[frame]);
+            case LEFT:
+                return new Rectangle(x + height - heightList[frame], y, heightList[frame], height);
+            case RIGHT:
+                return new Rectangle(x, y, heightList[frame], height);
+        }
+        return null;
     }
 
     @Override

@@ -60,6 +60,9 @@ public class FrameManager {
         if(currentState instanceof IceSkating) {
             y = 23;
         }
+        if(currentState instanceof SpringHorizontal) {
+            y = 23;
+        }
         for(int i=0;i<playerMoveFrame.length;i++) {
             playerMoveFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 32, 32);
         }

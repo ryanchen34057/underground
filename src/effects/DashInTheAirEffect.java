@@ -39,7 +39,7 @@ public class DashInTheAirEffect extends Effect {
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 3) {
+        if (frameDelay >= 3 / Game.UpdatesRatio) {
             frame++;
             if (frame >= 12) {
                 frame = 0;
