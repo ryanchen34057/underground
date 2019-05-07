@@ -16,6 +16,11 @@ public class SpriteManager {
     public static Sprite skull;
     public static Sprite vanishingRock;
     public static Sprite signboard;
+    public static Sprite c;
+    public static Sprite x;
+    public static Sprite esc;
+    public static Sprite left;
+    public static Sprite right;
     
 
     //Menu
@@ -45,8 +50,12 @@ public class SpriteManager {
         emerald = new Sprite(spriteSheet, 1, 9, 32, 32);
         skull = new Sprite(spriteSheet, 9, 9, 32, 32);
         vanishingRock = new Sprite(spriteSheet, 1,6,32,32);
-        signboard = new Sprite(spriteSheet,10,9,32,32);    
-
+        signboard = new Sprite(spriteSheet,9,8,32,32);
+        c = new Sprite(spriteSheet,14,9,32,32);
+        x = new Sprite(spriteSheet,11,9,32,32);
+        esc = new Sprite(spriteSheet,15,9,32,32);
+        left = new Sprite(spriteSheet,16,9,32,32);
+        right = new Sprite(spriteSheet,17,9,32,32);
         //BufferedImage object
         level0 = ResourceManager.getInstance().getImage("/res/level0.png");
         level1 = ResourceManager.getInstance().getImage("/res/level1.png");

@@ -17,9 +17,6 @@ import states.PlayerState;
 public class Level0State extends LevelState {
     //Signboard
     private BufferedImage signImage;
-    int x1,y1;
-    int x2,y2;
-    int x3,y3;
     private ArrayList<Words> words;
  
     
@@ -27,12 +24,12 @@ public class Level0State extends LevelState {
     public Level0State(GameStateManager gameStateManager) {
         super(gameStateManager);
         words = new ArrayList<>();
-        words.add(new Words("< > = Move", 20, (int)(Game.WIDTH*Game.SCALE*0.6), (int)(Game.HEIGHT*Game.SCALE*0.70)));
-        words.add(new Words("Esc = Pause", 20, (int)(Game.WIDTH*Game.SCALE*0.6), (int)(Game.HEIGHT*Game.SCALE*0.74)));
-        words.add(new Words("C = Jump", 20, (int)(Game.WIDTH*Game.SCALE*1.80), (int)(Game.HEIGHT*Game.SCALE*0.70)));
-        words.add(new Words("C + -> = Climb", 20, (int)(Game.WIDTH*Game.SCALE*1.80), (int)(Game.HEIGHT*Game.SCALE*0.74)));
-        words.add(new Words("X = Dash", 20, (int)(Game.WIDTH*Game.SCALE*3.2), (int)(Game.HEIGHT*Game.SCALE*0.70)));
-        words.add(new Words("C+X = AirDash", 20, (int)(Game.WIDTH*Game.SCALE*3.2), (int)(Game.HEIGHT*Game.SCALE*0.74)));
+        words.add(new Words("    = Move", 20, (int)(Game.WIDTH*Game.SCALE*0.6), (int)(Game.HEIGHT*Game.SCALE*0.70)));
+        words.add(new Words("   = Pause", 20, (int)(Game.WIDTH*Game.SCALE*0.6), (int)(Game.HEIGHT*Game.SCALE*0.74)));
+        words.add(new Words("  = Jump", 20, (int)(Game.WIDTH*Game.SCALE*1.80), (int)(Game.HEIGHT*Game.SCALE*0.70)));
+        words.add(new Words("   +   = Climb", 20, (int)(Game.WIDTH*Game.SCALE*1.80), (int)(Game.HEIGHT*Game.SCALE*0.74)));
+        words.add(new Words("  = Dash", 20, (int)(Game.WIDTH*Game.SCALE*3.2), (int)(Game.HEIGHT*Game.SCALE*0.70)));
+        words.add(new Words(" +  = AirDash", 20, (int)(Game.WIDTH*Game.SCALE*3.2), (int)(Game.HEIGHT*Game.SCALE*0.74)));
     }
 
     @Override
@@ -54,12 +51,23 @@ public class Level0State extends LevelState {
         g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(0).getWordX()-(int)(Game.WIDTH*Game.SCALE*0.225/2), words.get(0).getWordY()-(int)(Game.HEIGHT*Game.SCALE*0.218/2.5), (int)(Game.WIDTH*Game.SCALE*0.225), (int)(Game.HEIGHT*Game.SCALE*0.218), null);
         g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(2).getWordX()-(int)(Game.WIDTH*Game.SCALE*0.225/2), words.get(0).getWordY()-(int)(Game.HEIGHT*Game.SCALE*0.218/2.5), (int)(Game.WIDTH*Game.SCALE*0.225), (int)(Game.HEIGHT*Game.SCALE*0.218), null);
         g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(4).getWordX()-(int)(Game.WIDTH*Game.SCALE*0.225/2), words.get(0).getWordY()-(int)(Game.HEIGHT*Game.SCALE*0.218/2.5), (int)(Game.WIDTH*Game.SCALE*0.225), (int)(Game.HEIGHT*Game.SCALE*0.218), null);
-        
+        //Words
         for(Words n: words){
                 n.paint(g);
         }
+        //keys
+        g.drawImage(SpriteManager.left.getBufferedImage(), (int)(words.get(0).getWordX()-32*2.5), words.get(0).getWordY()-32, 32, 32, null);
+        g.drawImage(SpriteManager.right.getBufferedImage(), (int)(words.get(0).getWordX()-32*1.5), words.get(0).getWordY()-32, 32, 32, null);
+        g.drawImage(SpriteManager.esc.getBufferedImage(), (int)(words.get(1).getWordX()-32*2), words.get(1).getWordY()-32, 32, 32, null);
         
-        //  
+        g.drawImage(SpriteManager.c.getBufferedImage(), (int)(words.get(2).getWordX()-45*2), words.get(2).getWordY()-32-5, 45, 45, null);
+        g.drawImage(SpriteManager.right.getBufferedImage(), (int)(words.get(3).getWordX()-32*3), words.get(3).getWordY()-32, 32, 32, null);
+        g.drawImage(SpriteManager.c.getBufferedImage(), (int)(words.get(3).getWordX()-45*1), words.get(3).getWordY()-32-5, 45, 45, null);
+
+        g.drawImage(SpriteManager.x.getBufferedImage(), (int)(words.get(4).getWordX()-45*2), words.get(4).getWordY()-32-5, 45, 45, null);
+        g.drawImage(SpriteManager.c.getBufferedImage(), (int)(words.get(5).getWordX()-45*2.5), words.get(5).getWordY()-32-5, 45, 45, null);
+        g.drawImage(SpriteManager.x.getBufferedImage(), (int)(words.get(5).getWordX()-45*1.5), words.get(5).getWordY()-32-5, 45, 45, null);
+
         paintAllGameObject(g);      
         g.translate(-cam.getX(), -cam.getY());
     }
