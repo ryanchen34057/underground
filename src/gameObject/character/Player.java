@@ -350,6 +350,9 @@ public class Player extends Entity {
                     isTired = false;
                 }
                 break;
+            case lava:
+                ifHitWall(t, direction);
+                die();
             case hole:
                 ifHitWall(t, direction);
                 die();

@@ -10,8 +10,9 @@ public class AudioFile implements LineListener{
     private AudioFormat format;
     private DataLine.Info info;
     private Clip clip;
-    private FloatControl gainControl;
+    private static FloatControl gainControl;
     private boolean playing;
+    private float volume;
 
     public AudioFile(String fileName) {
         soundFile = new File(fileName);
@@ -23,6 +24,7 @@ public class AudioFile implements LineListener{
             clip.addLineListener(this);
             clip.open(ais);
             gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volume = -15;
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
@@ -34,7 +36,7 @@ public class AudioFile implements LineListener{
     }
 
     public void play() {
-        play(-10);
+        play(volume);
     }
 
     public void play(float volume) {
@@ -54,5 +56,9 @@ public class AudioFile implements LineListener{
             clip.setFramePosition(0);
             playing = false;
         }
+    }
+
+    public static void setVol(float vol) {
+        gainControl.setValue(vol);
     }
 }

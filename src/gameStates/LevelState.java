@@ -137,7 +137,7 @@ public abstract class LevelState extends GameState {
 
         Tile t;
         player.setOnTheGround(false);
-        Direction direction = null;
+        Direction direction;
         for(int i=0;i<tiles.size();i++) {
             t = tiles.get(i);
             if(inTheScreen(t)) {

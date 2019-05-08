@@ -4,6 +4,7 @@ import UI.Game;
 import UI.Window;
 import enums.Id;
 import gameObject.character.Player;
+import gameObject.tiles.Tile;
 import gameObject.tiles.trap.Lava;
 import gameStates.GameStateManager;
 import gameStates.LevelState;
@@ -65,6 +66,7 @@ public class LastLevelState extends LevelState {
             lavaCurrentSpeed--;
         }
         for(Lava lava: lavaLinkedList) {
+            player.handleCollision(lava, player.checkCollisionBounds(lava, Tile::getBounds));
             if(lavaUP++ >= UP_SPEED) {
                 lavaUP = 0;
                 lava.setVelY(lavaCurrentSpeed * Game.heightRatio);

@@ -47,7 +47,7 @@ public class Lava extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return null;
+        return new Rectangle(x, y, width, height);
     }
 
     @Override
