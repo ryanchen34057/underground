@@ -1,7 +1,6 @@
-package gameObject.tiles.prize;
+package gameObject.tiles.trap;
 
 import UI.Game;
-import audio.SoundEffectPlayer;
 import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
@@ -11,33 +10,35 @@ import util.CollisionCondition;
 
 import java.awt.*;
 
-public class Diamond extends Prize {
-    private int frameDelay, frame;
-    public Diamond(int x, int y, int width, int height, int point, Id id) {
-        super(x, y, width, height, point, id);
-        frameDelay = 0;
-        frame = 0;
-        boundsRectangle = new Rectangle(x+10, y+10, width-20,height-20);
+public class Lava extends Tile {
+    public static final int LAVA_WIDTH = (int)(300* Game.widthRatio);
+    public static final int LAVA_HEIGHT = (int)(89* Game.heightRatio);
+    private int frame;
+    private int frameDelay;
+    private float velY;
+
+    public Lava(int x, int y, int width, int height, Id id) {
+        super(x, y, width, height, id);
+        velY = 0;
     }
 
-    public Diamond getInstance() { return new Diamond(x, y, width, height, 0, Id.diamond); }
+    public void setVelY(float velY) {
+        this.velY = velY;
+    }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getDiamondFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
-                super.getWidth(), super.getHeight(), null);
-        if(Game.debugMode) {
-            g.setColor(Color.YELLOW);
-            g.drawRect(x+10, y+10, width-20,height-20);
-        }
+        g.drawImage(FrameManager.getLavaFrame()[frame].getBufferedImage(), x, y,
+                width, height, null);
     }
 
     @Override
     public void update() {
+        y += Math.round(velY);
         frameDelay++;
-        if (frameDelay >= 5/Game.UpdatesRatio) {
+        if (frameDelay >= 10/Game.UpdatesRatio) {
             frame++;
-            if (frame >= FrameManager.getEmeralFrame().length) {
+            if (frame >= FrameManager.getLavaFrame().length) {
                 frame = 0;
             }
             frameDelay = 0;
@@ -45,13 +46,8 @@ public class Diamond extends Prize {
     }
 
     @Override
-    public void die() {
-        isDead = true;
-    }
-
-    @Override
     public Rectangle getBounds() {
-        return boundsRectangle;
+        return null;
     }
 
     @Override
@@ -75,6 +71,11 @@ public class Diamond extends Prize {
     }
 
     @Override
+    public void die() {
+
+    }
+
+    @Override
     public boolean collidesWith(ICollidable other, CollisionCondition collisionCondition) {
         return false;
     }
@@ -86,7 +87,6 @@ public class Diamond extends Prize {
 
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
-        SoundEffectPlayer.playSoundEffect("Prize");
-        die();
+
     }
 }

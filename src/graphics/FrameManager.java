@@ -11,13 +11,14 @@ import static enums.Direction.*;
 
 public class FrameManager {
     public static Sprite[] playerMoveFrame = new Sprite[8];
-    public static Sprite[] emeralFrame = new Sprite[8];
-    public static Sprite[] effectFrame = new Sprite[30];
-    public static Sprite[] deathFrame = new Sprite[8];
-    public static Sprite[] bluePortalFrame = new Sprite[9];
-    public static Sprite[] purplePortalFrame = new Sprite[9];
-    public static Sprite[] diamondFrame = new Sprite[10];
-    public static Sprite[] springFrame = new Sprite[11];
+    private static Sprite[] emeralFrame = new Sprite[8];
+    private static Sprite[] effectFrame = new Sprite[30];
+    private static Sprite[] deathFrame = new Sprite[8];
+    private static Sprite[] bluePortalFrame = new Sprite[9];
+    private static Sprite[] purplePortalFrame = new Sprite[9];
+    private static Sprite[] diamondFrame = new Sprite[10];
+    private static Sprite[] springFrame = new Sprite[11];
+    private static Sprite[] lavaFrame = new Sprite[4];
 
     public static Sprite[] getPlayerMoveFrame(State currentState) {
         int y = 0;
@@ -189,5 +190,12 @@ public class FrameManager {
             }
         }
         return springFrame;
+    }
+
+    public static Sprite[] getLavaFrame() {
+        for(int i=0;i<lavaFrame.length;i++) {
+            lavaFrame[i] = new Sprite(SpriteManager.lavaSheet, i + 1, 1, 300, 89);
+        }
+        return lavaFrame;
     }
 }

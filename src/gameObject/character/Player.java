@@ -32,7 +32,7 @@ public class Player extends Entity {
     //Stats
     public static final int WIDTH = (int) (96 * Game.widthRatio);
     public static final int HEIGHT = (int) (96 * Game.widthRatio);
-    private final int STAMINA = Game.UPDATES *2;
+    private final int STAMINA = Game.UPDATES *4;
 
     // Running
     // 8f * Game.UpdatesRatio * Game.widthRatio
@@ -72,8 +72,8 @@ public class Player extends Entity {
     public static final float FALLING_VELX = 5.3f * Game.UpdatesRatio *  Game.widthRatio;
 
     // Vertical Dashing
-    public static final float VERTICALDASHING_SPEED = 10f * Game.UpdatesRatio * Game.heightRatio;
-    public static final float VERTICALDASHING_TIMER = (Game.UPDATES /1000f) * Game.UPDATES * (1.3f/3.6f);
+    public static final float VERTICALDASHING_SPEED = 9f * Game.UpdatesRatio * Game.heightRatio;
+    public static final float VERTICALDASHING_TIMER = (Game.UPDATES /1000f) * Game.UPDATES * (1.2f/3.6f);
     public static final float VERTICALDASHING_VELX = 9 * Game.UpdatesRatio * Game.widthRatio;
 
     // State
@@ -201,9 +201,6 @@ public class Player extends Entity {
     public boolean isOnTheWall() {
         return isOnTheWall;
     }
-    public void setOnTheWall(boolean onTheWall) {
-        isOnTheWall = onTheWall;
-    }
     public float getFriction() {
         return friction;
     }
@@ -212,6 +209,10 @@ public class Player extends Entity {
     }
     public boolean isGoaled() {
         return isGoaled;
+    }
+
+    public void setOnTheWall(boolean onTheWall) {
+        isOnTheWall = onTheWall;
     }
 
     // Handle keyInput from player
@@ -399,11 +400,9 @@ public class Player extends Entity {
             case bluePortal:
                 SoundEffectPlayer.playSoundEffect("Portal");
                 if(((Portal)t).getDirection() == Direction.LEFT) {
-                    x += (velX == 0) ? -20 * Game.widthRatio:0;
                     t.die();
                 }
                 else {
-                    x += (velX == 0) ? 20 * Game.widthRatio:0;
                     t.die();
                 }
 

@@ -44,7 +44,7 @@ public abstract class LevelState extends GameState {
 
     protected LinkedList<FallingRock> fallingRocks;
     protected static Camera cam;
-    private float alpha;
+    protected float alpha;
     protected int mapWidth;
     protected int mapHeight;
 
@@ -85,8 +85,6 @@ public abstract class LevelState extends GameState {
         if(!Input.keys.get(8).down &&!Input.keys.get(9).down && !Input.keys.get(10).down){//放開
             locked = false;
         }
-
-
     }
 
     @Override
@@ -103,7 +101,7 @@ public abstract class LevelState extends GameState {
         }
     }
 
-    private void fadeIn(Graphics2D g2) {
+    protected void fadeIn(Graphics2D g2) {
         AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
         g2.setComposite(ac);
         background.paint(g2);
@@ -139,6 +137,7 @@ public abstract class LevelState extends GameState {
 
         Tile t;
         player.setOnTheGround(false);
+        Direction direction = null;
         for(int i=0;i<tiles.size();i++) {
             t = tiles.get(i);
             if(inTheScreen(t)) {
@@ -155,7 +154,7 @@ public abstract class LevelState extends GameState {
                 }
                 // ********* Player collision detection **********
                 if (t.getBounds() != null && player.inTheScreen(t)) {
-                    Direction direction = player.checkCollisionBounds(t, Tile::getBounds);
+                    direction = player.checkCollisionBounds(t, Tile::getBounds);
                     player.handleCollision(t, direction);
                 }
                 // ***********************************************
@@ -182,6 +181,7 @@ public abstract class LevelState extends GameState {
                 tiles.remove(t);
             }
         }
+
         Effect e;
         for(int i=0;i<effects.size();i++) {
             e = effects.get(i);

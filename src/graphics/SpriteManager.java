@@ -7,6 +7,7 @@ public class SpriteManager {
     //images
     //Sprite sheet
     public static SpriteSheet spriteSheet;
+    public static SpriteSheet lavaSheet;
 
     //UI.Game object
     // Level1
@@ -17,7 +18,7 @@ public class SpriteManager {
     public static Sprite vanishingRock;
 
     //Menu
-    public static BufferedImage menu;
+    private static BufferedImage menu;
 
     //level
     public static BufferedImage level1;
@@ -25,6 +26,7 @@ public class SpriteManager {
     public static BufferedImage level3;
     public static BufferedImage level4;
     public static BufferedImage lastLevel;
+    public static BufferedImage tutorial;
 
     // Option
     public static BufferedImage option;
@@ -42,9 +44,16 @@ public class SpriteManager {
     //X key
     public static Sprite xKey;
 
+    //Arror
+    public static Sprite arrow;
+
+    //Lava
+    public static Sprite lava;
+
     public SpriteManager() {
         //Sprite object
         spriteSheet = new SpriteSheet("/res/spriteSheet.png");
+        lavaSheet = new SpriteSheet("/res/lava.png");
         emerald = new Sprite(spriteSheet, 1, 9, 32, 32);
         skull = new Sprite(spriteSheet, 9, 9, 32, 32);
         vanishingRock = new Sprite(spriteSheet, 1,6,32,32);
@@ -52,6 +61,7 @@ public class SpriteManager {
         xKey = new Sprite(spriteSheet, 11,9, 32, 32);
         rightCursor = new Sprite(spriteSheet, 12, 9, 32, 32);
         leftCursor = new Sprite(spriteSheet, 13, 9, 32, 32);
+        arrow = new Sprite(spriteSheet, 10, 10, 32, 32);
 
 
         //BufferedImage object
@@ -60,6 +70,7 @@ public class SpriteManager {
         level3 = ResourceManager.getInstance().getImage("/res/level3.png");
         level4 = ResourceManager.getInstance().getImage("/res/level4.png");
         lastLevel = ResourceManager.getInstance().getImage("/res/lastLevel.png");
+        tutorial = ResourceManager.getInstance().getImage("/res/tutorial.png");
         menu = ResourceManager.getInstance().getImage("/res/Cave1.png");
         option = ResourceManager.getInstance().getImage("/res/Cave1.png");
         pause = ResourceManager.getInstance().getImage("/res/Cave1.png");    

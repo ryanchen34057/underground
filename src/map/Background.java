@@ -11,8 +11,6 @@ public class Background {
     private BufferedImage bcakgroundImage;
     private float x;
     private float y;
-    private float velX;
-    private float velY;
     
     private int width;
     private int height;
@@ -33,6 +31,20 @@ public class Background {
     public void setPos(float x, float y) {
         this.x = (x * scale) % Game.WIDTH;
         this.y = (y * scale) % Game.HEIGHT;
+    }
+
+    //Getters
+    public float getX() {
+        return x;
+    }
+    public float getY() {
+        return y;
+    }
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
     }
 
     public void setVel(float velX, float velY) {

@@ -44,7 +44,7 @@ public class GameStateManager {
         emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(50 * Game.heightRatio));
         deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRatio));
         infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
-        //setGameState(new MenuState(this));
+        //setGameState(new TutorialState(this));
         setLevelState(new LastLevelState(this));
     }
 
@@ -94,7 +94,7 @@ public class GameStateManager {
         if(currentGameState != null){
             currentGameState.paint(g);
         }
-        if(timer != null && currentGameState instanceof LevelState) {
+        if(timer != null && currentGameState instanceof LevelState && !(currentGameState instanceof TutorialState)) {
             timer.paint(g);
             // Display emerald count
             emeraldCountWord.paint(g);
@@ -199,6 +199,9 @@ public class GameStateManager {
                 break;
             case 4:
                 setLevelState(new Level4State(this));
+                break;
+            case 5:
+                setLevelState(new LastLevelState(this));
                 break;
         }
     }

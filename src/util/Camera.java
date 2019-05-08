@@ -29,6 +29,9 @@ public class Camera {
         if(y <= (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5)) {
             y = (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5);
         }
+//        if(x <= mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth) {
+//            x = mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth;
+//        }
         if(shaking) {
             counter++;
             x += Math.random() * intensity - intensity/ 2;
