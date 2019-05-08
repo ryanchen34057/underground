@@ -51,7 +51,7 @@ public class MenuState extends GameState{
             if(Input.keys.get(7).down){//Enter
                 switch(cursor.getPointer()){
                     case 0:
-                        gameStateManager.setGameState(new SaveSlotState(gameStateManager));
+                        gameStateManager.setGameState(new StoryState(gameStateManager));
                         locked = true;
                         break;
                     case 1:

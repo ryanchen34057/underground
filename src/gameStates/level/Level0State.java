@@ -53,7 +53,7 @@ public class Level0State extends LevelState {
         g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(4).getWordX()-(int)(Game.WIDTH*Game.SCALE*0.225/2), words.get(0).getWordY()-(int)(Game.HEIGHT*Game.SCALE*0.218/2.5), (int)(Game.WIDTH*Game.SCALE*0.225), (int)(Game.HEIGHT*Game.SCALE*0.218), null);
         //Words
         for(Words n: words){
-                n.paint(g);
+            n.paint(g);
         }
         //keys
         g.drawImage(SpriteManager.left.getBufferedImage(), (int)(words.get(0).getWordX()-32*2.5), words.get(0).getWordY()-32, 32, 32, null);
