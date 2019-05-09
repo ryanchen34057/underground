@@ -3,6 +3,7 @@ package audio;
 import java.util.HashMap;
 
 public class SoundEffectPlayer {
+    public static boolean isON = true;
     // SoundEffect
     private static HashMap<String, AudioFile> soundEffects;
 
@@ -22,6 +23,8 @@ public class SoundEffectPlayer {
     }
 
     public static void playSoundEffect(String move) {
-        soundEffects.get(move).play();
+        if(isON) {
+            soundEffects.get(move).play();
+        }
     }
 }
