@@ -1,4 +1,3 @@
-
 package fonts;
 
 import java.awt.Color;
@@ -58,9 +57,19 @@ public class Words {
         sHeight = sa;
         g.drawString(msg, x-sw/2,y-sa/2);
     }
+
+    
+    public void addWordY(int y) {
+        this.y += y;
+    }
+    
     public void setWord(String msg){
         this.msg = msg;
     }
+
+     public void setWordX(int x) {
+            this.x = x;
+      }
     
     public int getWordX(){
         return this.x;

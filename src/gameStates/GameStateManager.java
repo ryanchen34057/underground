@@ -5,12 +5,16 @@ import fonts.Words;
 import gameObject.tiles.prize.Emerald;
 import gameStates.level.*;
 import graphics.SpriteManager;
+import static graphics.SpriteManager.c;
 import record.Timer;
 import record.Record;
 import java.awt.*;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Stack;
@@ -166,6 +170,61 @@ public class GameStateManager {
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
+
+    public void saveAndWriteRecord(Record record) {//遊戲紀錄
+            try {
+                  new File("./record").mkdir();
+                  FileOutputStream fileOut
+                          = new FileOutputStream("./record/" + "record" + record.getId() + ".ser");
+                  ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                  out.writeObject(record);
+                  out.close();
+                  fileOut.close();
+            } catch (IOException i) {
+                  i.printStackTrace();
+            }
+      }
+      public ArrayList readEndGameRecord(){//破關記錄
+            ArrayList<Record> records = null;
+            try {
+                  //讀檔
+                  FileInputStream fileIn = new FileInputStream("./record/" + "Leaderboard.ser");
+                  ObjectInputStream in = new ObjectInputStream(fileIn);
+                  records = (ArrayList)in.readObject();
+                  fileIn.close();
+                  in.close();
+            }catch(IOException | ClassNotFoundException e){
+                   e.printStackTrace();
+            }finally{
+                  return records;
+            }
+      }
+
+      public void saveEndGameRecord(Record record) {//寫入破關記錄
+            try {
+                  ArrayList<Record> endGame;
+                  if(readEndGameRecord() != null){
+                        endGame = readEndGameRecord();
+                  }else{
+                        endGame = new ArrayList<>();
+                  }
+                  //寫檔
+                  FileOutputStream fileOut = new FileOutputStream("./record/" + "Leaderboard.ser");
+                  ObjectOutputStream out = new ObjectOutputStream(fileOut); 
+                  endGame.add(record);
+                  //test
+                  for(int i=0;i<endGame.size();i++){
+                        System.out.println(endGame.get(i));
+                  }
+                  //
+                  out.writeObject(endGame);
+                  out.close();
+                  fileOut.close();          
+            } catch (IOException i) {
+                  System.out.println("!!");
+                  i.printStackTrace();
+            }
+      }
 
     public void saveAndWriteRecord(Record record) {
         try {

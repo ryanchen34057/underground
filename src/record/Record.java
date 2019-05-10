@@ -1,6 +1,7 @@
 package record;
 
 public class Record implements java.io.Serializable {
+    private static final long serialVersionUID = 34985786283949293L;
     private int id;
     private long  time;
     private String timeString;
@@ -40,4 +41,10 @@ public class Record implements java.io.Serializable {
     public int getDeathCount() {
         return deathCount;
     }
+    
+    @Override
+    public String toString(){
+      return id+","+time+","+timeString+","+emeraldCount+","+level+","+deathCount;
+    } 
+
 }

@@ -21,6 +21,7 @@ public class SoundEffectPlayer {
         soundEffects.put("Enter", new AudioFile("./src/audio/res/enter.wav"));
         soundEffects.put("Portal", new AudioFile("./src/audio/res/portal.wav"));
         soundEffects.put("End", new AudioFile("./src/audio/res/endGame.wav"));
+        soundEffects.put("Type", new AudioFile("./src/audio/KeyboardTyping.wav"));
     }
 
     public static void playSoundEffect(String move) {

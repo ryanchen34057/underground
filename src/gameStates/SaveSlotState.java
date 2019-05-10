@@ -4,7 +4,7 @@ import UI.Game;
 import UI.Window;
 import audio.SoundEffectPlayer;
 import fonts.Words;
-import gameStates.level.Level1State;
+import gameStates.level.Level0State;
 import graphics.SpriteManager;
 import input.Input;
 import map.Background;
@@ -75,7 +75,7 @@ public class SaveSlotState extends GameState {
                     gameStateManager.setSlotId(selected + 1);
                     gameStateManager.setDeathCount(0);
                     gameStateManager.setEmeraldCount(0);
-                    gameStateManager.setLevelState(new Level1State(gameStateManager));
+                    gameStateManager.setLevelState(new Level0State(gameStateManager));
                 } else {
                     gameStateManager.loadRecord(saveDatas[selected]);
                 }

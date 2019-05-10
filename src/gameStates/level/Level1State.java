@@ -1,15 +1,22 @@
 package gameStates.level;
 
+import UI.Game;
 import effects.DeathParticle;
 import enums.Id;
+import fonts.Words;
 import gameObject.character.Player;
 import gameStates.GameStateManager;
 import gameStates.LevelState;
+import graphics.Sprite;
 import graphics.SpriteManager;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import map.Background;
 import states.PlayerState;
 
 public class Level1State extends LevelState {
+    
     public Level1State(GameStateManager gameStateManager) {
         super(gameStateManager);
     }
@@ -22,6 +29,13 @@ public class Level1State extends LevelState {
         background = new Background("/res/background2.jpg", 1.0f);
         player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
+    }
+    @Override
+    public void paint(Graphics g) {
+        background.paint(g);
+        g.translate(cam.getX(), cam.getY());
+        paintAllGameObject(g);      
+        g.translate(-cam.getX(), -cam.getY());
     }
 
     @Override
