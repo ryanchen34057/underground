@@ -47,8 +47,11 @@ public class SpriteManager {
     //Arror
     public static Sprite arrow;
 
-    //Lava
-    public static Sprite lava;
+    //Empty diamond
+    public static Sprite emptyDiamond;
+
+    //Empty vanishing rock
+    public static Sprite emptyVanishingRock;
 
     public SpriteManager() {
         //Sprite object
@@ -62,6 +65,8 @@ public class SpriteManager {
         rightCursor = new Sprite(spriteSheet, 12, 9, 32, 32);
         leftCursor = new Sprite(spriteSheet, 13, 9, 32, 32);
         arrow = new Sprite(spriteSheet, 10, 10, 32, 32);
+        emptyDiamond = new Sprite(spriteSheet, 9, 7, 32, 32 );
+        emptyVanishingRock = new Sprite(spriteSheet, 2, 6, 32, 32);
 
 
         //BufferedImage object

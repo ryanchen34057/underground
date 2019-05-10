@@ -71,6 +71,8 @@ public class Window {
         frame.setVisible(true);
         musicPlayer = new MusicPlayer();
         musicPlayer.add("background");
+        musicPlayer.add("lastLevelBackground");
+        musicPlayer.add("endGame");
         pool.runTask(musicPlayer);
         pool.runTask(game);
         pool.join();

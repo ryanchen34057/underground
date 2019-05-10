@@ -20,6 +20,7 @@ public class SoundEffectPlayer {
         soundEffects.put("Cursor", new AudioFile("./src/audio/res/cursor.wav"));
         soundEffects.put("Enter", new AudioFile("./src/audio/res/enter.wav"));
         soundEffects.put("Portal", new AudioFile("./src/audio/res/portal.wav"));
+        soundEffects.put("End", new AudioFile("./src/audio/res/endGame.wav"));
     }
 
     public static void playSoundEffect(String move) {

@@ -57,9 +57,9 @@ public class FallingRock extends Tile {
     public void paint(Graphics g) {
         g.drawImage(bufferedImage, x, y, width, height, null);
         if(Game.debugMode) {
-            g.drawRect(x, y, width, height);
+            g.drawRect(x+(int)(width*0.08), y, width-2*(int)(width*0.08), height);
             g.setColor(Color.RED);
-            g.drawRect(x+(int)(width*0.1), y + (height - height/3), width-2*(int)(width*0.1),height/3);
+            g.drawRect(x+width/6, y + height, width-width/2,1);
             g.setColor(Color.GREEN);
         }
     }
@@ -106,7 +106,7 @@ public class FallingRock extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return new Rectangle(x+(int)(width*0.08), y, width-2*(int)(width*0.08), height);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class FallingRock extends Tile {
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(x+(int)(width*0.05), y + (height - height/3), width-(int)(width*0.05),height/3);
+        return new Rectangle(x+width/4, y + height, width-width/2,1);
     }
     @Override
     public  Rectangle getBoundsLeft() {

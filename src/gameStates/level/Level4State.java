@@ -5,6 +5,7 @@ import enums.Id;
 import gameObject.character.Player;
 import gameStates.GameStateManager;
 import gameStates.LevelState;
+import gameStates.TutorialState;
 import graphics.SpriteManager;
 import map.Background;
 import states.PlayerState;
@@ -65,7 +66,7 @@ public class Level4State extends LevelState {
         }
 
         if((player.isGoaled())) {
-            gameStateManager.setLevelState(new LastLevelState(gameStateManager));
+            gameStateManager.setLevelState(new TutorialState(gameStateManager));
         }
     }
 }

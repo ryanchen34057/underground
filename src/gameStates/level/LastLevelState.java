@@ -1,11 +1,12 @@
 package gameStates.level;
 
 import UI.Game;
-import UI.Window;
+import audio.MusicPlayer;
 import enums.Id;
 import gameObject.character.Player;
 import gameObject.tiles.Tile;
 import gameObject.tiles.trap.Lava;
+import gameStates.EndState;
 import gameStates.GameStateManager;
 import gameStates.LevelState;
 import graphics.SpriteManager;
@@ -17,13 +18,10 @@ import java.util.LinkedList;
 
 public class LastLevelState extends LevelState {
     private LinkedList<Lava> lavaLinkedList;
-    private static final int UP_SPEED = Game.UPDATES/3;
-    private int lavaUP;
-    private int lavaCurrentSpeed;
     private int speedDelay;
     private Rectangle rectangle;
+    private static final int DELAY = Game.UPDATES-100;
     private static final Color LAVA_COLOR = new Color(173, 64, 34);
-    private static final int MAX_SPEED = -18;
 
     public LastLevelState(GameStateManager gameStateManager) {
         super(gameStateManager);
@@ -35,11 +33,9 @@ public class LastLevelState extends LevelState {
         SpriteManager.levelInit();
         levelObjectInit();
         createLevel(SpriteManager.lastLevel);
-        background = new Background("/res/lavaBackground.png", 1.0f);
+        background = new Background("/res/lavaBackground2.png", 1.0f);
         player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
-        lavaUP = 0;
-        lavaCurrentSpeed = -8;
         speedDelay = 0;
         rectangle = new Rectangle(0, 0, Lava.LAVA_WIDTH*mapWidth, 0);
     }
@@ -61,15 +57,12 @@ public class LastLevelState extends LevelState {
 
         // Update all game object
         updateAllGameObject();
-        if(speedDelay++ >= Game.UPDATES*2 && lavaCurrentSpeed >= MAX_SPEED) {
-            speedDelay = 0;
-            lavaCurrentSpeed--;
-        }
+
         for(Lava lava: lavaLinkedList) {
-            player.handleCollision(lava, player.checkCollisionBounds(lava, Tile::getBounds));
-            if(lavaUP++ >= UP_SPEED) {
-                lavaUP = 0;
-                lava.setVelY(lavaCurrentSpeed * Game.heightRatio);
+            player.handleCollision(lava, player.checkCollisionVertical(lava, Tile::getBounds));
+            if(speedDelay++ >= DELAY) {
+                speedDelay = 0;
+                lava.setVelY(-10 * Game.heightRatio);
             }
             else {
                 lava.setVelY(0);
@@ -94,18 +87,17 @@ public class LastLevelState extends LevelState {
         }
 
         if((player.isGoaled())) {
-            gameStateManager.setLevelState(new Level2State(gameStateManager));
+            MusicPlayer.isOn = false;
+            MusicPlayer.changeSong(2);
+            MusicPlayer.isOn = true;
+            gameStateManager.setGameState(new EndState(gameStateManager));
         }
     }
 
     @Override
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-//        if(alpha <= 0.99f) {
-//            fadeIn(g2);
-//        }
-//        else {
-        background.paint(g2);
+        fadeIn(g2);
         g2.translate(cam.getX(), cam.getY());
         paintAllGameObject(g2);
         for(Lava lava: lavaLinkedList) {

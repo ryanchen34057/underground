@@ -3,8 +3,8 @@ package audio;
 import java.util.ArrayList;
 
 public class MusicPlayer implements Runnable {
-    private ArrayList<AudioFile> musicFiles;
-    private int currentSongIndex;
+    private static ArrayList<AudioFile> musicFiles;
+    private static AudioFile currentSong;
     public static boolean running;
     public static boolean isOn;
 
@@ -22,15 +22,23 @@ public class MusicPlayer implements Runnable {
         return musicFiles.size();
     }
 
+    public static void changeSong(int index) {
+        currentSong.stop();
+        currentSong = musicFiles.get(index);
+
+    }
+
     @Override
     public void run() {
-        AudioFile song = musicFiles.get(currentSongIndex);
+        if(currentSong == null) {
+            currentSong = musicFiles.get(0);
+        }
         while(running) {
             if(!isOn) {
-                song.stop();
+                currentSong.stop();
             }
             else {
-                song.play();
+                currentSong.play();
             }
 //            if(!song.isPlaying()) {
 //                currentSongIndex++;

@@ -2,6 +2,7 @@ package gameStates;
 
 import UI.Game;
 import UI.Window;
+import audio.MusicPlayer;
 import effects.Effect;
 import enums.Direction;
 import enums.Id;
@@ -11,7 +12,6 @@ import gameObject.tiles.Tile;
 import gameObject.tiles.portal.Portal;
 import gameObject.tiles.prize.Diamond;
 import gameStates.level.LastLevelState;
-import gameStates.level.Level2State;
 import graphics.SpriteManager;
 import map.Background;
 import states.PlayerState;
@@ -23,10 +23,6 @@ public class TutorialState extends LevelState {
     private float alpha;
     private ArrayList<Words> words;
     private Player player;
-    private int respawnRate;
-    private int respawnCount;
-    private boolean diamondIsEaten;
-    private Diamond diamond;
 
     public TutorialState(GameStateManager gameStateManager) {
         super(gameStateManager);
@@ -43,15 +39,12 @@ public class TutorialState extends LevelState {
         levelObjectInit();
         createLevel(SpriteManager.tutorial);
         alpha = 0.3f;
-        background = new Background("/res/lastLevelBackground.png", 1.0f);
+        background = new Background("/res/lavaBackground2.png", 1.0f);
         words = new ArrayList<>();
         words.add(new Words("Portal to last level", (int)(30* Game.widthRatio), (int)(background.getWidth()*0.85), (int)(100*Game.heightRatio)));
         words.add(new Words("Eat the diamond to reset your dash!", (int)(25*Game.widthRatio), (int)(640*Game.widthRatio), (int)(350*Game.heightRatio)));
         player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
-        respawnRate = 150;
-        respawnCount = 0;
-        diamondIsEaten = false;
     }
 
     @Override
@@ -73,29 +66,15 @@ public class TutorialState extends LevelState {
         for(int i=0;i<tiles.size();i++) {
             t = tiles.get(i);
             t.update();
-            if(t.getId() == Id.diamond) {
-                diamond = (Diamond) t;
-            }
             // ********* Player collision detection **********
             if (t.getBounds() != null && player.inTheScreen(t)) {
-                Direction direction = player.checkCollisionBounds(t, Tile::getBounds);
+                Direction direction = player.checkCollisionVertical(t, Tile::getBounds);
                 player.handleCollision(t, direction);
             }
-                // ***********************************************
-
             if(t.isDead()) {
-                diamondIsEaten = true;
                 tiles.remove(t);
             }
-        }
-
-        if(diamondIsEaten) {
-            respawnCount++;
-            if(respawnCount >= respawnRate) {
-                tiles.add(diamond.getInstance());
-                respawnCount = 0;
-                diamondIsEaten = false;
-            }
+                // ***********************************************
         }
 
         //Check if on the ground
@@ -113,6 +92,9 @@ public class TutorialState extends LevelState {
         }
 
         if((player.isGoaled())) {
+            MusicPlayer.isOn = false;
+            MusicPlayer.changeSong(1);
+            MusicPlayer.isOn = true;
             gameStateManager.setLevelState(new LastLevelState(gameStateManager));
         }
     }

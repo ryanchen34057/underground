@@ -30,7 +30,8 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public abstract class LevelState extends GameState {
-    public static final int DEATH_DELAY_TIME = 20;
+    private static final int DEATH_DELAY_TIME = 20;
+    private static final float FADEIN_TIME = 1.8f;
     protected Player player;
     protected LinkedList<Tile> tiles;
     protected  LinkedList<Effect> effects;
@@ -130,20 +131,21 @@ public abstract class LevelState extends GameState {
     }
 
     public void updateAllGameObject() {
-        if(alpha <= 0.97f) alpha += 0.99 / (1.3f*Game.UPDATES);
+        if(alpha <= 0.97f) alpha += 0.99 / (FADEIN_TIME*Game.UPDATES);
 
         //Update player
         player.update();
 
         Tile t;
         player.setOnTheGround(false);
+        player.setOnTheWall(false);
         Direction direction;
         for(int i=0;i<tiles.size();i++) {
             t = tiles.get(i);
             if(inTheScreen(t)) {
                 t.update();
                 if (t instanceof FallingRock) {
-                    if (Math.abs(player.getY() - t.getY()) < (500 * Game.heightRatio) && Math.abs(player.getX() - t.getX()) < 150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
+                    if (Math.abs(player.getY() - t.getY()) < (700 * Game.heightRatio) && Math.abs(player.getX() - t.getX()) < 150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
                         ((FallingRock) t).setShaking(true);
                     }
                     if (((FallingRock) t).getCurrentEffect() instanceof LandingEffect) {
@@ -154,7 +156,8 @@ public abstract class LevelState extends GameState {
                 }
                 // ********* Player collision detection **********
                 if (t.getBounds() != null && player.inTheScreen(t)) {
-                    direction = player.checkCollisionBounds(t, Tile::getBounds);
+                    player.handleCollision(t, player.checkCollisionVertical(t, Tile::getBounds));
+                    direction = player.checkCollisionHorizontal(t, Tile::getBounds);
                     player.handleCollision(t, direction);
                 }
                 // ***********************************************

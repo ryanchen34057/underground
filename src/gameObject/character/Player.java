@@ -8,8 +8,10 @@ import enums.Id;
 import gameObject.ICollidable;
 import gameObject.tiles.movable.FallingRock;
 import gameObject.tiles.portal.Portal;
+import gameObject.tiles.prize.Diamond;
 import gameObject.tiles.trap.Spring;
 import gameObject.tiles.wall.IceWall;
+import gameObject.tiles.wall.VanishingRock;
 import graphics.FrameManager;
 import input.Input;
 import gameObject.tiles.Tile;
@@ -153,6 +155,7 @@ public class Player extends Entity {
 
     @Override
     public void update() {
+        //System.out.println(isOnTheWall);
         if(!isDead) {
 //            if (prevState != currentState) {
 //                prevState = currentState;
@@ -210,7 +213,6 @@ public class Player extends Entity {
     public boolean isGoaled() {
         return isGoaled;
     }
-
     public void setOnTheWall(boolean onTheWall) {
         isOnTheWall = onTheWall;
     }
@@ -289,7 +291,7 @@ public class Player extends Entity {
         if(!Game.infinityMode) isDead = true;
     }
 
-    public Direction checkCollisionBounds(Tile t, CollisionCondition collisionCondition) {
+    public Direction checkCollisionVertical(Tile t, CollisionCondition collisionCondition) {
         if(t instanceof Portal) {
             if(getBounds().intersects(t.getBounds())) {
                 t.die();
@@ -309,9 +311,20 @@ public class Player extends Entity {
         if(getBoundsRight().intersects(collisionCondition.checkCollision(t))) {
             return Direction.RIGHT;
         }
-
         return null;
     }
+
+    public Direction checkCollisionHorizontal(Tile t, CollisionCondition collisionCondition) {
+        if(getBoundsLeft().intersects(collisionCondition.checkCollision(t))) {
+            return Direction.LEFT;
+        }
+        if(getBoundsRight().intersects(collisionCondition.checkCollision(t))) {
+            return Direction.RIGHT;
+        }
+        return null;
+    }
+
+
 
     public boolean isInTheAir() {
         return currentState == PlayerState.standingJumping ||
@@ -331,14 +344,10 @@ public class Player extends Entity {
 
     @Override
     public void handleCollision(ICollidable other, Direction direction) {
-        if(direction == null) {
-            return;
-        }
-        if(!isDead) {
+        if(!isDead && direction != null) {
             this.reactToCollision(other, direction);
+            other.reactToCollision(this, direction);
         }
-        other.reactToCollision(this, direction);
-
     }
 
     @Override
@@ -346,7 +355,7 @@ public class Player extends Entity {
         Tile t = (Tile) other;
         switch (t.getId()) {
             case diamond:
-                if(isTired) {
+                if(!(((Diamond)t).isEaten()) && isTired) {
                     isTired = false;
                 }
                 break;
@@ -391,9 +400,12 @@ public class Player extends Entity {
                 }
                 ifHitWall(t, direction);
                 break;
+            case vanishingRock:
+                if(((VanishingRock)t).isDisappear()) {
+                    return;
+                }
             case breakableWall:
             case icewall1:
-            case vanishingRock:
             case spring:
             case halfHeightWall:
             case halfWidthWall:
@@ -473,7 +485,6 @@ public class Player extends Entity {
                     isOnTheIce = false;
                 }
                 isOnTheGround = true;
-                isOnTheWall = false;
                 fatigue = 0;
                 break;
             case LEFT:
@@ -483,6 +494,7 @@ public class Player extends Entity {
                     x = collisionRect.x + collisionRect.width - (getBoundsLeft().x - x);
                 }
                 if(t instanceof Spring && ((Spring) t).getDirection() == RIGHT) {
+                    velY = 0;
                     x = collisionRect.x + collisionRect.width - (getBoundsLeft().x - x);
                     currentState = PlayerState.springHorizontal;
                     currentDashSpeed = (int)(DASH_SPEED*1.5);
@@ -490,14 +502,16 @@ public class Player extends Entity {
                     SoundEffectPlayer.playSoundEffect("SpringJumping");
                     ((Spring) t).setStepOn(true);
                 }
-                if(t.getId() != Id.icewall1 && currentState == PlayerState.falling && Input.keys.get(2).down && fatigue < STAMINA) {
-                    currentState = PlayerState.sliding;
-                    SoundEffectPlayer.playSoundEffect("Landing");
-                    isOnTheWall = true;
+                if(t.getId() != Id.icewall1) {
+                    if(Input.keys.get(2).down && fatigue < STAMINA && currentState == PlayerState.falling) {
+                        currentState = PlayerState.sliding;
+                        SoundEffectPlayer.playSoundEffect("Landing");
+                    }
                 }
                 if(currentState == PlayerState.iceSkating && velX == 0) {
                     currentState = PlayerState.standing;
                 }
+                isOnTheWall = true;
                 break;
             case RIGHT:
                 //System.out.println("RIGHT");
@@ -506,6 +520,7 @@ public class Player extends Entity {
                     x = collisionRect.x - width + ((x+width)-(getBoundsRight().x+getBoundsRight().width));
                 }
                 if(t instanceof Spring && ((Spring) t).getDirection() == Direction.LEFT) {
+                    velY = 0;
                     x = collisionRect.x - width + ((x+width)-(getBoundsRight().x+getBoundsRight().width));
                     currentState = PlayerState.springHorizontal;
                     currentDashSpeed = (int)(DASH_SPEED*1.5);
