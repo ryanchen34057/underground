@@ -1,6 +1,8 @@
 package gameStates;
 
 import UI.Game;
+import audio.MusicPlayer;
+import audio.SoundEffectPlayer;
 import fonts.Words;
 import static gameStates.GameState.locked;
 import gameStates.level.Level0State;
@@ -17,6 +19,7 @@ public class StoryState extends GameState {
       private float count;
       private int sentCount;
       private int currentLength;
+     
 
       public StoryState(GameStateManager gameStateManager) {
             super(gameStateManager);
@@ -44,10 +47,12 @@ public class StoryState extends GameState {
                   words.add(new Words(sent.get(i).substring(0, (int) count), 30, (int) (Game.WIDTH * Game.SCALE / 2), (int) (Game.HEIGHT * Game.SCALE / 2)));
             }
             currentLength = sent.get(0).length();
+            //audio
+            
       }
 
       public void init() {
-            background = new Background("/res/Black.png", Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE);
+            background = new Background("/res/Black.png", Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE);          
       }
 
       public void handleKeyInput() {
@@ -63,9 +68,14 @@ public class StoryState extends GameState {
       }
 
       public void update() {
+            
             if(sentCount<sent.size()){
                   count += 0.2;
                   type(count, sentCount);
+                  if(sentCount<sent.size()-1){
+                        SoundEffectPlayer.playSoundEffect("Type");
+                  }
+                  
             }//控制速率
             
              handleKeyInput();       
@@ -92,7 +102,6 @@ public class StoryState extends GameState {
                   return;
             }
             words.get(sentCount).setWord(sent.get(sentCount).substring(0, (int)count));
-            
       }
 
       public void setCurrentLength(int sentCount) {

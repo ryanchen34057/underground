@@ -14,6 +14,8 @@ public class SoundEffectPlayer {
         soundEffects.put("SpringJumping", new AudioFile("./src/audio/springJumping.wav"));
         soundEffects.put("Death", new AudioFile("./src/audio/death.wav"));
         soundEffects.put("Prize", new AudioFile("./src/audio/prize.wav"));
+        soundEffects.put("Type", new AudioFile("./src/audio/KeyboardTyping.wav"));
+        
 //        soundEffects.put("FallingRockHit", new AudioFile("./src/audio/fallingRockHit.wav"));
     }
 

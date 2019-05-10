@@ -58,6 +58,10 @@ public class Words {
       public int getWordX() {
             return this.x;
       }
+      
+      public void setWordX(int x) {
+            this.x = x;
+      }
 
       public int getWordY() {
             return this.y;
