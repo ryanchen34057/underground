@@ -1,6 +1,7 @@
 package gameStates;
 
 import UI.Game;
+import UI.Window;
 import fonts.Words;
 import static gameStates.GameState.locked;
 import graphics.SpriteManager;
@@ -30,14 +31,14 @@ public class LeaderboardState extends GameState {
             records = new ArrayList<>();
             words = new Words[5];
             for(int i=0;i<5;i++){//無紀錄，先給空值
-                  words[i] = new Words((i+1)+". noRecord", 40, Game.WIDTH*Game.SCALE/3, Game.HEIGHT*Game.SCALE/2+20+60*i);
+                  words[i] = new Words((i+1)+". noRecord", 40, Window.scaledGameWidth /3, Window.scaledGameHeight/2+20+60*i);
             }
             init();
       }
 
       public void init() {
-            background = new Background("/res/Cave1.png", Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE);
-            wordTitle = new Words("Leaderboard", 60, Game.WIDTH * Game.SCALE /2, Game.HEIGHT * Game.SCALE / 2 - 180);
+            background = new Background("/res/Cave1.png", Window.scaledGameWidth, Window.scaledGameHeight);
+            wordTitle = new Words("Leaderboard", 60, Window.scaledGameWidth /2,  Window.scaledGameHeight / 2 - 180);
 
             if(gameStateManager.readEndGameRecord() != null){
                   records = gameStateManager.readEndGameRecord();//讀取
@@ -95,11 +96,11 @@ public class LeaderboardState extends GameState {
                         words[i].paint(g);
                         if(i<records.size()){      
                               //寶石
-                              Words eCWords = new Words("X " + records.get(i).getEmeraldCount(), 30,Game.WIDTH*Game.SCALE/2+80,words[i].getWordY());
+                              Words eCWords = new Words("X " + records.get(i).getEmeraldCount(), 30,Window.scaledGameWidth/2+80,words[i].getWordY());
                               eCWords.paint(g);
                               g.drawImage(SpriteManager.emerald.getBufferedImage(), eCWords.getWordX()-104 , words[i].getWordY()-64, 64, 64, null);
                               //死亡
-                              Words eDWords = new Words("X " + records.get(i).getDeathCount(), 30,Game.WIDTH*Game.SCALE/2+280,words[i].getWordY());
+                              Words eDWords = new Words("X " + records.get(i).getDeathCount(), 30,Window.scaledGameWidth/2+280,words[i].getWordY());
                               eDWords.paint(g);
                               g.drawImage(SpriteManager.skull.getBufferedImage(), eDWords.getWordX()-104, words[i].getWordY()-64, 64, 64, null); 
                         }

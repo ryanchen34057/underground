@@ -11,6 +11,7 @@ import gameStates.GameStateManager;
 import gameStates.LevelState;
 import graphics.SpriteManager;
 import map.Background;
+import record.Record;
 import states.PlayerState;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -91,6 +92,9 @@ public class LastLevelState extends LevelState {
             MusicPlayer.changeSong(2);
             MusicPlayer.isOn = true;
             gameStateManager.setGameState(new EndState(gameStateManager));
+            //過關存檔
+            gameStateManager.saveEndGameRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(),
+                    gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
         }
     }
 

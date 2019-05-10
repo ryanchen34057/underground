@@ -61,7 +61,6 @@ public class SpriteManager {
     //Empty vanishing rock
     public static Sprite emptyVanishingRock;
 
-    public static BufferedImage pause; 
 
     public SpriteManager() {
         //Sprite object

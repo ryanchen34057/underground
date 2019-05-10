@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -48,8 +49,8 @@ public class GameStateManager {
         emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(50 * Game.heightRatio));
         deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRatio));
         infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
-        //setGameState(new MenuState(this));
-        setLevelState(new TutorialState(this));
+        setGameState(new MenuState(this));
+        //setLevelState(new TutorialState(this));
     }
 
     //Getters
@@ -184,6 +185,7 @@ public class GameStateManager {
                   i.printStackTrace();
             }
       }
+
       public ArrayList readEndGameRecord(){//破關記錄
             ArrayList<Record> records = null;
             try {
@@ -225,20 +227,6 @@ public class GameStateManager {
                   i.printStackTrace();
             }
       }
-
-    public void saveAndWriteRecord(Record record) {
-        try {
-            new File("./record").mkdir();
-            FileOutputStream fileOut =
-                    new FileOutputStream("./record/" + "record" + record.getId() + ".ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(record);
-            out.close();
-            fileOut.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
-    }
 
     public void loadRecord(Record record) {
         slotId = record.getId();
