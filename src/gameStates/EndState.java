@@ -2,6 +2,7 @@ package gameStates;
 
 import UI.Game;
 import UI.Window;
+import audio.MusicPlayer;
 import fonts.Words;
 import graphics.SpriteManager;
 import input.Input;
@@ -46,6 +47,7 @@ public class EndState extends GameState {
         if(!locked) {
             if(Input.keys.get(7).down) {
                 locked = true;
+                MusicPlayer.changeSong(0);
                 gameStateManager.toMenu();
             }
         }

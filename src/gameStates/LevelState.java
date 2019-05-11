@@ -255,7 +255,7 @@ public abstract class LevelState extends GameState {
         return "LevelState";
     }
 
-    private boolean inTheScreen(Tile t) {
+    protected boolean inTheScreen(Tile t) {
         return (t.getX() >= player.getX() - (Window.scaledGameWidth)) && (t.getX() < player.getX() + (Window.scaledGameWidth))
                 && (t.getY() >= player.getY() - (Window.scaledGameHeight)) && (t.getY() < player.getY() + (Window.scaledGameHeight));
     }

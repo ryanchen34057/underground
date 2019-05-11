@@ -88,7 +88,9 @@ public class LastLevelState extends LevelState {
         g2.translate(cam.getX(), cam.getY());
         paintAllGameObject(g2);
         for(Lava lava: lavaLinkedList) {
-            lava.paint(g2);
+            if(inTheScreen(lava)) {
+                lava.paint(g2);
+            }
         }
         g2.setColor(LAVA_COLOR);
         g2.fillRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
