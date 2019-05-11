@@ -23,17 +23,20 @@ import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
 import graphics.SpriteManager;
 import input.Input;
+import states.PlayerState;
 import util.Camera;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public abstract class LevelState extends GameState {
     private static final int DEATH_DELAY_TIME = 20;
     private static final float FADEIN_TIME = 1.8f;
     protected Player player;
-    protected LinkedList<Tile> tiles;
+    protected ArrayList<Tile> tiles;
     protected  LinkedList<Effect> effects;
     protected  LinkedList<ParticleSystem> particles;
 
@@ -43,7 +46,7 @@ public abstract class LevelState extends GameState {
     // SerialNum of the emerald;
     protected int emeraldSerial;
 
-    protected LinkedList<FallingRock> fallingRocks;
+    protected ArrayList<FallingRock> fallingRocks;
     protected static Camera cam;
     protected float alpha;
     protected int mapWidth;
@@ -56,10 +59,10 @@ public abstract class LevelState extends GameState {
     public abstract LevelState getInstance();
 
     public void levelObjectInit() {
-        tiles = new LinkedList<>();
+        tiles = new ArrayList<>();
         effects = new LinkedList<>();
         particles = new LinkedList<>();
-        fallingRocks = new LinkedList<>();
+        fallingRocks = new ArrayList<>();
         cam = new Camera();
         emeraldSerial = 0;
         alpha = 0.0f;
@@ -116,22 +119,36 @@ public abstract class LevelState extends GameState {
     public void paintAllGameObject(Graphics g) {
         player.paint(g);
         Tile t;
-        for(int i=0;i<tiles.size();i++) {
-            t = tiles.get(i);
+        Iterator<Tile> tileIterator = tiles.iterator();
+        while(tileIterator.hasNext()) {
+            t = tileIterator.next();
             if(inTheScreen(t)) {
                 t.paint(g);
             }
         }
-        for(int i=0;i<effects.size();i++) {
-            effects.get(i).paint(g);
+        Effect e;
+        Iterator<Effect> effectIterator = effects.iterator();
+        while(effectIterator.hasNext()) {
+            e = effectIterator.next();
+            e.paint(g);
         }
-        for(int i=0;i<particles.size();i++) {
-            particles.get(i).paint(g);
+        ParticleSystem p;
+        Iterator<ParticleSystem> particleSystemIterator = particles.iterator();
+        while(particleSystemIterator.hasNext()) {
+            p = particleSystemIterator.next();
+            p.paint(g);
         }
     }
 
     public void updateAllGameObject() {
         if(alpha <= 0.97f) alpha += 0.99 / (FADEIN_TIME*Game.UPDATES);
+
+        // Paint effect
+        if(player.getCurrentEffect() != null && effects.size() == 0) {
+            effects.add(player.getCurrentEffect());
+            player.setCurrentEffect(null);
+        }
+
 
         //Update player
         player.update();
@@ -140,8 +157,9 @@ public abstract class LevelState extends GameState {
         player.setOnTheGround(false);
         player.setOnTheWall(false);
         Direction direction;
-        for(int i=0;i<tiles.size();i++) {
-            t = tiles.get(i);
+        Iterator<Tile> tileIterator = tiles.iterator();
+        while(tileIterator.hasNext()) {
+            t = tileIterator.next();
             if(inTheScreen(t)) {
                 t.update();
                 if (t instanceof FallingRock) {
@@ -181,24 +199,26 @@ public abstract class LevelState extends GameState {
                 if(t instanceof Emerald) {
                     gameStateManager.incrementEmeraldCount();
                 }
-                tiles.remove(t);
+                tileIterator.remove();
             }
         }
 
         Effect e;
-        for(int i=0;i<effects.size();i++) {
-            e = effects.get(i);
+        Iterator<Effect> effectIterator = effects.iterator();
+        while(effectIterator.hasNext()) {
+            e = effectIterator.next();
             e.update();
             if(e.isDead()) {
-                effects.remove(e);
+                effectIterator.remove();
             }
         }
         ParticleSystem p;
-        for(int i=0;i<particles.size();i++) {
-            p =  particles.get(i);
+        Iterator<ParticleSystem> particleSystemIterator = particles.iterator();
+        while(particleSystemIterator.hasNext()) {
+            p = particleSystemIterator.next();
             p.update();
             if(p.isDead()) {
-                particles.remove(p);
+                particleSystemIterator.remove();
             }
         }
         // ********* Player death ************
@@ -214,6 +234,20 @@ public abstract class LevelState extends GameState {
             }
         }
         // ************************************
+
+        // Check if on the ice
+        if(player.isOnTheIce() && player.getCurrentState() != PlayerState.standing) {
+            player.setCurrentState(PlayerState.iceSkating);
+        }
+
+        //Check if on the ground
+        if(!player.isInTheAir() && !player.isOnTheGround()) {
+            player.setCurrentState(PlayerState.falling);
+        }
+
+        //Update camera
+        cam.update(player, mapWidth, mapHeight);
+
     }
 
     @Override
@@ -301,7 +335,7 @@ public abstract class LevelState extends GameState {
                     }
                 }
                 else if (red == 255 && green == 150 && blue == 255) {
-                    tiles.add( new Diamond(x * Emerald.PRIZE_SIZE, y * Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 0, Id.diamond));
+                    tiles.add( new Diamond(x * Emerald.PRIZE_SIZE, y * Emerald.PRIZE_SIZE, Diamond.DIAMOND_SIZE, Diamond.DIAMOND_SIZE, 0, Id.diamond));
                 }
                 else if(red == 255 && green == 150 && blue == 150) {
                     tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.UP));

@@ -18,11 +18,11 @@ import states.PlayerState;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class TutorialState extends LevelState {
     private float alpha;
     private ArrayList<Words> words;
-    private Player player;
 
     public TutorialState(GameStateManager gameStateManager) {
         super(gameStateManager);
@@ -49,47 +49,14 @@ public class TutorialState extends LevelState {
 
     @Override
     public void update() {
-        //Handle player's keyInput
-        player.handleKeyInput();
+        // handle player's keyInput
+        handleKeyInput();
 
-        //Update player
-        player.update();
+        // Set position of the background
+        background.setPos(cam.getX(), cam.getY());
 
-        // Paint effect
-        if(player.getCurrentEffect() != null && effects.size() == 0) {
-            effects.add(player.getCurrentEffect());
-            player.setCurrentEffect(null);
-        }
-
-        Tile t;
-        player.setOnTheGround(false);
-        for(int i=0;i<tiles.size();i++) {
-            t = tiles.get(i);
-            t.update();
-            // ********* Player collision detection **********
-            if (t.getBounds() != null && player.inTheScreen(t)) {
-                Direction direction = player.checkCollisionVertical(t, Tile::getBounds);
-                player.handleCollision(t, direction);
-            }
-            if(t.isDead()) {
-                tiles.remove(t);
-            }
-                // ***********************************************
-        }
-
-        //Check if on the ground
-        if(!player.isInTheAir() && !player.isOnTheGround()) {
-            player.setCurrentState(PlayerState.falling);
-        }
-
-        Effect e;
-        for(int i=0;i<effects.size();i++) {
-            e = effects.get(i);
-            e.update();
-            if(e.isDead()) {
-                effects.remove(e);
-            }
-        }
+        // Update all game object
+        updateAllGameObject();
 
         if((player.isGoaled())) {
             MusicPlayer.isOn = false;
@@ -117,9 +84,12 @@ public class TutorialState extends LevelState {
         // Paint the player
         player.paint(g);
 
-        for(int i=0;i<tiles.size();i++) {
-            if(tiles.get(i) instanceof Diamond || tiles.get(i) instanceof Portal) {
-                tiles.get(i).paint(g);
+        Iterator<Tile> tileIterator = tiles.iterator();
+        Tile t;
+        while(tileIterator.hasNext()) {
+            t = tileIterator.next();
+            if(t instanceof Diamond || t instanceof Portal) {
+                t.paint(g);
             }
         }
 

@@ -49,7 +49,7 @@ public class MenuState extends GameState{
                         locked = true;
                         break;
                     case 1:
-                        //gameStateManager.setGameState(new LeaderboardState(gameStateManager));
+                        gameStateManager.setGameState(new LeaderboardState(gameStateManager));
                         locked = true;
                         break;
                     case 2:

@@ -66,22 +66,22 @@ public class SpriteManager {
         //Sprite object
         spriteSheet = new SpriteSheet("/res/spriteSheet.png");
         lavaSheet = new SpriteSheet("/res/lava.png");
-        emerald = new Sprite(spriteSheet, 1, 9, 32, 32);
-        skull = new Sprite(spriteSheet, 9, 9, 32, 32);
-        vanishingRock = new Sprite(spriteSheet, 1,6,32,32);
-        enterKey = new Sprite(spriteSheet, 10,9, 32, 32);
-        xKey = new Sprite(spriteSheet, 11,9, 32, 32);
-        rightCursor = new Sprite(spriteSheet, 12, 9, 32, 32);
-        leftCursor = new Sprite(spriteSheet, 13, 9, 32, 32);
-        arrow = new Sprite(spriteSheet, 10, 10, 32, 32);
-        emptyDiamond = new Sprite(spriteSheet, 9, 7, 32, 32 );
-        emptyVanishingRock = new Sprite(spriteSheet, 2, 6, 32, 32);
-        signboard = new Sprite(spriteSheet,9,8,32,32);
-        c = new Sprite(spriteSheet,14,9,32,32);
-        x = new Sprite(spriteSheet,11,9,32,32);
-        esc = new Sprite(spriteSheet,15,9,32,32);
-        left = new Sprite(spriteSheet,16,9,32,32);
-        right = new Sprite(spriteSheet,17,9,32,32);
+        emerald = new Sprite(spriteSheet, 1, 9, 64, 64);
+        skull = new Sprite(spriteSheet, 9, 9, 64, 64);
+        vanishingRock = new Sprite(spriteSheet, 1,6,64,64);
+        enterKey = new Sprite(spriteSheet, 10,9, 64, 64);
+        xKey = new Sprite(spriteSheet, 11,9, 64, 64);
+        rightCursor = new Sprite(spriteSheet, 12, 9, 64, 64);
+        leftCursor = new Sprite(spriteSheet, 13, 9, 64, 64);
+        arrow = new Sprite(spriteSheet, 10, 10, 64, 64);
+        emptyDiamond = new Sprite(spriteSheet, 9, 7, 64, 64 );
+        emptyVanishingRock = new Sprite(spriteSheet, 2, 6, 64, 64);
+        signboard = new Sprite(spriteSheet,9,8,64,64);
+        c = new Sprite(spriteSheet,14,9,64,64);
+        x = new Sprite(spriteSheet,11,9,64,64);
+        esc = new Sprite(spriteSheet,15,9,64,64);
+        left = new Sprite(spriteSheet,16,9,64,64);
+        right = new Sprite(spriteSheet,17,9,64,64);
 
 
         //BufferedImage object
@@ -102,13 +102,13 @@ public class SpriteManager {
     public static void levelInit() {
         level1Sprites = new ArrayList<>();
         for(int i=1;i<=30;i++) {
-            level1Sprites.add(new Sprite(spriteSheet, i, 1, 32, 32));
+            level1Sprites.add(new Sprite(spriteSheet, i, 1, 64, 64));
         }
         for(int i=1;i<=4;i++) {
-            level1Sprites.add( new Sprite(spriteSheet, i, 5, 32, 32));
+            level1Sprites.add( new Sprite(spriteSheet, i, 5, 64, 64));
         }
         for(int i=1;i<=14;i++) {
-            level1Sprites.add(new Sprite(spriteSheet, i, 2, 32, 32));
+            level1Sprites.add(new Sprite(spriteSheet, i, 2, 64, 64));
         }
     }
 }

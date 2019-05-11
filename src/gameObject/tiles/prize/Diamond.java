@@ -13,6 +13,7 @@ import util.CollisionCondition;
 import java.awt.*;
 
 public class Diamond extends Prize {
+    public static final int DIAMOND_SIZE = (int)(80 * Game.widthRatio);
     private int frameDelay, frame;
     private static final int RESPAWN_RATE = 300;
     private int count;
@@ -59,7 +60,7 @@ public class Diamond extends Prize {
         }
         else {
             frameDelay++;
-            if (frameDelay >= 5/Game.UpdatesRatio) {
+            if (frameDelay >= 10/Game.UpdatesRatio) {
                 frame++;
                 if (frame >= FrameManager.getEmeralFrame().length) {
                     frame = 0;
@@ -111,7 +112,9 @@ public class Diamond extends Prize {
 
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
-        SoundEffectPlayer.playSoundEffect("Prize");
-        isEaten = true;
+        if(!isEaten) {
+            SoundEffectPlayer.playSoundEffect("Prize");
+            isEaten = true;
+        }
     }
 }

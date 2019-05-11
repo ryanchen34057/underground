@@ -44,27 +44,8 @@ public class Level2State extends LevelState {
         // Set position of the background
         background.setPos(cam.getX(), cam.getY());
 
-
-        // Paint effect
-        if(player.getCurrentEffect() != null && effects.size() == 0) {
-            effects.add(player.getCurrentEffect());
-            player.setCurrentEffect(null);
-        }
-
         // Update all game object
         updateAllGameObject();
-        cam.update(player, mapWidth, mapHeight);
-
-
-        // Check if on the ice
-        if(player.isOnTheIce() && player.getCurrentState() != PlayerState.standing) {
-            player.setCurrentState(PlayerState.iceSkating);
-        }
-
-        //Check if on the ground
-        if(!player.isInTheAir() && !player.isOnTheGround()) {
-            player.setCurrentState(PlayerState.falling);
-        }
 
         if((player.isGoaled())) {
             gameStateManager.setLevelState(new Level3State(gameStateManager));

@@ -15,10 +15,11 @@ import record.Record;
 import states.PlayerState;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class LastLevelState extends LevelState {
-    private LinkedList<Lava> lavaLinkedList;
+    private ArrayList<Lava> lavaLinkedList;
     private int speedDelay;
     private Rectangle rectangle;
     private static final int DELAY = Game.UPDATES-100;
@@ -30,7 +31,7 @@ public class LastLevelState extends LevelState {
 
     @Override
     public void init() {
-        lavaLinkedList = new LinkedList<>();
+        lavaLinkedList = new ArrayList<>();
         SpriteManager.levelInit();
         levelObjectInit();
         createLevel(SpriteManager.lastLevel);
@@ -50,12 +51,6 @@ public class LastLevelState extends LevelState {
         // Set position of the background
         background.setPos(cam.getX(), cam.getY());
 
-        // Paint effect
-        if(player.getCurrentEffect() != null && effects.size() == 0) {
-            effects.add(player.getCurrentEffect());
-            player.setCurrentEffect(null);
-        }
-
         // Update all game object
         updateAllGameObject();
 
@@ -74,18 +69,6 @@ public class LastLevelState extends LevelState {
         Lava lava = lavaLinkedList.get(0);
         rectangle.y = lava.getY() + (int)(lava.getHeight() / 1.2);
         rectangle.height = Lava.LAVA_HEIGHT * mapHeight - (lava.getY() + lava.getHeight());
-
-        cam.update(player, mapWidth, mapHeight);
-
-        // Check if on the ice
-        if(player.isOnTheIce() && player.getCurrentState() != PlayerState.standing) {
-            player.setCurrentState(PlayerState.iceSkating);
-        }
-
-        //Check if on the ground
-        if(!player.isInTheAir() && !player.isOnTheGround()) {
-            player.setCurrentState(PlayerState.falling);
-        }
 
         if((player.isGoaled())) {
             MusicPlayer.isOn = false;

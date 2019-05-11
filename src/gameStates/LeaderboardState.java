@@ -1,15 +1,10 @@
 package gameStates;
 
-import UI.Game;
 import UI.Window;
 import fonts.Words;
-import static gameStates.GameState.locked;
 import graphics.SpriteManager;
 import input.Input;
 import java.awt.Graphics;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,7 +13,6 @@ import record.Record;
 
 
 public class LeaderboardState extends GameState {
-      private GameStateManager gameStateManager;
       private Words wordTitle;
       
       //讀檔
@@ -27,18 +21,17 @@ public class LeaderboardState extends GameState {
 
       public LeaderboardState(GameStateManager gameStateManager) {
             super(gameStateManager);
-            this.gameStateManager = gameStateManager;
+            init();
+      }
+
+      public void init() {
             records = new ArrayList<>();
             words = new Words[5];
             for(int i=0;i<5;i++){//無紀錄，先給空值
                   words[i] = new Words((i+1)+". noRecord", 40, Window.scaledGameWidth /3, Window.scaledGameHeight/2+20+60*i);
             }
-            init();
-      }
-
-      public void init() {
             background = new Background("/res/Cave1.png", Window.scaledGameWidth, Window.scaledGameHeight);
-            wordTitle = new Words("Leaderboard", 60, Window.scaledGameWidth /2,  Window.scaledGameHeight / 2 - 180);
+            wordTitle = new Words("LeaderBoard", 60, Window.scaledGameWidth /2,  Window.scaledGameHeight / 2 - 180);
 
             if(gameStateManager.readEndGameRecord() != null){
                   records = gameStateManager.readEndGameRecord();//讀取

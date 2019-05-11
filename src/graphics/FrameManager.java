@@ -65,14 +65,14 @@ public class FrameManager {
             y = 23;
         }
         for(int i=0;i<playerMoveFrame.length;i++) {
-            playerMoveFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 32, 32);
+            playerMoveFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 64, 64);
         }
         return playerMoveFrame;
     }
 
     public static Sprite[] getEmeralFrame() {
         for(int i = 0; i< emeralFrame.length; i++) {
-            emeralFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 9, 32, 32);
+            emeralFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 9, 64, 64);
         }
         return emeralFrame;
     }
@@ -80,7 +80,7 @@ public class FrameManager {
 
     public static Sprite[] getDiamondFrame() {
         for(int i = 0; i< diamondFrame.length; i++) {
-            diamondFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 7, 32,  32);
+            diamondFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 7, 64,  64);
         }
         return diamondFrame;
     }
@@ -155,14 +155,14 @@ public class FrameManager {
         if(color == Color.BLUE) {
             int y = (direction == LEFT) ? 10 :11;
             for(int i = 0; i< bluePortalFrame.length; i++) {
-                bluePortalFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 32,  32);
+                bluePortalFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 64,  64);
             }
             return bluePortalFrame;
         }
         else {
             int y = (direction == LEFT) ? 12 :13;
             for(int i = 0; i< purplePortalFrame.length; i++) {
-                purplePortalFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 32,  32);
+                purplePortalFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 64,  64);
             }
             return purplePortalFrame;
         }
@@ -171,22 +171,22 @@ public class FrameManager {
     public static Sprite[] getSpringFrame(Direction direction) {
         if(direction == UP) {
             for(int i = 0; i< springFrame.length; i++) {
-                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 4, 32,  32);
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 4, 64,  64);
             }
         }
         else if(direction == DOWN) {
             for(int i = 0; i< springFrame.length; i++) {
-                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 3, 32,  32);
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 3, 64,  64);
             }
         }
         else if(direction == LEFT) {
             for(int i = 0; i< springFrame.length; i++) {
-                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 12, 3, 32,  32);
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 12, 3, 64,  64);
             }
         }
         else if(direction == RIGHT) {
             for(int i = 0; i< springFrame.length; i++) {
-                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 12, 4, 32,  32);
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 12, 4, 64,  64);
             }
         }
         return springFrame;

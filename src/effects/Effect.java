@@ -5,7 +5,7 @@ import enums.Id;
 import java.awt.*;
 
 public abstract class Effect {
-    public static int EFFECT_SIZE = 32;
+    public static int EFFECT_SIZE = 64;
 
     protected int frame;
     protected int frameDelay;
