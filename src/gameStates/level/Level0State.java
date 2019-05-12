@@ -26,9 +26,10 @@ public class Level0State extends LevelState {
             words.add(new Words("    = Move", 20, (int) (768 * Game.widthRatio), (int) (750 * Game.heightRatio)));
             words.add(new Words("   = Pause", 20, (int) (768 * Game.widthRatio), (int) (795 * Game.heightRatio)));
             words.add(new Words("  = Jump", 20, (int) (2304 * Game.widthRatio), (int) (750 * Game.heightRatio)));
-            words.add(new Words("   +   = Climb", 20, (int) (2304 * Game.widthRatio), (int) (795 * Game.heightRatio)));
+            words.add(new Words("   +   = Bounce", 20, (int) (2304 * Game.widthRatio), (int) (795 * Game.heightRatio)));
             words.add(new Words("  = Dash", 20, (int) (4096 * Game.widthRatio), (int) (750 * Game.heightRatio)));
-            words.add(new Words(" +  = AirDash", 20, (int) (4096 * Game.widthRatio), (int) (790 * Game.heightRatio)));
+            words.add(new Words("  +   = AirDash", 20, (int) (4096 * Game.widthRatio), (int) (790 * Game.heightRatio)));
+            words.add(new Words("  +   +   = Vertical AirDash", 20, (int) (5300 * Game.widthRatio), (int) (850 * Game.heightRatio)));
       }
 
       @Override
@@ -51,22 +52,29 @@ public class Level0State extends LevelState {
             g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(0).getWordX() - (int) (144 * Game.widthRatio), words.get(0).getWordY() - (int) (80 * Game.heightRatio), (int) (288 * Game.widthRatio), (int) (192 * Game.heightRatio), null);
             g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(2).getWordX() - (int) (144 * Game.widthRatio), words.get(0).getWordY() - (int) (80 * Game.heightRatio), (int) (288 * Game.widthRatio), (int) (192 * Game.heightRatio), null);
             g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(4).getWordX() - (int) (144 * Game.widthRatio), words.get(0).getWordY() - (int) (80 * Game.heightRatio), (int) (288 * Game.widthRatio), (int) (192 * Game.heightRatio), null);
+            g.drawImage(SpriteManager.signboard.getBufferedImage(), (int)(words.get(6).getWordX()*0.95), words.get(0).getWordY() - (int) (80 * Game.heightRatio) + (int)(64*Game.widthRatio), (int) (500 * Game.widthRatio), (int) (192 * Game.heightRatio), null);
             //Words
             for (Words n : words) {
                   n.paint(g);
             }
             //keys
-            g.drawImage(SpriteManager.left.getBufferedImage(), (int) (words.get(0).getWordX() - 32 * 2.5), words.get(0).getWordY() - 32, 32, 32, null);
-            g.drawImage(SpriteManager.right.getBufferedImage(), (int) (words.get(0).getWordX() - 32 * 1.5), words.get(0).getWordY() - 32, 32, 32, null);
-            g.drawImage(SpriteManager.esc.getBufferedImage(), (int) (words.get(1).getWordX() - 32 * 2), words.get(1).getWordY() - 32, 32, 32, null);
+            g.drawImage(SpriteManager.left.getBufferedImage(), (int) (words.get(0).getWordX()*0.9), words.get(0).getWordY()-(int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio) , (int)(32 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.right.getBufferedImage(), (int) (words.get(0).getWordX()*0.9) + (int)(32 * Game.widthRatio), words.get(0).getWordY()-(int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio ), (int)(32 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.esc.getBufferedImage(), (int) (words.get(1).getWordX()*0.92), words.get(1).getWordY()-(int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio), null);
 
-            g.drawImage(SpriteManager.c.getBufferedImage(), (int) (words.get(2).getWordX() - 45 * 2), words.get(2).getWordY() - 32 - 5, 45, 45, null);
-            g.drawImage(SpriteManager.right.getBufferedImage(), (int) (words.get(3).getWordX() - 32 * 3), words.get(3).getWordY() - 32, 32, 32, null);
-            g.drawImage(SpriteManager.c.getBufferedImage(), (int) (words.get(3).getWordX() - 45 * 1), words.get(3).getWordY() - 32 - 5, 45, 45, null);
+            g.drawImage(SpriteManager.c.getBufferedImage(), (int) (words.get(2).getWordX()*0.97), words.get(2).getWordY()-(int)(32 * Game.widthRatio), (int)(45 * Game.widthRatio), (int)(45 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.right.getBufferedImage(), (int) (words.get(3).getWordX()*0.96), words.get(3).getWordY()-(int)(27 * Game.widthRatio), (int)(32 * Game.widthRatio), (int)(32 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.c.getBufferedImage(), (int) (words.get(3).getWordX()*0.98), words.get(3).getWordY()-(int)(32 * Game.widthRatio), (int)(45 * Game.widthRatio), (int)(45 * Game.widthRatio ), null);
 
-            g.drawImage(SpriteManager.x.getBufferedImage(), (int) (words.get(4).getWordX() - 45 * 2), words.get(4).getWordY() - 32 - 5, 45, 45, null);
-            g.drawImage(SpriteManager.c.getBufferedImage(), (int) (words.get(5).getWordX() - 45 * 2.5), words.get(5).getWordY() - 32 - 5, 45, 45, null);
-            g.drawImage(SpriteManager.x.getBufferedImage(), (int) (words.get(5).getWordX() - 45 * 1.5), words.get(5).getWordY() - 32 - 5, 45, 45, null);
+            g.drawImage(SpriteManager.x.getBufferedImage(), (int) (words.get(4).getWordX()*0.985), words.get(4).getWordY()-(int)(32 * Game.widthRatio), (int)(45 * Game.widthRatio), (int)(45 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.c.getBufferedImage(), (int) (words.get(5).getWordX()*0.974), words.get(5).getWordY()-(int)(32 * Game.widthRatio), (int)(45 * Game.widthRatio), (int)(45 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.x.getBufferedImage(), (int) (words.get(5).getWordX()*0.985), words.get(5).getWordY()-(int)(32 * Game.widthRatio), (int)(45 * Game.widthRatio), (int)(45 * Game.widthRatio ), null);
+
+            g.drawImage(SpriteManager.c.getBufferedImage(), (int) (words.get(6).getWordX()*0.965), words.get(6).getWordY()-(int)(32 * Game.widthRatio), (int)(45 * Game.widthRatio ), (int)(45 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.up.getBufferedImage(), (int) (words.get(6).getWordX()*0.975), words.get(6).getWordY()-(int)(46 * Game.widthRatio), (int)(32 * Game.widthRatio ), (int)(32 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.right.getBufferedImage(), (int) (words.get(6).getWordX()*0.975), words.get(6).getWordY()-(int)(12 * Game.widthRatio), (int)(32 * Game.widthRatio ), (int)(32 * Game.widthRatio ), null);
+            g.drawImage(SpriteManager.x.getBufferedImage(), (int) (words.get(6).getWordX()*0.985), words.get(6).getWordY()-(int)(32 * Game.widthRatio), (int)(45 * Game.widthRatio ), (int)(45 * Game.widthRatio ), null);
+
 
             paintAllGameObject(g);
             g.translate(-cam.getX(), -cam.getY());
@@ -103,8 +111,6 @@ public class Level0State extends LevelState {
             if ((player.isGoaled())) {
                   gameStateManager.setLevelState(new Level1State(gameStateManager));
                   //過關存檔
-                  gameStateManager.saveEndGameRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(),
-                          gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
             }
       }
 

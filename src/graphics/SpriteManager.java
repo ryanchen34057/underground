@@ -22,6 +22,8 @@ public class SpriteManager {
     public static Sprite esc;
     public static Sprite left;
     public static Sprite right;
+    public static Sprite up;
+    public static Sprite down;
     
 
     //Menu
@@ -85,6 +87,8 @@ public class SpriteManager {
         esc = new Sprite(spriteSheet,15,9,64,64);
         left = new Sprite(spriteSheet,16,9,64,64);
         right = new Sprite(spriteSheet,17,9,64,64);
+        up = new Sprite(spriteSheet,18,9,64,64);
+        down = new Sprite(spriteSheet,19,9,64,64);
         lock = new Sprite(spriteSheet, 11, 10, 64, 64);
 
 

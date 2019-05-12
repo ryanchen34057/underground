@@ -52,7 +52,7 @@ public class GameStateManager {
         deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRatio));
         infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
         setGameState(new MenuState(this));
-        //setLevelState(new TutorialState(this));
+        //setLevelState(new LastLevelState(this));
     }
 
     //Getters
@@ -89,13 +89,23 @@ public class GameStateManager {
         gameStateStack.push(levelState);
         currentLevel = levelState.getLevel();
         String msg;
+        int x;
         if(currentLevel == LEVEL_COUNT) {
             msg = "Level: Lava Hell";
+            x = 160;
         }
         else {
             msg = "Level: " + currentLevel;
+            x = 85;
         }
-        levelWord = new Words(msg, (int)(30 * Game.widthRatio), (int)(85 * Game.widthRatio), (int)(40 * Game.heightRatio));
+        levelWord = new Words(msg, (int)(30 * Game.widthRatio), (int)(x * Game.widthRatio), (int)(40 * Game.heightRatio));
+    }
+
+    public void resetEmerald() {
+        emeraldMap = new HashMap<>();
+        for(int i=0;i<LEVEL_COUNT;i++) {
+            emeraldMap.put(i+1, new Emerald[5]);
+        }
     }
 
     public void updateGameState(GameState gameState) {

@@ -61,10 +61,12 @@ public class SaveSlotState extends GameState {
                     gameStateManager.setSlotId(selected + 1);
                     gameStateManager.setDeathCount(0);
                     gameStateManager.setEmeraldCount(0);
+                    gameStateManager.resetEmerald();
                     gameStateManager.setGameState(new StoryState(gameStateManager));
                 } else {
                     gameStateManager.loadRecord(saveDatas[selected]);
                 }
+                locked = true;
             }
             if (Input.keys.get(0).down) {//上
                 SoundEffectPlayer.playSoundEffect("Cursor");

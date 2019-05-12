@@ -60,7 +60,7 @@ public class StoryState extends GameState {
       public void handleKeyInput() {
             if(!locked){
                   if(Input.keys.get(7).down){//Enter
-                        gameStateManager.setLevelState(new LastLevelState(gameStateManager));
+                        gameStateManager.setLevelState(new Level0State(gameStateManager));
                         locked = true;
                   }
             }

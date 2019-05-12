@@ -7,6 +7,7 @@ import fonts.Words;
 import graphics.SpriteManager;
 import input.Input;
 import map.Background;
+import record.Record;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class EndState extends GameState {
             if(Input.keys.get(7).down) {
                 locked = true;
                 MusicPlayer.changeSong(0);
+                gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
                 gameStateManager.toMenu();
             }
         }

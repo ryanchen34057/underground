@@ -26,8 +26,11 @@ public class Camera {
         if(y > 0) {
             y = 0;
         }
-        if(y <= (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5)) {
-            y = (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5);
+//        if(y <= (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5)) {
+//            y = (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5);
+//        }
+        if(y <= -mapHeight*(int)(64 * Game.widthRatio) + Window.scaledGameHeight) {
+            y = -mapHeight*(int)(64 * Game.widthRatio) + Window.scaledGameHeight;
         }
         if(x <= -mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth) {
             x = -mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth;

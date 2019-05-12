@@ -14,6 +14,7 @@ import record.Record;
 
 public class LeaderboardState extends GameState {
       private Words wordTitle;
+      private Words enterWords;
       
       //讀檔
       private Words[] words;
@@ -28,33 +29,26 @@ public class LeaderboardState extends GameState {
       public void init() {
             background = new Background("/res/Cave1.png", Window.scaledGameWidth, Window.scaledGameHeight);
             wordTitle = new Words("Leaderboard", 60, Window.scaledGameWidth /2,  Window.scaledGameHeight / 2 - 180);
-              
-                        records = gameStateManager.readEndGameRecord();//讀取
-                        words = new Words[5];
-                        for(int i=0;i<5;i++){//無紀錄，先給空值
-                              words[i] = new Words((i+1)+". noRecord", 40, Window.scaledGameWidth /3, Window.scaledGameHeight/2+20+60*i);
+            enterWords = new Words("Back", (int) (Window.scaledGameWidth* 0.02), (int)(Window.scaledGameWidth/1.12),(int)(Window.scaledGameHeight/1.04));
+            records = gameStateManager.readEndGameRecord();//讀取
+            words = new Words[5];
+            for(int i=0;i<5;i++){//無紀錄，先給空值
+                  words[i] = new Words((i+1)+". noRecord", 40, Window.scaledGameWidth /3, Window.scaledGameHeight/2+20+60*i);
+            }
+
+            if(records.size() >= 1){
+                  //排序
+                  Collections.sort(records, Comparator.comparingInt(r -> (int) r.getTime()));
+                   for(int i=0;i<records.size();i++){//設定
+                        if(i>=5){
+                              break;
                         }
-                  
-                        if(records.size() >= 1){
-                              for(int i=0;i<records.size();i++){
-                                    System.out.println(records.get(i));
-                              }
-                              Collections.sort(records, new Comparator<Record>(){//排序
-                                    @Override
-                                    public int compare(Record r1, Record r2) {
-                                          return (int)r1.getTime() - (int)r2.getTime();
-                                    }   
-                              });
-                               for(int i=0;i<records.size();i++){//設定
-                                    if(i>=5){
-                                          break;
-                                    }
-                                    if(records.get(i) != null){
-                                          words[i].setWord((i+1)+". "+records.get(i).getTimeString().substring(7, 15));
-            //                              words[i].setWordX(Game.WIDTH * Game.SCALE/3);
-                                    }
-                              }
+                        if(records.get(i) != null){
+                              words[i].setWord((i+1)+". "+records.get(i).getTimeString().substring(7, 15));
+      //                              words[i].setWordX(Game.WIDTH * Game.SCALE/3);
                         }
+                  }
+            }
       }
 
      
@@ -81,6 +75,10 @@ public class LeaderboardState extends GameState {
       public void paint(Graphics g) {
             background.paint(g);
             wordTitle.paint(g);
+            enterWords.paint(g);
+
+            //Paint enter Key
+            g.drawImage(SpriteManager.enterKey.getBufferedImage(), (int) (Window.scaledGameWidth / 1.25), (int) (Window.scaledGameHeight / 1.12), (int) (Window.scaledGameWidth * 0.05), (int) (Window.scaledGameWidth * 0.05), null);
 
             for(int i=0;i<5;i++){
                   if(records.size() < 1){

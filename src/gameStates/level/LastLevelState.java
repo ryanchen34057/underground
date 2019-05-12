@@ -12,11 +12,9 @@ import gameStates.LevelState;
 import graphics.SpriteManager;
 import map.Background;
 import record.Record;
-import states.PlayerState;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class LastLevelState extends LevelState {
     private ArrayList<Lava> lavaLinkedList;
@@ -24,6 +22,8 @@ public class LastLevelState extends LevelState {
     private Rectangle rectangle;
     private static final int DELAY = Game.UPDATES-100;
     private static final Color LAVA_COLOR = new Color(173, 64, 34);
+    private float currentSpeed;
+    private static final int MAX_SPEED = -30;
 
     public LastLevelState(GameStateManager gameStateManager) {
         super(gameStateManager);
@@ -40,6 +40,7 @@ public class LastLevelState extends LevelState {
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
         speedDelay = 0;
         rectangle = new Rectangle(0, 0, Lava.LAVA_WIDTH*mapWidth, 0);
+        currentSpeed = -10;
     }
 
     @Override
@@ -58,7 +59,11 @@ public class LastLevelState extends LevelState {
             player.handleCollision(lava, player.checkCollisionVertical(lava, Tile::getBounds));
             if(speedDelay++ >= DELAY) {
                 speedDelay = 0;
-                lava.setVelY(-10 * Game.heightRatio);
+                lava.setVelY(currentSpeed * Game.heightRatio);
+                if(currentSpeed >= MAX_SPEED) {
+                    currentSpeed -= 0.03f;
+                }
+
             }
             else {
                 lava.setVelY(0);

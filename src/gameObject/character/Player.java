@@ -367,7 +367,7 @@ public class Player extends Entity {
                 die();
                 break;
             case fallingRock:
-                if(((FallingRock) t).isFalling()) {
+                if(((FallingRock) t).isFalling() && direction == TOP) {
                     die();
                 }
                 ifHitWall(t, direction);
@@ -443,10 +443,12 @@ public class Player extends Entity {
                     currentState = PlayerState.falling;
                 }
                 else {
-                    gravity = 0;
-                    velY = 0;
-                    y = collisionRect.y + (int)collisionRect.getHeight();
-                    currentState = PlayerState.falling;
+                    if(!(t instanceof Spring)) {
+                        gravity = 0;
+                        velY = 0;
+                        y = collisionRect.y + (int)collisionRect.getHeight();
+                        currentState = PlayerState.falling;
+                    }
                 }
                 break;
             case BOTTOM:
@@ -461,7 +463,7 @@ public class Player extends Entity {
                 }
                 //System.out.println("BOTTOM");
                 else if(currentState == PlayerState.falling || currentState == PlayerState.sliding
-                        || currentState == PlayerState.verticalDashing) {
+                        || currentState == PlayerState.verticalDashing && !(t instanceof Spring)) {
                     velY = 0;
                     gravity = 0;
                     friction = 0;
