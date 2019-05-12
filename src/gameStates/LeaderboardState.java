@@ -19,39 +19,42 @@ public class LeaderboardState extends GameState {
       private Words[] words;
       private ArrayList<Record> records;
 
-      public LeaderboardState(GameStateManager gameStateManager) { super(gameStateManager); }
+      public LeaderboardState(GameStateManager gameStateManager) {
+            super(gameStateManager);
+             init();
+            
+      }
 
       public void init() {
-            records = new ArrayList<>();
-            words = new Words[5];
-            for(int i=0;i<5;i++){//無紀錄，先給空值
-                  words[i] = new Words((i+1)+". noRecord", 40, Window.scaledGameWidth /3, Window.scaledGameHeight/2+20+60*i);
-            }
             background = new Background("/res/Cave1.png", Window.scaledGameWidth, Window.scaledGameHeight);
-            wordTitle = new Words("LeaderBoard", 60, Window.scaledGameWidth /2,  Window.scaledGameHeight / 2 - 180);
-
-            if(gameStateManager.readEndGameRecord() != null){
-                  records = gameStateManager.readEndGameRecord();//讀取
-                  for(int i=0;i<records.size();i++){
-                        System.out.println(records.get(i));
-                  }
-                  Collections.sort(records, new Comparator<Record>(){//排序
-                        @Override
-                        public int compare(Record r1, Record r2) {
-                              return (int)r1.getTime() - (int)r2.getTime();
-                        }   
-                  });
-
-                  for(int i=0;i<records.size();i++){//設定
-                        if(i>=5){
-                              break;
+            wordTitle = new Words("Leaderboard", 60, Window.scaledGameWidth /2,  Window.scaledGameHeight / 2 - 180);
+              
+                        records = gameStateManager.readEndGameRecord();//讀取
+                        words = new Words[5];
+                        for(int i=0;i<5;i++){//無紀錄，先給空值
+                              words[i] = new Words((i+1)+". noRecord", 40, Window.scaledGameWidth /3, Window.scaledGameHeight/2+20+60*i);
                         }
-                        if(records.get(i) != null){
-                              words[i].setWord((i+1)+". "+records.get(i).getTimeString().substring(7, 15));
-//                              words[i].setWordX(Game.WIDTH * Game.SCALE/3);
+                  
+                        if(records.size() >= 1){
+                              for(int i=0;i<records.size();i++){
+                                    System.out.println(records.get(i));
+                              }
+                              Collections.sort(records, new Comparator<Record>(){//排序
+                                    @Override
+                                    public int compare(Record r1, Record r2) {
+                                          return (int)r1.getTime() - (int)r2.getTime();
+                                    }   
+                              });
+                               for(int i=0;i<records.size();i++){//設定
+                                    if(i>=5){
+                                          break;
+                                    }
+                                    if(records.get(i) != null){
+                                          words[i].setWord((i+1)+". "+records.get(i).getTimeString().substring(7, 15));
+            //                              words[i].setWordX(Game.WIDTH * Game.SCALE/3);
+                                    }
+                              }
                         }
-                  }
-            }
       }
 
      

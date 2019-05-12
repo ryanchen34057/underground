@@ -6,6 +6,7 @@ import audio.MusicPlayer;
 import audio.SoundEffectPlayer;
 import fonts.Words;
 import static gameStates.GameState.locked;
+import gameStates.level.LastLevelState;
 import gameStates.level.Level0State;
 import input.Input;
 import java.awt.Graphics;
@@ -59,7 +60,7 @@ public class StoryState extends GameState {
       public void handleKeyInput() {
             if(!locked){
                   if(Input.keys.get(7).down){//Enter
-                        gameStateManager.setLevelState(new Level0State(gameStateManager));
+                        gameStateManager.setLevelState(new LastLevelState(gameStateManager));
                         locked = true;
                   }
             }

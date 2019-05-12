@@ -23,7 +23,9 @@ public class MusicPlayer implements Runnable {
     }
 
     public static void changeSong(int index) {
+        currentSong.stop();
         currentSong = musicFiles.get(index);
+
     }
 
     @Override
@@ -47,7 +49,7 @@ public class MusicPlayer implements Runnable {
 //                song.play();
 //            }
             try {
-                Thread.sleep(1);
+                Thread.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

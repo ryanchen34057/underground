@@ -23,12 +23,12 @@ public class Level0State extends LevelState {
       public Level0State(GameStateManager gameStateManager) {
             super(gameStateManager);
             words = new ArrayList<>();
-            words.add(new Words("    = Move", 20, (int) (768*Game.widthRatio), (int) (616*Game.heightRatio)));
-            words.add(new Words("   = Pause", 20, (int) (768*Game.widthRatio), (int) (651*Game.heightRatio)));
-            words.add(new Words("  = Jump", 20, (int) (2304*Game.widthRatio), (int) (616*Game.heightRatio)));
-            words.add(new Words("   +   = Climb", 20, (int) (2304*Game.widthRatio), (int) (651*Game.heightRatio)));
-            words.add(new Words("  = Dash", 20, (int) (4096*Game.widthRatio), (int) (616*Game.heightRatio)));
-            words.add(new Words(" +  = AirDash", 20, (int) (4096*Game.widthRatio), (int) (651*Game.heightRatio)));
+            words.add(new Words("    = Move", 20, (int) (768 * Game.widthRatio), (int) (750 * Game.heightRatio)));
+            words.add(new Words("   = Pause", 20, (int) (768 * Game.widthRatio), (int) (795 * Game.heightRatio)));
+            words.add(new Words("  = Jump", 20, (int) (2304 * Game.widthRatio), (int) (750 * Game.heightRatio)));
+            words.add(new Words("   +   = Climb", 20, (int) (2304 * Game.widthRatio), (int) (795 * Game.heightRatio)));
+            words.add(new Words("  = Dash", 20, (int) (4096 * Game.widthRatio), (int) (750 * Game.heightRatio)));
+            words.add(new Words(" +  = AirDash", 20, (int) (4096 * Game.widthRatio), (int) (790 * Game.heightRatio)));
       }
 
       @Override
@@ -48,9 +48,9 @@ public class Level0State extends LevelState {
             background.paint(g);
             g.translate(cam.getX(), cam.getY());
             //Signboard
-            g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(0).getWordX() - (int) (144*Game.widthRatio), words.get(0).getWordY() - (int) (112*Game.heightRatio), (int) (288*Game.widthRatio), (int) (192*Game.heightRatio), null);
-            g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(2).getWordX() - (int) (144*Game.widthRatio), words.get(0).getWordY() - (int) (112*Game.heightRatio), (int) (288*Game.widthRatio), (int) (192*Game.heightRatio), null);
-            g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(4).getWordX() - (int) (144*Game.widthRatio), words.get(0).getWordY() - (int) (112*Game.heightRatio), (int) (288*Game.widthRatio), (int) (192*Game.heightRatio), null);
+            g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(0).getWordX() - (int) (144 * Game.widthRatio), words.get(0).getWordY() - (int) (80 * Game.heightRatio), (int) (288 * Game.widthRatio), (int) (192 * Game.heightRatio), null);
+            g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(2).getWordX() - (int) (144 * Game.widthRatio), words.get(0).getWordY() - (int) (80 * Game.heightRatio), (int) (288 * Game.widthRatio), (int) (192 * Game.heightRatio), null);
+            g.drawImage(SpriteManager.signboard.getBufferedImage(), words.get(4).getWordX() - (int) (144 * Game.widthRatio), words.get(0).getWordY() - (int) (80 * Game.heightRatio), (int) (288 * Game.widthRatio), (int) (192 * Game.heightRatio), null);
             //Words
             for (Words n : words) {
                   n.paint(g);
@@ -102,6 +102,9 @@ public class Level0State extends LevelState {
 
             if ((player.isGoaled())) {
                   gameStateManager.setLevelState(new Level1State(gameStateManager));
+                  //過關存檔
+                  gameStateManager.saveEndGameRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(),
+                          gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
             }
       }
 

@@ -32,6 +32,9 @@ public class Camera {
         if(x <= -mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth) {
             x = -mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth;
         }
+//        if(x <= mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth) {
+//            x = mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth;
+//        }
         if(shaking) {
             counter++;
             x += Math.random() * intensity - intensity/ 2;

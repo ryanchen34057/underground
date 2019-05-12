@@ -36,6 +36,7 @@ public class GameStateManager {
     private int slotId;
     private int currentLevel;
     public static final int LEVEL_COUNT = 5;
+    ArrayList<Record> records;
 
 
     public GameStateManager() {
@@ -195,7 +196,7 @@ public class GameStateManager {
       }
 
       public ArrayList readEndGameRecord(){//破關記錄
-            ArrayList<Record> records = null;
+            records = new ArrayList<>();
             try {
                   //讀檔
                   FileInputStream fileIn = new FileInputStream("./record/" + "Leaderboard.ser");
@@ -203,6 +204,7 @@ public class GameStateManager {
                   records = (ArrayList)in.readObject();
                   fileIn.close();
                   in.close();
+                  return records;
             }catch(IOException | ClassNotFoundException e){
                    e.printStackTrace();
             }finally{
@@ -212,6 +214,7 @@ public class GameStateManager {
 
       public void saveEndGameRecord(Record record) {//寫入破關記錄
             try {
+                   System.out.println("try");
                   ArrayList<Record> endGame;
                   if(readEndGameRecord() != null){
                         endGame = readEndGameRecord();
@@ -231,7 +234,7 @@ public class GameStateManager {
                   out.close();
                   fileOut.close();          
             } catch (IOException i) {
-                  System.out.println("!!");
+                  System.out.println("error");
                   i.printStackTrace();
             }
       }
