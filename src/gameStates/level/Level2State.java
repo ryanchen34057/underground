@@ -53,7 +53,7 @@ public class Level2State extends LevelState {
 
         // Update all game object
         updateAllGameObject();
-        cam.update(player);
+        cam.update(player, mapWidth, mapHeight);
 
 
         // Check if on the ice

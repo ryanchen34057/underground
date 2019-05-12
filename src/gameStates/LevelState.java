@@ -1,7 +1,7 @@
 package gameStates;
 
 import UI.Game;
-import audio.SoundEffectPlayer;
+import UI.Window;
 import effects.DeathParticle;
 import effects.Effect;
 import effects.LandingEffect;
@@ -13,6 +13,7 @@ import gameObject.tiles.Tile;
 import gameObject.character.Player;
 import gameObject.tiles.movable.FallingRock;
 import gameObject.tiles.portal.Portal;
+import gameObject.tiles.prize.Diamond;
 import gameObject.tiles.prize.Emerald;
 import gameObject.tiles.trap.Hole;
 import gameObject.tiles.trap.Spike;
@@ -22,8 +23,6 @@ import gameObject.tiles.wall.VanishingRock;
 import gameObject.tiles.wall.Wall;
 import graphics.SpriteManager;
 import input.Input;
-import map.Background;
-import states.PlayerState;
 import util.Camera;
 
 import java.awt.*;
@@ -31,7 +30,8 @@ import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 
 public abstract class LevelState extends GameState {
-    public static final int DEATH_DELAY_TIME = 20;
+    private static final int DEATH_DELAY_TIME = 20;
+    private static final float FADEIN_TIME = 1.8f;
     protected Player player;
     protected LinkedList<Tile> tiles;
     protected  LinkedList<Effect> effects;
@@ -40,12 +40,17 @@ public abstract class LevelState extends GameState {
     // Coordinate of blue portal(where player spawns)
     protected  Dimension bluePortalCor;
 
+    // SerialNum of the emerald;
+    protected int emeraldSerial;
+
     protected LinkedList<FallingRock> fallingRocks;
     protected static Camera cam;
+    protected float alpha;
+    protected int mapWidth;
+    protected int mapHeight;
 
     public LevelState(GameStateManager gameStateManager) {
         super(gameStateManager);
-        init();
     }
 
     public abstract LevelState getInstance();
@@ -56,6 +61,8 @@ public abstract class LevelState extends GameState {
         particles = new LinkedList<>();
         fallingRocks = new LinkedList<>();
         cam = new Camera();
+        emeraldSerial = 0;
+        alpha = 0.0f;
     }
 
     @Override
@@ -63,18 +70,47 @@ public abstract class LevelState extends GameState {
         if(player != null) {
             player.handleKeyInput();
         }
-        //ESC - pause
-        if(Input.keys.get(8).down) {
-            gameStateManager.setGameState(new PauseState(gameStateManager));
+        if(!locked) {
+            //ESC - pause
+            if(Input.keys.get(8).down) {
+                gameStateManager.setGameState(new PauseState(gameStateManager));
+                locked = true;
+            }
+
+            //Debug mode G + B
+            if(Input.keys.get(9).down && Input.keys.get(10).down) {
+                Game.debugMode = !(Game.debugMode);
+                locked = true;
+            }
+        }
+        if(!Input.keys.get(8).down &&!Input.keys.get(9).down && !Input.keys.get(10).down){//放開
+            locked = false;
         }
     }
 
     @Override
     public void paint(Graphics g) {
-        background.paint(g);
-        g.translate(cam.getX(), cam.getY());
-        paintAllGameObject(g);
-        g.translate(-cam.getX(), -cam.getY());
+        Graphics2D g2 = (Graphics2D) g;
+        if(alpha <= 0.99f) {
+            fadeIn(g2);
+        }
+        else {
+            background.paint(g2);
+            g2.translate(cam.getX(), cam.getY());
+            paintAllGameObject(g2);
+            g2.translate(-cam.getX(), -cam.getY());
+        }
+    }
+
+    protected void fadeIn(Graphics2D g2) {
+        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,alpha);
+        g2.setComposite(ac);
+        background.paint(g2);
+        g2.translate(cam.getX(), cam.getY());
+        paintAllGameObject(g2);
+        g2.translate(-cam.getX(), -cam.getY());
+        ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1);
+        g2.setComposite(ac);
     }
 
     public void paintAllGameObject(Graphics g) {
@@ -95,34 +131,41 @@ public abstract class LevelState extends GameState {
     }
 
     public void updateAllGameObject() {
+        if(alpha <= 0.97f) alpha += 0.99 / (FADEIN_TIME*Game.UPDATES);
+
         //Update player
         player.update();
 
         Tile t;
         player.setOnTheGround(false);
+        player.setOnTheWall(false);
+        Direction direction;
         for(int i=0;i<tiles.size();i++) {
             t = tiles.get(i);
             if(inTheScreen(t)) {
                 t.update();
-                if(t instanceof FallingRock) {
-                    if (Math.abs(player.getX() - t.getX()) < 100 && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
+                if (t instanceof FallingRock) {
+                    if (Math.abs(player.getY() - t.getY()) < (700 * Game.heightRatio) && Math.abs(player.getX() - t.getX()) < 150 * Game.widthRatio && !((FallingRock) t).isFallen() && t.getY() <= player.getY()) {
                         ((FallingRock) t).setShaking(true);
                     }
                     if (((FallingRock) t).getCurrentEffect() instanceof LandingEffect) {
                         effects.add(LandingEffect.getInstance(t));
-                        cam.setShaking(true, 10, 5);
+                        cam.setShaking(true, 20, 5);
                     }
                     ((FallingRock) t).setCurrentEffect(null);
                 }
                 // ********* Player collision detection **********
                 if (t.getBounds() != null && player.inTheScreen(t)) {
-                    player.handleCollision(t, player.checkCollisionBounds(t, Tile::getBounds));
+                    player.handleCollision(t, player.checkCollisionVertical(t, Tile::getBounds));
+                    direction = player.checkCollisionHorizontal(t, Tile::getBounds);
+                    player.handleCollision(t, direction);
                 }
                 // ***********************************************
+            }
 
                 // ********* FallingRock collision detection **********
                 for(FallingRock fr: fallingRocks) {
-                    if (t.getBounds() != null && fr.collidesWith(t, Tile::getBounds)) {
+                    if (t.getBounds() != null && !(t instanceof FallingRock) && fr.collidesWith(t, Tile::getBounds)) {
                         if(t instanceof VanishingRock) {
                             if(!((VanishingRock) t).isStepOn()) {
                                 fr.handleCollision(t, null);
@@ -134,7 +177,6 @@ public abstract class LevelState extends GameState {
                     }
                 }
                 // ****************************************************
-            }
             if(t.isDead()) {
                 if(t instanceof Emerald) {
                     gameStateManager.incrementEmeraldCount();
@@ -142,6 +184,7 @@ public abstract class LevelState extends GameState {
                 tiles.remove(t);
             }
         }
+
         Effect e;
         for(int i=0;i<effects.size();i++) {
             e = effects.get(i);
@@ -179,13 +222,15 @@ public abstract class LevelState extends GameState {
     }
 
     private boolean inTheScreen(Tile t) {
-        return (t.getX() >= player.getX() - (Game.WIDTH * Game.SCALE)) && (t.getX() < player.getX() + (Game.WIDTH * Game.SCALE))
-                && (t.getY() >= player.getY() - (Game.HEIGHT * Game.SCALE)) && (t.getY() < player.getY() + (Game.HEIGHT * Game.SCALE));
+        return (t.getX() >= player.getX() - (Window.scaledGameWidth)) && (t.getX() < player.getX() + (Window.scaledGameWidth))
+                && (t.getY() >= player.getY() - (Window.scaledGameHeight)) && (t.getY() < player.getY() + (Window.scaledGameHeight));
     }
 
     public void createLevel(BufferedImage level) {
         int width = level.getWidth();
         int height = level.getHeight();
+        mapWidth = width;
+        mapHeight = height;
 
         for(int y=0;y<height;y++) {
             for (int x = 0; x < width; x++) {
@@ -195,70 +240,97 @@ public abstract class LevelState extends GameState {
                 int blue = (pixel) & 0xff;
 
                 if (red == 99 && green == 99 && blue == 99) {
-                    tiles.add(new Hole(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.hole));
+                    tiles.add(new Hole(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.hole));
                 }
                 // Bigger block
                 else if (red == 50 && green == 50 && blue == 19) {
-                    tiles.add(new Wall(x * 64, y * 64, Wall.TILE_SIZE * 5, Wall.TILE_SIZE * 5, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE * 5, Wall.TILE_SIZE * 5, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 100 && green == 50 && blue == 19) {
-                    tiles.add(new Wall(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 100 && green == 0 && blue <= 20) {
                     if (blue == 5 || blue == 4) {
-                        tiles.add(new Wall(x * 64, y * 64, Wall.TILE_SIZE / 2, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.halfWidthWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
-                    if (blue == 17) {
-                        tiles.add(new Wall(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE / 2, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
-                    } else {
-                        tiles.add(new Wall(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    else if (blue == 17 || blue == 18 || blue == 20) {
+                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.halfHeightWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    }
+                    else {
+                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
 
                 } else if (red == 100 && green == 100 && blue <= 29) {
-                    tiles.add(new Decor(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.decor, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    tiles.add(new Decor(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.decor, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 255 && green == 255 && blue == 0) {
-                    tiles.add(new VanishingRock(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.vanishingRock));
+                    tiles.add(new VanishingRock(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.vanishingRock));
                 } else if (red == 0 && green == 30 && blue == 255) {
-                    tiles.add(new IceWall(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.icewall1, SpriteManager.level1Sprites.get(green - 1).getBufferedImage()));
+                    tiles.add(new IceWall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.icewall1, SpriteManager.level1Sprites.get(green - 1).getBufferedImage()));
                 } else if (red == 0 && green == 255 && blue == 31) {
-                    tiles.add(new Spike(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.UP));
+                    tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.UP));
                 } else if (red == 0 && green == 255 && blue == 32) {
-                    tiles.add(new Spike(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.DOWN));
+                    tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.DOWN));
                 } else if (red == 0 && green == 255 && blue == 33) {
-                    tiles.add(new Spike(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.LEFT));
+                    tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.LEFT));
                 } else if (red == 0 && green == 255 && blue == 34) {
-                    tiles.add(new Spike(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.RIGHT));
+                    tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.RIGHT));
                 } else if (red == 255 && green == 100 && blue == 35) {
-                    FallingRock fr = new FallingRock(x * 64, y * 64, Wall.TILE_SIZE * 3, Wall.TILE_SIZE * 3, Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage());
+                    FallingRock fr = new FallingRock(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, (int)(Wall.TILE_SIZE * 2.5), (int)(Wall.TILE_SIZE * 2.5), Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage());
                     tiles.add(fr);
                     fallingRocks.add(fr);
                 } else if (red == 100 && green == 0 && blue >= 36) {
                     if (blue == 42 || blue == 43) {
-                        tiles.add(new Wall(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE / 2 - 10, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, (int)(22*Game.widthRatio), Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     } else {
-                        tiles.add(new Wall(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
 
                 } else if (red == 255 && green == 0 && blue == 0) {
-                    tiles.add(new Emerald(x * 64, y * 64, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 1000, Id.emerald));
+                    Emerald emerald;
+                    if(gameStateManager.getEmerald(getLevel(), emeraldSerial) == null) {
+                        emerald = new Emerald(x * Emerald.PRIZE_SIZE, y * Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 1000, Id.emerald, emeraldSerial);
+                        gameStateManager.addEmerald(getLevel(), emeraldSerial, emerald);
+                    }
+                    else {
+                        emerald = gameStateManager.getEmerald(getLevel(), emeraldSerial);
+                        if(emerald.isEaten()) {
+                            emerald = null;
+                        }
+                    }
+                    emeraldSerial++;
+                    if(emerald != null) {
+                        tiles.add(emerald);
+                    }
+                }
+                else if (red == 255 && green == 150 && blue == 255) {
+                    tiles.add( new Diamond(x * Emerald.PRIZE_SIZE, y * Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 0, Id.diamond));
                 }
                 else if(red == 255 && green == 150 && blue == 150) {
-                    tiles.add(new Spring(x * 64, y * 64, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring));
+                    tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.UP));
                 }
-
+                else if(red == 255 && green == 160 && blue == 160) {
+                    tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.DOWN));
+                }
+                else if(red == 255 && green == 170 && blue == 170) {
+                    tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.LEFT));
+                }
+                else if(red == 255 && green == 180 && blue == 180) {
+                    tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.RIGHT));
+                }
 
                 //Portal
 //              //Blue
                 else if (red == 0 && green == 0 && blue == 255 || red == 0 && green == 1 && blue == 255) {
                     Direction direction = (green == 1) ? Direction.LEFT : Direction.RIGHT;
-                    tiles.add(new Portal(x * 64, y * 64, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.bluePortal, Color.BLUE, direction));
-                    bluePortalCor = new Dimension(x * 64, y * 64);
+                    tiles.add(new Portal(x *  Wall.TILE_SIZE, y *  Wall.TILE_SIZE, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.bluePortal, Color.BLUE, direction));
+                    bluePortalCor = new Dimension(x *  Wall.TILE_SIZE, y * Wall.TILE_SIZE);
                 }
                 //Purple
                 else if (red == 255 && green == 0 && blue == 255 || red == 255 && green == 1 && blue == 255) {
                     Direction direction = (green == 1) ? Direction.LEFT : Direction.RIGHT;
-                    tiles.add(new Portal(x * 64, y * 64, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.purplePortal, Color.MAGENTA, direction));
+                    tiles.add(new Portal(x *  Wall.TILE_SIZE, y *  Wall.TILE_SIZE, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.purplePortal, Color.MAGENTA, direction));
                 }
             }
         }
+        emeraldSerial = 0;
     }
 
     public abstract int getLevel();

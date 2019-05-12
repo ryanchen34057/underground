@@ -14,11 +14,11 @@ public class StandingJumping implements State {
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(2).down) {
             player.setFacing(-1);
-            player.setVelX(-1 * (Player.STEP / Player.STANDINGJUMPING_VELX_OFFSET));
+            player.setVelX(-Player.STANDINGJUMPING_VELX_OFFSET);
         }
         else if(keys.get(3).down) {
             player.setFacing(1);
-            player.setVelX((Player.STEP / Player.STANDINGJUMPING_VELX_OFFSET));
+            player.setVelX(Player.STANDINGJUMPING_VELX_OFFSET);
         }
         //Vertical Dashing
         Direction dir = verticalDashCondition(keys, player);
@@ -31,6 +31,7 @@ public class StandingJumping implements State {
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
         }
         else if(keys.get(4).down && !player.isTired()) {
             player.setVelY(0);
@@ -38,6 +39,8 @@ public class StandingJumping implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
+            player.currentDashTimer = Player.DASH_TIMER;
+            player.currentDashSpeed = Player.DASH_SPEED;
         }
 
     }

@@ -1,6 +1,7 @@
 package map;
 
 import UI.Game;
+import UI.Window;
 import graphics.ResourceManager;
 
 import java.awt.*;
@@ -10,8 +11,6 @@ public class Background {
     private BufferedImage bcakgroundImage;
     private float x;
     private float y;
-    private float velX;
-    private float velY;
     
     private int width;
     private int height;
@@ -20,8 +19,8 @@ public class Background {
 
     public Background(String s, float scale) {
         bcakgroundImage = ResourceManager.getInstance().getImage(s);
-        width = Game.WIDTH * Game.SCALE;
-        height = Game.HEIGHT * Game.SCALE;
+        width = Window.scaledGameWidth;
+        height = Window.scaledGameHeight;
     }
     public Background(String s, int width, int height){
         bcakgroundImage = ResourceManager.getInstance().getImage(s);
@@ -32,6 +31,20 @@ public class Background {
     public void setPos(float x, float y) {
         this.x = (x * scale) % Game.WIDTH;
         this.y = (y * scale) % Game.HEIGHT;
+    }
+
+    //Getters
+    public float getX() {
+        return x;
+    }
+    public float getY() {
+        return y;
+    }
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
     }
 
     public void setVel(float velX, float velY) {

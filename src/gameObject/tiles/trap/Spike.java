@@ -17,6 +17,18 @@ public class Spike extends Tile {
         super(x, y, width, height, id);
         this.bufferedImage = bufferedImage;
         this.direction = direction;
+        if(id == Id.upwardSpike) {
+            boundsRectangle =  new Rectangle(x, y+height/2, width, height/2);
+        }
+        else if(id == Id.downwardSpike) {
+            boundsRectangle = new Rectangle(x, y, width, height/2-5);
+        }
+        else if(id == Id.leftwardSpike) {
+            boundsRectangle = new Rectangle(x+width/2+5, y, width/2, height);
+        }
+        else {
+            boundsRectangle = new Rectangle(x, y, width/2-5, height);
+        }
     }
 
     @Override
@@ -24,29 +36,37 @@ public class Spike extends Tile {
         if(direction == Direction.UP) {
             g.drawImage(bufferedImage, x, y, width, height, null);
             if(Game.debugMode) {
-                g.drawRect(x, y+height/2, width, height/2);
-                g.drawRect(x+6, y+30, width-12,1);
+                g.drawRect(x, y+(int)(height/1.6), width, (int)(height/1.6));
+                g.setColor(Color.RED);
+                g.drawRect(x+(int)(width*0.07), y+(int)(height/1.6), width-2*(int)(width*0.07),2);
+                g.setColor(Color.GREEN);
             }
         }
         else if(direction == Direction.DOWN) {
             g.drawImage(bufferedImage, x, y, width, height, null);
             if(Game.debugMode) {
-                g.drawRect(x, y, width, height/2-5);
-                g.drawRect(x+6, y+30, width-12,1);
+                g.drawRect(x, y, width, (int)(height/2.5));
+                g.setColor(Color.RED);
+                g.drawRect(x+(int)(width*0.07), y+(height-(int)(height/1.6)), width-2*(int)(width*0.07),2);
+                g.setColor(Color.GREEN);
             }
         }
         else if(direction == Direction.LEFT) {
             g.drawImage(bufferedImage, x, y, width, height, null);
             if(Game.debugMode) {
-                g.drawRect(x+width/2+5, y, width/2, height);
-                g.drawRect(x+35, y+6, 1,height-12);
+                g.drawRect(x+(int)(width/1.63), y, (int)(width/2.5), height);
+                g.setColor(Color.RED);
+                g.drawRect(x+(int)(width/1.63), y, 2,height);
+                g.setColor(Color.GREEN);
             }
         }
-        else {
+        else if(direction == Direction.RIGHT)  {
             g.drawImage(bufferedImage, x, y, width, height, null);
             if(Game.debugMode) {
-                g.drawRect(x, y, width/2-5, height);
-                g.drawRect(x+width-35, y+6, 1,height-12);
+                g.drawRect(x, y, (int)(width/2.5), height);
+                g.setColor(Color.RED);
+                g.drawRect(x+(int)(width/2.5), y, 2,height);
+                g.setColor(Color.GREEN);
             }
         }
     }
@@ -58,24 +78,13 @@ public class Spike extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        if(id == Id.upwardSpike) {
-            return new Rectangle(x, y+height/2, width, height/2);
-        }
-        else if(id == Id.downwardSpike) {
-            return new Rectangle(x, y, width, height/2-5);
-        }
-        else if(id == Id.leftwardSpike) {
-            return new Rectangle(x+width/2+5, y, width/2, height);
-        }
-        else {
-            return new Rectangle(x, y, width/2-5, height);
-        }
+        return boundsRectangle;
     }
 
     @Override
     public Rectangle getBoundsTop() {
         if(id == Id.upwardSpike) {
-            return new Rectangle(x+6, y+30, width-12,1);
+            return new Rectangle(x+(int)(width*0.07), y+(int)(height/1.6), width-2*(int)(width*0.07),2);
         }
         return null;
     }
@@ -83,7 +92,7 @@ public class Spike extends Tile {
     @Override
     public Rectangle getBoundsBottom() {
         if(id == Id.downwardSpike) {
-            return new Rectangle(x+6, y+30, width-12,1);
+            return new Rectangle(x+(int)(width*0.07), y+(height-(int)(height/1.6)), width-2*(int)(width*0.07),2);
         }
         return null;
     }
@@ -91,7 +100,7 @@ public class Spike extends Tile {
     @Override
     public Rectangle getBoundsLeft() {
         if(id == Id.leftwardSpike) {
-            return new Rectangle(x+35, y+6, 1,height-12);
+            return new Rectangle(x+(int)(width/1.63), y, 2,height);
         }
         return null;
     }

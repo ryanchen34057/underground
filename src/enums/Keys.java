@@ -10,4 +10,6 @@ public enum Keys {
     R,
     ENTER,
     ESC,
+    G,
+    B
 }

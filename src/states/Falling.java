@@ -1,5 +1,6 @@
 package states;
 
+import UI.Game;
 import audio.SoundEffectPlayer;
 import enums.Direction;
 import gameObject.character.Player;
@@ -34,6 +35,7 @@ public class Falling implements State {
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
         }
 
         //Dashing in the air
@@ -43,15 +45,17 @@ public class Falling implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
+            player.currentDashTimer = Player.DASH_TIMER;
+            player.currentDashSpeed = Player.DASH_SPEED;
         }
     }
 
     @Override
     public void update(Player player) {
         player.setGravity(player.getGravity() + Player.FALLING_GRAVITY_VEL);
-        player.setVelY((int) player.getGravity());
-        if(player.getGravity() > 15) {
-            player.setGravity(15);
+        player.setVelY(player.getGravity());
+        if(player.getGravity() > Player.RUNNINGJUMPING_GRAVITY) {
+            player.setGravity(Player.RUNNINGJUMPING_GRAVITY);
         }
     }
 

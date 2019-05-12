@@ -1,7 +1,9 @@
 package util;
 
 import UI.Game;
+import UI.Window;
 import gameObject.character.Entity;
+import gameObject.tiles.wall.Wall;
 
 public class Camera {
     private int x;
@@ -11,20 +13,25 @@ public class Camera {
     private int counter;
     private int intensity;
 
-    public void update(Entity player) {
-        float xTarg = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
-        float yTarg = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2 + 100;
-        x += (xTarg - x) * 0.07;
-        y += (yTarg - y) * 0.07;
+    public void update(Entity player, int mapWidth, int mapHeight) {
+//        x = -player.getX() + (Game.WIDTH * Game.SCALE) / 2;
+//        y = -player.getY() + (Game.HEIGHT * Game.SCALE) / 2;
+        float xTarg = -player.getX() + (Window.scaledGameWidth) / 2.0f;
+        float yTarg = -player.getY() + (Window.scaledGameHeight) / 2.0f;
+        x += (xTarg - x) * (0.08 * Game.UpdatesRatio * Game.widthRatio);
+        y += (yTarg - y) * (0.07 * Game.UpdatesRatio * Game.heightRatio);
         if(x > 0) {
             x = 0;
         }
         if(y > 0) {
             y = 0;
         }
-        if(y < -700) {
-            y = -700;
+        if(y <= (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5)) {
+            y = (player.getHeight() + Wall.TILE_SIZE)-mapHeight*(int) (64 * Game.widthRatio) + (int)(Window.scaledGameHeight/1.5);
         }
+//        if(x <= mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth) {
+//            x = mapWidth*(int)(64 * Game.widthRatio) + Window.scaledGameWidth;
+//        }
         if(shaking) {
             counter++;
             x += Math.random() * intensity - intensity/ 2;

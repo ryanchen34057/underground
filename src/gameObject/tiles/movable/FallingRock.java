@@ -21,10 +21,11 @@ public class FallingRock extends Tile {
     private boolean isShaking;
     private int intensity;
     private int shakingCounter;
-    private final int SHAKING_LENGTH = 30;
-    private final int FALLING_SPEED = 25;
+    private final float SHAKING_LENGTH = 0.6f * Game.UPDATES;
+    private final float FALLING_SPEED = 30f * Game.UpdatesRatio * Game.heightRatio;
     private boolean fallen;
     private Effect currentEffect;
+    private boolean onTheGround;
 
     public FallingRock(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height, id);
@@ -32,9 +33,10 @@ public class FallingRock extends Tile {
         originalY = y;
         isFalling = false;
         isShaking = false;
+        onTheGround = false;
         fallen = false;
         this.bufferedImage = bufferedImage;
-        intensity = 10;
+        intensity = (int)(20 * Game.UpdatesRatio * Game.widthRatio);
         shakingCounter = 0;
         currentEffect = null;
     }
@@ -43,12 +45,22 @@ public class FallingRock extends Tile {
         isShaking = shaking;
     }
 
+    public void setOnTheGround(boolean onTheGround) {
+        this.onTheGround = onTheGround;
+    }
+
+    public boolean isOnTheGround() {
+        return onTheGround;
+    }
+
     @Override
     public void paint(Graphics g) {
         g.drawImage(bufferedImage, x, y, width, height, null);
         if(Game.debugMode) {
+            g.drawRect(x+(int)(width*0.08), y, width-2*(int)(width*0.08), height);
+            g.setColor(Color.RED);
+            g.drawRect(x+width/6, y + height, width-width/2,1);
             g.setColor(Color.GREEN);
-            g.drawRect(x+10, y+height, width-40,1);
         }
     }
 
@@ -80,6 +92,10 @@ public class FallingRock extends Tile {
         return fallen;
     }
 
+    public void setFalling(boolean falling) {
+        isFalling = falling;
+    }
+
     public Effect getCurrentEffect() {
         return currentEffect;
     }
@@ -90,15 +106,16 @@ public class FallingRock extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x+11, y, width-65, height);
+        return new Rectangle(x+(int)(width*0.08), y, width-2*(int)(width*0.08), height);
     }
+
     @Override
     public  Rectangle getBoundsTop() {
         return new Rectangle(x+10, y, width-20,1 );
     }
     @Override
     public  Rectangle getBoundsBottom() {
-        return new Rectangle(x+10, y+height, width-40,1);
+        return new Rectangle(x+width/4, y + height, width-width/2,1);
     }
     @Override
     public  Rectangle getBoundsLeft() {
@@ -129,11 +146,12 @@ public class FallingRock extends Tile {
     public void reactToCollision(ICollidable other, Direction direction) {
         if(!(other instanceof Player) && !(other instanceof Prize)) {
             if(isFalling) {
-//                SoundEffectPlayer.playSoundEffect("FallingRockHit");
-                y = ((Tile) other).getY() - height;
+                SoundEffectPlayer.playSoundEffect("FallingRockHit");
+                y = (int)((Tile) other).getBounds().getY() - height;
                 isFalling = false;
             }
             if(!fallen) {
+                SoundEffectPlayer.playSoundEffect("FallingRockShaking");
                 currentEffect = LandingEffect.getInstance(this);
                 fallen = true;
             }

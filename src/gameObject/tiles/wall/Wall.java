@@ -5,18 +5,25 @@ import enums.Direction;
 import enums.Id;
 import gameObject.ICollidable;
 import gameObject.tiles.Tile;
-import graphics.Sprite;
-import graphics.SpriteManager;
 import util.CollisionCondition;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Wall extends Tile {
-    public static final int TILE_SIZE = 64;
+    public static final int TILE_SIZE = (int) (64 * Game.widthRatio);
     public Wall(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height, id);
         this.bufferedImage = bufferedImage;
+        if(id == Id.halfHeightWall) {
+            boundsRectangle =  new Rectangle(x, y, width, height/2);
+        }
+        else if(id == Id.halfWidthWall) {
+            boundsRectangle = new Rectangle(x, y, width/2, height);
+        }
+        else {
+            boundsRectangle = new Rectangle(x, y, width, height);
+        }
     }
 
     @Override
@@ -25,7 +32,15 @@ public class Wall extends Tile {
                     width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.GREEN);
-            g.drawRect(x, y, width,height);
+            if(id == Id.halfHeightWall) {
+                g.drawRect(x, y, width,height/2);
+            }
+            else if(id == Id.halfWidthWall) {
+                g.drawRect(x, y, width/2,height);
+            }
+            else {
+                g.drawRect(x, y, width,height);
+            }
         }
     }
 
@@ -36,7 +51,7 @@ public class Wall extends Tile {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x, y, width, height);
+        return boundsRectangle;
     }
 
     @Override

@@ -6,6 +6,7 @@ import enums.Id;
 import gameObject.character.Player;
 import gameStates.GameStateManager;
 import gameStates.LevelState;
+import gameStates.TutorialState;
 import graphics.SpriteManager;
 import map.Background;
 import states.PlayerState;
@@ -37,7 +38,6 @@ public class Level4State extends LevelState {
 
     @Override
     public void update() {
-        System.out.println(cam.getX() + "," + cam.getY());
         // handle player's keyInput
         handleKeyInput();
 
@@ -53,7 +53,7 @@ public class Level4State extends LevelState {
 
         // Update all game object
         updateAllGameObject();
-        cam.update(player);
+        cam.update(player, mapWidth, mapHeight);
 
 
         // Check if on the ice
@@ -67,7 +67,7 @@ public class Level4State extends LevelState {
         }
 
         if((player.isGoaled())) {
-            gameStateManager.setLevelState(new Level3State(gameStateManager));
+            gameStateManager.setLevelState(new TutorialState(gameStateManager));
         }
     }
 }

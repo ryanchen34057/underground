@@ -1,6 +1,5 @@
 package gameStates.level;
 
-import effects.DeathParticle;
 import enums.Id;
 import gameObject.character.Player;
 import gameStates.GameStateManager;
@@ -52,7 +51,7 @@ public class Level3State extends LevelState {
         updateAllGameObject();
 
         // Update camera
-        cam.update(player);
+        cam.update(player, mapWidth, mapHeight);
 
         // Check if on the ice
         if(player.isOnTheIce() && player.getCurrentState() != PlayerState.standing) {
@@ -64,7 +63,7 @@ public class Level3State extends LevelState {
             player.setCurrentState(PlayerState.falling);
         }
         if((player.isGoaled())) {
-            gameStateManager.setLevelState(new Level3State(gameStateManager));
+            gameStateManager.setLevelState(new Level4State(gameStateManager));
         }
     }
 }

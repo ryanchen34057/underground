@@ -11,17 +11,22 @@ import util.CollisionCondition;
 import java.awt.*;
 
 public class Emerald extends Prize {
-    public static final int PRIZE_SIZE = 64;
+    private int serial;
+    private boolean isEaten;
+    public static final int PRIZE_SIZE = (int)(64* Game.widthRatio);
     private int frameDelay, frame;
-    public Emerald(int x, int y, int width, int height, int point, Id id) {
+    public Emerald(int x, int y, int width, int height, int point, Id id, int serial) {
         super(x, y, width, height, point, id);
         frameDelay = 0;
         frame = 0;
+        this.serial = serial;
+        isEaten = false;
+        boundsRectangle = new Rectangle(x+10, y+10, width-20,height-20);
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getPrizeFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
+        g.drawImage(FrameManager.getEmeralFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
                 super.getWidth(), super.getHeight(), null);
         if(Game.debugMode) {
             g.setColor(Color.YELLOW);
@@ -32,14 +37,23 @@ public class Emerald extends Prize {
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 5) {
+        if (frameDelay >= 5/Game.UpdatesRatio) {
             frame++;
-            if (frame >= FrameManager.getPrizeFrame().length) {
+            if (frame >= FrameManager.getEmeralFrame().length) {
                 frame = 0;
             }
             frameDelay = 0;
         }
     }
+
+    public int getSerial() {
+        return serial;
+    }
+
+    public boolean isEaten() {
+        return isEaten;
+    }
+
 
     @Override
     public void die() {
@@ -48,7 +62,7 @@ public class Emerald extends Prize {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle(x+10, y+10, width-20,height-20);
+        return boundsRectangle;
     }
 
     @Override
@@ -84,6 +98,7 @@ public class Emerald extends Prize {
     @Override
     public void reactToCollision(ICollidable other, Direction direction) {
         SoundEffectPlayer.playSoundEffect("Prize");
+        isEaten = true;
         die();
     }
 }

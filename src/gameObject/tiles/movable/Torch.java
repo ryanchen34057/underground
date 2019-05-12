@@ -22,7 +22,7 @@ public class Torch extends Tile {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getTorchFrame()[frame].getBufferedImage(), x, y,
+        g.drawImage(FrameManager.getDiamondFrame()[frame].getBufferedImage(), x, y,
                 width, height, null);
     }
 
@@ -31,7 +31,7 @@ public class Torch extends Tile {
         frameDelay++;
         if (frameDelay >= 10) {
             frame++;
-            if (frame >= FrameManager.getTorchFrame().length) {
+            if (frame >= FrameManager.getDiamondFrame().length) {
                 frame = 0;
             }
             frameDelay = 0;

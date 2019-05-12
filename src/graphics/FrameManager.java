@@ -11,13 +11,14 @@ import static enums.Direction.*;
 
 public class FrameManager {
     public static Sprite[] playerMoveFrame = new Sprite[8];
-    public static Sprite[] prizeFrame = new Sprite[8];
-    public static Sprite[] effectFrame = new Sprite[30];
-    public static Sprite[] deathFrame = new Sprite[8];
-    public static Sprite[] bluePortalFrame = new Sprite[9];
-    public static Sprite[] purplePortalFrame = new Sprite[9];
-    public static Sprite[] torchFrame = new Sprite[10];
-    public static Sprite[] springFrame = new Sprite[11];
+    private static Sprite[] emeralFrame = new Sprite[8];
+    private static Sprite[] effectFrame = new Sprite[30];
+    private static Sprite[] deathFrame = new Sprite[8];
+    private static Sprite[] bluePortalFrame = new Sprite[9];
+    private static Sprite[] purplePortalFrame = new Sprite[9];
+    private static Sprite[] diamondFrame = new Sprite[10];
+    private static Sprite[] springFrame = new Sprite[11];
+    private static Sprite[] lavaFrame = new Sprite[4];
 
     public static Sprite[] getPlayerMoveFrame(State currentState) {
         int y = 0;
@@ -60,18 +61,30 @@ public class FrameManager {
         if(currentState instanceof IceSkating) {
             y = 23;
         }
+        if(currentState instanceof SpringHorizontal) {
+            y = 23;
+        }
         for(int i=0;i<playerMoveFrame.length;i++) {
             playerMoveFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, y, 32, 32);
         }
         return playerMoveFrame;
     }
 
-    public static Sprite[] getPrizeFrame() {
-        for(int i=0;i<prizeFrame.length;i++) {
-            prizeFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 9, 32, 32);
+    public static Sprite[] getEmeralFrame() {
+        for(int i = 0; i< emeralFrame.length; i++) {
+            emeralFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 9, 32, 32);
         }
-        return prizeFrame;
+        return emeralFrame;
     }
+
+
+    public static Sprite[] getDiamondFrame() {
+        for(int i = 0; i< diamondFrame.length; i++) {
+            diamondFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 7, 32,  32);
+        }
+        return diamondFrame;
+    }
+
 
     public static Sprite[] getEffectFrame(Id id) {
         if(id == Id.dashEffect) {
@@ -155,17 +168,34 @@ public class FrameManager {
         }
     }
 
-    public static Sprite[] getTorchFrame() {
-        for(int i = 0; i< torchFrame.length; i++) {
-            torchFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 7, 32,  32);
+    public static Sprite[] getSpringFrame(Direction direction) {
+        if(direction == UP) {
+            for(int i = 0; i< springFrame.length; i++) {
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 4, 32,  32);
+            }
         }
-        return torchFrame;
-    }
-
-    public static Sprite[] getSpringFrame() {
-        for(int i = 0; i< springFrame.length; i++) {
-            springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 4, 32,  32);
+        else if(direction == DOWN) {
+            for(int i = 0; i< springFrame.length; i++) {
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 1, 3, 32,  32);
+            }
+        }
+        else if(direction == LEFT) {
+            for(int i = 0; i< springFrame.length; i++) {
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 12, 3, 32,  32);
+            }
+        }
+        else if(direction == RIGHT) {
+            for(int i = 0; i< springFrame.length; i++) {
+                springFrame[i] = new Sprite(SpriteManager.spriteSheet,i + 12, 4, 32,  32);
+            }
         }
         return springFrame;
+    }
+
+    public static Sprite[] getLavaFrame() {
+        for(int i=0;i<lavaFrame.length;i++) {
+            lavaFrame[i] = new Sprite(SpriteManager.lavaSheet, i + 1, 1, 300, 89);
+        }
+        return lavaFrame;
     }
 }

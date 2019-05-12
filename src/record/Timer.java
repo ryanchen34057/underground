@@ -1,5 +1,6 @@
 package record;
 
+import UI.Game;
 import fonts.Words;
 import java.awt.Graphics;
 import java.text.DecimalFormat;
@@ -23,7 +24,7 @@ public class Timer {
         min = 0;
         sec = 0;
         ms = 0;
-        word = new Words(min + ":" + sec + ":" + ms,30,150,80);
+        word = new Words(min + ":" + sec + ":" + ms,(int)(30*Game.widthRatio),(int)(150*Game.widthRatio),(int)(80*Game.heightRatio));
         startTime = System.currentTimeMillis();
         pauseStart = 0;
     }
@@ -32,7 +33,7 @@ public class Timer {
         min = 0;
         sec = 0;
         ms = 0;
-        word = new Words(min + ":" + sec + ":" + ms,30,150,80);
+        word = new Words(min + ":" + sec + ":" + ms, (int)(30*Game.widthRatio),(int)(150*Game.widthRatio),(int)(80*Game.heightRatio));
         startTime = System.currentTimeMillis()- usedTimeRecord;
         pauseStart = 0;
     }
@@ -59,7 +60,7 @@ public class Timer {
         temp = trans(temp,MIN_TYPE,60*1000);
         temp = trans(temp,SEC_TYPE,1000);
         temp = trans(temp,MS_TYPE,1);
-        word.setWord(formatter.format(min)+":"+formatter.format(sec)+":"+formatter.format(ms/10));
+        word.setWord("Timer: " + formatter.format(min)+":"+formatter.format(sec)+":"+formatter.format(ms/10));
     }
     
     

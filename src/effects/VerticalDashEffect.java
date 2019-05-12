@@ -1,14 +1,12 @@
 package effects;
 
+import UI.Game;
 import enums.Direction;
 import gameObject.character.Player;
 import enums.Id;
 import graphics.FrameManager;
 
 import java.awt.*;
-
-import static enums.Direction.DOWN;
-import static enums.Direction.UP;
 
 public class VerticalDashEffect extends Effect {
     private int direction;
@@ -38,7 +36,7 @@ public class VerticalDashEffect extends Effect {
     @Override
     public void update() {
         frameDelay++;
-        if (frameDelay >= 3) {
+        if (frameDelay >= 3 / Game.UpdatesRatio) {
             frame++;
             if (frame >= 12) {
                 frame = 0;

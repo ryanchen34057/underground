@@ -1,5 +1,6 @@
 package states;
 
+import UI.Game;
 import gameObject.character.Player;
 import input.Input;
 
@@ -34,9 +35,10 @@ public class Sliding implements State {
     @Override
     public void update(Player player) {
         player.accumulateFatigue();
-        player.setFriction(player.getFriction() + 0.1f);
+        player.setFriction(1);
         player.setVelY(player.getFriction());
-        if(player.getFriction() >= 5 || player.getFatigue() >= player.getSTAMINA() || !player.isOnTheWall()) {
+        player.setVelX(player.getFacing());
+        if((player.getFriction() >= (Game.UPDATES *5)/Game.UpdatesRatio *Game.heightRatio) || player.getFatigue() >= player.getSTAMINA() || !player.isOnTheWall()) {
             player.setCurrentState(PlayerState.falling);
             player.setFriction(0);
         }

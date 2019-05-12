@@ -1,10 +1,12 @@
 package gameStates;
 
 import UI.Game;
+import UI.Window;
 import audio.MusicPlayer;
 import audio.SoundEffectPlayer;
 import fonts.Words;
 import static gameStates.GameState.locked;
+import gameStates.level.LastLevelState;
 import gameStates.level.Level0State;
 import input.Input;
 import java.awt.Graphics;
@@ -30,21 +32,21 @@ public class StoryState extends GameState {
 
             words = new ArrayList<>();
             sent = new ArrayList<>();
-            hint = new Words("Press Enter to skip", 30, (int) (Game.WIDTH * Game.SCALE / 2), (int) (Game.HEIGHT * Game.SCALE * 4 / 5));
+            hint = new Words("Press Enter to skip", (int)(30*Game.widthRatio), (int) (Window.scaledGameWidth / 2), (int) (Window.scaledGameHeight*0.9));
             //sentences
-            sent.add(new String("2110/4/10 The expedition started from Camp in Antarctica."));
-            sent.add(new String("Coordinates -69.715560, -66.484216."));
-            sent.add(new String("The weather is bad, visibility 5m to 10m."));
-            sent.add(new String("11:20 After break, we go to the cave with captain."));
-            sent.add(new String("My comm was interrupted temporarily , but it didn't matter."));
-            sent.add(new String("13:30 Our teammates find a mystery deep hole."));
-            sent.add(new String("There seems to be a distortion around the area."));
-            sent.add(new String("14:00 Passed through the hole into the unknown area,"));
-            sent.add(new String("it transfers my location , I ask for... help but..."));
-            sent.add(new String("Restart record...     By  Lara Croft"));
+            sent.add("2110/4/10 The expedition started from Camp in Antarctica.");
+            sent.add("Coordinates -69.715560, -66.484216.");
+            sent.add("The weather is bad, visibility 5m to 10m.");
+            sent.add("11:20 After break, we go to the cave with captain.");
+            sent.add("My comm was interrupted temporarily , but it didn't matter.");
+            sent.add("13:30 Our teammates find a mystery deep hole.");
+            sent.add("There seems to be a distortion around the area.");
+            sent.add("14:00 Passed through the hole into the unknown area,");
+            sent.add("it transfers my location , I ask for... help but...");
+            sent.add("Restart record...     By  Lara Croft");
             //words
             for (int i = 0; i < sent.size(); i++) {
-                  words.add(new Words(sent.get(i).substring(0, (int) count), 30, (int) (Game.WIDTH * Game.SCALE / 2), (int) (Game.HEIGHT * Game.SCALE / 2)));
+                  words.add(new Words(sent.get(i).substring(0, (int) count), 30, (int) (Window.scaledGameWidth/ 2), (int) (Window.scaledGameHeight/ 2)));
             }
             currentLength = sent.get(0).length();
             //audio
@@ -52,13 +54,13 @@ public class StoryState extends GameState {
       }
 
       public void init() {
-            background = new Background("/res/Black.png", Game.WIDTH * Game.SCALE, Game.HEIGHT * Game.SCALE);          
+            background = new Background("/res/Black.png", Window.scaledGameWidth, Window.scaledGameHeight);
       }
 
       public void handleKeyInput() {
             if(!locked){
                   if(Input.keys.get(7).down){//Enter
-                        gameStateManager.setLevelState(new Level0State(gameStateManager));
+                        gameStateManager.setLevelState(new LastLevelState(gameStateManager));
                         locked = true;
                   }
             }

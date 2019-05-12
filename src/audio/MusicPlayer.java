@@ -3,39 +3,53 @@ package audio;
 import java.util.ArrayList;
 
 public class MusicPlayer implements Runnable {
-    private ArrayList<AudioFile> musicFiles;
-    private int currentSongIndex;
-    private boolean running;
+    private static ArrayList<AudioFile> musicFiles;
+    private static AudioFile currentSong;
+    public static boolean running;
+    public static boolean isOn;
 
     public MusicPlayer() {
+        running = true;
+        isOn = true;
         musicFiles = new ArrayList<>();
     }
 
     public void add(String file) {
-        musicFiles.add(new AudioFile("./src/audio/" + file + ".wav"));
+        musicFiles.add(new AudioFile("./src/audio/res/" + file + ".wav"));
     }
 
     public int size() {
         return musicFiles.size();
     }
 
+    public static void changeSong(int index) {
+        currentSong.stop();
+        currentSong = musicFiles.get(index);
+
+    }
+
     @Override
     public void run() {
-        running = true;
-        AudioFile song = musicFiles.get(currentSongIndex);
-        song.play();
+        if(currentSong == null) {
+            currentSong = musicFiles.get(0);
+        }
         while(running) {
-            if(!song.isPlaying()) {
-                currentSongIndex++;
-                if(currentSongIndex >= musicFiles.size()) {
-                    currentSongIndex = 0;
-                }
-                song = musicFiles.get(currentSongIndex);
-                song.play();
+            if(!isOn) {
+                currentSong.stop();
             }
-
+            else {
+                currentSong.play();
+            }
+//            if(!song.isPlaying()) {
+//                currentSongIndex++;
+//                if(currentSongIndex >= musicFiles.size()) {
+//                    currentSongIndex = 0;
+//                }
+//                song = musicFiles.get(currentSongIndex);
+//                song.play();
+//            }
             try {
-                Thread.sleep(1);
+                Thread.sleep(2);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

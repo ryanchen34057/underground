@@ -1,6 +1,7 @@
 package gameObject.character;
 
 import UI.Game;
+import UI.Window;
 import audio.AudioFile;
 import effects.Effect;
 import enums.Id;
@@ -9,6 +10,7 @@ import gameObject.tiles.Tile;
 import states.State;
 
 import java.awt.*;
+import java.util.LinkedList;
 
 public abstract class Entity implements ICollidable {
     //Coordinate
@@ -152,8 +154,8 @@ public abstract class Entity implements ICollidable {
     public abstract void die();
 
     public boolean inTheScreen(Tile t) {
-        return (t.getX() >= x - (Game.WIDTH * Game.SCALE) / 1.5) && (t.getX() < x + (Game.WIDTH * Game.SCALE))
-                && (t.getY() >= y - (Game.HEIGHT * Game.SCALE) / 1.5) && (t.getY() < y + (Game.HEIGHT * Game.SCALE) / 1.5);
+        return (t.getX() >= x - (Window.scaledGameWidth) / 1.5) && (t.getX() < x + (Window.scaledGameWidth))
+                && (t.getY() >= y - (Window.scaledGameHeight) / 1.5) && (t.getY() < y + (Window.scaledGameHeight) / 1.5);
     }
 
 }

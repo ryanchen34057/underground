@@ -34,6 +34,8 @@ public class Running implements State {
             player.setCurrentState(PlayerState.dashing);
             player.setCurrentEffect(DashEffect.getInstance(player));
             player.setTired(true);
+            player.currentDashTimer = Player.DASH_TIMER;
+            player.currentDashSpeed = Player.DASH_SPEED;
 
         }
         else if(!keys.get(4).down) {

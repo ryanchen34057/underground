@@ -6,11 +6,20 @@ import effects.VerticalDashEffect;
 import enums.Direction;
 import gameObject.character.Player;
 import input.Input;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.TriangleMesh;
+
 import java.util.List;
 
 public class Bouncing implements State {
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
+//        if(keys.get(2).down) {
+//            player.setFacing(player.getFacing());
+//        }
+//        else if(keys.get(3).down) {
+//            player.setFacing(player.getFacing());
+//        }
         if(!keys.get(5).down) {
             player.setJumped(false);
         }
@@ -23,6 +32,7 @@ public class Bouncing implements State {
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
             player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
         }
 
         //DASHING_IN_THE_AIR
@@ -33,13 +43,15 @@ public class Bouncing implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
+            player.currentDashTimer = Player.DASH_TIMER;
+            player.currentDashSpeed = Player.DASH_SPEED;
         }
     }
 
     @Override
     public void update(Player player) {
         player.accumulateFatigue();
-        player.setVelX(player.getFacing() * -1 *  Player.BOUNCING_RANGE);
+        player.setVelX(player.getFacing() * -1 * Player.BOUNCING_RANGE);
         player.setGravity(player.getGravity() - Player.BOUNCING_GRAVITY_OFFSET);
         player.setVelY((int) -player.getGravity());
         if (player.getGravity() <= 0.0 || player.getFatigue() >= player.getSTAMINA()) {
