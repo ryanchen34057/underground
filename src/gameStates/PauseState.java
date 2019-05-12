@@ -63,6 +63,9 @@ public class PauseState extends GameState{
                         locked = true;
                         break;
                     case 2:
+                        if(gameStateManager.getCurrentLevel() > 0) {
+                            gameStateManager.setGameState(new LevelSelectionState(gameStateManager));
+                        }
                         break;
                     case 3:
                         gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));

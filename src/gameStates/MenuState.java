@@ -45,7 +45,7 @@ public class MenuState extends GameState{
                 SoundEffectPlayer.playSoundEffect("Enter");
                 switch(cursor.getPointer()){
                     case 0:
-                        gameStateManager.setGameState(new StoryState(gameStateManager));
+                        gameStateManager.setGameState(new SaveSlotState(gameStateManager));
                         locked = true;
                         break;
                     case 1:

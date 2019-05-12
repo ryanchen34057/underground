@@ -19,10 +19,7 @@ public class LeaderboardState extends GameState {
       private Words[] words;
       private ArrayList<Record> records;
 
-      public LeaderboardState(GameStateManager gameStateManager) {
-            super(gameStateManager);
-            init();
-      }
+      public LeaderboardState(GameStateManager gameStateManager) { super(gameStateManager); }
 
       public void init() {
             records = new ArrayList<>();

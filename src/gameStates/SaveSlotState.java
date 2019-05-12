@@ -33,20 +33,6 @@ public class SaveSlotState extends GameState {
 
     public GameState getInstance() { return new SaveSlotState(gameStateManager); }
 
-    public Record loadRecord(int num) {
-        Record record = null;
-        try {
-            FileInputStream fileIn = new FileInputStream("./record/record" + num + ".ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            record = (Record) in.readObject();
-            in.close();
-            fileIn.close();
-        } catch (IOException | ClassNotFoundException i) {
-            //i.printStackTrace();
-        }
-        return record;
-    }
-
     @Override
     public void init() {
         background = new Background("/res/SaveSlot.png", Window.scaledGameWidth, Window.scaledGameHeight);
@@ -75,7 +61,7 @@ public class SaveSlotState extends GameState {
                     gameStateManager.setSlotId(selected + 1);
                     gameStateManager.setDeathCount(0);
                     gameStateManager.setEmeraldCount(0);
-                    gameStateManager.setLevelState(new Level0State(gameStateManager));
+                    gameStateManager.setGameState(new StoryState(gameStateManager));
                 } else {
                     gameStateManager.loadRecord(saveDatas[selected]);
                 }
@@ -114,7 +100,7 @@ public class SaveSlotState extends GameState {
         handleKeyInput();
 
         if(!isLoaded) {
-            for (int i = 0; i < saveDatas.length; i++) {
+            for (int i=0; i<saveDatas.length;i++) {
                 Rectangle rectangle = rectangles.get(i);
                 Record record = loadRecord(i + 1);
                 saveDatas[i] = record;
@@ -152,7 +138,7 @@ public class SaveSlotState extends GameState {
         for (Words word : words) {
             word.paint(g);
         }
-        for (int i = 0; i < rectangles.size(); i++) {
+        for (int i = 0;i<rectangles.size();i++) {
             // Determine border of rectangle
             Rectangle rectangle = rectangles.get(i);
             if (i == selected) {
@@ -164,6 +150,7 @@ public class SaveSlotState extends GameState {
                 g2.setStroke(new BasicStroke(thickness));
                 g2.drawRect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
                 g2.setStroke(oldStroke);
+                g2.setColor(Color.white);
             }
 
             // Paint record data words
@@ -188,5 +175,19 @@ public class SaveSlotState extends GameState {
             g.drawImage(SpriteManager.enterKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.5), (int)(Window.scaledGameHeight/1.12), (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
             g.drawImage(SpriteManager.xKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.25), (int)(Window.scaledGameHeight/1.12), (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
         }
+    }
+
+    public Record loadRecord(int num) {
+        Record record = null;
+        try {
+            FileInputStream fileIn = new FileInputStream("./record/record" + num + ".ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            record = (Record) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException | ClassNotFoundException i) {
+            //i.printStackTrace();
+        }
+        return record;
     }
 }

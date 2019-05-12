@@ -1,6 +1,7 @@
 package gameStates;
 
 import UI.Game;
+import audio.MusicPlayer;
 import fonts.Words;
 import gameObject.tiles.prize.Emerald;
 import gameStates.level.*;
@@ -86,7 +87,14 @@ public class GameStateManager {
     public void setLevelState(LevelState levelState) {
         gameStateStack.push(levelState);
         currentLevel = levelState.getLevel();
-        levelWord = new Words("Level: " + currentLevel, (int)(30 * Game.widthRatio), (int)(85 * Game.widthRatio), (int)(40 * Game.heightRatio));
+        String msg;
+        if(currentLevel == LEVEL_COUNT) {
+            msg = "Level: Lava Hell";
+        }
+        else {
+            msg = "Level: " + currentLevel;
+        }
+        levelWord = new Words(msg, (int)(30 * Game.widthRatio), (int)(85 * Game.widthRatio), (int)(40 * Game.heightRatio));
     }
 
     public void updateGameState(GameState gameState) {

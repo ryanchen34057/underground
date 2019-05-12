@@ -64,14 +64,8 @@ public class AudioOptionState extends GameState {
     @Override
     public void handleKeyInput() {
         if (!locked) {
-            if(Input.keys.get(7).down && selectedVer == 1){//Enter
+            if(Input.keys.get(7).down && selectedVer == 3){//Enter
                 gameStateManager.back();
-                if(selectedHorSoundEffect == 0) {
-                    SoundEffectPlayer.isON = true;
-                }
-                else {
-                    SoundEffectPlayer.isON = false;
-                }
                 SoundEffectPlayer.playSoundEffect("Enter");
                 locked = true;
             }
@@ -120,7 +114,6 @@ public class AudioOptionState extends GameState {
                     }
                 }
                 SoundEffectPlayer.playSoundEffect("Cursor");
-
             }
         }
         if(!Input.keys.get(7).down && !Input.keys.get(0).down &&!Input.keys.get(1).down && !Input.keys.get(2).down &&!Input.keys.get(3).down){//放開

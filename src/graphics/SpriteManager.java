@@ -61,6 +61,9 @@ public class SpriteManager {
     //Empty vanishing rock
     public static Sprite emptyVanishingRock;
 
+    //Lock
+    public static Sprite lock;
+
 
     public SpriteManager() {
         //Sprite object
@@ -82,6 +85,7 @@ public class SpriteManager {
         esc = new Sprite(spriteSheet,15,9,64,64);
         left = new Sprite(spriteSheet,16,9,64,64);
         right = new Sprite(spriteSheet,17,9,64,64);
+        lock = new Sprite(spriteSheet, 11, 10, 64, 64);
 
 
         //BufferedImage object
