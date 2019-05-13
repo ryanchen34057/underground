@@ -229,6 +229,7 @@ public abstract class LevelState extends GameState {
             deathDelay++;
             if(deathDelay >= DEATH_DELAY_TIME) {
                 deathDelay = 0;
+                alpha = 0;
                 gameStateManager.incrementDeathCount();
                 gameStateManager.setLevelState(getInstance());
             }

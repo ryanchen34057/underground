@@ -2,15 +2,18 @@ package gameStates;
 
 import UI.Game;
 import UI.Window;
+import audio.MusicPlayer;
 import audio.SoundEffectPlayer;
 import fonts.Words;
 import gameStates.level.Level0State;
+import graphics.FrameManager;
 import graphics.SpriteManager;
 import input.Input;
 import map.Background;
 import record.Record;
 import record.Timer;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,6 +29,12 @@ public class SaveSlotState extends GameState {
     private HashMap<Record, ArrayList<Words>> saveSlotWordsMap;
     private Words[] startNewGameWords;
     private boolean isLoaded;
+    private boolean inputState;
+    private Words inputWords;
+    private int frame;
+    private int frameDelay;
+    private Words playerName;
+
 
     public SaveSlotState(GameStateManager gameStateManager) {
         super(gameStateManager);
@@ -49,50 +58,74 @@ public class SaveSlotState extends GameState {
         rectangles.add(new Rectangle((Window.scaledGameWidth) / 11, (Window.scaledGameHeight) / 6, (int) ((Window.scaledGameWidth) * 0.83), (int) ((Window.scaledGameHeight) * 0.22)));
         rectangles.add(new Rectangle((Window.scaledGameWidth) / 11, (int) ((Window.scaledGameHeight) / 2.4), (int) ((Window.scaledGameWidth) * 0.83), (int) ((Window.scaledGameHeight) * 0.22)));
         rectangles.add(new Rectangle((Window.scaledGameWidth) / 11, (int) ((Window.scaledGameHeight) / 1.49), (int) ((Window.scaledGameWidth) * 0.83), (int) ((Window.scaledGameHeight) * 0.22)));
+        inputState = false;
+        inputWords = new Words("Enter your name: ", (int)(40*Game.widthRatio), Window.scaledGameWidth/2, Window.scaledGameHeight/2);
+        frame = 0;
+        frameDelay = 0;
+        playerName = new Words("", (int)(60*Game.widthRatio), 0, 0);
     }
 
     @Override
     public void handleKeyInput() {
         if (!locked) {
-            if (Input.keys.get(7).down) {//Enter
-                SoundEffectPlayer.playSoundEffect("Enter");
-                if (saveDatas[selected] == null) {
-                    gameStateManager.setTimer(new Timer());
-                    gameStateManager.setSlotId(selected + 1);
-                    gameStateManager.setDeathCount(0);
-                    gameStateManager.setEmeraldCount(0);
-                    gameStateManager.resetEmerald();
-                    gameStateManager.setGameState(new StoryState(gameStateManager));
-                } else {
-                    gameStateManager.loadRecord(saveDatas[selected]);
+            if (inputState) {
+                if (Input.keys.get(7).down) {
+                    if(playerName.getMsg().length() > 0) {
+                        gameStateManager.setPlayerName(playerName.getMsg());
+                        gameStateManager.setTimer(new Timer());
+                        gameStateManager.setSlotId(selected + 1);
+                        gameStateManager.setDeathCount(0);
+                        gameStateManager.setEmeraldCount(0);
+                        gameStateManager.resetEmerald();
+                        gameStateManager.setGameState(new StoryState(gameStateManager));
+                        inputState = false;
+                        locked = true;
+                    }
                 }
-                locked = true;
-            }
-            if (Input.keys.get(0).down) {//上
-                SoundEffectPlayer.playSoundEffect("Cursor");
-                locked = true;
-                selected -= 1;
-                selected %= 3;
-                if (selected < 0) {
-                    selected = 0;
+
+            } else {
+                if (Input.keys.get(7).down) {//Enter
+                    SoundEffectPlayer.playSoundEffect("Enter");
+                    if (saveDatas[selected] == null) {
+                        Input.alphaBet.clear();
+                        inputState = true;
+                    }
+                    else {
+                        gameStateManager.loadRecord(saveDatas[selected]);
+                        if(gameStateManager.getCurrentLevel() == 5) {
+                            MusicPlayer.isOn = false;
+                            MusicPlayer.changeSong(1);
+                            MusicPlayer.isOn = true;
+                        }
+                    }
+                    locked = true;
                 }
-            }
-            if (Input.keys.get(1).down) {//下
-                SoundEffectPlayer.playSoundEffect("Cursor");
-                locked = true;
-                selected += 1;
-                selected %= 3;
-            }
-            if(Input.keys.get(4).down) { // X key
-                SoundEffectPlayer.playSoundEffect("Enter");
-                locked = true;
-                File recordToRemove = new File("./record/record" + (selected+1) + ".ser");
-                recordToRemove.delete();
-                saveDatas[selected] = null;
-                gameStateManager.updateGameState(new SaveSlotState(gameStateManager));
+                if (Input.keys.get(0).down) {//上
+                    SoundEffectPlayer.playSoundEffect("Cursor");
+                    locked = true;
+                    selected -= 1;
+                    selected %= 3;
+                    if (selected < 0) {
+                        selected = 0;
+                    }
+                }
+                if (Input.keys.get(1).down) {//下
+                    SoundEffectPlayer.playSoundEffect("Cursor");
+                    locked = true;
+                    selected += 1;
+                    selected %= 3;
+                }
+                if (Input.keys.get(4).down) { // X key
+                    SoundEffectPlayer.playSoundEffect("Enter");
+                    locked = true;
+                    File recordToRemove = new File("./record/record" + (selected + 1) + ".ser");
+                    recordToRemove.delete();
+                    saveDatas[selected] = null;
+                    gameStateManager.updateGameState(new SaveSlotState(gameStateManager));
+                }
             }
         }
-        if (!Input.keys.get(0).down && !Input.keys.get(1).down && !Input.keys.get(7).down && !Input.keys.get(4).down) {//放開
+        if (Input.isAllReleased()){//放開
             locked = false;
         }
     }
@@ -115,11 +148,13 @@ public class SaveSlotState extends GameState {
                 } else {
                     if (!(saveSlotWordsMap.containsKey(record))) {
                         saveSlotWordsMap.put(record, new ArrayList<>());
+                        Words nameWords = new Words("Name: " + record.getName(), (int) (Window.scaledGameWidth* 0.023), (int) (rectangle.x + rectangle.getWidth()/8.7), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
                         Words saveSlotWords = new Words("Save Slot" + record.getId(), (int) (Window.scaledGameWidth* 0.025), (int) (rectangle.x + rectangle.getWidth()/7), (int) (rectangle.y + (rectangle.getHeight()/3.33)));
-                        Words levelWords = new Words("Level: " + record.getLevel(), (int) (Window.scaledGameWidth* 0.023), (int) (rectangle.x + rectangle.getWidth()/5), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
-                        Words timeWords = new Words(record.getTimeString(), (int) (Window.scaledGameWidth* 0.023), (int) (rectangle.x + rectangle.getWidth()/2), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
-                        Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), (int) (Window.scaledGameWidth* 0.023), rectangle.x + (int) (rectangle.getWidth()/4.5), (int) (rectangle.y + (rectangle.getHeight()/1.1)));
-                        Words deathCountWords = new Words("X " + record.getDeathCount(), (int) (Window.scaledGameWidth* 0.023), rectangle.x + (int) (rectangle.getWidth()/2.05), emeraldCountWords.getWordY());
+                        Words levelWords = new Words("Level: " + record.getLevel(), (int) (Window.scaledGameWidth* 0.023), (int) (rectangle.x + rectangle.getWidth()/2.8), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
+                        Words timeWords = new Words(record.getTimeString(), (int) (Window.scaledGameWidth* 0.023), (int) (rectangle.x + rectangle.getWidth()/1.6), (int) (rectangle.y + (rectangle.getHeight()/1.75)));
+                        Words emeraldCountWords = new Words("X " + record.getEmeraldCount(), (int) (Window.scaledGameWidth* 0.023), rectangle.x + (int) (rectangle.getWidth()/2.74), (int) (rectangle.y + (rectangle.getHeight()/1.1)));
+                        Words deathCountWords = new Words("X " + record.getDeathCount(), (int) (Window.scaledGameWidth* 0.023), rectangle.x + (int) (rectangle.getWidth()/1.7), emeraldCountWords.getWordY());
+                        saveSlotWordsMap.get(record).add(nameWords);
                         saveSlotWordsMap.get(record).add(saveSlotWords);
                         saveSlotWordsMap.get(record).add(levelWords);
                         saveSlotWordsMap.get(record).add(timeWords);
@@ -161,8 +196,8 @@ public class SaveSlotState extends GameState {
                     words.paint(g);
                 }
                 if(saveDatas[i] != null) {
-                    g.drawImage(SpriteManager.emerald.getBufferedImage(), (int)(rectangle.x + rectangle.getWidth()/8.5), (int)(rectangle.y + rectangle.getHeight()/1.65), (int)(Window.scaledGameWidth*0.04), (int)(Window.scaledGameWidth*0.04), null);
-                    g.drawImage(SpriteManager.skull.getBufferedImage(), (int)(rectangle.x + rectangle.getWidth()/2.7),  (int)(rectangle.y + rectangle.getHeight()/1.65), (int)(Window.scaledGameWidth*0.04), (int)(Window.scaledGameWidth*0.04), null);
+                    g.drawImage(SpriteManager.emerald.getBufferedImage(), (int)(rectangle.x + rectangle.getWidth()/3.7), (int)(rectangle.y + rectangle.getHeight()/1.65), (int)(Window.scaledGameWidth*0.04), (int)(Window.scaledGameWidth*0.04), null);
+                    g.drawImage(SpriteManager.skull.getBufferedImage(), (int)(rectangle.x + rectangle.getWidth()/2.05),  (int)(rectangle.y + rectangle.getHeight()/1.65), (int)(Window.scaledGameWidth*0.04), (int)(Window.scaledGameWidth*0.04), null);
                 }
             }
 
@@ -176,6 +211,58 @@ public class SaveSlotState extends GameState {
             // Paint key hint
             g.drawImage(SpriteManager.enterKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.5), (int)(Window.scaledGameHeight/1.12), (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
             g.drawImage(SpriteManager.xKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.25), (int)(Window.scaledGameHeight/1.12), (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
+        }
+
+        if(inputState) {
+            // Transparent background
+            Graphics2D g2 = (Graphics2D) g;
+            AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.7f);
+            g2.setComposite(ac);
+            g.setColor(Color.black);
+            g.fillRect(0, 0, Window.scaledGameWidth+10, Window.scaledGameHeight+10);
+            ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1);
+
+            // Input rectangle
+            g2.setComposite(ac);
+            inputWords.paint(g);
+            g.setColor(Color.GRAY);
+            int rectX = inputWords.getWordX() - inputWords.getWidth()/2;
+            int rectY = inputWords.getWordY() + inputWords.getHeight()/2;
+            int rectWidth = inputWords.getWidth();
+            int rectHeight = (int)(90*Game.widthRatio);
+            g.fillRect(rectX, rectY, rectWidth, rectHeight);
+            playerName.setPos((int)(rectX * 1.01) + rectWidth/2, rectY + rectHeight);
+
+            // Cursor
+            if (frame <= 60) {
+                frame++;
+                g2.setColor(Color.white);
+                g2.drawLine(playerName.getWordX() + playerName.getWidth()/2, rectY
+                        , playerName.getWordX() + playerName.getWidth()/2, rectY + rectHeight);
+            }
+            else {
+                if(frameDelay <= 60) {
+                    frameDelay++;
+                }
+                else {
+                    frame = 0;
+                    frameDelay = 0;
+                }
+            }
+
+            String name = "";
+            // Display name input
+            for(Character character: Input.alphaBet) {
+                name += character;
+            }
+            playerName.setWord(name);
+            playerName.paint(g);
+
+            //Enter Key
+            g2.drawImage(SpriteManager.enterKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.3), (int)(Window.scaledGameHeight/1.12),
+                    (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
+
+
         }
     }
 

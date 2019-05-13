@@ -67,6 +67,10 @@ public class Words {
         this.msg = msg;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
      public void setWordX(int x) {
             this.x = x;
       }

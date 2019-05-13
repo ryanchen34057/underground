@@ -46,7 +46,7 @@ public class LevelSelectionState extends GameState {
         frame = 0;
         frameDelay = 0;
         playerX = (int) (220 * Game.widthRatio);
-        lockX = (int) (295 * Game.widthRatio);
+        lockX = (int) (240 * Game.widthRatio);
     }
 
     @Override
@@ -77,9 +77,12 @@ public class LevelSelectionState extends GameState {
                 SoundEffectPlayer.playSoundEffect("Cursor");
                 locked = true;
             }
-
+            if(Input.keys.get(8).down) {//ESC
+                gameStateManager.back();
+                locked = true;
+            }
         }
-        if (!Input.keys.get(0).down && !Input.keys.get(1).down && !Input.keys.get(2).down && !Input.keys.get(3).down && !Input.keys.get(7).down) {//放開
+        if (Input.isAllReleased()) {//放開
             locked = false;
         }
     }
@@ -114,7 +117,7 @@ public class LevelSelectionState extends GameState {
         g.drawImage(SpriteManager.enterKey.getBufferedImage(), (int) (Window.scaledGameWidth / 1.25), (int) (Window.scaledGameHeight / 1.12), (int) (Window.scaledGameWidth * 0.05), (int) (Window.scaledGameWidth * 0.05), null);
         //Paint lock
         for(int i=gameStateManager.getCurrentLevel();i<GameStateManager.LEVEL_COUNT;i++) {
-            g.drawImage(SpriteManager.lock.getBufferedImage(), lockX + MOVE_INCREMENT * i, (int) (340 * Game.heightRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), null);
+            g.drawImage(SpriteManager.lock.getBufferedImage(), lockX + MOVE_INCREMENT * i, (int) (360 * Game.heightRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), null);
         }
 
     }

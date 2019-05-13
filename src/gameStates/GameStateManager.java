@@ -22,11 +22,13 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class GameStateManager {
+    private String playerName;
     private Stack<GameState> gameStateStack;
     private GameState currentGameState;
     private GameState menu;
     private Timer timer;
     private static HashMap<Integer, Emerald[]> emeraldMap;
+    private Words nameWords;
     private Words emeraldCountWord;
     private Words deathCountWord;
     private Words levelWord;
@@ -40,6 +42,7 @@ public class GameStateManager {
 
 
     public GameStateManager() {
+        playerName = null;
         emeraldMap = new HashMap<>();
         for(int i=0;i<LEVEL_COUNT;i++) {
             emeraldMap.put(i+1, new Emerald[5]);
@@ -68,6 +71,9 @@ public class GameStateManager {
     public int getCurrentLevel() {
         return currentLevel;
     }
+    public String getPlayerName() {
+        return playerName;
+    }
 
     //Setters
     public void setSlotId(int id) {
@@ -78,6 +84,9 @@ public class GameStateManager {
     }
     public void setEmeraldCount(int emeraldCount) {
         this.emeraldCount = emeraldCount;
+    }
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     public void setGameState(GameState gameState) {
@@ -224,7 +233,6 @@ public class GameStateManager {
 
       public void saveEndGameRecord(Record record) {//寫入破關記錄
             try {
-                   System.out.println("try");
                   ArrayList<Record> endGame;
                   if(readEndGameRecord() != null){
                         endGame = readEndGameRecord();
@@ -235,27 +243,25 @@ public class GameStateManager {
                   FileOutputStream fileOut = new FileOutputStream("./record/" + "Leaderboard.ser");
                   ObjectOutputStream out = new ObjectOutputStream(fileOut); 
                   endGame.add(record);
-                  //test
-                  for(int i=0;i<endGame.size();i++){
-                        System.out.println(endGame.get(i));
-                  }
                   //
                   out.writeObject(endGame);
                   out.close();
                   fileOut.close();          
             } catch (IOException i) {
-                  System.out.println("error");
                   i.printStackTrace();
             }
       }
 
     public void loadRecord(Record record) {
         slotId = record.getId();
+        playerName = record.getName();
         currentLevel = record.getLevel();
         emeraldCount = record.getEmeraldCount();
         deathCount = record.getDeathCount();
         timer = new Timer(record.getTime());
         switch (record.getLevel()) {
+            case 0:
+                setLevelState(new Level0State(this));
             case 1:
                 setLevelState(new Level1State(this));
                 break;

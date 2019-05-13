@@ -66,6 +66,12 @@ public class SpriteManager {
     //Lock
     public static Sprite lock;
 
+    //Trophy
+    public static Sprite trophy;
+
+    //Clock
+    public static Sprite clock;
+
 
     public SpriteManager() {
         //Sprite object
@@ -90,6 +96,8 @@ public class SpriteManager {
         up = new Sprite(spriteSheet,18,9,64,64);
         down = new Sprite(spriteSheet,19,9,64,64);
         lock = new Sprite(spriteSheet, 11, 10, 64, 64);
+        trophy = new Sprite(spriteSheet, 10, 8, 64, 64);
+        clock = new Sprite(spriteSheet, 11,8, 64,64);
 
 
         //BufferedImage object

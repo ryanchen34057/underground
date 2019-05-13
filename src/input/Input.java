@@ -7,11 +7,12 @@ import java.awt.event.KeyListener;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class Input implements KeyListener {
 
     public static List<Key> keys = new ArrayList<>();
-
+    public static Stack<Character> alphaBet = new Stack<>();
     public Key up = new Key(Keys.UP);
     public Key down = new Key(Keys.DOWN);
     public Key left = new Key(Keys.LEFT);
@@ -26,6 +27,14 @@ public class Input implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if((e.getKeyCode() >= 65 && e.getKeyCode() <= 90) || ((e.getKeyCode() >= 97 && e.getKeyCode() <= 122))) {
+            if(alphaBet.size() < 6) {
+                alphaBet.push(e.getKeyChar());
+            }
+        }
+        if(e.getKeyCode() == 8) {
+            alphaBet.pop();
+        }
         toggle(e, true);
     }
 
@@ -84,6 +93,15 @@ public class Input implements KeyListener {
 
     public void releaseAll() {
         for (Key key : keys) key.down = false;
+    }
+
+    public static boolean isAllReleased() {
+        for (Key key : keys) {
+            if(key.down) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public class Key {

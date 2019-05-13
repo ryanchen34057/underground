@@ -19,8 +19,8 @@ public class Background {
 
     public Background(String s, float scale) {
         bcakgroundImage = ResourceManager.getInstance().getImage(s);
-        width = Window.scaledGameWidth;
-        height = Window.scaledGameHeight;
+        width = Window.scaledGameWidth + 10;
+        height = Window.scaledGameHeight + 10;
     }
     public Background(String s, int width, int height){
         bcakgroundImage = ResourceManager.getInstance().getImage(s);

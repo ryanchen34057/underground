@@ -81,7 +81,7 @@ public class LastLevelState extends LevelState {
             MusicPlayer.isOn = true;
             gameStateManager.setGameState(new EndState(gameStateManager));
             //過關存檔
-            gameStateManager.saveEndGameRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(),
+            gameStateManager.saveEndGameRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(),
                     gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
         }
     }

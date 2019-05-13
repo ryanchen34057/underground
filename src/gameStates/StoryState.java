@@ -43,7 +43,7 @@ public class StoryState extends GameState {
             sent.add("There seems to be a distortion around the area.");
             sent.add("14:00 Passed through the hole into the unknown area,");
             sent.add("it transfers my location , I ask for... help but...");
-            sent.add("Restart record...     By  Lara Croft");
+            sent.add("Restart record...   By  " + gameStateManager.getPlayerName()+".");
             //words
             for (int i = 0; i < sent.size(); i++) {
                   words.add(new Words(sent.get(i).substring(0, (int) count), 30, (int) (Window.scaledGameWidth/ 2), (int) (Window.scaledGameHeight/ 2)));

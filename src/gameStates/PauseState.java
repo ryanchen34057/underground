@@ -3,6 +3,7 @@ package gameStates;
 
 import UI.Game;
 import UI.Window;
+import audio.MusicPlayer;
 import selectionObject.Cursor;
 import fonts.Words;
 import input.Input;
@@ -66,14 +67,18 @@ public class PauseState extends GameState{
                         if(gameStateManager.getCurrentLevel() > 0) {
                             gameStateManager.setGameState(new LevelSelectionState(gameStateManager));
                         }
+                        locked = true;
                         break;
                     case 3:
-                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
+                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
                         gameStateManager.toMenu();
+                        MusicPlayer.isOn = false;
+                        MusicPlayer.changeSong(0);
+                        MusicPlayer.isOn = true;
                         locked = true;
                         break;
                     case 4:
-                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
+                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
                         System.exit(0);
                 }
             }

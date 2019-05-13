@@ -11,5 +11,6 @@ public enum Keys {
     ENTER,
     ESC,
     G,
-    B
+    B,
+    DEL
 }

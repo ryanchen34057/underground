@@ -110,7 +110,6 @@ public class Level0State extends LevelState {
 
             if ((player.isGoaled())) {
                   gameStateManager.setLevelState(new Level1State(gameStateManager));
-                  //過關存檔
             }
       }
 

@@ -38,7 +38,8 @@ public class EndState extends GameState {
             words.paint(g2);
         }
         // Enter Key
-        g2.drawImage(SpriteManager.enterKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.3), (int)(Window.scaledGameHeight/1.12), (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
+        g2.drawImage(SpriteManager.enterKey.getBufferedImage(), (int)(Window.scaledGameWidth/1.3), (int)(Window.scaledGameHeight/1.12),
+                (int)(Window.scaledGameWidth*0.05), (int)(Window.scaledGameWidth*0.05), null);
         ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1);
         g2.setComposite(ac);
     }
@@ -49,7 +50,7 @@ public class EndState extends GameState {
             if(Input.keys.get(7).down) {
                 locked = true;
                 MusicPlayer.changeSong(0);
-                gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
+                gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
                 gameStateManager.toMenu();
             }
         }
