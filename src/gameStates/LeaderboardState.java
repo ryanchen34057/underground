@@ -146,7 +146,7 @@ public class LeaderboardState extends GameState {
                               //死亡
                               Words eDWords = new Words("X " + records.get(i).getDeathCount(), (int)(30* Game.widthRatio),(int)(eCWords.getWordX()*1.25), (int)(nameWords[i].getWordY()*0.97));
                               eDWords.paint(g);
-                              g.drawImage(SpriteManager.skull.getBufferedImage(), eDWords.getWordX()-(int)(97*Game.widthRatio), nameWords[i].getWordY()-64, (int)(45* Game.widthRatio), (int)(45* Game.widthRatio), null);
+                              g.drawImage(SpriteManager.skull.getBufferedImage(), eDWords.getWordX()-(int)(97*Game.widthRatio), nameWords[i].getWordY()-(int)(57*Game.widthRatio), (int)(45* Game.widthRatio), (int)(45* Game.widthRatio), null);
                         }
                   }
             }

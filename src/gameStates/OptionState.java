@@ -44,9 +44,11 @@ public class OptionState extends GameState{
                  switch(cursor.getPointer()){
                     case 0:
                         gameStateManager.setGameState(new VideoOptionState(gameStateManager));
+                        locked = true;
                         break;
                     case 1:
                         gameStateManager.setGameState(new AudioOptionState(gameStateManager));
+                        locked = true;
                         break;
                     case 2:
                         gameStateManager.back();

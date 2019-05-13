@@ -49,7 +49,7 @@ public class Window {
 
     public static String[] getSizeList() {
         String[] sizeList = new String[2];
-        for(int i=2;i<Window.screenWidth / Window.gameWidth;i++) {
+        for(int i=2;i<4;i++) {
             sizeList[i-2] = "  " + (Window.gameWidth*(i+1)) + " x " + (Window.gameHeight*(i+1)) + "  ";
         }
         return sizeList;
