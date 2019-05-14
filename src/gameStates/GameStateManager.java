@@ -168,6 +168,8 @@ public class GameStateManager {
 
     public LevelState getNewLevel(int currentLevel) {
         switch (currentLevel) {
+            case 0:
+                return new Level0State(this);
             case 1:
                 return new Level1State(this);
             case 2:
