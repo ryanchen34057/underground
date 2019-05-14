@@ -54,7 +54,7 @@ public class EndState extends GameState {
                 gameStateManager.toMenu();
             }
         }
-        if(!(Input.keys.get(7).down)) {
+        if (Input.isAllReleased()){//放開
             locked = false;
         }
     }

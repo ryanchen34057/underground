@@ -4,11 +4,14 @@ import UI.Game;
 import UI.Window;
 import enums.Id;
 import gameObject.ICollidable;
+import graphics.FrameManager;
+import graphics.SpriteManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public abstract class Tile implements ICollidable {
+
     //Coordinate
     protected int x;
     protected int y;

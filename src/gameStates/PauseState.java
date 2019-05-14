@@ -91,7 +91,7 @@ public class PauseState extends GameState{
                 locked = true;
             }
         }
-        if(!Input.keys.get(0).down &&!Input.keys.get(1).down && !Input.keys.get(7).down){//放開
+        if (Input.isAllReleased()){//放開
             locked = false;
         }
     }

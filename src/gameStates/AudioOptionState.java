@@ -116,7 +116,7 @@ public class AudioOptionState extends GameState {
                 SoundEffectPlayer.playSoundEffect("Cursor");
             }
         }
-        if(!Input.keys.get(7).down && !Input.keys.get(0).down &&!Input.keys.get(1).down && !Input.keys.get(2).down &&!Input.keys.get(3).down){//放開
+        if (Input.isAllReleased()){//放開
             locked = false;
         }
     }

@@ -26,15 +26,11 @@ public class MenuState extends GameState{
     public void init() {
         background = new Background("/res/Cave1.png", Window.scaledGameWidth, Window.scaledGameHeight);
         wordTitle = new Words("Underground", (int) (80 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (350 * Game.heightRatio));
-        Words wordStart = new Words("Start", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (550 * Game.heightRatio));
-        Words wordLeaderboard = new Words("Leaderboard", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (620 * Game.heightRatio));
-        Words wordOption = new Words("Option", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (690 * Game.heightRatio));
-        Words wordExit = new Words("Exit", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (760 * Game.heightRatio));
         words = new Words[4];
-        words[0] = wordStart;
-        words[1] = wordLeaderboard;
-        words[2] = wordOption;
-        words[3] = wordExit;
+        words[0] = new Words("Start", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (550 * Game.heightRatio));
+        words[1] = new Words("Leaderboard", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (620 * Game.heightRatio));
+        words[2] = new Words("Option", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (690 * Game.heightRatio));
+        words[3] = new Words("Exit", (int) (40 * Game.widthRatio), Window.scaledGameWidth / 2, (int) (760 * Game.heightRatio));
         cursor = new Cursor((int)(32*Game.widthRatio), 1);
     }
 
@@ -73,7 +69,7 @@ public class MenuState extends GameState{
                 locked = true;
             }
         }
-        if(!Input.keys.get(0).down &&!Input.keys.get(1).down && !Input.keys.get(7).down){//放開
+        if (Input.isAllReleased()){//放開
             locked = false;
         }
 
