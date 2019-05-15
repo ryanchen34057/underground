@@ -71,7 +71,7 @@ public class LevelSelectionState extends GameState {
                 locked = true;
             }
             if (Input.keys.get(3).down) {//右
-                if (selected < 4 && (selected + 1) < gameStateManager.getCurrentLevel()) {
+                if (selected < 4 && (selected + 1) < gameStateManager.getLevelreached()) {
                     selected++;
                 }
                 SoundEffectPlayer.playSoundEffect("Cursor");

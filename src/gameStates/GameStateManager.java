@@ -37,6 +37,7 @@ public class GameStateManager {
     private int deathCount;
     private int slotId;
     private int currentLevel;
+    private int levelreached;
     public static final int LEVEL_COUNT = 5;
     ArrayList<Record> records;
 
@@ -51,11 +52,12 @@ public class GameStateManager {
         gameStateStack = new Stack<>();
         emeraldCount = 0;
         deathCount = 0;
-        emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(50 * Game.heightRatio));
-        deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRatio));
+        emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(55 * Game.heightRatio));
+        deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(105 * Game.heightRatio));
         infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
         setGameState(new MenuState(this));
         //setLevelState(new LastLevelState(this));
+        levelreached = 0;
     }
 
     //Getters
@@ -107,7 +109,7 @@ public class GameStateManager {
             msg = "Level: " + currentLevel;
             x = 85;
         }
-        levelWord = new Words(msg, (int)(30 * Game.widthRatio), (int)(x * Game.widthRatio), (int)(40 * Game.heightRatio));
+        levelWord = new Words(msg, (int)(30 * Game.widthRatio), (int)(x * Game.widthRatio), (int)(50 * Game.heightRatio));
     }
 
     public void resetEmerald() {
@@ -185,8 +187,8 @@ public class GameStateManager {
     }
     
     public void toMenu(){
-        emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(50 * Game.heightRatio));
-        deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(100 * Game.heightRatio));
+        emeraldCountWord = new Words("X " + emeraldCount, (int) (30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(55 * Game.heightRatio));
+        deathCountWord = new Words("X " + deathCount, (int)(30 * Game.widthRatio), (int)(1200 * Game.widthRatio), (int)(105 * Game.heightRatio));
         infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
         if(gameStateStack.size() > 1){
             gameStateStack = new Stack<>();
@@ -200,6 +202,14 @@ public class GameStateManager {
 
     public void setTimer(Timer timer) {
         this.timer = timer;
+    }
+
+    public int getLevelreached() {
+        return levelreached;
+    }
+
+    public void incrementLevelReached() {
+        levelreached++;
     }
 
     public void saveAndWriteRecord(Record record) {//遊戲紀錄

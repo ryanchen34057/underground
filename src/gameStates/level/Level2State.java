@@ -49,6 +49,9 @@ public class Level2State extends LevelState {
 
         if((player.isGoaled())) {
             gameStateManager.setLevelState(new Level3State(gameStateManager));
+            if(gameStateManager.getLevelreached() == 2) {
+                gameStateManager.incrementLevelReached();
+            }
         }
     }
 }

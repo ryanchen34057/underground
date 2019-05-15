@@ -45,14 +45,6 @@ public class FallingRock extends Tile {
         isShaking = shaking;
     }
 
-    public void setOnTheGround(boolean onTheGround) {
-        this.onTheGround = onTheGround;
-    }
-
-    public boolean isOnTheGround() {
-        return onTheGround;
-    }
-
     @Override
     public void paint(Graphics g) {
         g.drawImage(bufferedImage, x, y, width, height, null);
@@ -68,7 +60,7 @@ public class FallingRock extends Tile {
     public void update() {
         if(isShaking) {
             x += Math.random() * intensity - intensity/ 2;
-            y += Math.random() * intensity - intensity/ 2;
+            //y += Math.random() * intensity - intensity/ 2;
             shakingCounter++;
         }
 

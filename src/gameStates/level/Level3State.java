@@ -31,7 +31,7 @@ public class Level3State extends LevelState {
         createLevel(SpriteManager.level3);
         background = new Background("/res/background2.jpg", 1.0f);
         player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
-        player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
+        player.setPosition((int) bluePortalCor.getWidth(), (int) bluePortalCor.getHeight());
     }
 
     @Override
@@ -45,8 +45,11 @@ public class Level3State extends LevelState {
         // Update game object
         updateAllGameObject();
 
-        if((player.isGoaled())) {
+        if ((player.isGoaled())) {
             gameStateManager.setLevelState(new Level4State(gameStateManager));
+            if (gameStateManager.getLevelreached() == 3) {
+                gameStateManager.incrementLevelReached();
+            }
         }
     }
 }
