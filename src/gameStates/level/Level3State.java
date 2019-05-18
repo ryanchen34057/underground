@@ -1,12 +1,12 @@
 package gameStates.level;
 
+import UI.Game;
 import enums.Id;
 import gameObject.character.Player;
 import gameStates.GameStateManager;
 import gameStates.LevelState;
 import graphics.SpriteManager;
 import map.Background;
-import states.PlayerState;
 
 public class Level3State extends LevelState {
 
@@ -30,7 +30,7 @@ public class Level3State extends LevelState {
         levelObjectInit();
         createLevel(SpriteManager.level3);
         background = new Background("/res/background2.jpg", 1.0f);
-        player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
+        player = new Player((int)(96* Game.widthRatio), (int)(96*Game.widthRatio), Id.player);
         player.setPosition((int) bluePortalCor.getWidth(), (int) bluePortalCor.getHeight());
     }
 
@@ -47,7 +47,7 @@ public class Level3State extends LevelState {
 
         if ((player.isGoaled())) {
             gameStateManager.setLevelState(new Level4State(gameStateManager));
-            if (gameStateManager.getLevelreached() == 3) {
+            if (gameStateManager.getLevelReached() == 3) {
                 gameStateManager.incrementLevelReached();
             }
         }

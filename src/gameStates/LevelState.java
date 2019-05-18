@@ -275,57 +275,58 @@ public abstract class LevelState extends GameState {
                 int blue = (pixel) & 0xff;
 
                 if (red == 99 && green == 99 && blue == 99) {
-                    tiles.add(new Hole(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.hole));
+                    tiles.add(new Hole(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.hole));
                 }
                 // Bigger block
                 else if (red == 50 && green == 50 && blue == 19) {
-                    tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE * 5, Wall.TILE_SIZE * 5, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    tiles.add(new Wall(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio) * 5, (int)(64*Game.widthRatio) * 5, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 100 && green == 50 && blue == 19) {
-                    tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    tiles.add(new Wall(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 100 && green == 0 && blue <= 20) {
                     if (blue == 5 || blue == 4) {
-                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.halfWidthWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.halfWidthWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
                     else if (blue == 17 || blue == 18 || blue == 20) {
-                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.halfHeightWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.halfHeightWall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
                     else {
-                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
 
                 } else if (red == 100 && green == 100 && blue <= 29) {
-                    tiles.add(new Decor(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.decor, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                    tiles.add(new Decor(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.decor, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                 } else if (red == 255 && green == 255 && blue == 0) {
-                    tiles.add(new VanishingRock(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.vanishingRock));
+                    tiles.add(new VanishingRock(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.vanishingRock));
                 } else if (red == 0 && green == 30 && blue == 255) {
-                    tiles.add(new IceWall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.icewall1, SpriteManager.level1Sprites.get(green - 1).getBufferedImage()));
+                    tiles.add(new IceWall(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.icewall1, SpriteManager.level1Sprites.get(green - 1).getBufferedImage()));
                 } else if (red == 0 && green == 255 && blue == 31) {
-                    tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.UP));
+                    tiles.add(new Spike(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.upwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.UP));
                 } else if (red == 0 && green == 255 && blue == 32) {
-                    tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.DOWN));
+                    tiles.add(new Spike(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.downwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.DOWN));
                 } else if (red == 0 && green == 255 && blue == 33) {
-                    tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.LEFT));
+                    tiles.add(new Spike(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.leftwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.LEFT));
                 } else if (red == 0 && green == 255 && blue == 34) {
-                    tiles.add(new Spike(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.RIGHT));
+                    tiles.add(new Spike(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.rightwardSpike, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage(), Direction.RIGHT));
                 } else if (red == 255 && green == 100 && blue == 35) {
-                    FallingRock fr = new FallingRock(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, (int)(Wall.TILE_SIZE * 2.5), (int)(Wall.TILE_SIZE * 2.5), Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage());
+                    FallingRock fr = new FallingRock(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)((int)(64*Game.widthRatio) * 2.5), (int)((int)(64*Game.widthRatio) * 2.5), Id.fallingRock, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage());
                     tiles.add(fr);
                     fallingRocks.add(fr);
                 } else if (red == 100 && green == 0 && blue >= 36) {
                     if (blue == 42 || blue == 43) {
-                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, (int)(22*Game.widthRatio), Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(22*Game.widthRatio), Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     } else {
-                        tiles.add(new Wall(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
+                        tiles.add(new Wall(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.wall, SpriteManager.level1Sprites.get(blue - 1).getBufferedImage()));
                     }
 
                 } else if (red == 255 && green == 0 && blue == 0) {
                     Emerald emerald;
                     if(gameStateManager.getEmerald(getLevel(), emeraldSerial) == null) {
-                        emerald = new Emerald(x * Emerald.PRIZE_SIZE, y * Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, Emerald.PRIZE_SIZE, 1000, Id.emerald, emeraldSerial);
+                        emerald = new Emerald(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), 1000, Id.emerald, emeraldSerial);
                         gameStateManager.addEmerald(getLevel(), emeraldSerial, emerald);
                     }
                     else {
                         emerald = gameStateManager.getEmerald(getLevel(), emeraldSerial);
+                        emerald.setSize( (int)(64*Game.widthRatio), (int)(64*Game.widthRatio));
                         if(emerald.isEaten()) {
                             emerald = null;
                         }
@@ -336,32 +337,32 @@ public abstract class LevelState extends GameState {
                     }
                 }
                 else if (red == 255 && green == 150 && blue == 255) {
-                    tiles.add( new Diamond(x * Emerald.PRIZE_SIZE, y * Emerald.PRIZE_SIZE, Diamond.DIAMOND_SIZE, Diamond.DIAMOND_SIZE, 0, Id.diamond));
+                    tiles.add( new Diamond(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(80 * Game.widthRatio), (int)(80 * Game.widthRatio), 0, Id.diamond));
                 }
                 else if(red == 255 && green == 150 && blue == 150) {
-                    tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.UP));
+                    tiles.add(new Spring(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.spring, Direction.UP));
                 }
                 else if(red == 255 && green == 160 && blue == 160) {
-                    tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.DOWN));
+                    tiles.add(new Spring(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.spring, Direction.DOWN));
                 }
                 else if(red == 255 && green == 170 && blue == 170) {
-                    tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.LEFT));
+                    tiles.add(new Spring(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.spring, Direction.LEFT));
                 }
                 else if(red == 255 && green == 180 && blue == 180) {
-                    tiles.add(new Spring(x * Wall.TILE_SIZE, y * Wall.TILE_SIZE, Wall.TILE_SIZE, Wall.TILE_SIZE, Id.spring, Direction.RIGHT));
+                    tiles.add(new Spring(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), (int)(64*Game.widthRatio), Id.spring, Direction.RIGHT));
                 }
 
                 //Portal
 //              //Blue
                 else if (red == 0 && green == 0 && blue == 255 || red == 0 && green == 1 && blue == 255) {
                     Direction direction = (green == 1) ? Direction.LEFT : Direction.RIGHT;
-                    tiles.add(new Portal(x *  Wall.TILE_SIZE, y *  Wall.TILE_SIZE, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.bluePortal, Color.BLUE, direction));
-                    bluePortalCor = new Dimension(x *  Wall.TILE_SIZE, y * Wall.TILE_SIZE);
+                    tiles.add(new Portal(x * (int)(Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(200*Game.widthRatio), (int)(200*Game.widthRatio), Id.bluePortal, Color.BLUE, direction));
+                    bluePortalCor = new Dimension(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio));
                 }
                 //Purple
                 else if (red == 255 && green == 0 && blue == 255 || red == 255 && green == 1 && blue == 255) {
                     Direction direction = (green == 1) ? Direction.LEFT : Direction.RIGHT;
-                    tiles.add(new Portal(x *  Wall.TILE_SIZE, y *  Wall.TILE_SIZE, Portal.PORTAL_SIZE, Portal.PORTAL_SIZE, Id.purplePortal, Color.MAGENTA, direction));
+                    tiles.add(new Portal(x * (int)(64*Game.widthRatio), y * (int)(64*Game.widthRatio), (int)(200*Game.widthRatio), (int)(200*Game.widthRatio), Id.purplePortal, Color.MAGENTA, direction));
                 }
             }
         }

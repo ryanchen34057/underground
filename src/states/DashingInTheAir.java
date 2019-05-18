@@ -16,9 +16,9 @@ public class DashingInTheAir implements State {
     public void update(Player player) {
         player.setVelX(player.currentDashSpeed * player.getFacing());
         player.currentDashTimer -= (Game.UPDATES / 1000.0f);
-        player.currentDashSpeed -= Player.DASH_SPEED_BUMP;
+        player.currentDashSpeed -= player.DASH_SPEED_BUMP;
         if(player.currentDashTimer <= (Game.UPDATES / 1000.0f)) {
-            player.setGravity(Player.FALLING_GRAVITY_VEL);
+            player.setGravity(player.FALLING_GRAVITY_VEL);
             player.setCurrentState(PlayerState.falling);
         }
     }

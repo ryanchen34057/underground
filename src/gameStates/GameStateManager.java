@@ -1,16 +1,13 @@
 package gameStates;
 
 import UI.Game;
-import audio.MusicPlayer;
 import fonts.Words;
 import gameObject.tiles.prize.Emerald;
 import gameStates.level.*;
 import graphics.SpriteManager;
-import static graphics.SpriteManager.c;
 import record.Timer;
 import record.Record;
 import java.awt.*;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,7 +25,6 @@ public class GameStateManager {
     private GameState menu;
     private Timer timer;
     private static HashMap<Integer, Emerald[]> emeraldMap;
-    private Words nameWords;
     private Words emeraldCountWord;
     private Words deathCountWord;
     private Words levelWord;
@@ -37,7 +33,7 @@ public class GameStateManager {
     private int deathCount;
     private int slotId;
     private int currentLevel;
-    private int levelreached;
+    private int levelReached;
     public static final int LEVEL_COUNT = 5;
     ArrayList<Record> records;
 
@@ -57,7 +53,7 @@ public class GameStateManager {
         infinityModeWord = new Words("Infinity Mode", (int)(30 * Game.widthRatio), (int)(140 * Game.widthRatio), (int)(120 * Game.heightRatio));
         setGameState(new MenuState(this));
         //setLevelState(new LastLevelState(this));
-        levelreached = 0;
+        levelReached = 0;
     }
 
     //Getters
@@ -89,6 +85,10 @@ public class GameStateManager {
     }
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public void setLevelReached(int levelReached) {
+        this.levelReached = levelReached;
     }
 
     public void setGameState(GameState gameState) {
@@ -204,12 +204,12 @@ public class GameStateManager {
         this.timer = timer;
     }
 
-    public int getLevelreached() {
-        return levelreached;
+    public int getLevelReached() {
+        return levelReached;
     }
 
     public void incrementLevelReached() {
-        levelreached++;
+        levelReached++;
     }
 
     public void saveAndWriteRecord(Record record) {//遊戲紀錄
@@ -265,13 +265,14 @@ public class GameStateManager {
       }
 
     public void loadRecord(Record record) {
+        levelReached = record.getLevelReached();
         slotId = record.getId();
         playerName = record.getName();
-        currentLevel = record.getLevel();
+        currentLevel = record.getCurrentLevel();
         emeraldCount = record.getEmeraldCount();
         deathCount = record.getDeathCount();
         timer = new Timer(record.getTime());
-        switch (record.getLevel()) {
+        switch (record.getCurrentLevel()) {
             case 0:
                 setLevelState(new Level0State(this));
             case 1:

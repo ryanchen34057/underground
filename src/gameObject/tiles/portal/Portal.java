@@ -13,7 +13,6 @@ import java.awt.*;
 public class Portal extends Tile {
     private Color color;
     private Direction direction;
-    public static final int PORTAL_SIZE = (int)(200*Game.widthRatio);
     private int frame;
     private int frameDelay;
     public Portal(int x, int y, int width, int height, Id id, Color color, Direction direction) {

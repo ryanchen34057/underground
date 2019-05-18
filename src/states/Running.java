@@ -21,7 +21,7 @@ public class Running implements State {
         }
         if(keys.get(5).down && !player.isJumped()) {
             player.setVelX(0);
-            player.setGravity(Player.RUNNINGJUMPING_GRAVITY);
+            player.setGravity(player.RUNNINGJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.runningJumping);
             SoundEffectPlayer.playSoundEffect("Jumping");
             player.setJumped(true);
@@ -34,8 +34,8 @@ public class Running implements State {
             player.setCurrentState(PlayerState.dashing);
             player.setCurrentEffect(DashEffect.getInstance(player));
             player.setTired(true);
-            player.currentDashTimer = Player.DASH_TIMER;
-            player.currentDashSpeed = Player.DASH_SPEED;
+            player.currentDashTimer = player.DASH_TIMER;
+            player.currentDashSpeed = player.DASH_SPEED;
 
         }
         else if(!keys.get(4).down) {
@@ -45,7 +45,7 @@ public class Running implements State {
 
     @Override
     public void update(Player player) {
-        player.setVelX(player.getFacing() * Player.STEP);
+        player.setVelX(player.getFacing() * player.STEP);
     }
 
     @Override

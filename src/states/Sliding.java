@@ -10,7 +10,7 @@ public class Sliding implements State {
     @Override
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(5).down && !player.isJumped()) {
-            player.setGravity(Player.BOUNCING_GRAVITY);
+            player.setGravity(player.BOUNCING_GRAVITY);
             player.setCurrentState(PlayerState.bouncing);
             player.setJumped(true);
         }
@@ -20,13 +20,13 @@ public class Sliding implements State {
 
         if(player.getFacing() == -1) {
             if(!keys.get(2).down) {
-                player.setGravity(Player.FALLING_GRAVITY_VEL);
+                player.setGravity(player.FALLING_GRAVITY_VEL);
                 player.setCurrentState(PlayerState.falling);
             }
         }
         else {
             if(!keys.get(3).down) {
-                player.setGravity(Player.FALLING_GRAVITY_VEL);
+                player.setGravity(player.FALLING_GRAVITY_VEL);
                 player.setCurrentState(PlayerState.falling);
             }
         }

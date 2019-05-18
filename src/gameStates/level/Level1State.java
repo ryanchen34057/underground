@@ -1,20 +1,12 @@
 package gameStates.level;
 
 import UI.Game;
-import effects.DeathParticle;
 import enums.Id;
-import fonts.Words;
 import gameObject.character.Player;
 import gameStates.GameStateManager;
 import gameStates.LevelState;
-import graphics.Sprite;
 import graphics.SpriteManager;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import map.Background;
-import record.Record;
-import states.PlayerState;
 
 public class Level1State extends LevelState {
     
@@ -28,7 +20,7 @@ public class Level1State extends LevelState {
         levelObjectInit();
         createLevel(SpriteManager.level1);
         background = new Background("/res/background2.jpg", 1.0f);
-        player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
+        player = new Player((int)(96*Game.widthRatio), (int)(96*Game.widthRatio), Id.player);
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
     }
 
@@ -45,7 +37,7 @@ public class Level1State extends LevelState {
 
         if((player.isGoaled())) {
             gameStateManager.setLevelState(new Level2State(gameStateManager));
-            if(gameStateManager.getLevelreached() == 1) {
+            if(gameStateManager.getLevelReached() == 1) {
                 gameStateManager.incrementLevelReached();
             }
         }

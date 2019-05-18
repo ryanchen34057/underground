@@ -13,7 +13,6 @@ import util.CollisionCondition;
 import java.awt.*;
 
 public class Diamond extends Prize {
-    public static final int DIAMOND_SIZE = (int)(80 * Game.widthRatio);
     private int frameDelay, frame;
     private static final int RESPAWN_RATE = 300;
     private int count;

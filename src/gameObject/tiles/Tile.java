@@ -18,9 +18,6 @@ public abstract class Tile implements ICollidable {
     protected int width;
     protected int height;
 
-    //State
-    protected boolean breakable;
-
     //info
     protected Id id;
     protected boolean isDead;

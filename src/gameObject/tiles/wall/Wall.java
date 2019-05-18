@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Wall extends Tile {
-    public static final int TILE_SIZE = (int) (64 * Game.widthRatio);
     public Wall(int x, int y, int width, int height, Id id, BufferedImage bufferedImage) {
         super(x, y, width, height, id);
         this.bufferedImage = bufferedImage;

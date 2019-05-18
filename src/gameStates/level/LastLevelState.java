@@ -36,7 +36,7 @@ public class LastLevelState extends LevelState {
         levelObjectInit();
         createLevel(SpriteManager.lastLevel);
         background = new Background("/res/lavaBackground2.png", 1.0f);
-        player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
+        player = new Player((int)(96*Game.widthRatio), (int)(96*Game.widthRatio), Id.player);
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
         speedDelay = 0;
         rectangle = new Rectangle(0, 0, Lava.LAVA_WIDTH*mapWidth, 0);
@@ -82,7 +82,7 @@ public class LastLevelState extends LevelState {
             gameStateManager.setGameState(new EndState(gameStateManager));
             //過關存檔
             gameStateManager.saveEndGameRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(),
-                    gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
+                    gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getLevelReached(), gameStateManager.getDeathCount()));
         }
     }
 

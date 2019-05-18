@@ -18,7 +18,7 @@ public class IceSkating implements State {
         }
         if(keys.get(5).down) {
             SoundEffectPlayer.playSoundEffect("Dashing");
-            player.setGravity(Player.DASHJUMPING_GRAVITY);
+            player.setGravity(player.DASHJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.dashJumping);
             player.setOnTheIce(false);
             player.setTired(true);
@@ -27,7 +27,7 @@ public class IceSkating implements State {
 
     @Override
     public void update(Player player) {
-        player.setVelX(Player.ICESKATING_SPEED * player.getFacing());
+        player.setVelX(player.ICESKATING_SPEED * player.getFacing());
         dashTimer -= (60.0f / 10000.0f);
     }
 

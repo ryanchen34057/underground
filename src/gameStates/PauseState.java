@@ -70,7 +70,7 @@ public class PauseState extends GameState{
                         locked = true;
                         break;
                     case 3:
-                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
+                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getLevelReached(), gameStateManager.getDeathCount()));
                         gameStateManager.toMenu();
                         MusicPlayer.isOn = false;
                         MusicPlayer.changeSong(0);
@@ -78,7 +78,7 @@ public class PauseState extends GameState{
                         locked = true;
                         break;
                     case 4:
-                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getDeathCount()));
+                        gameStateManager.saveAndWriteRecord(new Record(gameStateManager.getSlotId(), gameStateManager.getPlayerName(), gameStateManager.getTimer().getUsedTimeRecord(), gameStateManager.getTimer().toString(), gameStateManager.getEmeraldCount(), gameStateManager.getCurrentLevel(), gameStateManager.getLevelReached(), gameStateManager.getDeathCount()));
                         System.exit(0);
                 }
             }

@@ -5,7 +5,6 @@ import UI.Window;
 import audio.MusicPlayer;
 import audio.SoundEffectPlayer;
 import fonts.Words;
-import gameObject.character.Player;
 import gameStates.level.LastLevelState;
 import graphics.FrameManager;
 import graphics.SpriteManager;
@@ -24,7 +23,7 @@ public class LevelSelectionState extends GameState {
     private int frameDelay;
     private int playerX;
     private int lockX;
-    private static final int MOVE_INCREMENT = 202;
+    private final int MOVE_INCREMENT = (int)(190*Game.widthRatio);
 
     public LevelSelectionState(GameStateManager gameStateManager) {
         super(gameStateManager);
@@ -46,7 +45,7 @@ public class LevelSelectionState extends GameState {
         frame = 0;
         frameDelay = 0;
         playerX = (int) (220 * Game.widthRatio);
-        lockX = (int) (240 * Game.widthRatio);
+        lockX = (int) (220 * Game.widthRatio);
     }
 
     @Override
@@ -71,7 +70,7 @@ public class LevelSelectionState extends GameState {
                 locked = true;
             }
             if (Input.keys.get(3).down) {//右
-                if (selected < 4 && (selected + 1) < gameStateManager.getLevelreached()) {
+                if (selected < 4 && (selected + 1) < gameStateManager.getLevelReached()) {
                     selected++;
                 }
                 SoundEffectPlayer.playSoundEffect("Cursor");
@@ -112,7 +111,7 @@ public class LevelSelectionState extends GameState {
         levelWords.get(selected).paint(g);
 
         //Paint player moving
-        g.drawImage(FrameManager.getPlayerMoveFrame(PlayerState.running)[frame].getBufferedImage(), playerX + MOVE_INCREMENT * selected, (int) (320 * Game.heightRatio), Player.WIDTH, Player.HEIGHT, null);
+        g.drawImage(FrameManager.getPlayerMoveFrame(PlayerState.running)[frame].getBufferedImage(), playerX + MOVE_INCREMENT * selected, (int) (320 * Game.heightRatio), (int)(96*Game.widthRatio),  (int)(96*Game.widthRatio), null);
         //Paint enter Key
         g.drawImage(SpriteManager.enterKey.getBufferedImage(), (int) (Window.scaledGameWidth / 1.25), (int) (Window.scaledGameHeight / 1.12), (int) (Window.scaledGameWidth * 0.05), (int) (Window.scaledGameWidth * 0.05), null);
         //Paint lock

@@ -19,7 +19,7 @@ public class LandingEffect extends Effect {
 
     public static LandingEffect getInstance(ICollidable ic) {
         if(ic instanceof Player) {
-            return new LandingEffect(((Player) ic).getX()+(int)(Player.WIDTH*0.16), ((Player) ic).getY()+(int)(Player.HEIGHT*0.3125), (int)(64 * Game.widthRatio), (int)(64 * Game.widthRatio), Id.landingEffect);
+            return new LandingEffect(((Player) ic).getX()+((int)(96*Game.widthRatio*0.16)), ((Player) ic).getY()+(int)(96*Game.widthRatio*0.3125), (int)(64 * Game.widthRatio), (int)(64 * Game.widthRatio), Id.landingEffect);
         }
         if(ic instanceof FallingRock) {
             return new LandingEffect(((FallingRock) ic).getX()-(int)(((FallingRock) ic).getWidth()*0.29), ((FallingRock) ic).getY()-(int)(((FallingRock) ic).getHeight()*0.21), EFFECT_SIZE, EFFECT_SIZE, Id.rockLandingEffect);

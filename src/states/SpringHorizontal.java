@@ -18,7 +18,7 @@ public class SpringHorizontal implements State {
         }
         if(keys.get(5).down) {
             SoundEffectPlayer.playSoundEffect("Dashing");
-            player.setGravity(Player.DASHJUMPING_GRAVITY);
+            player.setGravity(player.DASHJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.dashJumping);
         }
     }
@@ -27,7 +27,7 @@ public class SpringHorizontal implements State {
     public void update(Player player) {
         player.setVelX(player.currentDashSpeed * -player.getFacing());
         player.currentDashTimer -= (Game.UPDATES / 1000.0f);
-        player.currentDashSpeed -= Player.DASH_SPEED_BUMP;
+        player.currentDashSpeed -= player.DASH_SPEED_BUMP;
         if(player.currentDashTimer <= (Game.UPDATES / 1000.0f)) {
             player.setCurrentState(PlayerState.standing);
         }

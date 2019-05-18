@@ -7,16 +7,18 @@ public class Record implements java.io.Serializable {
     private long  time;
     private String timeString;
     private int emeraldCount;
-    private int level;
+    private int levelReached;
+    private int currentLevel;
     private int deathCount;
 
-    public Record(int id, String name, long time,String timeString, int emeraldCount, int level, int deathCount) {
+    public Record(int id, String name, long time,String timeString, int emeraldCount, int levelReached, int currentLevel, int deathCount) {
         this.name = name;
         this.id = id;
         this.time = time;
         this.timeString = timeString;
         this.emeraldCount = emeraldCount;
-        this.level = level;
+        this.levelReached = levelReached;
+        this.currentLevel = currentLevel;
         this.deathCount = deathCount;
     }
 
@@ -33,8 +35,11 @@ public class Record implements java.io.Serializable {
     public int getEmeraldCount() {
         return emeraldCount;
     }
-    public int getLevel() {
-        return level;
+    public int getLevelReached() {
+        return levelReached;
+    }
+    public int getCurrentLevel() {
+        return currentLevel;
     }
     public int getDeathCount() {
         return deathCount;
@@ -45,7 +50,7 @@ public class Record implements java.io.Serializable {
 
     @Override
     public String toString(){
-      return id+","+name+  "," + time+","+timeString+","+emeraldCount+","+level+","+deathCount;
+      return id+","+name+  "," + time+","+timeString+","+emeraldCount+","+ currentLevel +","+deathCount;
     } 
 
 }

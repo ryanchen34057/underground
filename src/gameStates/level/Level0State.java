@@ -11,7 +11,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import map.Background;
-import record.Record;
 import states.PlayerState;
 
 public class Level0State extends LevelState {
@@ -38,7 +37,7 @@ public class Level0State extends LevelState {
             levelObjectInit();
             createLevel(SpriteManager.level0);
             background = new Background("/res/background2.jpg", 1.0f);
-            player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
+            player = new Player((int)(96*Game.widthRatio), (int)(96*Game.widthRatio), Id.player);
             player.setPosition((int) bluePortalCor.getWidth(), (int) bluePortalCor.getHeight());
             //Signboard 
             signImage = SpriteManager.signboard.getBufferedImage();
@@ -110,7 +109,7 @@ public class Level0State extends LevelState {
 
             if ((player.isGoaled())) {
                   gameStateManager.setLevelState(new Level1State(gameStateManager));
-                  if(gameStateManager.getLevelreached() == 0) {
+                  if(gameStateManager.getLevelReached() == 0) {
                         gameStateManager.incrementLevelReached();
                   }
             }

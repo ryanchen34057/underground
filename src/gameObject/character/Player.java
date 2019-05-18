@@ -32,51 +32,52 @@ public class Player extends Entity {
     private float friction;
 
     //Stats
-    public static final int WIDTH = (int) (96 * Game.widthRatio);
-    public static final int HEIGHT = (int) (96 * Game.widthRatio);
     private final int STAMINA = Game.UPDATES *4;
+
+    private int width;
+    private int height;
 
     // Running
     // 8f * Game.UpdatesRatio * Game.widthRatio
-    public static final float STEP = 8 * Game.UpdatesRatio * Game.widthRatio;
+    public final float STEP = 8 * Game.UpdatesRatio * Game.widthRatio;
 
     // StandingJump
     // 18f * Game.UpdatesRatio  *
-    public static final float STANDINGJUMPING_GRAVITY = 18f * Game.UpdatesRatio * Game.heightRatio;
-    public static final float STANDINGJUMPING_VELX_OFFSET = 2.5f * Game.UpdatesRatio * Game.widthRatio;
-    public static final float STANDINGJUMPING_GRAVITY_OFFSET = (STANDINGJUMPING_GRAVITY / (18f/0.8f)) * Game.UpdatesRatio;
+    public final float STANDINGJUMPING_GRAVITY = 18f * Game.UpdatesRatio * Game.heightRatio;
+    public final float STANDINGJUMPING_VELX_OFFSET = 2.5f * Game.UpdatesRatio * Game.widthRatio;
+    public final float STANDINGJUMPING_GRAVITY_OFFSET = (STANDINGJUMPING_GRAVITY / (18f/0.8f)) * Game.UpdatesRatio;
 
     // RunningJump
-    public static final float RUNNINGJUMPING_GRAVITY = 17f * Game.UpdatesRatio *  Game.heightRatio;
-    public static final float RUNNINGJUMPING_GRAVITY_OFFSET = (RUNNINGJUMPING_GRAVITY / 17f/1.2f) * Game.UpdatesRatio;
-    public static final float RUNNINGJUMPING_STEP = 6.5f * Game.UpdatesRatio * Game.widthRatio;
+    public final float RUNNINGJUMPING_GRAVITY = 17f * Game.UpdatesRatio *  Game.heightRatio;
+    public final float RUNNINGJUMPING_GRAVITY_OFFSET = (RUNNINGJUMPING_GRAVITY / 17f/1.2f) * Game.UpdatesRatio;
+    public final float RUNNINGJUMPING_STEP = 6.5f * Game.UpdatesRatio * Game.widthRatio;
 
 
     // Dash
-    public static final float DASH_SPEED = 10 * Game.UpdatesRatio * Game.widthRatio;
-    public static final float DASH_TIMER = (Game.UPDATES /1000f) * Game.UPDATES * (1.5f/3.6f);
-    public static final float ICESKATING_SPEED = 15 * Game.UpdatesRatio * Game.widthRatio;
+    public final float DASH_SPEED = 10 * Game.UpdatesRatio * Game.widthRatio;
+    public final float DASH_TIMER = (Game.UPDATES /1000f) * Game.UPDATES * (1.5f/3.6f);
+    public final float ICESKATING_SPEED = 15 * Game.UpdatesRatio * Game.widthRatio;
     public float currentDashSpeed;
     public double currentDashTimer;
-    public static final float DASH_SPEED_BUMP = 0.005f * Game.UpdatesRatio * Game.widthRatio;
+    public final float DASH_SPEED_BUMP = 0.005f * Game.UpdatesRatio * Game.widthRatio;
 
     // DashJumping
-    public static final float DASHJUMPING_GRAVITY = 17 * Game.UpdatesRatio * Game.heightRatio;
-    public static final float DASHJUMPING_GRAVITY_OFFSET = (DASHJUMPING_GRAVITY / (17f/0.8f)) * Game.UpdatesRatio;
+    public final float DASHJUMPING_GRAVITY = 17 * Game.UpdatesRatio * Game.heightRatio;
+    public final float DASHJUMPING_GRAVITY_OFFSET = (DASHJUMPING_GRAVITY / (17f/0.8f)) * Game.UpdatesRatio;
 
     // Sliding and Bouncing
-    public static final float BOUNCING_RANGE = 3.2f * Game.UpdatesRatio * Game.widthRatio;
-    public static final float BOUNCING_GRAVITY = 18 * Game.UpdatesRatio *  Game.heightRatio;
-    public static final float BOUNCING_GRAVITY_OFFSET = (BOUNCING_GRAVITY / (17f/0.6f)) * Game.UpdatesRatio;
+    public final float BOUNCING_RANGE = 3.2f * Game.UpdatesRatio * Game.widthRatio;
+    public final float BOUNCING_GRAVITY = 18 * Game.UpdatesRatio *  Game.heightRatio;
+    public final float BOUNCING_GRAVITY_OFFSET = (BOUNCING_GRAVITY / (17f/0.6f)) * Game.UpdatesRatio;
 
     // Falling
-    public static final float FALLING_GRAVITY_VEL = 0.3f * (Game.UpdatesRatio) *  Game.heightRatio;
-    public static final float FALLING_VELX = 5.3f * Game.UpdatesRatio *  Game.widthRatio;
+    public final float FALLING_GRAVITY_VEL = 0.3f * (Game.UpdatesRatio) *  Game.heightRatio;
+    public final float FALLING_VELX = 5.3f * Game.UpdatesRatio *  Game.widthRatio;
 
     // Vertical Dashing
-    public static final float VERTICALDASHING_SPEED = 9f * Game.UpdatesRatio * Game.heightRatio;
-    public static final float VERTICALDASHING_TIMER = (Game.UPDATES /1000f) * Game.UPDATES * (1.2f/3.6f);
-    public static final float VERTICALDASHING_VELX = 9 * Game.UpdatesRatio * Game.widthRatio;
+    public final float VERTICALDASHING_SPEED = 9f * Game.UpdatesRatio * Game.heightRatio;
+    public final float VERTICALDASHING_TIMER = (Game.UPDATES /1000f) * Game.UPDATES * (1.2f/3.6f);
+    public final float VERTICALDASHING_VELX = 9 * Game.UpdatesRatio * Game.widthRatio;
 
     // State
     private boolean isJumped;
@@ -86,6 +87,8 @@ public class Player extends Entity {
 
     public Player(int width, int height, Id id) {
         super(width, height, id);
+        this.width = width;
+        this.height = height;
         currentState = PlayerState.idle;
         //velX = 5 * Game.widthRatio;
         frameDelay = 0;
@@ -112,25 +115,25 @@ public class Player extends Entity {
         if(!isDead) {
             if (facing == -1) {
                 g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame + 4].getBufferedImage(), x, y,
-                        WIDTH, HEIGHT, null);
+                        width, height, null);
             } else {
                 g.drawImage(FrameManager.getPlayerMoveFrame(currentState)[frame].getBufferedImage(), x, y,
-                        WIDTH, HEIGHT, null);
+                        width, height, null);
             }
             if(Game.debugMode) {
                 g.setColor(Color.BLUE);
-                //g.drawRect(x+ (int)(WIDTH /3.2), y, WIDTH - (int)(WIDTH /1.8), HEIGHT);
+                //g.drawRect(x+ (int)(width /3.2), y, width - (int)(width /1.8), height);
                 //TOP
-                g.drawRect(x + (int)(WIDTH/2.5), y, WIDTH - (int)(WIDTH /1.4), (int)(15*Game.widthRatio));
+                g.drawRect(x + (int)(width/2.5), y, width - (int)(width /1.4), (int)(15*Game.widthRatio));
                 //BOTTOM
-                g.drawRect(x + (int)(WIDTH/2.5), y+HEIGHT - (int)(15*Game.widthRatio), WIDTH - (int)(WIDTH /1.4), (int)(15*Game.widthRatio));
+                g.drawRect(x + (int)(width/2.5), y+height - (int)(15*Game.widthRatio), width - (int)(width /1.4), (int)(15*Game.widthRatio));
                 //LEFT
-                g.drawRect(x + (WIDTH/3) , y+HEIGHT/6, (int)(20*Game.widthRatio), HEIGHT-HEIGHT/3);
+                g.drawRect(x + (width/3) , y+height/6, (int)(20*Game.widthRatio), height-height/3);
                 //RIGHT
-                g.drawRect(x + (WIDTH/3) + (int)(getBounds().width/1.2) , y+HEIGHT/6, (int)(20*Game.widthRatio), HEIGHT-HEIGHT/3);
+                g.drawRect(x + (width/3) + (int)(getBounds().width/1.2) , y+height/6, (int)(20*Game.widthRatio), height-height/3);
                 // Original Size
                 g.setColor(Color.RED);
-                g.drawRect(x, y, WIDTH, HEIGHT);
+                g.drawRect(x, y, width, height);
             }
         }
     }
@@ -138,19 +141,19 @@ public class Player extends Entity {
 
     @Override
     // Collision test
-    public Rectangle getBounds() { return new Rectangle(x + (int)(WIDTH/2.5), y, WIDTH - (int)(WIDTH /1.4), (int)(15*Game.widthRatio)); }
+    public Rectangle getBounds() { return new Rectangle(x + (int)(width/2.5), y, width - (int)(width /1.4), (int)(15*Game.widthRatio)); }
 
     public Rectangle getBoundsTop() {
-        return new Rectangle(x + (int)(WIDTH/2.5), y, WIDTH - (int)(WIDTH /1.4), (int)(15*Game.widthRatio));
+        return new Rectangle(x + (int)(width/2.5), y, width - (int)(width /1.4), (int)(15*Game.widthRatio));
     }
     public Rectangle getBoundsBottom() {
-        return new Rectangle(x + (int)(WIDTH/2.5), y+HEIGHT - (int)(15*Game.widthRatio), WIDTH - (int)(WIDTH /1.4), (int)(15*Game.widthRatio));
+        return new Rectangle(x + (int)(width/2.5), y+height - (int)(15*Game.widthRatio), width - (int)(width /1.4), (int)(15*Game.widthRatio));
     }
     public Rectangle getBoundsLeft() {
-        return new Rectangle(x + (WIDTH/3) , y+HEIGHT/6, (int)(20*Game.widthRatio), HEIGHT-HEIGHT/3);
+        return new Rectangle(x + (width/3) , y+height/6, (int)(20*Game.widthRatio), height-height/3);
     }
     public Rectangle getBoundsRight() {
-        return new Rectangle(x + (WIDTH/3) + (int)(getBounds().width/1.2) , y+HEIGHT/6, (int)(20*Game.widthRatio), HEIGHT-HEIGHT/3);
+        return new Rectangle(x + (width/3) + (int)(getBounds().width/1.2) , y+height/6, (int)(20*Game.widthRatio), height-height/3);
     }
 
     @Override
@@ -453,7 +456,7 @@ public class Player extends Entity {
                 break;
             case BOTTOM:
                 if(t instanceof Spring && ((Spring) t).getDirection() == UP) {
-                    y = collisionRect.y - HEIGHT;
+                    y = collisionRect.y - height;
                     ((Spring) t).setStepOn(true);
                     SoundEffectPlayer.playSoundEffect("SpringJumping");
                     isJumped = true;
@@ -467,7 +470,7 @@ public class Player extends Entity {
                     velY = 0;
                     gravity = 0;
                     friction = 0;
-                    y = collisionRect.y - HEIGHT+1;
+                    y = collisionRect.y - height+1;
                     currentState = PlayerState.standing;
                     SoundEffectPlayer.playSoundEffect("Landing");
                     // Don't create landing effect when died

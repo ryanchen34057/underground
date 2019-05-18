@@ -14,24 +14,24 @@ public class StandingJumping implements State {
     public void handleKeyInput(Player player, List<Input.Key> keys) {
         if(keys.get(2).down) {
             player.setFacing(-1);
-            player.setVelX(-Player.STANDINGJUMPING_VELX_OFFSET);
+            player.setVelX(-player.STANDINGJUMPING_VELX_OFFSET);
         }
         else if(keys.get(3).down) {
             player.setFacing(1);
-            player.setVelX(Player.STANDINGJUMPING_VELX_OFFSET);
+            player.setVelX(player.STANDINGJUMPING_VELX_OFFSET);
         }
         //Vertical Dashing
         Direction dir = verticalDashCondition(keys, player);
         if(dir != null && !player.isTired()) {
             if(keys.get(2).down || keys.get(3).down) {
-                player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
+                player.setVelX(player.VERTICALDASHING_VELX * player.getFacing());
             }
             SoundEffectPlayer.playSoundEffect("Dashing");
             player.setCurrentState(PlayerState.verticalDashing);
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
-            player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
-            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
+            player.currentDashSpeed = player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = player.VERTICALDASHING_TIMER;
         }
         else if(keys.get(4).down && !player.isTired()) {
             player.setVelY(0);
@@ -39,15 +39,15 @@ public class StandingJumping implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
-            player.currentDashTimer = Player.DASH_TIMER;
-            player.currentDashSpeed = Player.DASH_SPEED;
+            player.currentDashTimer = player.DASH_TIMER;
+            player.currentDashSpeed = player.DASH_SPEED;
         }
 
     }
 
     @Override
     public void update(Player player) {
-        player.setGravity(player.getGravity() - Player.STANDINGJUMPING_GRAVITY_OFFSET);
+        player.setGravity(player.getGravity() - player.STANDINGJUMPING_GRAVITY_OFFSET);
         player.setVelY((int) -player.getGravity());
         if (player.getGravity() <= 0.0) {
             player.setCurrentState(PlayerState.falling);

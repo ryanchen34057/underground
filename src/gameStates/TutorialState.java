@@ -43,7 +43,7 @@ public class TutorialState extends LevelState {
         words = new ArrayList<>();
         words.add(new Words("Portal to last level", (int)(30* Game.widthRatio), (int)(background.getWidth()*0.85), (int)(100*Game.heightRatio)));
         words.add(new Words("Eat the diamond to reset your dash!", (int)(25*Game.widthRatio), (int)(640*Game.widthRatio), (int)(350*Game.heightRatio)));
-        player = new Player(Player.WIDTH, Player.HEIGHT, Id.player);
+        player = new Player((int)(96*Game.widthRatio), (int)(96*Game.widthRatio), Id.player);
         player.setPosition((int)bluePortalCor.getWidth(), (int)bluePortalCor.getHeight());
     }
 

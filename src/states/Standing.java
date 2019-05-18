@@ -15,7 +15,7 @@ public class Standing implements State {
         //Dash Jumping
         if(keys.get(5).down && keys.get(4).down && !player.isTired()) {
             SoundEffectPlayer.playSoundEffect("Dashing");
-            player.setGravity(Player.DASHJUMPING_GRAVITY);
+            player.setGravity(player.DASHJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.dashJumping);
         }
         else if(keys.get(2).down) {
@@ -30,7 +30,7 @@ public class Standing implements State {
         if(keys.get(5).down && player.isOnTheGround() && !player.isJumped()) {
             player.setVelX(0);
             player.setJumped(true);
-            player.setGravity(Player.STANDINGJUMPING_GRAVITY);
+            player.setGravity(player.STANDINGJUMPING_GRAVITY);
             player.setCurrentState(PlayerState.standingJumping);
             SoundEffectPlayer.playSoundEffect("Jumping");
         }
@@ -40,8 +40,8 @@ public class Standing implements State {
             player.setCurrentState(PlayerState.dashing);
             player.setCurrentEffect(DashEffect.getInstance(player));
             player.setTired(true);
-            player.currentDashTimer = Player.DASH_TIMER;
-            player.currentDashSpeed = Player.DASH_SPEED;
+            player.currentDashTimer = player.DASH_TIMER;
+            player.currentDashSpeed = player.DASH_SPEED;
         }
         if(!keys.get(4).down) {
             player.setTired(false);

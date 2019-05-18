@@ -25,8 +25,8 @@ public class Idle implements State {
             player.setCurrentState(PlayerState.dashing);
             player.setCurrentEffect(DashEffect.getInstance(player));
             player.setTired(true);
-            player.currentDashTimer = Player.DASH_TIMER;
-            player.currentDashSpeed = Player.DASH_SPEED;
+            player.currentDashTimer = player.DASH_TIMER;
+            player.currentDashSpeed = player.DASH_SPEED;
         }
     }
 

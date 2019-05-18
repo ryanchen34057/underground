@@ -19,11 +19,11 @@ public class VerticalDashing implements State {
     @Override
     public void update(Player player) {
         player.currentDashTimer -= ((Game.UPDATES / 1000.0f));
-        player.currentDashSpeed -= Player.DASH_SPEED_BUMP;
+        player.currentDashSpeed -= player.DASH_SPEED_BUMP;
         if(player.currentDashTimer <= (Game.UPDATES / 1000.0f)) {
             player.setGravity(0);
             //Reset timer
-            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
+            player.currentDashTimer = player.VERTICALDASHING_TIMER;
             player.setCurrentState(PlayerState.falling);
         }
     }

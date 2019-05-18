@@ -27,12 +27,12 @@ public class Bouncing implements State {
         Direction dir = verticalDashCondition(keys, player);
         if(dir != null && !player.isTired()) {
             SoundEffectPlayer.playSoundEffect("Dashing");
-            player.setVelX(Player.VERTICALDASHING_VELX * player.getFacing());
+            player.setVelX(player.VERTICALDASHING_VELX * player.getFacing());
             player.setCurrentState(PlayerState.verticalDashing);
             player.setCurrentEffect(VerticalDashEffect.getInstance(player, dir));
             player.setTired(true);
-            player.currentDashSpeed = Player.VERTICALDASHING_SPEED;
-            player.currentDashTimer = Player.VERTICALDASHING_TIMER;
+            player.currentDashSpeed = player.VERTICALDASHING_SPEED;
+            player.currentDashTimer = player.VERTICALDASHING_TIMER;
         }
 
         //DASHING_IN_THE_AIR
@@ -43,16 +43,16 @@ public class Bouncing implements State {
             player.setCurrentState(PlayerState.dashingInTheAir);
             player.setCurrentEffect(DashInTheAirEffect.getInstance(player));
             player.setTired(true);
-            player.currentDashTimer = Player.DASH_TIMER;
-            player.currentDashSpeed = Player.DASH_SPEED;
+            player.currentDashTimer = player.DASH_TIMER;
+            player.currentDashSpeed = player.DASH_SPEED;
         }
     }
 
     @Override
     public void update(Player player) {
         player.accumulateFatigue();
-        player.setVelX(player.getFacing() * -1 * Player.BOUNCING_RANGE);
-        player.setGravity(player.getGravity() - Player.BOUNCING_GRAVITY_OFFSET);
+        player.setVelX(player.getFacing() * -1 * player.BOUNCING_RANGE);
+        player.setGravity(player.getGravity() - player.BOUNCING_GRAVITY_OFFSET);
         player.setVelY((int) -player.getGravity());
         if (player.getGravity() <= 0.0 || player.getFatigue() >= player.getSTAMINA()) {
             player.setCurrentState(PlayerState.falling);

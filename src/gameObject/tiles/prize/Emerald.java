@@ -13,7 +13,6 @@ import java.awt.*;
 public class Emerald extends Prize {
     private int serial;
     private boolean isEaten;
-    public static final int PRIZE_SIZE = (int)(64* Game.widthRatio);
     private int frameDelay, frame;
     public Emerald(int x, int y, int width, int height, int point, Id id, int serial) {
         super(x, y, width, height, point, id);
@@ -26,8 +25,8 @@ public class Emerald extends Prize {
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(FrameManager.getEmeralFrame()[frame].getBufferedImage(), super.getX(), super.getY(),
-                super.getWidth(), super.getHeight(), null);
+        g.drawImage(FrameManager.getEmeralFrame()[frame].getBufferedImage(), x, y,
+                width, height, null);
         if(Game.debugMode) {
             g.setColor(Color.YELLOW);
             g.drawRect(x+10, y+10, width-20,height-20);
@@ -46,8 +45,9 @@ public class Emerald extends Prize {
         }
     }
 
-    public int getSerial() {
-        return serial;
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
     }
 
     public boolean isEaten() {

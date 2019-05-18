@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
-    public static final String TITLE = "UnderGound";
+    public static final String TITLE = "Undergound";
     private Thread thread;
     private boolean running;
     public static boolean debugMode;
