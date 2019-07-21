@@ -9,7 +9,9 @@ UnderGround是一個橫向捲軸式的跳台遊戲。玩家控制的主角是一
 
 2.	遊戲操作說明&示意圖
 
-
+![image](https://github.com/ryanchen34057/underground/blob/master/1.jpg)
+![image](https://github.com/ryanchen34057/underground/blob/master/2.jpg)
+![image](https://github.com/ryanchen34057/underground/blob/master/3.jpg)
  	 
    1.基本動作：方向鍵左右控制移動
 
